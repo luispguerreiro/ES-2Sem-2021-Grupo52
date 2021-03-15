@@ -22,7 +22,7 @@ public class test {
 
 	}
 
-	public static void Loc_method(String FileName, String MethodName) throws FileNotFoundException {
+	public static int Loc_method(String FileName, String MethodName) throws FileNotFoundException {
 		File file = new File(FileName);
 		Scanner iterate = new Scanner(file);
 		int numLines = 1;
@@ -31,41 +31,39 @@ public class test {
 		while (iterate.hasNext()) {
 
 			if (iterate.nextLine().toLowerCase().contains("loc(")) {
-				System.out.println("encontrei o metodo");
+				//System.out.println("encontrei o metodo");
 				while (livre != true) {
 					numLines++;
 					
 
 					if (iterate.nextLine().toLowerCase().contains("{")) {
 						chavetas++;
-						System.out.println("tem chaveta");
+						//System.out.println("tem chaveta");
 					}
 					if (iterate.nextLine().toLowerCase().contains("}")) {
 						chavetas--;
-						System.out.println("tira chaveta");
+						//System.out.println("tira chaveta");
 					}
 						if (chavetas == 0) {
-							System.out.println(numLines);
-							break;
+							//System.out.println(numLines);
+							iterate.close();
+							return numLines;
 						}
-						System.out.println("tira uma linha");
-						if (chavetas == 0) {
-							livre = true;
-							break;
-						}
+						
 					
 				}
 			}
-			System.out.println(iterate.next());
+			iterate.next();
 		}
-		System.out.println(numLines);
+		//System.out.println(numLines);
+		return numLines;
 
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
 		System.out.println("Rui, deixa de ser do benfica!");
 		System.out.println(Loc_class("Loc.java"));
-		Loc_method("Loc.java", "loc(string fileName)");
+		System.out.println(Loc_method("Loc.java", "loc(string fileName)"));
 	}
 
 }
