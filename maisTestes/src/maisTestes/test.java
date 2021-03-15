@@ -1,6 +1,7 @@
-package projecto;
+package maisTestes;
 
-public class Test {
+public class test {
+
 
 	public static void main(String[] args) {
 		System.out.println("Rui, deixa de ser do benfica!");
