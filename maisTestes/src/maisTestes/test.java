@@ -19,8 +19,6 @@ public class test {
 			iterate.nextLine();
 			numLines ++;
 		}
-		
-		
 		return numLines; 
 		
 	}
