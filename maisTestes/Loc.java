@@ -14,10 +14,9 @@ public class Loc {
 			iterate.nextLine();
 			numLines ++;
 		}
-		
-		
 	}
-public static void main(String[] args) throws FileNotFoundException {
+	
+	public static void main(String[] args) throws FileNotFoundException {
 	File file = new File("Loc.java");
 	Scanner iterate = new Scanner (file);
 	 int numLines = 0;

@@ -26,36 +26,40 @@ public class test {
 		File file = new File(FileName);
 		Scanner iterate = new Scanner(file);
 		int numLines = 1;
-		int chavetas = 1;
+		int chavetas = 0;
 		boolean livre = false;
 		while (iterate.hasNext()) {
 
-			if (iterate.nextLine().toLowerCase().contains("loc(")) {
-				//System.out.println("encontrei o metodo");
+			if (iterate.nextLine().toLowerCase().contains(MethodName + "(")) {
+				// System.out.println("encontrei o metodo");
 				while (livre != true) {
+					String s = iterate.nextLine();
+					if (s.toLowerCase().contains("{")) {
+						chavetas++;
+						// numLines++;
+						// System.out.println("tem chaveta");
+					} else {
+						if (s.toLowerCase().contains("}")) {
+							chavetas--;
+							// numLines++;
+							// System.out.println("tira chaveta");
+						}
+					
+					if (chavetas < 0) {
+						// System.out.println(numLines);
+						livre = true;
+						iterate.close();
+						return numLines;
+					}
+					}
 					numLines++;
 					
 
-					if (iterate.nextLine().toLowerCase().contains("{")) {
-						chavetas++;
-						//System.out.println("tem chaveta");
-					}
-					if (iterate.nextLine().toLowerCase().contains("}")) {
-						chavetas--;
-						//System.out.println("tira chaveta");
-					}
-						if (chavetas == 0) {
-							//System.out.println(numLines);
-							iterate.close();
-							return numLines;
-						}
-						
-					
 				}
 			}
 			iterate.next();
 		}
-		//System.out.println(numLines);
+		// System.out.println(numLines);
 		return numLines;
 
 	}
@@ -63,7 +67,7 @@ public class test {
 	public static void main(String[] args) throws FileNotFoundException {
 		System.out.println("Rui, deixa de ser do benfica!");
 		System.out.println(Loc_class("Loc.java"));
-		System.out.println(Loc_method("Loc.java", "loc(string fileName)"));
+		System.out.println(Loc_method("Loc.java", "loc"));
 	}
 
 }
