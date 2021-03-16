@@ -2,6 +2,7 @@ package maisTestes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Method;
 import java.util.Scanner;
 
 public class test {
@@ -28,23 +29,20 @@ public class test {
 		int numLines = 1;
 		int chavetas = 0;
 		boolean livre = false;
+		
 		while (iterate.hasNext()) {
-
 			if (iterate.nextLine().toLowerCase().contains(MethodName + "(")) {
 				// System.out.println("encontrei o metodo");
 				while (livre != true) {
 					String s = iterate.nextLine();
 					if (s.toLowerCase().contains("{")) {
 						chavetas++;
-						// numLines++;
 						// System.out.println("tem chaveta");
 					} else {
 						if (s.toLowerCase().contains("}")) {
 							chavetas--;
-							// numLines++;
 							// System.out.println("tira chaveta");
 						}
-					
 					if (chavetas < 0) {
 						// System.out.println(numLines);
 						livre = true;
@@ -68,6 +66,20 @@ public class test {
 		System.out.println("Rui, deixa de ser do benfica!");
 		System.out.println(Loc_class("Loc.java"));
 		System.out.println(Loc_method("Loc.java", "loc"));
+	   
+	        Class className=null;
+	       try{
+	          className= Class.forName("Teste");
+	          Method[] methods= className.getDeclaredMethods();
+	           System.out.println("Number of methods in "+className+" = "+methods.length);
+	           for(int i=0;i<methods.length;i++){
+	               System.out.println(methods[i]);
+	           }
+	       }catch(ClassNotFoundException classNotFoundException){
+	           System.out.println("Class "+className+" could not be found");
+	       }
+
+	    
 	}
 
 }
