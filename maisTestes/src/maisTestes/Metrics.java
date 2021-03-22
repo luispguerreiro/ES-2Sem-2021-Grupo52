@@ -12,7 +12,7 @@ import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-public class App {
+public class Metrics{
 	// private static final String SRC_PATH =
 	// "C:\\Users\\r_f_g\\eclipse-workspace\\Es Teste\\src";
 	private static final String FILE_PATH = "C:\\Users\\r_f_g\\eclipse-workspace\\JparsecTeste\\Snippet.java";
