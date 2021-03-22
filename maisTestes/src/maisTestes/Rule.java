@@ -42,9 +42,9 @@ public class Rule {
 	public boolean isLong_Method(Rule r) {
 		if (r.getThresholds().size() != 2 || r.getOperators().get(0).equals(logicOperator.OR))
 			return false;
-		if (thresholds.get(0).getComparator().equals(Threshold.comparator.BIGGER)
-				&& thresholds.get(1).getComparator().equals(Threshold.comparator.BIGGER)) {
-			if (!thresholds.get(0).equals(thresholds.get(1))) {
+		if (!thresholds.get(0).equals(thresholds.get(1))) {
+			if (thresholds.get(0).getComparator().equals(Threshold.comparator.BIGGER)
+					&& thresholds.get(1).getComparator().equals(Threshold.comparator.BIGGER)) {
 				if ((thresholds.get(0).getMetricName().equals("LOC_method")
 						|| thresholds.get(0).getMetricName().equals("CYCLO_Method"))
 						&& (thresholds.get(1).getMetricName().equals("LOC_method")
@@ -53,6 +53,24 @@ public class Rule {
 				}
 			}
 		}
+		return false;
+	}
+
+	public boolean isGod_Class(Rule r) {
+		if (r.getThresholds().size() != 2 || r.getOperators().get(0).equals(logicOperator.AND))
+			return false;
+		if (!thresholds.get(0).equals(thresholds.get(1))) {
+			if (thresholds.get(0).getComparator().equals(Threshold.comparator.BIGGER)
+					&& thresholds.get(1).getComparator().equals(Threshold.comparator.BIGGER)) {
+				if ((thresholds.get(0).getMetricName().equals("WMC_class")
+						|| thresholds.get(0).getMetricName().equals("NOM_class"))
+						&& (thresholds.get(1).getMetricName().equals("WMC_class")
+								|| thresholds.get(1).getMetricName().equals("NOM_class"))) {
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 
@@ -77,13 +95,13 @@ public class Rule {
 
 	public void fuelArrays() {
 		Threshold t = new Threshold("LOC_method", 100, Threshold.comparator.BIGGER, 50);
-		Threshold t1 = new Threshold("CYCLO_Method", 50, Threshold.comparator.BIGGER, 50);
-		Threshold t2 = new Threshold("Loc_Method", 30, Threshold.comparator.BIGGER, 50);
+		Threshold t1 = new Threshold("WMC_class", 50, Threshold.comparator.BIGGER, 50);
+		Threshold t2 = new Threshold("NOM_class", 30, Threshold.comparator.BIGGER, 50);
 		getThresholds().add(t);
-		getThresholds().add(t1);
-//		getThresholds().add(t2);
-		operators.add(logicOperator.AND);
-//		operators.add(logicOperator.OR);
+//		getThresholds().add(t1);
+		getThresholds().add(t2);
+//		operators.add(logicOperator.AND);
+		operators.add(logicOperator.OR);
 //		operators.add(logicOperator.AND);
 //		operators.add(logicOperator.OR);
 	}
@@ -92,7 +110,7 @@ public class Rule {
 		ArrayList<Threshold> thresholds = new ArrayList<>();
 		ArrayList<logicOperator> operators = new ArrayList<>();
 		Rule r = new Rule(thresholds, operators);
-		System.out.println(r.isLong_Method(r));
+		System.out.println(r.isGod_Class(r));
 	}
 
 }
