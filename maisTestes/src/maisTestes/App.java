@@ -26,7 +26,7 @@ public class App {
 		new Loc_Method().visit(cu, methodNamesLines);
 		new Loc_Class().visit(cu, ClassLines);
 		
-
+ 
 	}
 	
 	
