@@ -1,6 +1,6 @@
 package maisTestes;
 
-//import maisTestes.GuiOutput.comparators;
+import maisTestes.GuiOutput.comparators;
 //para importar os enums de outras classes
 
 public class Threshold {
@@ -9,10 +9,10 @@ public class Threshold {
 	}
 
 	private String metricName;
-	private comparator o;
+	private comparators o;
 	private int limit;
 
-	public Threshold(String metricName, comparator o, int limit) {
+	public Threshold(String metricName, comparators o, int limit) {
 		this.metricName = metricName;
 		this.o = o;
 		this.limit = limit;
@@ -40,13 +40,13 @@ public class Threshold {
 	}
 	
 	public boolean result() {
-		if(o == comparator.BIGGER) {
+		if(o == comparators.BIGGER) {
 			return isBigger();
 		}
-		if(o == comparator.EQUALS) {
+		if(o == comparators.EQUALS) {
 			return isEquals();
 		}
-		if(o == comparator.SMALLER) {
+		if(o == comparators.SMALLER) {
 			return isSmaller();
 		}
 		throw new IllegalStateException();
@@ -69,7 +69,7 @@ public class Threshold {
 		return limit;
 	}
 
-	public comparator getComparator() {
+	public comparators getComparator() {
 		return o;
 	}
 
@@ -78,7 +78,7 @@ public class Threshold {
 	}
 
 	public static void main(String[] args) {
-		Threshold t =  new Threshold("LOC_class", comparator.SMALLER, 20);
+		Threshold t =  new Threshold("LOC_class", comparators.SMALLER, 20);
 		System.out.println(t.result());
 	}
 
