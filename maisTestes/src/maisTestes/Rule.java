@@ -94,12 +94,12 @@ public class Rule {
 //	}
 
 	public void fuelArrays() {
-		Threshold t = new Threshold("LOC_method", 100, Threshold.comparator.BIGGER, 50);
-		Threshold t1 = new Threshold("WMC_class", 50, Threshold.comparator.BIGGER, 50);
-		Threshold t2 = new Threshold("NOM_class", 30, Threshold.comparator.BIGGER, 50);
+//		Threshold t = new Threshold("LOC_method", 100, Threshold.comparator.BIGGER, 50);
+//		Threshold t1 = new Threshold("WMC_class", 50, Threshold.comparator.BIGGER, 50);
+//		Threshold t2 = new Threshold("NOM_class", 30, Threshold.comparator.BIGGER, 50);
 //		getThresholds().add(t);
-		getThresholds().add(t1);
-		getThresholds().add(t2);
+//		getThresholds().add(t1);
+//		getThresholds().add(t2);
 //		operators.add(logicOperator.AND);
 		operators.add(logicOperator.OR);
 //		operators.add(logicOperator.AND);

@@ -1,69 +1,85 @@
 package maisTestes;
 
-public class Threshold {
-	public enum comparator {BIGGER, SMALLER, EQUALS}
+//import maisTestes.GuiOutput.comparators;
+//para importar os enums de outras classes
 
-	private String metricName; 
-	private int metricValue;
+public class Threshold {
+	public enum comparator {
+		BIGGER, SMALLER, EQUALS
+	}
+
+	private String metricName;
 	private comparator o;
 	private int limit;
-	
-	
-	
-	public Threshold(String metricName, int metricValue, comparator o, int limit) {
-		this.metricName=metricName;
-		this.metricValue=metricValue;
-		this.o=o;
+
+	public Threshold(String metricName, comparator o, int limit) {
+		this.metricName = metricName;
+		this.o = o;
 		this.limit = limit;
-		System.out.println("Threshold: " + metricValue + " " + o + " " + limit);
+		System.out.println("Threshold: " + metricName + " " + o + " " + limit);
+	}
+
+	public int callMetric() {
+		if (metricName.equals("LOC_class")) {
+//			return Metrics.loc();
+			return 10;
+		} else if (metricName.equals("NOM_class")) {
+//			return Metrics.nom();
+			return 20;
+		} else if (metricName.equals("WMC_class")) {
+//			return Metrics.wmc();
+			return 10;
+		} else if (metricName.equals("LOC_method")) {
+//			return Metrics.locMethod();
+			return 20;
+		} else if (metricName.equals("CYCLO_method")) {
+//			return Metrics.cyclo();
+			return 10;
+		}
+		throw new IllegalArgumentException("Conflito ao identificar a métrica. \nTente novamente!");
 	}
 	
-	
-	public boolean isBigger(Threshold t) {
-		return metricValue > limit;
+	public boolean result() {
+		if(o == comparator.BIGGER) {
+			return isBigger();
+		}
+		if(o == comparator.EQUALS) {
+			return isEquals();
+		}
+		if(o == comparator.SMALLER) {
+			return isSmaller();
+		}
+		throw new IllegalStateException();
 	}
-	
-	public boolean isSmaller(Threshold t) {
-		return metricValue < limit;
+
+	public boolean isBigger() {
+		return callMetric() > limit;
 	}
-	
-	public boolean isEquals(Threshold t) {
-		return metricValue == limit;
+
+	public boolean isSmaller() {
+		return callMetric() < limit;
 	}
-	
-	public void comparator(Threshold t){
-//		if(t.getComparator().equals(null))
-//			throw new IllegalArgumentException("Escolha um dos comparadores");
-		if(t.getComparator().equals(comparator.BIGGER))
-			System.out.println(isBigger(t));
-		if(t.getComparator().equals(comparator.SMALLER))
-			System.out.println(isSmaller(t));
-		if(t.getComparator().equals(comparator.EQUALS))
-			System.out.println(isEquals(t));
+
+	public boolean isEquals() {
+		return callMetric() == limit;
 	}
-	
-	
-	public int getMetric() {
-		return metricValue;
-	}
-	
+
+
 	public int getLimit() {
 		return limit;
 	}
-	
+
 	public comparator getComparator() {
 		return o;
 	}
-	
+
 	public String getMetricName() {
 		return metricName;
 	}
-	
-	
+
 	public static void main(String[] args) {
-		Threshold t = new Threshold("LOC_Methos", 30 , comparator.BIGGER, 50);
-		t.comparator(t);
-	
+		Threshold t =  new Threshold("LOC_class", comparator.SMALLER, 20);
+		System.out.println(t.result());
 	}
 
 }
