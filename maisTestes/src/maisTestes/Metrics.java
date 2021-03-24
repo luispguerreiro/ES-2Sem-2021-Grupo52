@@ -26,9 +26,9 @@ public class Metrics {
 		CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
 		List<String> methodNamesLines = new ArrayList<>();
 		List<String> ClassLines = new ArrayList<>();
-		//new Loc_Method().visit(cu, methodNamesLines);
+		new Loc_Method().visit(cu, methodNamesLines);
 		locClass(cu);
-
+		
 	}
 
 	private static void locClass(CompilationUnit cu) {
@@ -39,11 +39,11 @@ public class Metrics {
 				int inicio=n.getBegin().get().line;
 				int fim = n.getEnd().get().line;
 				linhasClass = fim-inicio;
-				System.out.println(linhasClass);
+				System.out.println("O nome da classe é: " + n.getNameAsString());
+				System.out.println("o numero de linhas da classe é: " + linhasClass);
 			}
 			
 	}
-
 		
 	}
 
@@ -54,8 +54,8 @@ public class Metrics {
 			int inicio = m.getBegin().get().line;
 			int fim = m.getEnd().get().line;
 			int linhasMethod = fim - inicio;
-			// System.out.println(m.getNameAsString());
-			System.out.println(Integer.toString(linhasMethod));
+			System.out.println("Method " + m.getNameAsString());
+			System.out.println("- " + Integer.toString(linhasMethod));
 			collector.add(m.getNameAsString());
 			collector.add(Integer.toString(linhasMethod));
 
