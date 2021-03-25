@@ -13,9 +13,7 @@ import maisTestes.GuiOutput.comparators;
 import maisTestes.Metrics.Loc_Method;
 
 public class Threshold {
-	public enum comparator {
-		BIGGER, SMALLER, EQUALS
-	}
+	
 	
 //	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
 
@@ -31,10 +29,11 @@ public class Threshold {
 		System.out.println("Threshold: " + metricName + " " + o + " " + limit);
 	}
 
-	public int callMetric() throws FileNotFoundException {
+	public int callMetric() throws FileNotFoundException  {
 		Metrics m = new Metrics();
+//		try {
 		if (metricName.equals("LOC_class")) {
-			m.locClass();
+				m.locClass();
 			System.out.println(m.getLinhasClass());
 			System.out.println("nome classe:" + m.getS());
 			return m.getLinhasClass();
@@ -57,6 +56,10 @@ public class Threshold {
 //			return Metrics.cyclo();
 			return 10;
 		}
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		throw new IllegalArgumentException("Conflito ao identificar a métrica. \nTente novamente!");
 	}
 	
@@ -73,7 +76,8 @@ public class Threshold {
 		throw new IllegalStateException();
 	}
 
-	public boolean isBigger() throws FileNotFoundException {
+	public boolean isBigger() throws FileNotFoundException  {
+		
 		return callMetric() > limit;
 	}
 
@@ -81,7 +85,7 @@ public class Threshold {
 		return callMetric() < limit;
 	}
 
-	public boolean isEquals() throws FileNotFoundException {
+	public boolean isEquals() throws FileNotFoundException{
 		return callMetric() == limit;
 	}
 
@@ -99,7 +103,7 @@ public class Threshold {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Threshold t =  new Threshold("LOC_method", comparators.SMALLER, 400);
+		Threshold t =  new Threshold("NOM_class", comparators.SMALLER, 400);
 		System.out.println(t.result());
 	}
 
