@@ -11,11 +11,12 @@ public class GodClass extends Rule {
 	private static final String locClass = "LOC_class";
 	private static final String nomClass = "NOM_class";
 	private static final String wmcClass = "WMC_class";
+	private static final String ruleName = "God_class";
 	
 	
 	public GodClass(ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
 			ArrayList<operators> oper) throws FileNotFoundException {
-		super(metricName, comp, limits, oper);
+		super(ruleName, metricName, comp, limits, oper);
 	}
 
 

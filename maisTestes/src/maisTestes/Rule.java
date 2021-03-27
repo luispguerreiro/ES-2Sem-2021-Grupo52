@@ -19,13 +19,14 @@ public abstract class Rule {
 	protected ArrayList<comparators> comp = new ArrayList<>();
 	protected ArrayList<Integer> limits = new ArrayList<>();
 	protected ArrayList<operators> oper = new ArrayList<>();
-
+	private String ruleName;
 	private ArrayList<Boolean> threshResults = new ArrayList<>();
 
-	private String rule;
+	
 
-	public Rule(ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
+	public Rule(String ruleName, ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
 			ArrayList<operators> oper) throws FileNotFoundException {
+		this.ruleName= ruleName;
 		this.metricName = metricName;
 		this.comp = comp;
 		this.limits = limits;
@@ -85,7 +86,13 @@ public abstract class Rule {
 		}
 		return true;
 	}
-
+	public String getRuleName(){
+		return ruleName;
+	}
+	
+	public void setRuleName(String ruleName){
+		this.ruleName= ruleName;
+	}
 	/**
 	 * public boolean isLong_Method(Rule r) { if (r.getThresholds().size() != 2 ||
 	 * r.getOperators().get(0).equals(logicOperator.OR)) return false; if
@@ -154,14 +161,11 @@ public abstract class Rule {
 			throw new IllegalArgumentException("Não pode continuar! \nverificar tamanho dos vetores!");
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		ArrayList<String> metricName = new ArrayList<>();
-		ArrayList<comparators> comp = new ArrayList<>();
-		ArrayList<Integer> limits = new ArrayList<>();
-		ArrayList<operators> oper = new ArrayList<>();
-
-		//Rule r = new Rule(metricName, comp, limits, oper);
-
+	// Aqui vamos passar um Arraylist ou só um int? 
+	//Se calhar é mais fácil passar um Arraylist porque o utilizador pode querer mudar limites de várias métricas da Rule
+	
+	public void setLimits(ArrayList<Integer> limits){
+		this.limits= limits;
 	}
 
 }

@@ -10,12 +10,13 @@ public class LongMethod extends Rule {
 	
 	private static final String locMethod = "LOC_method";
 	private static final String cycloMethod = "CYCLO_method";
+	private static final String ruleName= "Long_method";
 	
 
 	public LongMethod(ArrayList<String> metricName ,ArrayList<comparators> comp, ArrayList<Integer> limits,
 			ArrayList<operators> oper) throws FileNotFoundException {
 		
-		super(metricName, comp, limits, oper);
+		super(ruleName, metricName, comp, limits, oper);
 	}
 	
 	
