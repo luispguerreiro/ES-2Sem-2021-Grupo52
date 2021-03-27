@@ -8,17 +8,17 @@ import javax.naming.LimitExceededException;
 import maisTestes.GuiOutput.comparators;
 import maisTestes.GuiOutput.operators;
 
-public class Rule {
+public abstract class Rule {
 
 	// NUM_METRICS vai ser atributo da class metrics
 	private final int NUM_METRICS;
 
 	private ArrayList<Threshold> thresholds = new ArrayList<>();
 
-	private ArrayList<String> metricName = new ArrayList<>();
-	private ArrayList<comparators> comp = new ArrayList<>();
-	private ArrayList<Integer> limits = new ArrayList<>();
-	private ArrayList<operators> oper = new ArrayList<>();
+	protected ArrayList<String> metricName = new ArrayList<>();
+	protected ArrayList<comparators> comp = new ArrayList<>();
+	protected ArrayList<Integer> limits = new ArrayList<>();
+	protected ArrayList<operators> oper = new ArrayList<>();
 
 	private ArrayList<Boolean> threshResults = new ArrayList<>();
 
@@ -32,6 +32,7 @@ public class Rule {
 		this.oper = oper;
 
 		fuelArrays();
+		check();
 
 		NUM_METRICS = metricName.size();
 
@@ -142,6 +143,15 @@ public class Rule {
 		limits.add(40);
 		oper.add(operators.AND);
 		oper.add(operators.OR);
+		
+	}
+	
+	public void check() {
+		if(metricName.size()==comp.size() && comp.size()==limits.size() && (limits.size()==oper.size()+1)) {
+			System.out.println("Vetores criados corretamente!");
+		}
+		else
+			throw new IllegalArgumentException("Não pode continuar! \nverificar tamanho dos vetores!");
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
@@ -150,7 +160,7 @@ public class Rule {
 		ArrayList<Integer> limits = new ArrayList<>();
 		ArrayList<operators> oper = new ArrayList<>();
 
-		Rule r = new Rule(metricName, comp, limits, oper);
+		//Rule r = new Rule(metricName, comp, limits, oper);
 
 	}
 
