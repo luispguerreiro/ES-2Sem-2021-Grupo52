@@ -19,7 +19,8 @@ public class Metrics {
 	// "C:\\Users\\r_f_g\\eclipse-workspace\\Es Teste\\src";
 	static int linhasClass;
 	int linhasMethod;
-	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
+	//private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
+	private static final String FILE_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\compiler\\ConstantPoolGenerator.java";
 	private static final String SRC_PATH = "C:\\Users\\r_f_g\\eclipse-workspace\\JparsecTeste";
 	private static CompilationUnit cu = null;
 	

@@ -22,6 +22,7 @@ public class NewRule extends Rule {
 		ArrayList<operators> oper = new ArrayList<>();
 
 		NewRule r = new NewRule(ruleName, metricName, comp, limits, oper);
+		System.out.println(ruleName);
 	}
 
 }

@@ -33,12 +33,14 @@ public class LongMethod extends Rule {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
+		
 		ArrayList<String> metricName = new ArrayList<>();
 		ArrayList<comparators> comp = new ArrayList<>();
 		ArrayList<Integer> limits = new ArrayList<>();
 		ArrayList<operators> oper = new ArrayList<>();
 		
 		LongMethod l = new LongMethod(metricName, comp, limits, oper);
+		System.out.println(ruleName);
 	
 	}
 
