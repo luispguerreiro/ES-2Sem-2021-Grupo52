@@ -35,7 +35,7 @@ public class Metrics {
 
 	}
 
-	public void locClass(String FilePath) throws FileNotFoundException {
+	public void locClass(String FilePath)  throws FileNotFoundException {
 		
 		CompilationUnit cu2 = StaticJavaParser.parse(new File(FilePath));
 
