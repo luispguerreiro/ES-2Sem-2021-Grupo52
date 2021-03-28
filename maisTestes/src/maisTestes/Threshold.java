@@ -13,6 +13,7 @@ import maisTestes.GuiOutput.comparators;
 import maisTestes.Metrics.Loc_Method;
 
 public class Threshold {
+	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
 	public enum comparator {
 		BIGGER, SMALLER, EQUALS
 	}
@@ -34,7 +35,7 @@ public class Threshold {
 	public int callMetric() throws FileNotFoundException {
 		Metrics m = new Metrics();
 		if (metricName.equals("LOC_class")) {
-			m.locClass();
+			m.locClass(FILE_PATH);
 			System.out.println(m.getLinhasClass());
 			System.out.println("nome classe:" + m.getS());
 			return m.getLinhasClass();

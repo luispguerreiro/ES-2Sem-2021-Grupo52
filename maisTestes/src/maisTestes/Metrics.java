@@ -31,12 +31,13 @@ public class Metrics {
 		List<String> methodNamesLines = new ArrayList<>();
 		List<String> ClassLines = new ArrayList<>();
 		new Loc_Method().visit(cu, methodNamesLines);
-		m.locClass();
+		m.locClass(FILE_PATH);
 
 	}
 
-	public void locClass() throws FileNotFoundException {
-		CompilationUnit cu2 = StaticJavaParser.parse(new File(FILE_PATH));
+	public void locClass(String FilePath) throws FileNotFoundException {
+		
+		CompilationUnit cu2 = StaticJavaParser.parse(new File(FilePath));
 
 		List<TypeDeclaration> nodes = cu2.findAll(TypeDeclaration.class);
 
