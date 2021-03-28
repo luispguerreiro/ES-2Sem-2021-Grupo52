@@ -5,23 +5,34 @@ package maisTestes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import maisTestes.GuiOutput.comparators;
+import maisTestes.GuiOutput.operators;
 
 /**
  * @author nmsidique @author henry
  *
  */
 class LongMethodTest {
-
+	static ArrayList<String> metricName = new ArrayList<>();
+	static ArrayList<comparators> comp = new ArrayList<>();
+	static ArrayList<Integer> limits = new ArrayList<>();
+	static ArrayList<operators> oper = new ArrayList<>();
+	static LongMethod lm;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		lm= new LongMethod( metricName, comp, limits, oper);  
 	}
 
 	/**
@@ -58,7 +69,7 @@ class LongMethodTest {
 	 */
 	@Test
 	final void testLongMethod() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertNotNull(lm);
 	}
 
 	/**
