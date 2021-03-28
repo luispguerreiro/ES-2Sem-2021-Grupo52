@@ -8,7 +8,7 @@ import javax.naming.LimitExceededException;
 import maisTestes.GuiOutput.comparators;
 import maisTestes.GuiOutput.operators;
 
-public abstract class Rule {
+public abstract class Rule implements IRule {
 
 	// NUM_METRICS vai ser atributo da class metrics
 	private final int NUM_METRICS;
@@ -41,10 +41,12 @@ public abstract class Rule {
 		System.out.println("---->Resultado da Logica:" + logic());
 	}
 
+	@Override
 	public ArrayList<Threshold> getThresholds() {
 		return thresholds;
 	}
-
+	
+	@Override
 	public void createThresholds() throws FileNotFoundException {
 		for (int i = 0; i < NUM_METRICS; i++) {
 			Threshold t = new Threshold(metricName.get(i), comp.get(i), limits.get(i));
@@ -53,7 +55,8 @@ public abstract class Rule {
 			System.out.println("-->Resultado de metrica Threashold: " + t.result());
 		}
 	}
-
+	
+	@Override
 	public boolean logic() {
 		while(!(threshResults.size()==1)) {
 			if (oper.get(0).equals(operators.AND)) {
@@ -70,7 +73,8 @@ public abstract class Rule {
 		}
 		return threshResults.get(0);
 	}
-
+	
+	@Override
 	public boolean and(boolean one, boolean two) {
 		if (one == true) {
 			if (two == true)
@@ -78,7 +82,8 @@ public abstract class Rule {
 		}
 		return false;
 	}
-
+	
+	@Override
 	public boolean or(boolean one, boolean two) {
 		if (one == false) {
 			if (two == false)
@@ -86,10 +91,13 @@ public abstract class Rule {
 		}
 		return true;
 	}
+	
+	@Override
 	public String getRuleName(){
 		return ruleName;
 	}
 	
+	@Override
 	public void setRuleName(String ruleName){
 		this.ruleName= ruleName;
 	}
@@ -138,6 +146,7 @@ public abstract class Rule {
 //		}
 //	}
 
+	@Override
 	public void fuelArrays() {
 		metricName.add("NOM_class");
 		metricName.add("LOC_class");
@@ -153,6 +162,7 @@ public abstract class Rule {
 		
 	}
 	
+	@Override
 	public void check() {
 		if(metricName.size()==comp.size() && comp.size()==limits.size() && (limits.size()==oper.size()+1)) {
 			System.out.println("Vetores criados corretamente!");
@@ -164,6 +174,7 @@ public abstract class Rule {
 	// Aqui vamos passar um Arraylist ou só um int? 
 	//Se calhar é mais fácil passar um Arraylist porque o utilizador pode querer mudar limites de várias métricas da Rule
 	
+	@Override
 	public void setLimits(ArrayList<Integer> limits){
 		this.limits= limits;
 	}
