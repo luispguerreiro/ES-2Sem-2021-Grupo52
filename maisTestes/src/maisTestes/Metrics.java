@@ -62,13 +62,13 @@ public class Metrics {
 		for (int i = 0; i < nodes.size(); i++) {
 			TypeDeclaration n = nodes.get(i);
 			if (n.getMember(i).isConstructorDeclaration()) {
-				int inicio = n.getBegin().get().line;
-				int fim = n.getEnd().get().line;
+				int inicio = n.getMember(i).getBegin().get().line;
+				int fim = n.getMember(i).getEnd().get().line;
 				int linhasMethod = fim - inicio;
 				methodNamesLines.add(n.getNameAsString());
 				methodNamesLines.add(Integer.toString(linhasMethod));
 				System.out.println(n.getName());
-				System.out.println(n.getBegin());
+				System.out.println(linhasMethod);
 
 			}
 
