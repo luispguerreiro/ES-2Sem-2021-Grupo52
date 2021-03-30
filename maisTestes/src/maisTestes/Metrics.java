@@ -30,7 +30,7 @@ public class Metrics {
 		// CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
 		// List<String> methodNamesLines = new ArrayList<>();
 		// List<String> ClassLines = new ArrayList<>();
-		// m.locClass(FILE_PATH);
+		m.locClass(FILE_PATH);
 		m.locMethod(FILE_PATH);
 
 	}
@@ -59,19 +59,21 @@ public class Metrics {
 		List<String> methodNamesLines = new ArrayList<>();
 		new Loc_Method().visit(cu, methodNamesLines);
 		List<TypeDeclaration> nodes = cu.findAll(TypeDeclaration.class);
-		for (int i = 0; i < nodes.size(); i++) {
-			TypeDeclaration n = nodes.get(i);
-			if (n.getMember(i).isConstructorDeclaration()) {
-				int inicio = n.getMember(i).getBegin().get().line;
-				int fim = n.getMember(i).getEnd().get().line;
-				int linhasMethod = fim - inicio;
-				methodNamesLines.add(n.getNameAsString());
-				methodNamesLines.add(Integer.toString(linhasMethod));
-				System.out.println(n.getName());
-				System.out.println(linhasMethod);
+		// for (int i = 0; i < nodes.size(); i++) {
+		// TypeDeclaration n = nodes.get(i);
+		for (TypeDeclaration n : nodes) {
+			for (int i = 0; i < n.getMembers().size(); i++) {
+				if (n.getMember(i).isConstructorDeclaration()) {
+					int inicio = n.getMember(i).getBegin().get().line;
+					int fim = n.getMember(i).getEnd().get().line;
+					int linhasMethod = fim - inicio;
+					methodNamesLines.add(n.getNameAsString());
+					methodNamesLines.add(Integer.toString(linhasMethod));
+					System.out.println("construtor:" + n.getName());
+					System.out.println(linhasMethod);
+				}
 
 			}
-
 		}
 
 	}
