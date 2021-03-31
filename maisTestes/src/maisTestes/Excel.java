@@ -13,7 +13,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
 
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws FileNotFoundException {
 		try {
 			File file = new File("Code_Smells.xlsx");
@@ -33,19 +32,15 @@ public class Excel {
 					switch (cell.getColumnIndex()) {
 					case 1:
 						linha.setPacote(cell.getStringCellValue());
-//						System.out.print(cell.getStringCellValue() + " ");
 						break;
 					case 2:
 						linha.setClasse(cell.getStringCellValue());
-//						System.out.print(cell.getStringCellValue() + " ");
 						break;
 					case 3:
 						linha.setMetodo(cell.getStringCellValue());
-//						System.out.print(cell.getStringCellValue() + " ");
 						break;
 					case 7:
 						linha.setIs_God_Class(cell.getBooleanCellValue());
-//						System.out.print(cell.getBooleanCellValue() + " ");
 						break;
 					case 10:
 						if (cell.getCellType() == 4) {
@@ -53,7 +48,6 @@ public class Excel {
 //						System.out.print(cell.getBooleanCellValue() + " ");
 						} else {
 							linha.setIs_Long_Method(false);
-//							System.out.print(cell.getStringCellValue() + " ");
 						}
 						break;
 					default:
@@ -61,8 +55,7 @@ public class Excel {
 				}
 				list.add(linha);
 			}
-//			for (Linha l : list)
-//				System.out.println(l.toString());
+
 			Procura p = new Procura();
 			p.getProcura(list, "GrammerException");
 			
