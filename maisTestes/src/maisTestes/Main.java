@@ -22,6 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Main {
+	
+	//aqui está o código que vai buscar todos os ficheiros de uma pasta
 
 	public static void main(String[] args) {
 		Main m = new Main();

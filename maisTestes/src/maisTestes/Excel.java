@@ -1,4 +1,5 @@
 package maisTestes;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,10 +20,13 @@ public class Excel {
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sheet = wb.getSheetAt(0);
+
 			Iterator<Row> itr = sheet.iterator();
+			itr.next();
+			
 			ArrayList<Linha> list = new ArrayList<Linha>();
 			Linha linha;
-			itr.next();
+
 			while (itr.hasNext()) {
 				Row row = itr.next();
 				Iterator<Cell> cellIterator = row.cellIterator();
@@ -58,8 +62,8 @@ public class Excel {
 
 			Procura p = new Procura();
 			p.getProcura(list, "GrammerException");
-			
-			for(Linha l : p.getLista())
+
+			for (Linha l : p.getLista())
 				System.out.println(l.toString());
 
 		} catch (IOException e) {
