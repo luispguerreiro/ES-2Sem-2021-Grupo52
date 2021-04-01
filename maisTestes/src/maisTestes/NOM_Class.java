@@ -1,19 +1,28 @@
 package maisTestes;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
+import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class NOM_Class {
 
-	private static final String FILE_PATH = "C:\\Users\\luisg\\Desktop\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\SourceCodeParser.java";
 	private int numOfMethods = 0;
 	private ClassOrInterfaceDeclaration c;
 
-	// NOM_class (# métodos p/ class) + WMC_Class (complexidade da classe) + CYCLO_method
+	private ClassOrInterfaceDeclaration mainClass;
+	private List<ClassOrInterfaceDeclaration> nestedClasses;
+
+	// NOM_class (# métodos p/ class) + WMC_Class (complexidade da classe) +
+	// CYCLO_method
 
 	public NOM_Class(ClassOrInterfaceDeclaration c) {
 		this.c = c;
@@ -54,14 +63,26 @@ public class NOM_Class {
 
 		}
 
-		// System.out.println("Métodos: " + m.getDeclarationAsString(false, false, true));
+		// System.out.println("Métodos: " + m.getDeclarationAsString(false, false,
+		// true));
 	}
 
-//	public static void main(String[] args) {
-//		try {
-//			new NOM_Class();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public int getNumOfMethods() {
+		return numOfMethods;
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		ClassOrInterfaceDeclaration mainClass;
+		CompilationUnit cu = StaticJavaParser.parse(new FileInputStream(FILE_PATH));
+		List<TypeDeclaration<?>> types = cu.getTypes();
+		if (!types.isEmpty()) {
+			for (TypeDeclaration<?> t : types) {
+				if (t.isClassOrInterfaceDeclaration()) {
+					mainClass = (ClassOrInterfaceDeclaration) t;
+					System.out.println("Main Class: " + t.getNameAsString());
+					new NOM_Class(mainClass);
+				}
+			}
+		}
+	}
 }
