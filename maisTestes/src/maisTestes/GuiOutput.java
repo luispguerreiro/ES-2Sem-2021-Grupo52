@@ -49,7 +49,7 @@ public class GuiOutput {
 	private final String folderPath = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ES_Rules_History\\";
 
 	// Date format (day/month/year hour:min:seg a)
-	private String string_date = "01/04/2021 12:13:00";
+	private String string_date = "01/04/2021 13:00:00";
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 	public GuiOutput() {
@@ -155,8 +155,8 @@ public class GuiOutput {
 		GuiOutput gui = new GuiOutput();
 
 		// Para testar, deixar apenas 1 operacional.
-		NewRule r = new NewRule(ruleName, metricName, comp, limits, oper);
-//		GodClass r = new GodClass(metricName, comp, limits, oper);
+//		NewRule r = new NewRule(ruleName, metricName, comp, limits, oper);
+		GodClass r = new GodClass(metricName, comp, limits, oper);
 //		LongMethod r = new LongMethod(metricName, comp, limits, oper);
 		gui.writeFile(r);
 //		Rule g1 = gui.readFile("Regra1");
