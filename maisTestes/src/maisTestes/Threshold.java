@@ -2,6 +2,7 @@ package maisTestes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,16 @@ import maisTestes.GuiOutput.comparators;
 //para importar os enums de outras classes
 import maisTestes.Metrics.Loc_Method;
 
-public class Threshold {
+public class Threshold implements Serializable {
 	
 	
 //	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String metricName;
 	private comparators o;
 	private int limit;
@@ -32,10 +37,13 @@ public class Threshold {
 	public int callMetric() throws FileNotFoundException  {
 		Metrics m = new Metrics();
 //		try {
+		boolean a = true;
+		if(a == true) {
 		if (metricName.equals("LOC_class")) {
 				m.locClass();
-			System.out.println(m.getLinhasClass());
-			System.out.println("nome classe:" + m.getS());
+			//System.out.println(m.getLinhasClass());
+			a=false;
+				//System.out.println("nome classe:" + m.getS());
 			return m.getLinhasClass();
 //			return 10;
 		} else if (metricName.equals("NOM_class")) {
@@ -60,6 +68,7 @@ public class Threshold {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		}
 		throw new IllegalArgumentException("Conflito ao identificar a métrica. \nTente novamente!");
 	}
 	

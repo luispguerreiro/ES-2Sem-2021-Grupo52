@@ -45,7 +45,6 @@ public class GodClass extends Rule {
 		ArrayList<operators> oper = new ArrayList<>();
 		
 		GodClass g = new GodClass(metricName, comp, limits, oper);
-		System.out.println(ruleName);
 	}
 
 }

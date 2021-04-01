@@ -1,6 +1,7 @@
 package maisTestes;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.naming.LimitExceededException;
@@ -8,7 +9,12 @@ import javax.naming.LimitExceededException;
 import maisTestes.GuiOutput.comparators;
 import maisTestes.GuiOutput.operators;
 
-public abstract class Rule implements IRule {
+public abstract class Rule implements IRule, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	// NUM_METRICS vai ser atributo da class metrics
 	private final int NUM_METRICS;
@@ -22,11 +28,9 @@ public abstract class Rule implements IRule {
 	private String ruleName;
 	private ArrayList<Boolean> threshResults = new ArrayList<>();
 
-	
-
 	public Rule(String ruleName, ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
 			ArrayList<operators> oper) throws FileNotFoundException {
-		this.ruleName= ruleName;
+		this.ruleName = ruleName;
 		this.metricName = metricName;
 		this.comp = comp;
 		this.limits = limits;
@@ -45,7 +49,7 @@ public abstract class Rule implements IRule {
 	public ArrayList<Threshold> getThresholds() {
 		return thresholds;
 	}
-	
+
 	@Override
 	public void createThresholds() throws FileNotFoundException {
 		for (int i = 0; i < NUM_METRICS; i++) {
@@ -55,10 +59,10 @@ public abstract class Rule implements IRule {
 			System.out.println("-->Resultado de metrica Threashold: " + t.result());
 		}
 	}
-	
+
 	@Override
 	public boolean logic() {
-		while(!(threshResults.size()==1)) {
+		while (!(threshResults.size() == 1)) {
 			if (oper.get(0).equals(operators.AND)) {
 				System.out.println(and(threshResults.get(0), threshResults.get(1)));
 				threshResults.set(0, and(threshResults.get(0), threshResults.get(1)));
@@ -73,7 +77,7 @@ public abstract class Rule implements IRule {
 		}
 		return threshResults.get(0);
 	}
-	
+
 	@Override
 	public boolean and(boolean one, boolean two) {
 		if (one == true) {
@@ -82,7 +86,7 @@ public abstract class Rule implements IRule {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean or(boolean one, boolean two) {
 		if (one == false) {
@@ -91,16 +95,37 @@ public abstract class Rule implements IRule {
 		}
 		return true;
 	}
-	
+
 	@Override
-	public String getRuleName(){
+	public String getRuleName() {
 		return ruleName;
 	}
 	
-	@Override
-	public void setRuleName(String ruleName){
-		this.ruleName= ruleName;
+	public ArrayList<comparators> getComp() {
+		return comp;
 	}
+	
+	public ArrayList<Integer> getLimits() {
+		return limits;
+	}
+	
+	public ArrayList<String> getMetricName() {
+		return metricName;
+	}
+	
+	public ArrayList<operators> getOper() {
+		return oper;
+	}
+	
+	public ArrayList<Boolean> getThreshResults() {
+		return threshResults;
+	}
+
+	@Override
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
+
 	/**
 	 * public boolean isLong_Method(Rule r) { if (r.getThresholds().size() != 2 ||
 	 * r.getOperators().get(0).equals(logicOperator.OR)) return false; if
@@ -159,24 +184,26 @@ public abstract class Rule implements IRule {
 		limits.add(40);
 		oper.add(operators.AND);
 		oper.add(operators.OR);
-		
+		for (int i = 0, j = 0; i <= metricName.size() && j < metricName.size() - 1; i++, j++) {
+			System.out.println("HELLOOOOO" + oper.get(0) + oper.get(1));
+			System.out.println(
+					"HELOOOOO" + metricName.get(i) + " " + comp.get(i) + " " + limits.get(i) + " " + oper.get(j));
+			System.out.print(oper.get(i));
+		}
+
 	}
-	
+
 	@Override
 	public void check() {
-		if(metricName.size()==comp.size() && comp.size()==limits.size() && (limits.size()==oper.size()+1)) {
+		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {
 			System.out.println("Vetores criados corretamente!");
-		}
-		else
+		} else
 			throw new IllegalArgumentException("Não pode continuar! \nverificar tamanho dos vetores!");
 	}
 
-	// Aqui vamos passar um Arraylist ou só um int? 
-	//Se calhar é mais fácil passar um Arraylist porque o utilizador pode querer mudar limites de várias métricas da Rule
-	
 	@Override
-	public void setLimits(ArrayList<Integer> limits){
-		this.limits= limits;
+	public void setLimits(ArrayList<Integer> limits) {
+		this.limits = limits;
 	}
 
 }
