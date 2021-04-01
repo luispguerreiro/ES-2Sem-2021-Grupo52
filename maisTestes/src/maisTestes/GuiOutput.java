@@ -46,7 +46,6 @@ public class GuiOutput {
 	private ArrayList<operators> oper = new ArrayList<>();
 	private ArrayList<comparators> comp = new ArrayList<>();
 
-	private final double daysToRemove = 0.0208333333;
 	private final String folderPath = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ES_Rules_History\\";
 
 	// Date format (day/month/year hour:min:seg a)
