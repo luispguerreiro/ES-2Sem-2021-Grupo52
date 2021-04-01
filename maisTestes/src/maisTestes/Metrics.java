@@ -9,7 +9,10 @@ import java.util.List;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -34,7 +37,6 @@ public class Metrics {
 		m.locMethod(FILE_PATH);
 
 	}
-	
 
 	public void locClass(String FilePath) throws FileNotFoundException {
 
@@ -58,25 +60,32 @@ public class Metrics {
 	public void locMethod(String FilePath) throws FileNotFoundException {
 		CompilationUnit cu = StaticJavaParser.parse(new File(FilePath));
 		List<String> methodNamesLines = new ArrayList<>();
-		new Loc_Method().visit(cu, methodNamesLines);
 		List<TypeDeclaration> nodes = cu.findAll(TypeDeclaration.class);
-		// for (int i = 0; i < nodes.size(); i++) {
-		// TypeDeclaration n = nodes.get(i);
 		for (TypeDeclaration n : nodes) {
-			for (int i = 0; i < n.getMembers().size(); i++) {
-				if (n.getMember(i).isConstructorDeclaration()) {
-					int inicio = n.getMember(i).getBegin().get().line;
-					int fim = n.getMember(i).getEnd().get().line;
-					int linhasMethod = fim - inicio;
-					methodNamesLines.add(n.getNameAsString());
-					methodNamesLines.add(Integer.toString(linhasMethod));
-					System.out.println("construtor:" + n.getName());
-					System.out.println(linhasMethod);
+			ClassOrInterfaceDeclaration classe = (ClassOrInterfaceDeclaration) n;
+			List<ConstructorDeclaration> constructors = classe.getConstructors();
+			for (ConstructorDeclaration cs : constructors) {
+				int inicio = cs.getBegin().get().line;
+				int fim = cs.getEnd().get().line;
+				int linhasMethod = fim - inicio;
+				List<Parameter> par = cs.getParameters();
+				String parameters = "";
+				if (!par.isEmpty()) {
+					for (Parameter p : par) {
+						parameters += p.getType().toString();
+						if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
+							parameters += ",";
+						}
+					}
 				}
-
+				System.out.println("constructor: " + cs.getNameAsString() + "(" + parameters + ")");
+				System.out.println(linhasMethod);
+				methodNamesLines.add(cs.getNameAsString() + "(" + parameters + ")");
+				methodNamesLines.add(Integer.toString(linhasMethod));
 			}
-		}
 
+		}
+		new Loc_Method().visit(cu, methodNamesLines);
 	}
 
 	public static int getLinhasClass() {
@@ -96,18 +105,27 @@ public class Metrics {
 		@Override
 		public void visit(MethodDeclaration m, List<String> collector) {
 			super.visit(m, collector);
-			List<TypeDeclaration> nodes = m.findAll(TypeDeclaration.class);
 
 			int inicio = m.getBegin().get().line;
 			int fim = m.getEnd().get().line;
 			int linhasMethod = fim - inicio;
-			System.out.println("Method " + m.getNameAsString());
-			System.out.println("- " + Integer.toString(linhasMethod));
-			collector.add(m.getNameAsString());
-			collector.add(Integer.toString(linhasMethod));
+			List<Parameter> par = m.getParameters();
+			String parameters = "";
+			if (!par.isEmpty()) {
+				for (Parameter p : par) {
 
+					parameters += p.getType().toString();
+					if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
+						parameters += ",";
+					}
+				}
+
+				System.out.println("Métodos: " + m.getNameAsString() + "(" + parameters + ")");
+				System.out.println("- " + Integer.toString(linhasMethod));
+				collector.add(m.getNameAsString() + "(" + parameters + ")");
+				collector.add(Integer.toString(linhasMethod));
+			}
 		}
-
 	}
 
 }
