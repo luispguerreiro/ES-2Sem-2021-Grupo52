@@ -101,11 +101,16 @@ public class Metrics {
 	public static String getFilePath() {
 		return FILE_PATH;
 	}
+	
+	
 
 	public static class Loc_Method extends VoidVisitorAdapter<List<String>> {
 
+		List<String> collector = new ArrayList<>();
+		
 		@Override
 		public void visit(MethodDeclaration m, List<String> collector) {
+			this.collector=collector;
 			super.visit(m, collector);
 
 			int inicio = m.getBegin().get().line;
@@ -131,6 +136,10 @@ public class Metrics {
 				collector.add(m.getNameAsString() + "(" + parameters + ")");
 				collector.add(Integer.toString(linhasMethod));
 			}
+		}
+		
+		public List<String> getCollector() {
+			return collector;
 		}
 	}
 

@@ -27,7 +27,7 @@ public class LongMethod extends Rule {
 		metricName.add(cycloMethod);
 		comp.add(comparators.BIGGER);
 		comp.add(comparators.BIGGER);
-		limits.add(50);
+		limits.add(10);
 		limits.add(10);
 		oper.add(operators.AND);
 	}

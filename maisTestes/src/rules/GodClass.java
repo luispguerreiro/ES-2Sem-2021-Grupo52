@@ -29,7 +29,7 @@ public class GodClass extends Rule {
 		comp.add(comparators.BIGGER);
 		comp.add(comparators.BIGGER);
 		// ver limite da loc_class
-		limits.add(30);
+		limits.add(300);
 		limits.add(10);
 		limits.add(50);
 		oper.add(operators.OR);

@@ -55,14 +55,29 @@ public abstract class Rule implements IRule, Serializable {
 		for (int i = 0; i < NUM_METRICS; i++) {
 			Threshold t = new Threshold(metricName.get(i), comp.get(i), limits.get(i));
 			thresholds.add(t);
-			threshResults.add(t.result());
-			System.out.println("-->Resultado de metrica Threashold: " + t.result());
+//			t.result();
+////			threshResults.add(t.getBoolArray().);
+//			threshResults = t.getBoolArray();
+//			System.out.println("-->Resultado de metrica Threshold: " + t.result() );
+			calculateThresholds(t);
+			logic();
+		}
+	}
+	
+	public void calculateThresholds(Threshold t) throws FileNotFoundException{
+//		threshResults.addAll(t.result());
+		threshResults.addAll(t.result());
+		for (int i = 0; i < threshResults.size(); i++) {
+			System.out.println("-->Resultado de metrica Threshold: " + threshResults.get(i));
 		}
 	}
 
 	@Override
 	public boolean logic() {
-		while (!(threshResults.size() == 1)) {
+		System.out.println("______" + threshResults);
+		System.out.println("Logic() size " + threshResults.size() + "\n oper: " + oper.get(0));
+//		while (!(threshResults.size() == 1)) {
+			while (threshResults.size() > 1) {
 			if (oper.get(0).equals(operators.AND)) {
 				System.out.println(and(threshResults.get(0), threshResults.get(1)));
 				threshResults.set(0, and(threshResults.get(0), threshResults.get(1)));
