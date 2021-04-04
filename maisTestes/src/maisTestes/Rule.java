@@ -184,12 +184,12 @@ public abstract class Rule implements IRule, Serializable {
 		limits.add(40);
 		oper.add(operators.AND);
 		oper.add(operators.OR);
-		for (int i = 0, j = 0; i <= metricName.size() && j < metricName.size() - 1; i++, j++) {
-			System.out.println("HELLOOOOO" + oper.get(0) + oper.get(1));
-			System.out.println(
-					"HELOOOOO" + metricName.get(i) + " " + comp.get(i) + " " + limits.get(i) + " " + oper.get(j));
-			System.out.print(oper.get(i));
-		}
+//		for (int i = 0, j = 0; i <= metricName.size() && j < metricName.size() - 1; i++, j++) {
+//			System.out.println("HELLOOOOO" + oper.get(0) + oper.get(1));
+//			System.out.println(
+//					"HELOOOOO" + metricName.get(i) + " " + comp.get(i) + " " + limits.get(i) + " " + oper.get(j));
+//			System.out.print(oper.get(i));
+//		}
 
 	}
 

@@ -9,11 +9,9 @@ import java.util.List;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import com.github.javaparser.printer.YamlPrinter;
 
 public class Metrics {
 	// private static final String SRC_PATH =
@@ -80,7 +78,6 @@ public class Metrics {
 			System.out.println("- " + Integer.toString(linhasMethod));
 			collector.add(m.getNameAsString());
 			collector.add(Integer.toString(linhasMethod));
-
 		}
 
 	}

@@ -53,7 +53,9 @@ public class GuiOutput {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 	public GuiOutput() {
-		deleteOlderFiles(folderPath, string_date);
+//		deleteOlderFiles(folderPath, string_date);
+		getRecentFiles(folderPath, string_date);
+		
 	}
 
 	public ArrayList<Integer> getLimit() {
@@ -118,13 +120,13 @@ public class GuiOutput {
 		return rule;
 	}
 
-	public void deleteOlderFiles(String path, String s) {
+	public void deleteOlderFiles(String path, String date) {
 		File folder = new File(path);
 		File[] folderFiles = folder.listFiles();
 		boolean a = false;
 		Date d;
 		try {
-			d = dateFormat.parse(s);
+			d = dateFormat.parse(date);
 
 			for (int i = 0; i < folderFiles.length; i++) {
 				if (folderFiles[i].isFile()) {
@@ -138,8 +140,37 @@ public class GuiOutput {
 					}
 				}
 			}
-			if(a==false)
+			if (a == false)
 				System.out.println("Não foi encontrado nenhum ficheiro antes de " + d + " para ser apagado!\n");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void getRecentFiles(String path, String date) {
+		File folder = new File(path);
+		File[] folderFiles = folder.listFiles();
+		boolean a = false;
+		Date d;
+		try {
+			System.out.println("---HISTÓRICO DE REGRAS---");
+			d = dateFormat.parse(date);
+
+			for (int i = 0; i < folderFiles.length; i++) {
+				if (folderFiles[i].isFile()) {
+					File file = folderFiles[i];
+					long diff = file.lastModified();
+
+					if (diff > d.getTime()) {
+						a = true;
+						System.out.println("	Ficheiro existente no histórico: " + file.getName());
+					}
+				}
+			}
+			if (a == false)
+				System.out.println("Não foi encontrado nenhum ficheiro mais recente do que " + d + "\n");
+			System.out.println("---FIM DO HISTÓRICO---\n");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,8 +187,8 @@ public class GuiOutput {
 
 		// Para testar, deixar apenas 1 operacional.
 //		NewRule r = new NewRule(ruleName, metricName, comp, limits, oper);
-		GodClass r = new GodClass(metricName, comp, limits, oper);
-//		LongMethod r = new LongMethod(metricName, comp, limits, oper);
+//		GodClass r = new GodClass(metricName, comp, limits, oper);
+		LongMethod r = new LongMethod(metricName, comp, limits, oper);
 		gui.writeFile(r);
 //		Rule g1 = gui.readFile("Regra1");
 //		System.out.println("Nome da Regra guardada: " + g1.getRuleName());
