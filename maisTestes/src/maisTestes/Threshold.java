@@ -1,18 +1,14 @@
 package maisTestes;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
-
-import com.github.javaparser.StaticJavaParser;
-import com.github.javaparser.ast.CompilationUnit;
 
 import Metrics.CYCLO_method;
 import Metrics.Loc_Class;
 import Metrics.Loc_Method;
 import Metrics.Metrics;
 import Metrics.NOM_Class;
+import Metrics.Resultado;
 import Metrics.WMC_Class;
 import maisTestes.GuiOutput.comparators;
 
@@ -36,7 +32,7 @@ public class Threshold {
 		System.out.println("Threshold: " + metricName + " " + o + " " + limit);
 	}
 
-	public ArrayList<String> callMetric() throws FileNotFoundException {
+	public ArrayList<Resultado> callMetric() throws FileNotFoundException {
 		Metrics m = new Metrics(FILE_PATH);
 		if (metricName.equals("LOC_class")) {
 			Loc_Class a = new Loc_Class(m);

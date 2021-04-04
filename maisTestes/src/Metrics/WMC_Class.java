@@ -16,12 +16,16 @@ public class WMC_Class {
 	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
-	private ArrayList<String> resultados = new ArrayList<>();
-	List<ClassOrInterfaceDeclaration> contructors = new ArrayList<>();
+	private ArrayList<Resultado> resultados = new ArrayList<>();
+	private List<ClassOrInterfaceDeclaration> contructors = new ArrayList<>();
+	private String pack="";
 
 	public WMC_Class(Metrics m) {
+
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
+		
+		pack = m.getCu().getPackageDeclaration().toString();
 		contructors.add(mainClass);
 		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
 			contructors.add(nestClass);
@@ -31,6 +35,7 @@ public class WMC_Class {
 	}
 
 	public void Resolve() {
+		
 		for (ClassOrInterfaceDeclaration callableDeclaration : contructors) {
 			List<Statement> statements = callableDeclaration.findAll(Statement.class);
 			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
@@ -38,9 +43,10 @@ public class WMC_Class {
 				countStatements(statements);
 				countBinaryExpressions(binExpressions);
 			}
+			
 
-			resultados.add(callableDeclaration.getNameAsString());
-			resultados.add(Integer.toString(cyclo));
+			resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
+
 			// System.out.println("Método " + " tem complexidade " + cyclo);
 			cyclo = 1;
 
@@ -96,15 +102,16 @@ public class WMC_Class {
 	 * 
 	 * }
 	 */
-	public ArrayList<String> getResultados() {
+	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
 		WMC_Class a = new WMC_Class(new Metrics(FILE_PATH));
 		a.Resolve();
-		for (String string : a.getResultados()) {
-			System.out.println(string);
+		for (Resultado string : a.getResultados()) {
+			System.out.println(string.getPath());
+			System.out.println(string.getLinhas());
 		}
 
 	}

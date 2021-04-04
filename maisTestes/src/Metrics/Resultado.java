@@ -30,6 +30,34 @@ public class Resultado {
 	public String getPath() {
 		return path;
 	}
+	public String getPackage() {
+		String[] aux;
+		aux = path.trim().split("/");
+		String [] aux2=aux[0].trim().split(";");
+		String pack =  aux2[0].substring(9);
+		return pack;
+	}
+	public String getClasses() {
+		
+		String[] aux;
+		aux = path.trim().split("/");
+		String [] aux2=aux[1].trim().split(";");
+		
+		return aux2[0];
+	}
 	
+	public String getMethodNames() {
+		String[] aux;
+		
+		aux = path.trim().split("/");
+		System.out.println(aux[2]);
+		String [] aux2=aux[1].trim().split(";");
+		
+		return aux2[0];
+
+	}
 	
+	public static void main(String[] args) {
+		
+	}
 }
