@@ -40,7 +40,7 @@ public class Threshold implements Serializable {
 		boolean a = true;
 		if(a == true) {
 		if (metricName.equals("LOC_class")) {
-				m.locClass();
+//				m.locClass();
 			a=false;
 				//System.out.println("nome classe:" + m.getS());
 			return m.getLinhasClass();
