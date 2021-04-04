@@ -14,8 +14,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import maisTestes.GuiOutput.comparators;
-import maisTestes.GuiOutput.operators;
+import rules.GodClass;
+import rules.GuiOutput.comparators;
+import rules.GuiOutput.operators;
 
 /**
  * @author nmsidique&henry
@@ -58,7 +59,7 @@ class GodClassTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.GodClass#fuelArrays()}.
+	 * Test method for {@link rules.GodClass#fuelArrays()}.
 	 */
 	@Test
 	final void testFuelArrays() {
@@ -66,7 +67,7 @@ class GodClassTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.GodClass#GodClass(java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)}.
+	 * Test method for {@link rules.GodClass#GodClass(java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)}.
 	 */
 	@Test
 	final void testGodClass() {
@@ -74,7 +75,7 @@ class GodClassTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.GodClass#main(java.lang.String[])}.
+	 * Test method for {@link rules.GodClass#main(java.lang.String[])}.
 	 */
 	@Test
 	final void testMain() {

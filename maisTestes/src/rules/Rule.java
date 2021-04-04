@@ -1,4 +1,4 @@
-package maisTestes;
+package rules;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import javax.naming.LimitExceededException;
 
-import maisTestes.GuiOutput.comparators;
-import maisTestes.GuiOutput.operators;
+import rules.GuiOutput.comparators;
+import rules.GuiOutput.operators;
 
 public abstract class Rule implements IRule, Serializable {
 

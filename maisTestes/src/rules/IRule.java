@@ -1,4 +1,4 @@
-package maisTestes;
+package rules;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

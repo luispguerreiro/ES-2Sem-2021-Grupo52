@@ -14,8 +14,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import maisTestes.GuiOutput.comparators;
-import maisTestes.GuiOutput.operators;
+import rules.NewRule;
+import rules.GuiOutput.comparators;
+import rules.GuiOutput.operators;
 
 /**
  * @author henry&nmsidique
@@ -57,7 +58,7 @@ class NewRuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.NewRule#NewRule(java.lang.String, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)}.
+	 * Test method for {@link rules.NewRule#NewRule(java.lang.String, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)}.
 	 */
 	@Test
 	final void testNewRule() {
@@ -65,7 +66,7 @@ class NewRuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.NewRule#main(java.lang.String[])}.
+	 * Test method for {@link rules.NewRule#main(java.lang.String[])}.
 	 */
 	@Test
 	final void testMain() {

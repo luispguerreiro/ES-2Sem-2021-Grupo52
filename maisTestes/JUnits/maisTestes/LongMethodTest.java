@@ -14,8 +14,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import maisTestes.GuiOutput.comparators;
-import maisTestes.GuiOutput.operators;
+import rules.LongMethod;
+import rules.GuiOutput.comparators;
+import rules.GuiOutput.operators;
 
 /**
  * @author nmsidique @author henry
@@ -57,7 +58,7 @@ class LongMethodTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.LongMethod#fuelArrays()}.
+	 * Test method for {@link rules.LongMethod#fuelArrays()}.
 	 */
 	@Test
 	final void testFuelArrays() {
@@ -65,7 +66,7 @@ class LongMethodTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.LongMethod#LongMethod(java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)}.
+	 * Test method for {@link rules.LongMethod#LongMethod(java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)}.
 	 */
 	@Test
 	final void testLongMethod() {
@@ -73,7 +74,7 @@ class LongMethodTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.LongMethod#main(java.lang.String[])}.
+	 * Test method for {@link rules.LongMethod#main(java.lang.String[])}.
 	 */
 	@Test
 	final void testMain() {

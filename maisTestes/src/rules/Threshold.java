@@ -1,4 +1,4 @@
-package maisTestes;
+package rules;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,9 +9,8 @@ import java.util.List;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 
-import maisTestes.GuiOutput.comparators;
-//para importar os enums de outras classes
-import maisTestes.Metrics.Loc_Method;
+import rules.GuiOutput.comparators;
+import rules.Metrics.Loc_Method;
 
 public class Threshold implements Serializable {
 	

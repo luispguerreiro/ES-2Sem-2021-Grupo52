@@ -46,7 +46,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#Rule(java.lang.String, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)}.
+	 * Test method for {@link rules.Rule#Rule(java.lang.String, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)}.
 	 */
 	@Test
 	final void testRule() {
@@ -54,7 +54,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#getThresholds()}.
+	 * Test method for {@link rules.Rule#getThresholds()}.
 	 */
 	@Test
 	final void testGetThresholds() {
@@ -62,7 +62,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#createThresholds()}.
+	 * Test method for {@link rules.Rule#createThresholds()}.
 	 */
 	@Test
 	final void testCreateThresholds() {
@@ -70,7 +70,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#logic()}.
+	 * Test method for {@link rules.Rule#logic()}.
 	 */
 	@Test
 	final void testLogic() {
@@ -78,7 +78,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#and(boolean, boolean)}.
+	 * Test method for {@link rules.Rule#and(boolean, boolean)}.
 	 */
 	@Test
 	final void testAnd() {
@@ -86,7 +86,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#or(boolean, boolean)}.
+	 * Test method for {@link rules.Rule#or(boolean, boolean)}.
 	 */
 	@Test
 	final void testOr() {
@@ -94,7 +94,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#getRuleName()}.
+	 * Test method for {@link rules.Rule#getRuleName()}.
 	 */
 	@Test
 	final void testGetRuleName() {
@@ -102,7 +102,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#setRuleName(java.lang.String)}.
+	 * Test method for {@link rules.Rule#setRuleName(java.lang.String)}.
 	 */
 	@Test
 	final void testSetRuleName() {
@@ -110,7 +110,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#fuelArrays()}.
+	 * Test method for {@link rules.Rule#fuelArrays()}.
 	 */
 	@Test
 	final void testFuelArrays() {
@@ -118,7 +118,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#check()}.
+	 * Test method for {@link rules.Rule#check()}.
 	 */
 	@Test
 	final void testCheck() {
@@ -126,7 +126,7 @@ class RuleTest {
 	}
 
 	/**
-	 * Test method for {@link maisTestes.Rule#setLimits(java.util.ArrayList)}.
+	 * Test method for {@link rules.Rule#setLimits(java.util.ArrayList)}.
 	 */
 	@Test
 	final void testSetLimits() {

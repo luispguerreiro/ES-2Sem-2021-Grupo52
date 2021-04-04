@@ -1,10 +1,10 @@
-package maisTestes;
+package rules;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import maisTestes.GuiOutput.comparators;
-import maisTestes.GuiOutput.operators;
+import rules.GuiOutput.comparators;
+import rules.GuiOutput.operators;
 
 public class NewRule extends Rule {
 
