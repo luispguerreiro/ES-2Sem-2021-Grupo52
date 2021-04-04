@@ -51,7 +51,6 @@ public class Threshold {
 			return d.getResultados();
 		} else if (metricName.equals("CYCLO_method")) {
 			CYCLO_method e = new CYCLO_method(m);
-			e.Resolve();
 			return e.getResultados();
 		}
 		throw new IllegalArgumentException("Conflito ao identificar a métrica. \nTente novamente!");
