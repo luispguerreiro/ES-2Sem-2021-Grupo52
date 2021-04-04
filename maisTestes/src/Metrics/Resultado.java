@@ -41,19 +41,16 @@ public class Resultado {
 		
 		String[] aux;
 		aux = path.trim().split("/");
-		String [] aux2=aux[1].trim().split(";");
 		
-		return aux2[0];
+		
+		return aux[1];
 	}
 	
 	public String getMethodNames() {
 		String[] aux;
 		
-		aux = path.trim().split("/");
-		System.out.println(aux[2]);
-		String [] aux2=aux[1].trim().split(";");
-		
-		return aux2[0];
+		aux = path.trim().split("/");	
+		return aux[2];
 
 	}
 	
