@@ -52,10 +52,10 @@ public class Threshold {
 			return c.getResultados();
 		} else if (metricName.equals("LOC_method")) {
 			Loc_Method d = new Loc_Method(new Metrics(FILE_PATH));
-			d.getResultados();
 			return d.getResultados();
 		} else if (metricName.equals("CYCLO_method")) {
 			CYCLO_method e = new CYCLO_method(m);
+			e.Resolve();
 			return e.getResultados();
 		}
 		throw new IllegalArgumentException("Conflito ao identificar a métrica. \nTente novamente!");
