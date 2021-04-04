@@ -3,6 +3,7 @@ package rules;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import Metrics.Resultado;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
 
@@ -12,7 +13,8 @@ public class GodClass extends Rule {
 	private static final String nomClass = "NOM_class";
 	private static final String wmcClass = "WMC_class";
 	private static final String ruleName = "God_class";
-	
+	private ArrayList<Resultado> results = new ArrayList<>();
+
 	
 	public GodClass(ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
 			ArrayList<operators> oper) throws FileNotFoundException {
@@ -36,7 +38,6 @@ public class GodClass extends Rule {
 		oper.add(operators.OR);
 		//oper.add(operators.OR);
 	}
-	
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		ArrayList<String> metricName = new ArrayList<>();

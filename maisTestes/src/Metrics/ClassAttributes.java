@@ -72,7 +72,7 @@ public class ClassAttributes {
 	public List<String> getMethodsName() {
 		return methodsName;
 	}
-	
+
 	public ClassOrInterfaceDeclaration getClazz() {
 		return clazz;
 	}
