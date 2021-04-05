@@ -6,19 +6,19 @@ public class Resultado {
 	private boolean verificacao;
 	
 
-	public Resultado(String path, int linhas, boolean verificacao) {
+	public Resultado(String path, int linhas, boolean verifacao) {
 	this.path=path;
 	this.linhas=linhas;
-	this.verificacao=verificacao;
+	this.verificacao=verifacao;
 		
 	}
 	
-	public void setTrue() {
+	private void setTrue() {
 		verificacao= true;
 
 	}
 	
-	public boolean getVerificacao(){
+	private boolean getVerificacao(){
 		return verificacao;
 		
 	}
@@ -30,6 +30,31 @@ public class Resultado {
 	public String getPath() {
 		return path;
 	}
+	public String getPackage() {
+		String[] aux;
+		aux = path.trim().split("/");
+		String [] aux2=aux[0].trim().split(";");
+		String pack =  aux2[0].substring(9);
+		return pack;
+	}
+	public String getClasses() {
+		
+		String[] aux;
+		aux = path.trim().split("/");
+		
+		
+		return aux[1];
+	}
 	
+	public String getMethodNames() {
+		String[] aux;
+		
+		aux = path.trim().split("/");	
+		return aux[2];
+
+	}
 	
+	public static void main(String[] args) {
+		
+	}
 }
