@@ -1,25 +1,25 @@
 package maisTestes;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
-import com.github.javaparser.StaticJavaParser;
-import com.github.javaparser.ast.CompilationUnit;
-
+import Metrics.CYCLO_method;
+import Metrics.Loc_Class;
+import Metrics.Loc_Method;
+import Metrics.Metrics;
+import Metrics.NOM_Class;
+import Metrics.Resultado;
+import Metrics.WMC_Class;
 import maisTestes.GuiOutput.comparators;
-//para importar os enums de outras classes
-import maisTestes.Metrics.Loc_Method;
 
 public class Threshold {
 	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
+
 	public enum comparator {
 		BIGGER, SMALLER, EQUALS
 	}
-	
-//	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
 
+//	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
 
 	private String metricName;
 	private comparators o;
@@ -32,61 +32,46 @@ public class Threshold {
 		System.out.println("Threshold: " + metricName + " " + o + " " + limit);
 	}
 
-	public int callMetric() throws FileNotFoundException {
-		Metrics m = new Metrics();
+	public ArrayList<Resultado> callMetric() throws FileNotFoundException {
+		Metrics m = new Metrics(FILE_PATH);
 		if (metricName.equals("LOC_class")) {
-			m.locClass(FILE_PATH);
-			System.out.println(m.getLinhasClass());
+			Loc_Class a = new Loc_Class(m);
+			System.out.println(a.getResultados());
 			System.out.println("nome classe:" + m.getS());
-			return m.getLinhasClass();
+			return a.getResultados();
 //			return 10;
 		} else if (metricName.equals("NOM_class")) {
-//			return Metrics.nom();
-			return 20;
+			NOM_Class b = new NOM_Class(m);
+			return b.getResultados();
 		} else if (metricName.equals("WMC_class")) {
-//			return Metrics.wmc();
-			return 10;
+			WMC_Class c = new WMC_Class(m);
+			return c.getResultados();
 		} else if (metricName.equals("LOC_method")) {
-			Loc_Method l = new Loc_Method();
-			CompilationUnit cu = StaticJavaParser.parse(new File(m.getFilePath()));
-			List<String> methodNamesLines = new ArrayList<>();
-			l.visit(cu, methodNamesLines);
-			
-			//			return Metrics.locMethod();
-			return 20;
+			Loc_Method d = new Loc_Method(new Metrics(FILE_PATH));
+			return d.getResultados();
 		} else if (metricName.equals("CYCLO_method")) {
-//			return Metrics.cyclo();
-			return 10;
+			CYCLO_method e = new CYCLO_method(m);
+			return e.getResultados();
 		}
 		throw new IllegalArgumentException("Conflito ao identificar a métrica. \nTente novamente!");
 	}
-	
-	public boolean result() throws FileNotFoundException {
-		if(o == comparators.BIGGER) {
-			return isBigger();
-		}
-		if(o == comparators.EQUALS) {
-			return isEquals();
-		}
-		if(o == comparators.SMALLER) {
-			return isSmaller();
-		}
-		throw new IllegalStateException();
-	}
 
-	public boolean isBigger() throws FileNotFoundException {
-		return callMetric() > limit;
-	}
-
-	public boolean isSmaller() throws FileNotFoundException {
-		return callMetric() < limit;
-	}
-
-	public boolean isEquals() throws FileNotFoundException {
-		return callMetric() == limit;
-	}
-
-
+	/*
+	 * public boolean result() throws FileNotFoundException { if (o ==
+	 * comparators.BIGGER) { return isBigger(); } if (o == comparators.EQUALS) {
+	 * return isEquals(); } if (o == comparators.SMALLER) { return isSmaller(); }
+	 * throw new IllegalStateException(); }
+	 * 
+	 * 
+	 * public boolean isBigger() throws FileNotFoundException { return callMetric()
+	 * > limit; }
+	 * 
+	 * public boolean isSmaller() throws FileNotFoundException { return callMetric()
+	 * < limit; }
+	 * 
+	 * public boolean isEquals() throws FileNotFoundException { return callMetric()
+	 * == limit; }
+	 */
 	public int getLimit() {
 		return limit;
 	}
@@ -100,8 +85,8 @@ public class Threshold {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Threshold t =  new Threshold("LOC_method", comparators.SMALLER, 400);
-		System.out.println(t.result());
+		Threshold t = new Threshold("LOC_method", comparators.SMALLER, 400);
+		System.out.println();
 	}
 
 }

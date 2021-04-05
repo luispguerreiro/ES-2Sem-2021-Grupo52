@@ -1,46 +1,130 @@
 package Metrics;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.github.javaparser.StaticJavaParser;
-import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.ConstructorDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.expr.BinaryExpr;
+import com.github.javaparser.ast.expr.BinaryExpr.Operator;
+import com.github.javaparser.ast.stmt.Statement;
+import com.github.javaparser.ast.stmt.SwitchEntry;
+import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
 public class WMC_Class {
 
-	private static final String FILE_PATH = "C:\\Users\\luisg\\Desktop\\SourceCodeParser.java";
-//	private static final String FILE_PATH = "C:\\Users\\luisg\\Desktop\\ParsingException.java";
-	
-	private int cycloClass = 0;
-	
-	public WMC_Class(ClassOrInterfaceDeclaration c) {
-		List<ConstructorDeclaration> contructors = c.findAll(ConstructorDeclaration.class);
-		List<MethodDeclaration> methods = c.findAll(MethodDeclaration.class);
+	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
+	private List<SwitchEntry> sw;
+	private int cyclo = 1;
+	private ArrayList<Resultado> resultados = new ArrayList<>();
+	private List<ClassOrInterfaceDeclaration> contructors = new ArrayList<>();
+	private String pack = "";
 
-		for (ConstructorDeclaration cd : contructors) {
-//			new CYCLO_method(cd);
-			cycloClass += new CYCLO_method(cd).getCyclo();
+	public WMC_Class(Metrics m) {
+
+		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
+		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
+		pack = m.getCu().getPackageDeclaration().toString();
+		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
+
+		String mainClassName = mainClass.getNameAsString();
+		List<Statement> statementsmain = mainClass.findAll(Statement.class);
+		List<BinaryExpr> binExpressionsmain = mainClass.findAll(BinaryExpr.class);
+		if (!statementsmain.isEmpty() || !binExpressionsmain.isEmpty()) {
+			countStatements(statementsmain);
+			countBinaryExpressions(binExpressionsmain);
 		}
-		
-		for (MethodDeclaration m : methods) {
-//			new CYCLO_method(m);
-			cycloClass += new CYCLO_method(m).getCyclo();
+
+		resultados.add(new Resultado(pack + "/" + mainClassName + "/" + mainClass.getNameAsString(), cyclo, false));
+		cyclo = 1;
+
+		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
+			contructors.add(nestClass);
+
+			for (ClassOrInterfaceDeclaration callableDeclaration : contructors) {
+				List<Statement> statements = callableDeclaration.findAll(Statement.class);
+				List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
+				if (!statements.isEmpty() || !binExpressions.isEmpty()) {
+					countStatements(statements);
+					countBinaryExpressions(binExpressions);
+				}
+
+				resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
+
+				// System.out.println("Método " + " tem complexidade " + cyclo);
+				cyclo = 1;
+
+			}
+
 		}
-//		cycloClass -= (contructors.size() + methods.size());
-		System.out.println("Class: " + c.getNameAsString() + " tem complexidade " + cycloClass);
+
 	}
-	
+
+	public void Resolve() {
+
+		for (ClassOrInterfaceDeclaration callableDeclaration : contructors) {
+			List<Statement> statements = callableDeclaration.findAll(Statement.class);
+			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
+			if (!statements.isEmpty() || !binExpressions.isEmpty()) {
+				countStatements(statements);
+				countBinaryExpressions(binExpressions);
+			}
+
+			resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
+
+			// System.out.println("Método " + " tem complexidade " + cyclo);
+			cyclo = 1;
+
+		}
+
+	}
+
+	private void countStatements(List<Statement> statements) {
+
+		for (Statement s : statements) {
+			if (s.isContinueStmt() || s.isDoStmt() || s.isForEachStmt() || s.isForStmt() || s.isIfStmt()
+					|| s.isWhileStmt()) {
+				cyclo++;
+			}
+			if (s.isSwitchStmt()) {
+				sw = s.findAll(SwitchEntry.class);
+				for (SwitchEntry sws : sw) {
+					if (sws.getType().equals(Type.STATEMENT_GROUP) && sws.getLabels().isNonEmpty()) {
+						cyclo++;
+					}
+				}
+			}
+		}
+
+	}
+
+	private void countBinaryExpressions(List<BinaryExpr> binExpressions) {
+		for (BinaryExpr e : binExpressions) {
+			if (e.getOperator().equals(Operator.AND) || e.getOperator().equals(Operator.OR)) {
+				cyclo++;
+			}
+		}
+	}
+
+	public int getCyclo() {
+		return cyclo;
+	}
+
+	public ArrayList<Resultado> getResultados() {
+		return resultados;
+	}
+
 	public static void main(String[] args) throws FileNotFoundException {
-		CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
-		List<ClassOrInterfaceDeclaration> classes = cu.findAll(ClassOrInterfaceDeclaration.class);
-
-		for (ClassOrInterfaceDeclaration cs : classes) {
-			new WMC_Class(cs);
+		WMC_Class a = new WMC_Class(new Metrics(FILE_PATH));
+		a.Resolve();
+		for (Resultado string : a.getResultados()) {
+			// System.out.println(string.getPath());
+			System.out.println(string.getClasses());
+			System.out.println(string.getLinhas());
 		}
+
 	}
-	
+
 }
