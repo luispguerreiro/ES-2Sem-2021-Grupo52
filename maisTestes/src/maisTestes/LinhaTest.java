@@ -113,7 +113,18 @@ class LinhaTest {
 
 	@Test
 	void testToString() {
+		Linha linha = new Linha();
 		
+		linha.setPacote("pacote");
+		linha.setClasse("classe");
+		linha.setMetodo("metodo");
+		linha.setIs_God_Class(true);
+		linha.setIs_Long_Method(true);
+		
+		String string = linha.toString();
+		assertEquals(string, linha.toString());
+		
+		assertTrue(string.matches("pacote(.*)"));
 	}
 
 }
