@@ -14,7 +14,7 @@ public class Main {
 	private static final String FILE_PATH = "C:\\Users\\luisg\\Desktop\\SourceCodeParser.java";
 	private ClassOrInterfaceDeclaration mainClass;
 	private List<ClassOrInterfaceDeclaration> nestedClasses;
-	
+
 	public Main(CompilationUnit cu) {
 		listClasses(cu);
 		ClassAttributes mainClassAttributes = new ClassAttributes(mainClass);
@@ -22,13 +22,13 @@ public class Main {
 			System.out.println(mainClassMethods);
 		}
 	}
-	
+
 	private void listClasses(CompilationUnit cu) {
 		List<TypeDeclaration<?>> types = cu.getTypes();
 		nestedClasses = cu.findAll(ClassOrInterfaceDeclaration.class);
 		if (!types.isEmpty() && !types.getClass().isInterface()) {
 			for (TypeDeclaration<?> t : types) {
-				
+
 				System.out.println("Types: " + t.getNameAsString());
 				if (t.isClassOrInterfaceDeclaration()) {
 					mainClass = (ClassOrInterfaceDeclaration) t;
@@ -43,14 +43,13 @@ public class Main {
 				System.out.println("Nested class: " + mainClass.getNameAsString() + "." + nc.getName());
 //				new NOM_Class(nested);
 			}
-		}
-		else {
+		} else {
 			nestedClasses.clear();
 		}
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		CompilationUnit cu = StaticJavaParser.parse(new FileInputStream(FILE_PATH));		
+		CompilationUnit cu = StaticJavaParser.parse(new FileInputStream(FILE_PATH));
 		Main m = new Main(cu);
 	}
 
