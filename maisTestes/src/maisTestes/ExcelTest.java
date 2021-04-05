@@ -33,10 +33,9 @@ class ExcelTest {
 	final void testMain() throws FileNotFoundException {
 		Excel excel= new Excel();
 		excel.lerExcel(new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx"));
+		
 		assertNotNull(excel.getList());
 		assertEquals(247, excel.getList().size());
-		
-//		fail("Not yet implemented");
 	}
 
 }

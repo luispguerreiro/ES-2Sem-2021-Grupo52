@@ -2,6 +2,9 @@ package maisTestes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,13 +30,26 @@ class ProcuraTest {
 	}
 
 	@Test
-	void testGetProcura() {
-		fail("Not yet implemented");
+	void testGetProcura() throws FileNotFoundException {
+		Procura p = new Procura();
+		Excel excel = new Excel();
+
+		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		p.getProcura(excel.getList(), "GrammerException");
+
+		assertNotNull(p.getLista());
+		assertEquals(4, p.getLista().size());
 	}
 
 	@Test
-	void testGetLista() {
-		fail("Not yet implemented");
+	void testGetLista() throws FileNotFoundException {
+		Procura p = new Procura();
+		Excel excel = new Excel();
+
+		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		p.getProcura(excel.getList(), "GrammerException");
+		
+		assertNotNull(p.getLista());
 	}
 
 }
