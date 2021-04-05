@@ -1,6 +1,8 @@
 package maisTestes;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,12 +32,26 @@ class ExcelTest {
 	}
 
 	@Test
-	final void testMain() throws FileNotFoundException {
-		Excel excel= new Excel();
-		excel.lerExcel(new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx"));
-		
+	void testLerExcel() throws FileNotFoundException {
+		Excel excel = new Excel();
+		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+
 		assertNotNull(excel.getList());
 		assertEquals(247, excel.getList().size());
+	}
+
+	@Test
+	void testGetList() throws FileNotFoundException {
+		Excel excel = new Excel();
+		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+
+		assertNotNull(excel.getList());
+		assertFalse(excel.getList().isEmpty());
+	}
+
+	@Test
+	void testMain() throws FileNotFoundException {
+		testLerExcel();
 	}
 
 }
