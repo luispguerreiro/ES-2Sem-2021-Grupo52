@@ -4,7 +4,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.expr.BinaryExpr.Operator;
 import com.github.javaparser.ast.stmt.Statement;
@@ -16,21 +18,52 @@ public class WMC_Class {
 	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
-	private ArrayList<String> resultados = new ArrayList<>();
-	List<ClassOrInterfaceDeclaration> contructors = new ArrayList<>();
+	private ArrayList<Resultado> resultados = new ArrayList<>();
+	private List<ClassOrInterfaceDeclaration> contructors = new ArrayList<>();
+	private String pack = "";
 
 	public WMC_Class(Metrics m) {
+
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
-		contructors.add(mainClass);
+		pack = m.getCu().getPackageDeclaration().toString();
+		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
+
+		String mainClassName = mainClass.getNameAsString();
+		List<Statement> statementsmain = mainClass.findAll(Statement.class);
+		List<BinaryExpr> binExpressionsmain = mainClass.findAll(BinaryExpr.class);
+		if (!statementsmain.isEmpty() || !binExpressionsmain.isEmpty()) {
+			countStatements(statementsmain);
+			countBinaryExpressions(binExpressionsmain);
+		}
+
+		resultados.add(new Resultado(pack + "/" + mainClassName + "/" + mainClass.getNameAsString(), cyclo, false));
+		cyclo = 1;
+
 		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
 			contructors.add(nestClass);
+
+			for (ClassOrInterfaceDeclaration callableDeclaration : contructors) {
+				List<Statement> statements = callableDeclaration.findAll(Statement.class);
+				List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
+				if (!statements.isEmpty() || !binExpressions.isEmpty()) {
+					countStatements(statements);
+					countBinaryExpressions(binExpressions);
+				}
+
+				resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
+
+				// System.out.println("Método " + " tem complexidade " + cyclo);
+				cyclo = 1;
+
+			}
 
 		}
 
 	}
 
 	public void Resolve() {
+
 		for (ClassOrInterfaceDeclaration callableDeclaration : contructors) {
 			List<Statement> statements = callableDeclaration.findAll(Statement.class);
 			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
@@ -39,8 +72,8 @@ public class WMC_Class {
 				countBinaryExpressions(binExpressions);
 			}
 
-			resultados.add(callableDeclaration.getNameAsString());
-			resultados.add(Integer.toString(cyclo));
+			resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
+
 			// System.out.println("Método " + " tem complexidade " + cyclo);
 			cyclo = 1;
 
@@ -79,32 +112,17 @@ public class WMC_Class {
 		return cyclo;
 	}
 
-	/*
-	 * public void Resolve() { for (CallableDeclaration callableDeclaration :
-	 * contructorsNestClass) { List<Statement> statements =
-	 * callableDeclaration.findAll(Statement.class); List<BinaryExpr> binExpressions
-	 * = callableDeclaration.findAll(BinaryExpr.class); if (!statements.isEmpty() ||
-	 * !binExpressions.isEmpty()) { countStatements(statements);
-	 * countBinaryExpressions(binExpressions); }
-	 * resultados.add(callableDeclaration.getNameAsString());
-	 * resultados.add(Integer.toString(cyclo));
-	 * 
-	 * System.out.println("Método " + callableDeclaration.getNameAsString() +
-	 * " tem complexidade " + cyclo);
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
-	public ArrayList<String> getResultados() {
+	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
 		WMC_Class a = new WMC_Class(new Metrics(FILE_PATH));
 		a.Resolve();
-		for (String string : a.getResultados()) {
-			System.out.println(string);
+		for (Resultado string : a.getResultados()) {
+			// System.out.println(string.getPath());
+			System.out.println(string.getClasses());
+			System.out.println(string.getLinhas());
 		}
 
 	}

@@ -13,10 +13,11 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
-
-	public static void main(String[] args) throws FileNotFoundException {
+	
+	ArrayList<Linha> list;
+	
+	public void lerExcel(File file) throws FileNotFoundException{
 		try {
-			File file = new File("Code_Smells.xlsx");
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sheet = wb.getSheetAt(0);
@@ -24,7 +25,7 @@ public class Excel {
 			Iterator<Row> itr = sheet.iterator();
 			itr.next();
 			
-			ArrayList<Linha> list = new ArrayList<Linha>();
+			list = new ArrayList<Linha>();
 			Linha linha;
 
 			while (itr.hasNext()) {
@@ -60,11 +61,11 @@ public class Excel {
 				list.add(linha);
 			}
 
-			Procura p = new Procura();
-			p.getProcura(list, "GrammerException");
+//			Procura p = new Procura();
+//			p.getProcura(list, "GrammerException");
 
-			for (Linha l : p.getLista())
-				System.out.println(l.toString());
+//			for (Linha l : p.getLista())
+//				System.out.println(l.toString());
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -72,6 +73,16 @@ public class Excel {
 			System.out.println("Ficheiro inexistente");
 
 		}
+	}
+	public ArrayList<Linha> getList() {
+		return list;
+	}
+	
+		
+
+	public static void main(String[] args) throws FileNotFoundException {
+		Excel excel= new Excel();
+		excel.lerExcel(new File("Code_Smells.xlsx"));
 
 	}
 

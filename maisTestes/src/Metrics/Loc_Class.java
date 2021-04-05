@@ -12,11 +12,12 @@ public class Loc_Class {
 	private int linhasClass;
 
 	private String s = new String();
-	ArrayList<String> resultados = new ArrayList<>();
+	ArrayList<Resultado> resultados = new ArrayList<>();
 
 	public Loc_Class(Metrics m) {
 
 		CompilationUnit cu2 = m.getCu();
+		String pack = cu2.getPackageDeclaration().toString();
 
 		List<TypeDeclaration> nodes = cu2.findAll(TypeDeclaration.class);
 		// System.out.println(nodes.size());
@@ -31,8 +32,9 @@ public class Loc_Class {
 				s = n.getNameAsString();
 				// System.out.println("O nome da classe é: " + n.getNameAsString());
 				// System.out.println("o numero de linhas da classe é: " + linhasClass);
-				resultados.add(s);
-				resultados.add(Integer.toString(linhasClass));
+				//resultados.add(s);
+				//resultados.add(Integer.toString(linhasClass));
+				resultados.add(new Resultado(pack + "/" + s , linhasClass,false));
 				// System.out.println(statements.size() + binExpressions.size());
 				// System.out.println(statements.size());
 				// System.out.println(binExpressions.size());
@@ -40,15 +42,16 @@ public class Loc_Class {
 		}
 	}
 
-	public ArrayList<String> getResultados() {
+	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
 		Loc_Class a = new Loc_Class(new Metrics(FILE_PATH));
-		for (String string : a.getResultados()) {
-			System.out.println(string);
-
+		for (Resultado string : a.getResultados()) {
+			//System.out.println(string.getPath());
+			//System.out.println(string.getLinhas());
+			System.out.println(string.getClasses());
 		}
 	}
 }

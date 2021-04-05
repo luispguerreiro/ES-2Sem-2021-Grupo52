@@ -43,7 +43,7 @@ public class Metrics {
 		return nestedClasses;
 	}
 
-	public static CompilationUnit getCu() {
+	public CompilationUnit getCu() {
 		return cu;
 	}
 

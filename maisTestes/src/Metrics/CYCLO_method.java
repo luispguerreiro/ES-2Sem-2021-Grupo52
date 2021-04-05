@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.expr.BinaryExpr.Operator;
 import com.github.javaparser.ast.stmt.Statement;
@@ -16,38 +17,71 @@ public class CYCLO_method {
 	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
-	private ArrayList<String> resultados = new ArrayList<>();
-	List<CallableDeclaration> contructors;
+	private ArrayList<Resultado> resultados = new ArrayList<>();
+	private String pack;
 
 	public CYCLO_method(Metrics m) {
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
-		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
-		this.contructors = mainClass.findAll(CallableDeclaration.class);
-		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
-
-			List<CallableDeclaration> contructorsNestClass = nestClass.findAll(CallableDeclaration.class);
-			for (CallableDeclaration C : contructorsNestClass) {
-				contructors.add(C);
-
-			}
-
-		}
-
-	}
-
-	public void Resolve() {
-		for (CallableDeclaration callableDeclaration : contructors) {
+		pack = m.getCu().getPackageDeclaration().toString();
+		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
+		for (CallableDeclaration callableDeclaration : mainClassMet) {
+			String mainClassName = mainClass.getNameAsString();
 			List<Statement> statements = callableDeclaration.findAll(Statement.class);
 			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
 			if (!statements.isEmpty() || !binExpressions.isEmpty()) {
 				countStatements(statements);
 				countBinaryExpressions(binExpressions);
 			}
-			resultados.add(callableDeclaration.getNameAsString());
-			resultados.add(Integer.toString(cyclo));
+			List<Parameter> par = callableDeclaration.getParameters();
+			String parameters = "";
+			if (!par.isEmpty()) {
+				for (Parameter p : par) {
+					parameters += p.getType().toString();
+					if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
+						parameters += ",";
+					}
+				}
+			}
 
-			//System.out.println("Método " + callableDeclaration.getNameAsString() + " tem complexidade " + cyclo);
+			resultados.add(new Resultado(pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString() + "("
+					+ parameters + ")" + "/", cyclo, false));
 			cyclo = 1;
+		}
+
+		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
+		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
+			String NestClassNames = nestClass.getNameAsString();
+			List<CallableDeclaration> contructorsNestClass = nestClass.findAll(CallableDeclaration.class);
+			for (CallableDeclaration c : contructorsNestClass) {
+
+				List<Statement> statements = c.findAll(Statement.class);
+				List<BinaryExpr> binExpressions = c.findAll(BinaryExpr.class);
+				if (!statements.isEmpty() || !binExpressions.isEmpty()) {
+					countStatements(statements);
+					countBinaryExpressions(binExpressions);
+				}
+				List<Parameter> par = c.getParameters();
+				String parameters = "";
+				if (!par.isEmpty()) {
+					for (Parameter p : par) {
+						parameters += p.getType().toString();
+						if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
+							parameters += ",";
+						}
+
+					}
+				}
+
+				resultados.add(new Resultado(
+						pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/", cyclo,
+						false));
+				// resultados.add(callableDeclaration.getNameAsString());
+				// resultados.add(Integer.toString(cyclo));
+
+				// System.out.println("Método " + callableDeclaration.getNameAsString() + " tem
+				// complexidade " + cyclo);
+				cyclo = 1;
+			}
 		}
 	}
 
@@ -81,21 +115,24 @@ public class CYCLO_method {
 	public int getCyclo() {
 		return cyclo;
 	}
-	
-	public ArrayList<String> getResultados() {
+
+	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
+
 	public static void main(String[] args) throws Exception {
 
 		// CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
 
-		CYCLO_method a =  new CYCLO_method(new Metrics(FILE_PATH));
-		a.Resolve();
-		for (String string : a.getResultados()) {
-			System.out.println(string);
+		CYCLO_method a = new CYCLO_method(new Metrics(FILE_PATH));
+		// a.Resolve();
+		for (Resultado string : a.getResultados()) {
+			// System.out.println(string.getPath());
+			System.out.println(string.getMethodNames());
+			System.out.println(string.getLinhas());
+//System.out.println(string.getClasses());
 		}
-		
-		
+
 		;
 	}
 

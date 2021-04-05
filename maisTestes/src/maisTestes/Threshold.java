@@ -1,18 +1,24 @@
 package maisTestes;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-import com.github.javaparser.StaticJavaParser;
-import com.github.javaparser.ast.CompilationUnit;
-
+<<<<<<< HEAD
 import rules.GuiOutput;
 import rules.Metrics;
 import rules.GuiOutput.comparators;
 import rules.Metrics.Loc_Method;
+=======
+import Metrics.CYCLO_method;
+import Metrics.Loc_Class;
+import Metrics.Loc_Method;
+import Metrics.Metrics;
+import Metrics.NOM_Class;
+import Metrics.Resultado;
+import Metrics.WMC_Class;
+import maisTestes.GuiOutput.comparators;
+>>>>>>> branch 'main' of https://github.com/luispguerreiro/ES-2Sem-2021-Grupo52
 
 public class Threshold implements Serializable {
 	
@@ -35,11 +41,16 @@ public class Threshold implements Serializable {
 		System.out.println("Threshold: " + metricName + " " + o + " " + limit);
 	}
 
+<<<<<<< HEAD
 	public int callMetric() throws FileNotFoundException  {
 		Metrics m = new Metrics();
 //		try {
 		boolean a = true;
 		if(a == true) {
+=======
+	public ArrayList<Resultado> callMetric() throws FileNotFoundException {
+		Metrics m = new Metrics(FILE_PATH);
+>>>>>>> branch 'main' of https://github.com/luispguerreiro/ES-2Sem-2021-Grupo52
 		if (metricName.equals("LOC_class")) {
 //				m.locClass();
 			a=false;
@@ -54,6 +65,7 @@ public class Threshold implements Serializable {
 //			return Metrics.wmc();
 			return 10;
 		} else if (metricName.equals("LOC_method")) {
+<<<<<<< HEAD
 			Loc_Method l = new Loc_Method();
 			CompilationUnit cu = StaticJavaParser.parse(new File(m.getFilePath()));
 			List<String> methodNamesLines = new ArrayList<>();
@@ -61,6 +73,10 @@ public class Threshold implements Serializable {
 			
 			//			return Metrics.locMethod();
 			return 20;
+=======
+			Loc_Method d = new Loc_Method(new Metrics(FILE_PATH));
+			return d.getResultados();
+>>>>>>> branch 'main' of https://github.com/luispguerreiro/ES-2Sem-2021-Grupo52
 		} else if (metricName.equals("CYCLO_method")) {
 //			return Metrics.cyclo();
 			return 10;
