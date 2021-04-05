@@ -55,12 +55,7 @@ public abstract class Rule implements IRule, Serializable {
 		for (int i = 0; i < NUM_METRICS; i++) {
 			Threshold t = new Threshold(metricName.get(i), comp.get(i), limits.get(i));
 			thresholds.add(t);
-//			t.result();
-////			threshResults.add(t.getBoolArray().);
-//			threshResults = t.getBoolArray();
-//			System.out.println("-->Resultado de metrica Threshold: " + t.result() );
-			calculateThresholds(t);
-			logic();
+			
 		}
 	}
 	
