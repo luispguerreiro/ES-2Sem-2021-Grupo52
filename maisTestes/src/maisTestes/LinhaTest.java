@@ -28,57 +28,77 @@ class LinhaTest {
 
 	@Test
 	void testSetPacote() {
-		fail("Not yet implemented");
+		Linha linha = new Linha();
+		linha.setPacote("pacote");
+		
+		assertNotNull(linha.getPacote());
+		assertEquals("pacote", linha.getPacote());
 	}
 
 	@Test
 	void testSetClasse() {
-		fail("Not yet implemented");
+		Linha linha = new Linha();
+		linha.setClasse("classe");
+		
+		assertNotNull(linha.getClasse());
+		assertEquals("classe", linha.getClasse());
 	}
 
 	@Test
 	void testSetMetodo() {
-		fail("Not yet implemented");
+		Linha linha = new Linha();
+		linha.setMetodo("metodo");
+		
+		assertNotNull(linha.getMetodo());
+		assertEquals("metodo", linha.getMetodo());
 	}
 
 	@Test
 	void testSetIs_God_Class() {
-		fail("Not yet implemented");
+		Linha linha = new Linha();
+		linha.setIs_God_Class(true);
+		
+		assertNotNull(linha.getis_God_Class());
+		assertEquals(true, linha.getis_God_Class());
 	}
 
 	@Test
 	void testSetIs_Long_Method() {
-		fail("Not yet implemented");
+		Linha linha = new Linha();
+		linha.setIs_Long_Method(true);
+		
+		assertNotNull(linha.getis_Long_Method());
+		assertEquals(true, linha.getis_Long_Method());
 	}
 
 	@Test
 	void testGetPacote() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testGetClasse() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testGetMetodo() {
-		fail("Not yet implemented");
+	
 	}
 
 	@Test
 	void testGetis_God_Class() {
-		fail("Not yet implemented");
+	
 	}
 
 	@Test
 	void testGetis_Long_Method() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test
 	void testToString() {
-		fail("Not yet implemented");
+		
 	}
 
 }
