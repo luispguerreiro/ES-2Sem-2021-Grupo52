@@ -73,27 +73,42 @@ class LinhaTest {
 
 	@Test
 	void testGetPacote() {
+		Linha linha = new Linha();
+		linha.setPacote("pacote");
 		
+		assertNotNull(linha.getPacote());
 	}
 
 	@Test
 	void testGetClasse() {
+		Linha linha = new Linha();
+		linha.setClasse("classe");
 		
+		assertNotNull(linha.getClasse());
 	}
 
 	@Test
 	void testGetMetodo() {
-	
+		Linha linha = new Linha();
+		linha.setMetodo("metodo");
+		
+		assertNotNull(linha.getMetodo());
 	}
 
 	@Test
 	void testGetis_God_Class() {
-	
+		Linha linha = new Linha();
+		linha.setIs_God_Class(true);
+		
+		assertNotNull(linha.getis_God_Class());
 	}
 
 	@Test
 	void testGetis_Long_Method() {
+		Linha linha = new Linha();
+		linha.setIs_Long_Method(true);
 		
+		assertNotNull(linha.getis_Long_Method());
 	}
 
 	@Test
