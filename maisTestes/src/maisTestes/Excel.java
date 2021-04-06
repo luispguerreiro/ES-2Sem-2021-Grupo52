@@ -70,7 +70,10 @@ public class Excel {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Excel excel = new Excel();
 		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
-
+		
+		for (Linha linha : excel.getList()) {
+			System.out.println(linha.toString());
+		}
 	}
 
 }
