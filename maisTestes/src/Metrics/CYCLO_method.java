@@ -44,7 +44,7 @@ public class CYCLO_method {
 			}
 
 			resultados.add(new Resultado(pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString() + "("
-					+ parameters + ")" + "/", cyclo, false));
+					+ parameters + ")" , cyclo, false));
 			cyclo = 1;
 		}
 
@@ -126,6 +126,7 @@ public class CYCLO_method {
 
 		CYCLO_method a = new CYCLO_method(new Metrics(FILE_PATH));
 		// a.Resolve();
+		System.out.println(a.getResultados().size());
 		for (Resultado string : a.getResultados()) {
 			// System.out.println(string.getPath());
 			System.out.println(string.getMethodNames());
