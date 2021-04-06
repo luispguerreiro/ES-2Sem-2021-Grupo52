@@ -36,7 +36,10 @@ public class Resultado {
 		String [] aux2=aux[0].trim().split(";");
 		String pack =  aux2[0].substring(9);
 		String[] packf = pack.split(" "); 
+		if(packf[0].equals("empty"))
+			return " ";
 		return packf[1];
+//		return pack;
 	}
 	public String getClasses() {
 		
