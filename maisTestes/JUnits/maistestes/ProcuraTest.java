@@ -1,4 +1,4 @@
-package maisTestes;
+package maistestes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
