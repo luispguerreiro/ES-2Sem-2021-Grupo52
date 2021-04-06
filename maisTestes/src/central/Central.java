@@ -30,8 +30,9 @@ public class Central {
 	// File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de
 	// Trabalho\\jasml_metrics.xlsx"); // vai ser o nome
 	private String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes";
-	private static final String FILE_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\SourceCodeParser.java";
-	private File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // vai ser o nome
+	private String FILE_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\SourceCodeParser.java";
+	private File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // vai ser o
+																											// nome
 	// da
 	// pasta"_metric"
 	private Loc_Method locMethod;
@@ -147,10 +148,22 @@ public class Central {
 	public String getFlePath() {
 		return FILE_PATH;
 	}
-	
-	public File getFile(){
-		return 	file;
-		}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setSourcePath(String SRC_PATH) {
+		this.SRC_PATH = SRC_PATH;
+	}
+
+	public void setFilePath(String FILE_PATH) {
+		this.FILE_PATH = FILE_PATH;
+	}
+
+	public void setFile(File f) {
+		this.file = f;
+	}
 
 	public static void main(String[] args) throws IOException {
 		Central c = new Central();
