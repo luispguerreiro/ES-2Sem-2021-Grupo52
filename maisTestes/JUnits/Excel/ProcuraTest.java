@@ -1,8 +1,7 @@
-package maisTestes;
+package Excel;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,7 +12,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ExcelTest {
+import maisTestes.Excel;
+import maisTestes.Procura;
+
+class ProcuraTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,30 +34,28 @@ class ExcelTest {
 	}
 
 	@Test
-	void testLerExcel() throws FileNotFoundException, IOException {
+	void testGetProcura() throws FileNotFoundException, IOException {
+		Procura p = new Procura();
 		Excel excel = new Excel();
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
 
-		assertNotNull(excel.getList());
-		assertEquals(247, excel.getList().size());
+		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		p.getProcura(excel.getList(), "GrammerException");
+
+		assertNotNull(p.getLista());
+		assertEquals(4, p.getLista().size());
+		assertFalse(p.getLista().isEmpty());
 	}
 
 	@Test
-	void testGetList() throws FileNotFoundException, IOException {
+	void testGetLista() throws FileNotFoundException, IOException {
+		Procura p = new Procura();
 		Excel excel = new Excel();
+
 		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		p.getProcura(excel.getList(), "GrammerException");
 
-		assertNotNull(excel.getList());
-		assertFalse(excel.getList().isEmpty());
-	}
-
-	@Test
-	void testMain() throws FileNotFoundException, IOException {
-		Excel excel = new Excel();
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
-
-		assertNotNull(excel.getList());
-		assertEquals(247, excel.getList().size());
+		assertNotNull(p.getLista());
+		assertFalse(p.getLista().isEmpty());
 	}
 
 }
