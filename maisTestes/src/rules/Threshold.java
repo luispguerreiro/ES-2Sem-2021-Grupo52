@@ -20,7 +20,7 @@ public class Threshold implements Serializable {
 	private comparators o;
 	private int limit;
 
-	private ArrayList<String> resultados = new ArrayList<>(); // vai ser ArrayList<Resultado>
+	private ArrayList<Resultado> resultados = new ArrayList<>(); // vai ser ArrayList<Resultado>
 
 	public Threshold(String metricName, comparators o, int limit) throws FileNotFoundException {
 		this.metricName = metricName;
@@ -77,7 +77,7 @@ public class Threshold implements Serializable {
 		return metricName;
 	}
 
-	public ArrayList<String> getResultados() {
+	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
 

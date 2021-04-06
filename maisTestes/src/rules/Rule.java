@@ -61,7 +61,7 @@ public abstract class Rule implements IRule, Serializable {
 	
 	public void calculateThresholds(Threshold t) throws FileNotFoundException{
 //		threshResults.addAll(t.result());
-		threshResults.addAll(t.result());
+//		threshResults.addAll(t.result());
 		for (int i = 0; i < threshResults.size(); i++) {
 			System.out.println("-->Resultado de metrica Threshold: " + threshResults.get(i));
 		}
