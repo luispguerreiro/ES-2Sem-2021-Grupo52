@@ -3,8 +3,12 @@
  */
 package central;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.File;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -12,18 +16,26 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import maisTestes.Excel;
+
 /**
  * @author nmsid & henry
  *
  */
 class CentralTest {
 	static Central c;
+	static File file;
+	Sheet sheet;
+	Excel excel;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		c= new Central();
+		file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	
 	}
 
 	/**
@@ -60,7 +72,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testWriteExcel() {
-		fail("Not yet implemented"); // TODO
+		
 	}
 
 	/**
@@ -68,7 +80,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testWriteClassExcel() {
-		fail("Not yet implemented"); // TODO
+		Row cabecalho= sheet.createRow(0);
+		Assertions.assertNotNull(cabecalho);
 	}
 
 	/**
