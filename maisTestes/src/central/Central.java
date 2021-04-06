@@ -23,9 +23,16 @@ import Metrics.WMC_Class;
 
 public class Central {
 
-	private String SRC_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\miniJasml";
-	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\SourceCodeParser.java";
-	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // vai ser o nome
+	// private String SRC_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de
+	// Trabalho\\miniJasml";
+	// private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente
+	// de Trabalho\\SourceCodeParser.java";
+	// File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de
+	// Trabalho\\jasml_metrics.xlsx"); // vai ser o nome
+	private String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes";
+	private String FILE_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\SourceCodeParser.java";
+	private File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // vai ser o
+																											// nome
 	// da
 	// pasta"_metric"
 	private Loc_Method locMethod;
@@ -67,7 +74,7 @@ public class Central {
 		int rowCount = 1;
 		int k = 0;
 		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
-			
+
 			Row row = sheet.createRow(++separador);
 			int colCount = 0;
 			Cell pack = row.createCell(++colCount);
@@ -81,11 +88,11 @@ public class Central {
 			pack.setCellValue(locMethod.getResultados().get(i).getPackage());
 			classes.setCellValue(locMethod.getResultados().get(i).getClasses());
 			methods.setCellValue(locMethod.getResultados().get(i).getMethodNames());
-			
 
 			if (!(cycloMethod.getResultados().get(i).getClasses()
-					.equals(cycloMethod.getResultados().get(k).getClasses())) && k<nomClass.getResultados().size()-1) {
-				System.out.println( i +" "+k );
+					.equals(cycloMethod.getResultados().get(k).getClasses()))
+					&& k < nomClass.getResultados().size() - 1) {
+				System.out.println(i + " " + k);
 				k++;
 			}
 
@@ -95,7 +102,6 @@ public class Central {
 
 			cell7.setCellValue(locMethod.getResultados().get(i).getLinhas());
 			cell8.setCellValue(cycloMethod.getResultados().get(i).getLinhas());
-
 
 			Cell methodID = row.createCell(0);
 			methodID.setCellValue(separador);
@@ -133,6 +139,30 @@ public class Central {
 			cell.setCellValue(s);
 			cell.setCellStyle(style);
 		}
+	}
+
+	public String getSourcePath() {
+		return SRC_PATH;
+	}
+
+	public String getFlePath() {
+		return FILE_PATH;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setSourcePath(String SRC_PATH) {
+		this.SRC_PATH = SRC_PATH;
+	}
+
+	public void setFilePath(String FILE_PATH) {
+		this.FILE_PATH = FILE_PATH;
+	}
+
+	public void setFile(File f) {
+		this.file = f;
 	}
 
 	public static void main(String[] args) throws IOException {
