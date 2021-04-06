@@ -60,6 +60,7 @@ class LinhaTest {
 		
 		assertNotNull(linha.getis_God_Class());
 		assertEquals(true, linha.getis_God_Class());
+		assertTrue(linha.getis_God_Class());
 	}
 
 	@Test
@@ -69,6 +70,7 @@ class LinhaTest {
 		
 		assertNotNull(linha.getis_Long_Method());
 		assertEquals(true, linha.getis_Long_Method());
+		assertTrue(linha.getis_Long_Method());
 	}
 
 	@Test
@@ -77,6 +79,7 @@ class LinhaTest {
 		linha.setPacote("pacote");
 		
 		assertNotNull(linha.getPacote());
+		assertEquals("pacote", linha.getPacote());
 	}
 
 	@Test
@@ -85,6 +88,7 @@ class LinhaTest {
 		linha.setClasse("classe");
 		
 		assertNotNull(linha.getClasse());
+		assertEquals("classe", linha.getClasse());
 	}
 
 	@Test
@@ -93,6 +97,7 @@ class LinhaTest {
 		linha.setMetodo("metodo");
 		
 		assertNotNull(linha.getMetodo());
+		assertEquals("metodo", linha.getMetodo());
 	}
 
 	@Test
@@ -101,6 +106,7 @@ class LinhaTest {
 		linha.setIs_God_Class(true);
 		
 		assertNotNull(linha.getis_God_Class());
+		assertTrue(linha.getis_God_Class());
 	}
 
 	@Test
@@ -109,6 +115,7 @@ class LinhaTest {
 		linha.setIs_Long_Method(true);
 		
 		assertNotNull(linha.getis_Long_Method());
+		assertTrue(linha.getis_Long_Method());
 	}
 
 	@Test
@@ -122,9 +129,10 @@ class LinhaTest {
 		linha.setIs_Long_Method(true);
 		
 		String string = linha.toString();
-		assertEquals(string, linha.toString());
 		
+		assertEquals(string, linha.toString());
 		assertTrue(string.matches("pacote(.*)"));
+		assertTrue(string.contains("pacote classe metodo"));
 	}
 
 }

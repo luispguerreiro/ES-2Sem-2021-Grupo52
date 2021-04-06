@@ -13,10 +13,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Excel {
-	
+
 	ArrayList<Linha> list;
-	
-	public void lerExcel(File file) throws FileNotFoundException{
+
+	public void lerExcel(File file) throws FileNotFoundException {
 		try {
 			FileInputStream fis = new FileInputStream(file);
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -24,7 +24,7 @@ public class Excel {
 
 			Iterator<Row> itr = sheet.iterator();
 			itr.next();
-			
+
 			list = new ArrayList<Linha>();
 			Linha linha;
 
@@ -74,14 +74,13 @@ public class Excel {
 
 		}
 	}
+
 	public ArrayList<Linha> getList() {
 		return list;
 	}
-	
-		
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Excel excel= new Excel();
+		Excel excel = new Excel();
 		excel.lerExcel(new File("Code_Smells.xlsx"));
 
 	}

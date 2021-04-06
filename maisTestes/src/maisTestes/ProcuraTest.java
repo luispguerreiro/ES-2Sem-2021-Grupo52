@@ -39,6 +39,7 @@ class ProcuraTest {
 
 		assertNotNull(p.getLista());
 		assertEquals(4, p.getLista().size());
+		assertFalse(p.getLista().isEmpty());
 	}
 
 	@Test
@@ -48,8 +49,9 @@ class ProcuraTest {
 
 		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
 		p.getProcura(excel.getList(), "GrammerException");
-		
+
 		assertNotNull(p.getLista());
+		assertFalse(p.getLista().isEmpty());
 	}
 
 }
