@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -30,7 +31,7 @@ class ProcuraTest {
 	}
 
 	@Test
-	void testGetProcura() throws FileNotFoundException {
+	void testGetProcura() throws FileNotFoundException, IOException {
 		Procura p = new Procura();
 		Excel excel = new Excel();
 
@@ -43,7 +44,7 @@ class ProcuraTest {
 	}
 
 	@Test
-	void testGetLista() throws FileNotFoundException {
+	void testGetLista() throws FileNotFoundException, IOException {
 		Procura p = new Procura();
 		Excel excel = new Excel();
 
