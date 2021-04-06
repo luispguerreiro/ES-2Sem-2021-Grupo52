@@ -1,4 +1,4 @@
-package Metrics;
+ package Metrics;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -12,14 +12,16 @@ public class NOM_Class {
 
 //	private static final String FILE_PATH = "C:\\Users\\luisg\\Desktop\\SourceCodeParser.java";
 	private int numOfMethods = 0;
-
-	ArrayList<String> resultados = new ArrayList<>();
+	
+	ArrayList<Resultado> resultados = new ArrayList<>();
 
 	public NOM_Class(Metrics m) {
+		String pack = m.getCu().getPackageDeclaration().toString();
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		numOfMethods += mainClass.getConstructors().size() + mainClass.getMethods().size();
-		resultados.add(mainClass.getNameAsString());
-		resultados.add(Integer.toString(numOfMethods));
+		//resultados.add(mainClass.getNameAsString());
+	//	resultados.add(Integer.toString(numOfMethods));
+		resultados.add(new Resultado(pack + "/" + mainClass.getNameAsString() , numOfMethods,false));
 		// System.out.println(mainClass.getNameAsString());
 		// System.out.println(numOfMethods);
 		numOfMethods = 0;
@@ -28,8 +30,9 @@ public class NOM_Class {
 			List<ConstructorDeclaration> contructors = c.getConstructors();
 			List<MethodDeclaration> methods = c.getMethods();
 			numOfMethods += contructors.size() + methods.size();
-			resultados.add(c.getNameAsString());
-			resultados.add(Integer.toString(numOfMethods));
+			//resultados.add(c.getNameAsString());
+		//	resultados.add(Integer.toString(numOfMethods));
+			resultados.add(new Resultado(pack + "/" + c.getNameAsString() , numOfMethods,false));
 			// System.out.println("Class " + c.getNameAsExpression() + " tem " +
 			// numOfMethods + " métodos");
 
@@ -46,15 +49,16 @@ public class NOM_Class {
 	 * // System.out.println("Métodos: " + m.getDeclarationAsString(false, false, //
 	 * true)); }
 	 */
-	public ArrayList<String> getResultados() {
+	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
 
 	public static void main(String[] args) {
 		try {
 			NOM_Class a = new NOM_Class(new Metrics("C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java"));
-			for (String string : a.getResultados()) {
-				System.out.println(string);
+			for (Resultado string : a.getResultados()) {
+				System.out.println(string.getPath());
+				System.out.println(string.getLinhas());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
