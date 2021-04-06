@@ -61,12 +61,6 @@ public class Excel {
 			list.add(linha);
 		}
 
-//			Procura p = new Procura();
-//			p.getProcura(list, "GrammerException");
-
-//			for (Linha l : p.getLista())
-//				System.out.println(l.toString());
-
 	}
 
 	public ArrayList<Linha> getList() {
