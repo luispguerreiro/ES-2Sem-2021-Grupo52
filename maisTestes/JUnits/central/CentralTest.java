@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,12 +17,13 @@ import org.junit.jupiter.api.Test;
  *
  */
 class CentralTest {
-
+	static Central c;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		c= new Central();
 	}
 
 	/**
@@ -50,7 +52,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testCentral() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertNotNull(c);
 	}
 
 	/**
