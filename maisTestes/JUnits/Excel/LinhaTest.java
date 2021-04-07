@@ -108,5 +108,5 @@ class LinhaTest {
 		assertTrue(string.matches("pacote(.*)"));
 		assertTrue(string.contains("pacote classe metodo"));
 	}
-
+	
 }

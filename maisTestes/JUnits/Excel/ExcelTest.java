@@ -26,6 +26,7 @@ class ExcelTest {
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
+	
 	}
 
 	@BeforeEach
@@ -38,7 +39,6 @@ class ExcelTest {
 
 	@Test
 	void testLerExcel() throws FileNotFoundException, IOException {
-		
 
 		assertNotNull(excel.getList());
 		assertEquals(247, excel.getList().size());

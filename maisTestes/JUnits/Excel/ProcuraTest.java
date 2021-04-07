@@ -52,5 +52,4 @@ class ProcuraTest {
 		assertNotNull(p.getLista());
 		assertFalse(p.getLista().isEmpty());
 	}
-
 }
