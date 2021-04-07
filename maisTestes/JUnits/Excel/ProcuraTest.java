@@ -16,9 +16,16 @@ import maisTestes.Excel;
 import maisTestes.Procura;
 
 class ProcuraTest {
+	static Procura p;
+	static Excel excel;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		p = new Procura();
+		excel = new Excel();
+
+		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		p.getProcura(excel.getList(), "GrammerException");
 	}
 
 	@AfterAll
@@ -35,12 +42,6 @@ class ProcuraTest {
 
 	@Test
 	void testGetProcura() throws FileNotFoundException, IOException {
-		Procura p = new Procura();
-		Excel excel = new Excel();
-
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
-		p.getProcura(excel.getList(), "GrammerException");
-
 		assertNotNull(p.getLista());
 		assertEquals(4, p.getLista().size());
 		assertFalse(p.getLista().isEmpty());
@@ -48,12 +49,6 @@ class ProcuraTest {
 
 	@Test
 	void testGetLista() throws FileNotFoundException, IOException {
-		Procura p = new Procura();
-		Excel excel = new Excel();
-
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
-		p.getProcura(excel.getList(), "GrammerException");
-
 		assertNotNull(p.getLista());
 		assertFalse(p.getLista().isEmpty());
 	}

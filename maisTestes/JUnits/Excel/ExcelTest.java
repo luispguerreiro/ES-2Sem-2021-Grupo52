@@ -16,9 +16,12 @@ import org.junit.jupiter.api.Test;
 import maisTestes.Excel;
 
 class ExcelTest {
+	static Excel excel;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		excel = new Excel();
+		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
 	}
 
 	@AfterAll
@@ -35,8 +38,7 @@ class ExcelTest {
 
 	@Test
 	void testLerExcel() throws FileNotFoundException, IOException {
-		Excel excel = new Excel();
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		
 
 		assertNotNull(excel.getList());
 		assertEquals(247, excel.getList().size());
@@ -44,18 +46,12 @@ class ExcelTest {
 
 	@Test
 	void testGetList() throws FileNotFoundException, IOException {
-		Excel excel = new Excel();
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
-
 		assertNotNull(excel.getList());
 		assertFalse(excel.getList().isEmpty());
 	}
 
 	@Test
 	void testMain() throws FileNotFoundException, IOException {
-		Excel excel = new Excel();
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
-
 		assertNotNull(excel.getList());
 		assertEquals(247, excel.getList().size());
 	}
