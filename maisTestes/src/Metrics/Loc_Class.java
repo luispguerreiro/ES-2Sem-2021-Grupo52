@@ -29,7 +29,7 @@ public class Loc_Class {
 			int iniciomain = mainClass.getBegin().get().line;
 			int fimmain = mainClass.getEnd().get().line;
 			linhasClassMain = fimmain - iniciomain;
-		
+		resultados.add(new Resultado(pack + "/" + mainClassName , linhasClassMain,false));
 		
 		
 		for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
@@ -41,8 +41,8 @@ public class Loc_Class {
 			resultados.add(new Resultado(pack + "/" + NestClassNames , linhasClass,false));
 			
 		}
-		
-		resultados.add(new Resultado(pack + "/" + mainClassName , linhasClassMain,false));
+		resultados.remove(0);
+		resultados.add(0,new Resultado(pack + "/" + mainClassName , linhasClassMain,false));
 		
 		
 		
