@@ -14,7 +14,7 @@ import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
 public class CYCLO_method {
 
-	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\Jasml\\src\\com\\jasml\\classes\\Attribute_Code.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
 	private ArrayList<Resultado> resultados = new ArrayList<>();
@@ -42,10 +42,21 @@ public class CYCLO_method {
 					}
 				}
 			}
+			boolean a = false;
+			for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
+				for (CallableDeclaration ctest : nestClass.findAll(CallableDeclaration.class)) {
+					if (ctest.getName() == callableDeclaration.getName()) {
+						a = true;
+					}
+				}
 
+			}
+		
+		if (a == false) {
 			resultados.add(new Resultado(pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString() + "("
 					+ parameters + ")" , cyclo, false));
 			cyclo = 1;
+		}
 		}
 
 		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();

@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class Loc_Method {
 	public ArrayList<Resultado> resultados = new ArrayList<>();
-	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\Jasml\\\\src\\\\com\\\\jasml\\\\classes\\\\Attribute_Code.java";
 	static int linhasfinal = 0;
 
 	public Loc_Method(Metrics m) {
@@ -22,6 +24,7 @@ public class Loc_Method {
 		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
 		List<String> Resultados = new ArrayList<>();
 		List<TypeDeclaration> nodes = cu.findAll(TypeDeclaration.class);
+
 		for (CallableDeclaration callableDeclaration : mainClassMet) {
 			String mainClassName = mainClass.getNameAsString();
 			List<Parameter> par = callableDeclaration.getParameters();
@@ -34,41 +37,53 @@ public class Loc_Method {
 					}
 				}
 			}
+			boolean a = false;
+			for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
+				for (CallableDeclaration ctest : nestClass.findAll(CallableDeclaration.class)) {
+					if (ctest.getName() == callableDeclaration.getName()) {
+						a = true;
+					}
+				}
+
+			}
+		
+		if (a == false) {
 			int inicio = callableDeclaration.getBegin().get().line;
 			int fim = callableDeclaration.getEnd().get().line + 1;
 			int linhasMethod = fim - inicio;
 			resultados.add(new Resultado(
 					pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString() + "(" + parameters + ")",
 					linhasMethod, false));
-
 		}
+	}
 
-		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
-		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
-			String NestClassNames = nestClass.getNameAsString();
-			List<CallableDeclaration> contructorsNestClass = nestClass.findAll(CallableDeclaration.class);
-			for (CallableDeclaration c : contructorsNestClass) {
-				List<Parameter> par = c.getParameters();
-				String parameters = "";
-				if (!par.isEmpty()) {
-					for (Parameter p : par) {
-						parameters += p.getType().toString();
-						if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
-							parameters += ",";
-						}
-
+	List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();for(
+	ClassOrInterfaceDeclaration nestClass:nestedClasses)
+	{
+		String NestClassNames = nestClass.getNameAsString();
+		List<CallableDeclaration> contructorsNestClass = nestClass.findAll(CallableDeclaration.class);
+		for (CallableDeclaration c : contructorsNestClass) {
+			List<Parameter> par = c.getParameters();
+			String parameters = "";
+			if (!par.isEmpty()) {
+				for (Parameter p : par) {
+					parameters += p.getType().toString();
+					if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
+						parameters += ",";
 					}
+
 				}
-				int inicio = nestClass.getBegin().get().line;
-				int fim = nestClass.getEnd().get().line + 1;
-				int linhasMethod = fim - inicio;
-
-				resultados.add(new Resultado(
-						pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/",
-						linhasMethod, false));
-
 			}
+			int inicio = nestClass.getBegin().get().line;
+			int fim = nestClass.getEnd().get().line + 1;
+			int linhasMethod = fim - inicio;
+
+			resultados.add(new Resultado(
+					pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/",
+					linhasMethod, false));
+
 		}
+	}
 
 	}
 
