@@ -46,7 +46,7 @@ public class Loc_Method {
 				}
 
 			}
-		
+		 
 		if (a == false) {
 			int inicio = callableDeclaration.getBegin().get().line;
 			int fim = callableDeclaration.getEnd().get().line + 1;

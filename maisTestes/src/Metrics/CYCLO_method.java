@@ -40,7 +40,7 @@ public class CYCLO_method {
 					if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
 						parameters += ",";
 					}
-				}
+				} 
 			}
 			boolean a = false;
 			for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
