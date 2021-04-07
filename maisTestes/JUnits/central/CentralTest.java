@@ -3,25 +3,42 @@
  */
 package central;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import maisTestes.Excel;
 
 /**
  * @author nmsid & henry
  *
  */
 class CentralTest {
-
+	static Central c;
+	static File file;
+	static Sheet sheet;
+	static Excel excel;
+	static XSSFWorkbook workBook;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		c= new Central();
+		file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	
 	}
 
 	/**
@@ -50,15 +67,17 @@ class CentralTest {
 	 */
 	@Test
 	final void testCentral() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertNotNull(c);
 	}
 
 	/**
 	 * Test method for {@link central.Central#writeExcel(org.apache.poi.ss.usermodel.Sheet, org.apache.poi.xssf.usermodel.XSSFWorkbook)}.
+	 * @throws IOException 
 	 */
 	@Test
-	final void testWriteExcel() {
-		fail("Not yet implemented"); // TODO
+	final void testWriteExcel() throws IOException {
+		c.writeExcel(sheet, workBook);
+		Assertions.assertNotNull(c);
 	}
 
 	/**
@@ -66,7 +85,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testWriteClassExcel() {
-		fail("Not yet implemented"); // TODO
+		Row cabecalho= sheet.createRow(0);
+		Assertions.assertNotNull(cabecalho);
 	}
 
 	/**
@@ -74,7 +94,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testCabecalho() {
-		fail("Not yet implemented"); // TODO
+		Row cabecalho2= sheet.createRow(0);
+		Assertions.assertNotNull(cabecalho2);
 	}
 
 	/**
