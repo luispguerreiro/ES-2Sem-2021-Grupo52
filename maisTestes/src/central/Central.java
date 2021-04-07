@@ -19,20 +19,15 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import Metrics.CYCLO_method;
-import Metrics.Loc_Class;
-import Metrics.Loc_Method;
-import Metrics.Metrics;
-import Metrics.NOM_Class;
-import Metrics.WMC_Class;
+import luis.Metrics;
 
 
 
 public class Central {
 
-	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
+	private String SRC_PATH = "C:\\Users\\luisg\\Desktop\\Faculdade\\3º Ano\\ES\\jasml_0.10";
 	
-	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // vai ser o nome
+	File file = new File("C:\\Users\\luisg\\Desktop\\jasml_metrics.xlsx"); // vai ser o nome
 	// private String SRC_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de
 	// Trabalho\\miniJasml";
 	// private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente
@@ -44,14 +39,15 @@ public class Central {
 //																											// nome
 	// da
 	// pasta"_metric"
-	private Loc_Method locMethod;
-	private CYCLO_method cycloMethod;
-	private Loc_Class locClass;
-	private NOM_Class nomClass;
-	private WMC_Class wmcClass;
+//	private Loc_Method locMethod;
+//	private CYCLO_method cycloMethod;
+//	private Loc_Class locClass;
+//	private NOM_Class nomClass;
+//	private WMC_Class wmcClass;
+	private List<Metrics> metrics = new ArrayList<>();
 	int separador = 0;
 
-	private Metrics metric;
+//	private Metrics metric;
 
 	public Central() throws IOException {
 		
@@ -63,13 +59,13 @@ public class Central {
 		Sheet sheet = workBook.createSheet("aaa");
 		for (int i = 0; i < v.length; i++) {
 
-			metric = new Metrics(v[i].getAbsolutePath());
+			metrics.add(new Metrics(v[i].getAbsolutePath()));
 
-			locMethod = new Loc_Method(metric);
-			cycloMethod = new CYCLO_method(metric);
-			locClass = new Loc_Class(metric);
-			nomClass = new NOM_Class(metric);
-			wmcClass = new WMC_Class(metric);
+//			locMethod = new Loc_Method(metric);
+//			cycloMethod = new CYCLO_method(metric);
+//			locClass = new Loc_Class(metric);
+//			nomClass = new NOM_Class(metric);
+//			wmcClass = new WMC_Class(metric);
 
 			writeExcel(sheet, workBook);
 		}
@@ -112,53 +108,44 @@ public class Central {
 		cabecalho(sheet, workBook);
 		int rowCount = 1;
 		int k = 0;
-		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
+		for (Metrics metric : metrics) {
+			for (int i = 0; i < metric.getNumOfMethods(); i++) {
 
-			Row row = sheet.createRow(++separador);
-			int colCount = 0;
-			Cell pack = row.createCell(++colCount);
-			Cell classes = row.createCell(++colCount);
-			Cell methods = row.createCell(++colCount);
-			Cell cell4 = row.createCell(++colCount);
-			Cell cell5 = row.createCell(++colCount);
-			Cell cell6 = row.createCell(++colCount);
-			Cell cell7 = row.createCell(++colCount);
-			Cell cell8 = row.createCell(++colCount);
-			pack.setCellValue(locMethod.getResultados().get(i).getPackage());
-			classes.setCellValue(locMethod.getResultados().get(i).getClasses());
-			methods.setCellValue(locMethod.getResultados().get(i).getMethodNames());
+				Row row = sheet.createRow(++separador);
+				int colCount = 0;
+				Cell pack = row.createCell(++colCount);
+				Cell classes = row.createCell(++colCount);
+				Cell methods = row.createCell(++colCount);
+				Cell cell4 = row.createCell(++colCount);
+				Cell cell5 = row.createCell(++colCount);
+				Cell cell6 = row.createCell(++colCount);
+				Cell cell7 = row.createCell(++colCount);
+				Cell cell8 = row.createCell(++colCount);
+				pack.setCellValue(metric.getClassPackage());
+				classes.setCellValue(metric.getClassName());
+				methods.setCellValue(metric.getMethodsName().get(i));
 
-			if (!(cycloMethod.getResultados().get(i).getClasses()
-					.equals(cycloMethod.getResultados().get(k).getClasses()))
-					&& k < nomClass.getResultados().size() - 1) {
-				System.out.println(i + " " + k);
-				k++;
+//				if (!(cycloMethod.getResultados().get(i).getClasses()
+//						.equals(cycloMethod.getResultados().get(k).getClasses()))
+//						&& k < nomClass.getResultados().size() - 1) {
+//					System.out.println(i + " " + k);
+//					k++;
+//				}
+
+				cell4.setCellValue(metric.getNumOfMethods());
+				cell5.setCellValue(metric.getLOC_Class());
+				cell6.setCellValue(metric.getCYCLO_Class());
+
+				cell7.setCellValue(metric.getLOC_Method_Results().get(i));
+				cell8.setCellValue(metric.getCYCLO_Method_Results().get(i));
+
+				Cell methodID = row.createCell(0);
+				methodID.setCellValue(separador);
+				rowCount++;
+
 			}
-
-			cell4.setCellValue(nomClass.getResultados().get(k).getLinhas());
-			cell5.setCellValue(locClass.getResultados().get(k).getLinhas());
-			cell6.setCellValue(wmcClass.getResultados().get(k).getLinhas());
-
-			cell7.setCellValue(locMethod.getResultados().get(i).getLinhas());
-			cell8.setCellValue(cycloMethod.getResultados().get(i).getLinhas());
-
-			Cell methodID = row.createCell(0);
-			methodID.setCellValue(separador);
-			rowCount++;
-
 		}
-
-	}
-
-	public void writeClassExcel(int colCount, Row row, Cell cell) {
-		Cell cell4 = row.createCell(++colCount);
-		Cell cell5 = row.createCell(++colCount);
-		Cell cell6 = row.createCell(++colCount);
-		while (cell.getStringCellValue().equals(locClass.getResultados().get(0).getClasses())) {
-			cell4.setCellValue(nomClass.getResultados().get(0).getLinhas());
-			cell5.setCellValue(locClass.getResultados().get(0).getLinhas());
-			cell6.setCellValue(wmcClass.getResultados().get(0).getLinhas());
-		}
+		
 
 	}
 

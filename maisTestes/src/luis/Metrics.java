@@ -58,6 +58,10 @@ public class Metrics {
 		classPackage = nestedClass.findCompilationUnit().get().getPackageDeclaration().get().getNameAsString();
 		className = mainClassName + "." + nestedClass.getNameAsString();
 		NOM_Class(nestedClass);
+		for (CallableDeclaration<?> method : methods) {
+			LOC_Method(method);
+			CYCLO_Method(method);
+		}
 		LOC_Class(nestedClass);
 		WMC_Class(CYCLO_Method_Results);
 	}
