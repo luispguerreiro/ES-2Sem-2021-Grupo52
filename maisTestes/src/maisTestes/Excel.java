@@ -1,12 +1,12 @@
 package maisTestes;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -71,9 +71,6 @@ public class Excel {
 		Excel excel = new Excel();
 		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
 		
-		for (Linha linha : excel.getList()) {
-			System.out.println(linha.toString());
-		}
 	}
 
 }
