@@ -204,7 +204,6 @@ public class Central {
 		}
 	}
 
-	<<<<<<<HEAD
 
 	public String getSourcePath() {
 		return SRC_PATH;
@@ -224,7 +223,7 @@ public class Central {
 
 	public void setFilePath(String FILE_PATH) {
 		this.FILE_PATH = FILE_PATH;
-	}=======
+	}
 
 	public List<Path> listFiles(Path path) throws IOException {
 		List<Path> result;
@@ -254,9 +253,6 @@ public class Central {
 		this.SRC_PATH = SRC_PATH;
 	}
 
-	>>>>>>>branch'main'
-
-	of https:// github.com/luispguerreiro/ES-2Sem-2021-Grupo52
 
 	public void setFile(File f) {
 		this.file = f;
