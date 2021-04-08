@@ -57,8 +57,8 @@ public class Loc_Method {
 		}
 	}
 
-	List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();for(
-	ClassOrInterfaceDeclaration nestClass:nestedClasses)
+	List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
+	for(ClassOrInterfaceDeclaration nestClass:nestedClasses)
 	{
 		String NestClassNames = nestClass.getNameAsString();
 		List<CallableDeclaration> contructorsNestClass = nestClass.findAll(CallableDeclaration.class);
@@ -74,9 +74,12 @@ public class Loc_Method {
 
 				}
 			}
-			int inicio = nestClass.getBegin().get().line;
-			int fim = nestClass.getEnd().get().line + 1;
+			
+			int inicio = c.getBegin().get().line;
+			int fim = c.getEnd().get().line + 1;
 			int linhasMethod = fim - inicio;
+			System.out.println(inicio);
+			System.out.println(fim);
 
 			resultados.add(new Resultado(
 					pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/",
