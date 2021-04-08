@@ -28,14 +28,14 @@ public class GodClass extends Rule {
 		metricName.add(nomClass);
 //		metricName.add(wmcClass);
 		comp.add(comparators.BIGGER);
-		comp.add(comparators.BIGGER);
 //		comp.add(comparators.BIGGER);
+		comp.add(comparators.BIGGER);
 		// ver limite da loc_class
-		limits.add(300);
+		limits.add(1);
 		limits.add(10);
 //		limits.add(50);
-		oper.add(operators.OR);
 //		oper.add(operators.OR);
+		oper.add(operators.OR);
 		//oper.add(operators.OR);
 	}
 	

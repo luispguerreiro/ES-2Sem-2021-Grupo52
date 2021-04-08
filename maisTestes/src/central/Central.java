@@ -71,11 +71,8 @@ public class Central {
 			fuelAll();
 		}
 		putMethodID();
-		if(!(file.canWrite())){
-				System.out.println("Feche o ficheiro primeiro!\n");
-				throw new IllegalStateException();
-		}
-				OutputStream fileOut = new FileOutputStream(file);
+		
+		OutputStream fileOut = new FileOutputStream(file);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
@@ -85,11 +82,10 @@ public class Central {
 	}
 
 	public void sys(){
-		for(int i=0; i<all.size(); i++){
-			for(int j=0;j<all.get(i).getAllInts().length; j++){
-			System.out.println(all.get(i).getAllInts()[j]);
-			System.out.println("size  ->" + all.get(i).getAllInts().length);
-			}
+		for(int i=0; i<boolResult.size(); i++){
+			System.out.println(boolResult.get(i).getPath());
+			System.out.println(boolResult.get(i).getVerificacao());
+			
 			}
 	}
 	
@@ -111,11 +107,11 @@ public class Central {
 			
 			boolResult.add(new BoolResultado(all.get(i).getPath(), false));
 
-//			System.out.println("nomClass: "+all.get(i).getAllInts().get(0));
-//			System.out.println("  locClass: "+all.get(i).getAllInts().get(1));
-//			System.out.println("    wmcClass: "+all.get(i).getAllInts().get(2));
-//			System.out.println("      locMethod: "+all.get(i).getAllInts().get(3));
-//			System.out.println("        cycloMethod: "+all.get(i).getAllInts().get(4));
+			System.out.println("nomClass: "+all.get(i).getAllInts()[0]);
+			System.out.println("  locClass: "+all.get(i).getAllInts()[1]);
+			System.out.println("    wmcClass: "+all.get(i).getAllInts()[2]);
+			System.out.println("      locMethod: "+all.get(i).getAllInts()[3]);
+			System.out.println("        cycloMethod: "+all.get(i).getAllInts()[4]);
 		}
 //		System.out.println("nomClass: "+all.get(0).getAllInts().get(10));
 	}
