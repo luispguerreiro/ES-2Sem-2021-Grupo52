@@ -5,60 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.CallableDeclaration;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class Loc_Class {
 	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\SourceCodeParser.java";
 	private int linhasClass;
-	private int linhasClassMain;
 
 	private String s = new String();
 	ArrayList<Resultado> resultados = new ArrayList<>();
 
 	public Loc_Class(Metrics m) {
+
 		CompilationUnit cu2 = m.getCu();
 		String pack = cu2.getPackageDeclaration().toString();
-		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
+
 		List<TypeDeclaration> nodes = cu2.findAll(TypeDeclaration.class);
-		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
-		
-		
-			String mainClassName = mainClass.getNameAsString();
-			int iniciomain = mainClass.getBegin().get().line;
-			int fimmain = mainClass.getEnd().get().line;
-			linhasClassMain = fimmain - iniciomain;
-		resultados.add(new Resultado(pack + "/" + mainClassName , linhasClassMain,false));
-		
-		
-		for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
-			String NestClassNames = nestClass.getNameAsString();
-			int inicio = nestClass.getBegin().get().line;
-			int fim = nestClass.getEnd().get().line;
-			linhasClass = fim - inicio;
-			linhasClassMain=linhasClassMain-linhasClass;
-			resultados.add(new Resultado(pack + "/" + NestClassNames , linhasClass,false));
-			
-		}
-		resultados.remove(0);
-		resultados.add(0,new Resultado(pack + "/" + mainClassName , linhasClassMain,false));
-		
-		
-		 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-		
-		
 		// System.out.println(nodes.size());
 		for (TypeDeclaration n : nodes) {
 			// System.out.println();
@@ -78,7 +39,7 @@ public class Loc_Class {
 				// System.out.println(statements.size());
 				// System.out.println(binExpressions.size());
 			}
-		}*/
+		}
 	}
 
 	public ArrayList<Resultado> getResultados() {
@@ -89,7 +50,7 @@ public class Loc_Class {
 		Loc_Class a = new Loc_Class(new Metrics(FILE_PATH));
 		for (Resultado string : a.getResultados()) {
 			//System.out.println(string.getPath());
-			System.out.println(string.getLinhas());
+			//System.out.println(string.getLinhas());
 			System.out.println(string.getClasses());
 		}
 	}

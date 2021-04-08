@@ -37,49 +37,37 @@ class LinhaTest {
 
 	@Test
 	void testSetPacote() {
-		Linha linha1 = new Linha();
-		linha1.setPacote("pacote");
-		
-		assertNotNull(linha1.getPacote());
-		assertEquals("pacote", linha1.getPacote());
+		Linha linha = new Linha();
+		linha.setPacote("pacote");
+
+		assertNotNull(linha.getPacote());
+		assertEquals("pacote", linha.getPacote());
 	}
 
 	@Test
 	void testSetClasse() {
-		Linha linha2 = new Linha();
-		linha2.setClasse("classe");
-		
-		assertNotNull(linha2.getClasse());
-		assertEquals("classe", linha2.getClasse());
+		assertNotNull(linha.getClasse());
+		assertEquals("classe", linha.getClasse());
 	}
 
 	@Test
 	void testSetMetodo() {
-		Linha linha3 = new Linha();
-		linha3.setMetodo("metodo");
-		
-		assertNotNull(linha3.getMetodo());
-		assertEquals("metodo", linha3.getMetodo());
+		assertNotNull(linha.getMetodo());
+		assertEquals("metodo", linha.getMetodo());
 	}
 
 	@Test
 	void testSetIs_God_Class() {
-		Linha linha4 = new Linha();
-		linha4.setIs_God_Class(true);
-		
-		assertNotNull(linha4.getis_God_Class());
-		assertEquals(true, linha4.getis_God_Class());
-		assertTrue(linha4.getis_God_Class());
+		assertNotNull(linha.getis_God_Class());
+		assertEquals(true, linha.getis_God_Class());
+		assertTrue(linha.getis_God_Class());
 	}
 
 	@Test
 	void testSetIs_Long_Method() {
-		Linha linha5 = new Linha();
-		linha5.setIs_Long_Method(true);
-		
-		assertNotNull(linha5.getis_Long_Method());
-		assertEquals(true, linha5.getis_Long_Method());
-		assertTrue(linha5.getis_Long_Method());
+		assertNotNull(linha.getis_Long_Method());
+		assertEquals(true, linha.getis_Long_Method());
+		assertTrue(linha.getis_Long_Method());
 	}
 
 	@Test
