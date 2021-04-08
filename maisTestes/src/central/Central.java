@@ -35,7 +35,7 @@ public class Central {
 	public Central() throws IOException {
 		File[] v = extracted();
 		XSSFWorkbook workBook = new XSSFWorkbook();
-		Sheet sheet = workBook.createSheet("aaa");
+		Sheet sheet = workBook.createSheet("Code Smells");
 		for (int i = 0; i < v.length; i++) {
 			new Metrics(v[i].getAbsolutePath()).getClassMetrics().forEach(m -> metrics.add(m));
 		}
