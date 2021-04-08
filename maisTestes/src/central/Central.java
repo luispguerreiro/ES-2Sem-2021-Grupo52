@@ -23,6 +23,7 @@ import luis.Metrics;
 
 public class Central {
 
+
 	private String SRC_PATH = "C:\\Users\\luisg\\Desktop\\Faculdade\\3º Ano\\ES\\jasml_0.10";
 
 	File file = new File("C:\\Users\\luisg\\Desktop\\jasml_metrics.xlsx"); // vai ser o nome
@@ -32,11 +33,7 @@ public class Central {
 //	private Metrics metric;
 
 	public Central() throws IOException {
-
 		File[] v = extracted();
-
-//		File dir = new File(SRC_PATH);
-//		File[] files = dir.listFiles();
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet("aaa");
 		for (int i = 0; i < v.length; i++) {
