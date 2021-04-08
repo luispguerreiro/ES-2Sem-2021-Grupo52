@@ -15,7 +15,7 @@ import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
 public class WMC_Class {
 
-	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\Jasml\\src\\com\\jasml\\classes\\Attribute_Code.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
 	private ArrayList<Resultado> resultados = new ArrayList<>();
@@ -36,50 +36,34 @@ public class WMC_Class {
 			countStatements(statementsmain);
 			countBinaryExpressions(binExpressionsmain);
 		}
+		int a = mainClassMet.size();
 
-		resultados.add(new Resultado(pack + "/" + mainClassName + "/" + mainClass.getNameAsString(), cyclo, false));
-		cyclo = 1;
+		resultados.add(new Resultado(pack + "/" + mainClassName + "/" + mainClass.getNameAsString(), cyclo+a, false));
+		cyclo = 0;
 
 		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
-			contructors.add(nestClass);
-
-			for (ClassOrInterfaceDeclaration callableDeclaration : contructors) {
-				List<Statement> statements = callableDeclaration.findAll(Statement.class);
-				List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
+			
+				List<Statement> statements = nestClass.findAll(Statement.class);
+				List<BinaryExpr> binExpressions = nestClass.findAll(BinaryExpr.class);
 				if (!statements.isEmpty() || !binExpressions.isEmpty()) {
 					countStatements(statements);
 					countBinaryExpressions(binExpressions);
 				}
+				List<CallableDeclaration> nestedClassMet = nestClass.findAll(CallableDeclaration.class);
+				
+				int b = nestedClassMet.size();
 
-				resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
+				resultados.add(new Resultado(pack + "/" + nestClass.getNameAsString(), cyclo+b, false));
 
 				// System.out.println("Método " + " tem complexidade " + cyclo);
-				cyclo = 1;
+				cyclo = 0;
 
-			}
-
-		}
-
-	}
-
-	public void Resolve() {
-
-		for (ClassOrInterfaceDeclaration callableDeclaration : contructors) {
-			List<Statement> statements = callableDeclaration.findAll(Statement.class);
-			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
-			if (!statements.isEmpty() || !binExpressions.isEmpty()) {
-				countStatements(statements);
-				countBinaryExpressions(binExpressions);
-			}
-
-			resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
-
-			// System.out.println("Método " + " tem complexidade " + cyclo);
-			cyclo = 1;
+			
 
 		}
 
 	}
+
 
 	private void countStatements(List<Statement> statements) {
 
@@ -118,7 +102,7 @@ public class WMC_Class {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		WMC_Class a = new WMC_Class(new Metrics(FILE_PATH));
-		a.Resolve();
+		
 		for (Resultado string : a.getResultados()) {
 			// System.out.println(string.getPath());
 			System.out.println(string.getClasses());
