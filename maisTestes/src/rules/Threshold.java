@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import Metrics.CallMetrics;
 import Metrics.Resultado;
+import central.BoolResultado;
 import rules.GuiOutput.comparators;
 
 public class Threshold implements Serializable {
@@ -27,9 +28,7 @@ public class Threshold implements Serializable {
 		this.o = o;
 		this.limit = limit;
 		System.out.println("Threshold: " + metricName + " " + o + " " + limit);
-		CallMetrics cm = new CallMetrics(FILE_PATH, metricName);
-		resultados = cm.init();
-		compareArray(resultados);
+		
 	}
 
 	public boolean isBigger(int z) throws FileNotFoundException {
@@ -57,13 +56,27 @@ public class Threshold implements Serializable {
 		}
 		throw new IllegalStateException();
 	}
-
-	public void compareArray(ArrayList<Resultado> resultados) throws FileNotFoundException {
-		for (int i = 0; i < resultados.size(); i++) {
-			if (result(resultados.get(i).getLinhas()))
-				resultados.get(i).setTrue();
-		}
+	
+	public void setMetricBoolean(ArrayList<BoolResultado> r){
+		int position = positionToGet();
+		
 	}
+	
+	public int positionToGet(){
+		if(metricName.equals("NOM_class"))
+				return 0;
+		else if(metricName.equals("LOC_class"))
+				return 1;
+		else if(metricName.equals("WMC_class"))
+			return 2;
+		else if(metricName.equals("LOC_method"))
+			return 3;
+		else if(metricName.equals("CYCLO_method"))
+			return 4;
+		throw new IllegalArgumentException("metric name não encontrado\n");
+	}
+		
+
 
 	public int getLimit() {
 		return limit;

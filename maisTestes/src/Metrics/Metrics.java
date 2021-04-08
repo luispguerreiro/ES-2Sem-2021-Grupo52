@@ -53,7 +53,7 @@ public class Metrics {
 		if (!types.isEmpty() && !types.getClass().isInterface()) {
 			for (TypeDeclaration<?> t : types) {
 
-				System.out.println("Types: " + t.getNameAsString());
+//				System.out.println("Types: " + t.getNameAsString());
 				if (t.isClassOrInterfaceDeclaration()) {
 					mainClass = (ClassOrInterfaceDeclaration) t;
 //					System.out.println("Main Class: " + t.getNameAsString());
@@ -64,7 +64,7 @@ public class Metrics {
 		if (!nestedClasses.isEmpty() && nestedClasses.size() >= 2 && !nestedClasses.getClass().isInterface()) {
 			nestedClasses.remove(mainClass);
 			for (ClassOrInterfaceDeclaration nc : nestedClasses) {
-				System.out.println("Nested class: " + mainClass.getNameAsString() + "." + nc.getName());
+//				System.out.println("Nested class: " + mainClass.getNameAsString() + "." + nc.getName());
 //				new NOM_Class(nested);
 			}
 		} else {

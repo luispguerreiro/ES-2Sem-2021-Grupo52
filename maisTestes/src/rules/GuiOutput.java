@@ -197,6 +197,6 @@ public class GuiOutput {
 //					+ "   Limite: " + g1.getLimits().get(i)); // FALTA O G1.GETCOMP.GET(J)
 //
 //		}
-
+		
 	}
 }

@@ -23,4 +23,6 @@ public interface IRule {
 	void check();
 
 	void setLimits(ArrayList<Integer> limits);
+
+	boolean logic(int valor) throws FileNotFoundException;
 }

@@ -24,24 +24,18 @@ import Metrics.Loc_Class;
 import Metrics.Loc_Method;
 import Metrics.Metrics;
 import Metrics.NOM_Class;
+import Metrics.Resultado;
 import Metrics.WMC_Class;
+import rules.GodClass;
+import rules.GuiOutput.comparators;
+import rules.GuiOutput.operators;
+import rules.Threshold;
 
 public class Central {
 
 	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
-	
-	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // vai ser o nome
-	// private String SRC_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de
-	// Trabalho\\miniJasml";
-	// private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente
-	// de Trabalho\\SourceCodeParser.java";
-	// File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de
-	// Trabalho\\jasml_metrics.xlsx"); // vai ser o nome
-//	private String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes";
-//	private File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // vai ser o
-//																											// nome
-	// da
-	// pasta"_metric"
+
+	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); //mudar nome
 	private Loc_Method locMethod;
 	private CYCLO_method cycloMethod;
 	private Loc_Class locClass;
@@ -49,16 +43,19 @@ public class Central {
 	private WMC_Class wmcClass;
 	int separador = 0;
 
+	ArrayList<Resultado> all = new ArrayList<>();
+	
+	ArrayList<BoolResultado> boolResult = new ArrayList<>();
+
 	private Metrics metric;
+	
 
-	public Central() throws IOException {
-		
-			File[] v = extracted();
+	public Central(GodClass g) throws IOException {
 
-//		File dir = new File(SRC_PATH);
-//		File[] files = dir.listFiles();
+		File[] v = extracted();
+
 		XSSFWorkbook workBook = new XSSFWorkbook();
-		Sheet sheet = workBook.createSheet("aaa");
+		Sheet sheet = workBook.createSheet(file.getName().replaceFirst("[.][^.]+$", ""));
 		for (int i = 0; i < v.length; i++) {
 
 			metric = new Metrics(v[i].getAbsolutePath());
@@ -70,48 +67,71 @@ public class Central {
 			wmcClass = new WMC_Class(metric);
 
 			writeExcel(sheet, workBook);
+
+			fuelAll();
 		}
-			
-		OutputStream fileOut = new FileOutputStream(file);
+		putMethodID();
+		if(!(file.canWrite())){
+				System.out.println("Feche o ficheiro primeiro!\n");
+				throw new IllegalStateException();
+		}
+				OutputStream fileOut = new FileOutputStream(file);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
+		System.out.println("\nExportação para Excel concluída!\n");
+		sys();
+		g.calculateThresholds(all, boolResult);
+	}
+
+	public void sys(){
+		for(int i=0; i<all.size(); i++){
+			for(int j=0;j<all.get(i).getAllInts().length; j++){
+			System.out.println(all.get(i).getAllInts()[j]);
+			System.out.println("size  ->" + all.get(i).getAllInts().length);
 			}
-
-
-
-
-	public File[] extracted() throws IOException {
-		File dir = new File(SRC_PATH);
-		ArrayList<File> lista = new ArrayList<File>();
-		File[] v = new File[0] ;
-		if (dir.isDirectory()) {
-			Path path = Paths.get(dir.getAbsolutePath());
-			List<Path> paths = listFiles(path);
-			List<File> files = pathsToFiles(paths);
-			for (int i = 0; i < paths.size(); i++) {
-				if (files.get(i).isFile() && files.get(i).getPath().endsWith(".java")) {
-					lista.add(files.get(i));
-				}
 			}
-			v = new File[lista.size()];
-			for (int i = 0; i < lista.size(); i++) {
-				v[i] = lista.get(i);
+	}
+	
+	public void fuelAll() {
+		all.addAll(cycloMethod.getResultados());
+		int k = 0;
+		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
+
+			if (!(cycloMethod.getResultados().get(i).getClasses()
+					.equals(cycloMethod.getResultados().get(k).getClasses()))
+					&& k < nomClass.getResultados().size() - 1) {
+				k++;
 			}
+			all.get(i).setAllIntsNomClass(nomClass.getResultados().get(k).getLinhas());
+			all.get(i).setAllIntsLocClass(locClass.getResultados().get(k).getLinhas());
+			all.get(i).setAllIntsWmcClass(wmcClass.getResultados().get(k).getLinhas());
+			all.get(i).setAllIntsLocMethod(locMethod.getResultados().get(i).getLinhas());
+			all.get(i).setAllIntsCycloMethod(cycloMethod.getResultados().get(i).getLinhas());
+			
+			boolResult.add(new BoolResultado(all.get(i).getPath(), false));
+
+//			System.out.println("nomClass: "+all.get(i).getAllInts().get(0));
+//			System.out.println("  locClass: "+all.get(i).getAllInts().get(1));
+//			System.out.println("    wmcClass: "+all.get(i).getAllInts().get(2));
+//			System.out.println("      locMethod: "+all.get(i).getAllInts().get(3));
+//			System.out.println("        cycloMethod: "+all.get(i).getAllInts().get(4));
 		}
-		return v;
-	}	
-	
-	
-	
+//		System.out.println("nomClass: "+all.get(0).getAllInts().get(10));
+	}
+
+	public void putMethodID() {
+		for (int i = 0; i < all.size(); i++)
+			all.get(i).setMethodID(i + 1);
+	}
 
 	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
 		sheet.setDefaultColumnWidth(20);
 		cabecalho(sheet, workBook);
 		int rowCount = 1;
 		int k = 0;
-		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
 
+		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
 			Row row = sheet.createRow(++separador);
 			int colCount = 0;
 			Cell pack = row.createCell(++colCount);
@@ -129,7 +149,6 @@ public class Central {
 			if (!(cycloMethod.getResultados().get(i).getClasses()
 					.equals(cycloMethod.getResultados().get(k).getClasses()))
 					&& k < nomClass.getResultados().size() - 1) {
-				System.out.println(i + " " + k);
 				k++;
 			}
 
@@ -148,17 +167,10 @@ public class Central {
 
 	}
 
-	public void writeClassExcel(int colCount, Row row, Cell cell) {
-		Cell cell4 = row.createCell(++colCount);
-		Cell cell5 = row.createCell(++colCount);
-		Cell cell6 = row.createCell(++colCount);
-		while (cell.getStringCellValue().equals(locClass.getResultados().get(0).getClasses())) {
-			cell4.setCellValue(nomClass.getResultados().get(0).getLinhas());
-			cell5.setCellValue(locClass.getResultados().get(0).getLinhas());
-			cell6.setCellValue(wmcClass.getResultados().get(0).getLinhas());
-		}
+	public void verificacao(ArrayList<Resultado> res, Threshold t) {
 
 	}
+
 
 	public void cabecalho(Sheet sheet, XSSFWorkbook workBook) {
 		String[] c = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class", "LOC_method",
@@ -178,6 +190,27 @@ public class Central {
 		}
 	}
 
+	public File[] extracted() throws IOException {
+		File dir = new File(SRC_PATH);
+		ArrayList<File> lista = new ArrayList<File>();
+		File[] v = new File[0];
+		if (dir.isDirectory()) {
+			Path path = Paths.get(dir.getAbsolutePath());
+			List<Path> paths = listFiles(path);
+			List<File> files = pathsToFiles(paths);
+			for (int i = 0; i < paths.size(); i++) {
+				if (files.get(i).isFile() && files.get(i).getPath().endsWith(".java")) {
+					lista.add(files.get(i));
+				}
+			}
+			v = new File[lista.size()];
+			for (int i = 0; i < lista.size(); i++) {
+				v[i] = lista.get(i);
+			}
+		}
+		return v;
+	}
+
 	public List<Path> listFiles(Path path) throws IOException {
 		List<Path> result;
 		try (Stream<Path> walk = Files.walk(path)) {
@@ -185,7 +218,7 @@ public class Central {
 		}
 		return result;
 	}
-	
+
 	public List<File> pathsToFiles(List<Path> path) {
 		List<File> files = new ArrayList<File>();
 		for (int i = 0; i < path.size(); i++) {
@@ -193,11 +226,10 @@ public class Central {
 		}
 		return files;
 	}
-	
+
 	public String getSourcePath() {
 		return SRC_PATH;
 	}
-
 
 	public File getFile() {
 		return file;
@@ -207,13 +239,29 @@ public class Central {
 		this.SRC_PATH = SRC_PATH;
 	}
 
-
 	public void setFile(File f) {
 		this.file = f;
 	}
 
+	public ArrayList<Resultado> getAll() {
+		return all;
+	}
+
 	public static void main(String[] args) throws IOException {
-		Central c = new Central();
+		String ruleName = "Regra2";
+		int ruleType = 0;
+		ArrayList<String> metricName = new ArrayList<>();
+		ArrayList<comparators> comp = new ArrayList<>();
+		ArrayList<Integer> limits = new ArrayList<>();
+		ArrayList<operators> oper = new ArrayList<>();
+		GodClass r = new GodClass(ruleName, metricName, comp, limits, oper);
+		
+		Central c = new Central(r);
+//		for (int i = 0; i < c.getAll().size(); i++) {
+//			System.out.println("ID--> " + c.getAll().get(i).getMethodID());
+//			System.out.println(c.getAll().get(i).getMetrica());
+//
+//		}
 	}
 
 }

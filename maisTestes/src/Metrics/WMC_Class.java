@@ -21,6 +21,11 @@ public class WMC_Class {
 	private ArrayList<Resultado> resultados = new ArrayList<>();
 	private List<ClassOrInterfaceDeclaration> contructors = new ArrayList<>();
 	private String pack = "";
+	
+	private int i = 1;
+	
+//	private ArrayList<Integer> empty = new ArrayList<>();
+	private int[] empty = new int[5];
 
 	public WMC_Class(Metrics m) {
 
@@ -37,7 +42,7 @@ public class WMC_Class {
 			countBinaryExpressions(binExpressionsmain);
 		}
 
-		resultados.add(new Resultado(pack + "/" + mainClassName + "/" + mainClass.getNameAsString(), cyclo, false));
+		resultados.add(new Resultado(i, pack + "/" + mainClassName + "/" + mainClass.getNameAsString(), cyclo, empty));
 		cyclo = 1;
 
 		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
@@ -51,7 +56,7 @@ public class WMC_Class {
 					countBinaryExpressions(binExpressions);
 				}
 
-				resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
+				resultados.add(new Resultado(i, pack + "/" + callableDeclaration.getNameAsString(), cyclo, empty));
 
 				// System.out.println("Método " + " tem complexidade " + cyclo);
 				cyclo = 1;
@@ -72,7 +77,7 @@ public class WMC_Class {
 				countBinaryExpressions(binExpressions);
 			}
 
-			resultados.add(new Resultado(pack + "/" + callableDeclaration.getNameAsString(), cyclo, false));
+			resultados.add(new Resultado(i, pack + "/" + callableDeclaration.getNameAsString(), cyclo, empty));
 
 			// System.out.println("Método " + " tem complexidade " + cyclo);
 			cyclo = 1;

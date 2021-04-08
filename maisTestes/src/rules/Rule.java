@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.naming.LimitExceededException;
-
+import Metrics.Resultado;
+import central.BoolResultado;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
 
@@ -16,9 +16,6 @@ public abstract class Rule implements IRule, Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// NUM_METRICS vai ser atributo da class metrics
-	private final int NUM_METRICS;
-
 	private ArrayList<Threshold> thresholds = new ArrayList<>();
 
 	protected ArrayList<String> metricName = new ArrayList<>();
@@ -26,23 +23,22 @@ public abstract class Rule implements IRule, Serializable {
 	protected ArrayList<Integer> limits = new ArrayList<>();
 	protected ArrayList<operators> oper = new ArrayList<>();
 	private String ruleName;
-	private ArrayList<Boolean> threshResults = new ArrayList<>();
+	private ArrayList<BoolResultado> ruleResults = new ArrayList<>();
+	private int ruleType; // 0 if ruleType=god_class, 1 if ruleType=long_method
 
-	public Rule(String ruleName, ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
-			ArrayList<operators> oper) throws FileNotFoundException {
+	public Rule(String ruleName, int ruleType, ArrayList<String> metricName, ArrayList<comparators> comp,
+			ArrayList<Integer> limits, ArrayList<operators> oper) throws FileNotFoundException {
 		this.ruleName = ruleName;
 		this.metricName = metricName;
 		this.comp = comp;
 		this.limits = limits;
 		this.oper = oper;
+		this.ruleType = ruleType;
 
 		fuelArrays();
 		check();
 
-		NUM_METRICS = metricName.size();
-
 		createThresholds();
-		System.out.println("---->Resultado da Logica:" + logic());
 	}
 
 	@Override
@@ -52,40 +48,62 @@ public abstract class Rule implements IRule, Serializable {
 
 	@Override
 	public void createThresholds() throws FileNotFoundException {
-		for (int i = 0; i < NUM_METRICS; i++) {
+		for (int i = 0; i < metricName.size(); i++) {
 			Threshold t = new Threshold(metricName.get(i), comp.get(i), limits.get(i));
 			thresholds.add(t);
-			
-		}
-	}
-	
-	public void calculateThresholds(Threshold t) throws FileNotFoundException{
-//		threshResults.addAll(t.result());
-//		threshResults.addAll(t.result());
-		for (int i = 0; i < threshResults.size(); i++) {
-			System.out.println("-->Resultado de metrica Threshold: " + threshResults.get(i));
 		}
 	}
 
-	@Override
-	public boolean logic() {
-		System.out.println("______" + threshResults);
-		System.out.println("Logic() size " + threshResults.size() + "\n oper: " + oper.get(0));
-//		while (!(threshResults.size() == 1)) {
-			while (threshResults.size() > 1) {
-			if (oper.get(0).equals(operators.AND)) {
-				System.out.println(and(threshResults.get(0), threshResults.get(1)));
-				threshResults.set(0, and(threshResults.get(0), threshResults.get(1)));
-				threshResults.remove(1);
-				oper.remove(0);
-			} else {
-				System.out.println(or(threshResults.get(0), threshResults.get(1)));
-				threshResults.set(0, or(threshResults.get(0), threshResults.get(1)));
-				threshResults.remove(1);
-				oper.remove(0);
+	public void calculateThresholds(ArrayList<Resultado> result, ArrayList<BoolResultado> boolresult)
+			throws FileNotFoundException {
+		System.out.println(result.get(2).getAllInts()[4]);
+		for (int j = 0; j < result.size(); j++) {
+			int pos = thresholds.get(0).positionToGet();
+			if (thresholds.size() == 1) {
+				boolresult.get(j).setVerificacao(logic1(thresholds.get(0), result.get(j).getAllInts()[pos]));
+			}
+			else if (thresholds.size() == 2) {
+				int pos2 = thresholds.get(1).positionToGet();
+				boolresult.get(j).setVerificacao(logic2(thresholds.get(0), thresholds.get(1),
+						result.get(j).getAllInts()[pos],
+						result.get(j).getAllInts()[pos2]));
+			} 
+			else if (thresholds.size() == 3) {
+				int pos2 = thresholds.get(1).positionToGet();
+				int pos3 = thresholds.get(2).positionToGet();
+				boolresult.get(j).setVerificacao(logic3(thresholds.get(0), thresholds.get(1), thresholds.get(2),
+						result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2], result.get(j).getAllInts()[pos3]));
 			}
 		}
-		return threshResults.get(0);
+		System.out.println("Resultados booleanos: " + boolresult.get(10).getVerificacao() + "size " + boolresult.size());
+	}
+
+//	@Override
+//	public boolean logic(int valor) throws FileNotFoundException {
+//		if (thresholds.size() == 1)
+//			logic1(thresholds.get(0), valor);
+//		else if (thresholds.size() == 2)
+//			logic2(thresholds.get(0), thresholds.get(1), valor);
+//		else if (thresholds.size() == 3)
+//			logic3(thresholds.get(0), thresholds.get(1), thresholds.get(2), valor);
+//		throw new IllegalStateException("Erro ao identificar tamanho do vetor de thresholds\n");
+//
+//	}
+
+	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
+		return t.result(valor);
+	}
+
+	public boolean logic2(Threshold t, Threshold t1, int valor, int valor1) throws FileNotFoundException {
+		if (oper.get(0).equals(operators.AND))
+			return and(t.result(valor), t1.result(valor1));
+		if (oper.get(0).equals(operators.OR))
+			return or(t.result(valor), t1.result(valor1));
+		throw new IllegalAccessError("Erro ao comparar thresholds\n");
+	}
+
+	public boolean logic3(Threshold t, Threshold t1, Threshold t2, int valor1, int valor2, int valor3) {
+		return true;
 	}
 
 	@Override
@@ -110,76 +128,31 @@ public abstract class Rule implements IRule, Serializable {
 	public String getRuleName() {
 		return ruleName;
 	}
-	
+
+	public int getRuleType() {
+		return ruleType;
+	}
+
 	public ArrayList<comparators> getComp() {
 		return comp;
 	}
-	
+
 	public ArrayList<Integer> getLimits() {
 		return limits;
 	}
-	
+
 	public ArrayList<String> getMetricName() {
 		return metricName;
 	}
-	
+
 	public ArrayList<operators> getOper() {
 		return oper;
-	}
-	
-	public ArrayList<Boolean> getThreshResults() {
-		return threshResults;
 	}
 
 	@Override
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
-
-	/**
-	 * public boolean isLong_Method(Rule r) { if (r.getThresholds().size() != 2 ||
-	 * r.getOperators().get(0).equals(logicOperator.OR)) return false; if
-	 * (!thresholds.get(0).equals(thresholds.get(1))) { if
-	 * (thresholds.get(0).getComparator().equals(Threshold.comparator.BIGGER) &&
-	 * thresholds.get(1).getComparator().equals(Threshold.comparator.BIGGER)) { if
-	 * ((thresholds.get(0).getMetricName().equals("LOC_method") ||
-	 * thresholds.get(0).getMetricName().equals("CYCLO_Method")) &&
-	 * (thresholds.get(1).getMetricName().equals("LOC_method") ||
-	 * thresholds.get(1).getMetricName().equals("CYCLO_Method"))) { return true; } }
-	 * } return false; }
-	 * 
-	 * public boolean isGod_Class(Rule r) { if (r.getThresholds().size() != 2 ||
-	 * r.getOperators().get(0).equals(logicOperator.AND)) return false; if
-	 * (!thresholds.get(0).equals(thresholds.get(1))) { if
-	 * (thresholds.get(0).getComparator().equals(Threshold.comparator.BIGGER) &&
-	 * thresholds.get(1).getComparator().equals(Threshold.comparator.BIGGER)) { if
-	 * ((thresholds.get(0).getMetricName().equals("WMC_class") ||
-	 * thresholds.get(0).getMetricName().equals("NOM_class")) &&
-	 * (thresholds.get(1).getMetricName().equals("WMC_class") ||
-	 * thresholds.get(1).getMetricName().equals("NOM_class"))) { return true; } } }
-	 * 
-	 * return false; }
-	 * 
-	 **/
-
-//		StringBuilder st= new StringBuilder();
-//		if (metrics.size() > 1) {
-//			for (int i = 0, j = 0; j < metrics.size() / 2; j++, i += 2) {
-////				System.out.println(metrics.get(i) + operators.get(j) + metrics.get(i + 1));
-//				st.append(metrics.get(i));
-//				st.append(" ");
-//				st.append(operators.get(j).toString());
-//				st.append(" ");
-//				st.append(metrics.get(i + 1));
-//				st.append(" ");
-//				st.append(operators.get(j+1).toString());
-//				st.append(" ");
-//
-//
-//			}
-//			System.out.println(st);
-//		}
-//	}
 
 	@Override
 	public void fuelArrays() {

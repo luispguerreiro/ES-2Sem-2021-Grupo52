@@ -12,13 +12,13 @@ public class GodClass extends Rule {
 	private static final String locClass = "LOC_class";
 	private static final String nomClass = "NOM_class";
 	private static final String wmcClass = "WMC_class";
-	private static final String ruleName = "God_class";
 	private ArrayList<Resultado> results = new ArrayList<>();
+	private static final int ruleType = 0;
 
 	
-	public GodClass(ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
+	public GodClass(String ruleName, ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
 			ArrayList<operators> oper) throws FileNotFoundException {
-		super(ruleName, metricName, comp, limits, oper);
+		super(ruleName, ruleType, metricName, comp, limits, oper);
 	}
 
 
@@ -26,16 +26,16 @@ public class GodClass extends Rule {
 	public void fuelArrays() {
 		metricName.add(locClass);
 		metricName.add(nomClass);
-		metricName.add(wmcClass);
+//		metricName.add(wmcClass);
 		comp.add(comparators.BIGGER);
 		comp.add(comparators.BIGGER);
-		comp.add(comparators.BIGGER);
+//		comp.add(comparators.BIGGER);
 		// ver limite da loc_class
 		limits.add(300);
 		limits.add(10);
-		limits.add(50);
+//		limits.add(50);
 		oper.add(operators.OR);
-		oper.add(operators.OR);
+//		oper.add(operators.OR);
 		//oper.add(operators.OR);
 	}
 	
@@ -44,8 +44,23 @@ public class GodClass extends Rule {
 		ArrayList<comparators> comp = new ArrayList<>();
 		ArrayList<Integer> limits = new ArrayList<>();
 		ArrayList<operators> oper = new ArrayList<>();
+		String ruleName = "godClass_V1.0";
 		
-		GodClass g = new GodClass(metricName, comp, limits, oper);
+		GodClass g = new GodClass(ruleName, metricName, comp, limits, oper);
+	}
+
+
+	@Override
+	public boolean logic() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean logic(int valor) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
