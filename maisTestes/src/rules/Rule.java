@@ -75,7 +75,7 @@ public abstract class Rule implements IRule, Serializable {
 						result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2], result.get(j).getAllInts()[pos3]));
 			}
 		}
-		System.out.println("Resultados booleanos: " + boolresult.get(10).getVerificacao() + "size " + boolresult.size());
+		System.out.println("Resultados booleanos: " + boolresult.get(20).getVerificacao() + " size " + boolresult.size());
 	}
 
 //	@Override

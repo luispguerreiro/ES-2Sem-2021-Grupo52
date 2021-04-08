@@ -35,7 +35,7 @@ public class Central {
 
 	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
 
-	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); //mudar nome
+	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // mudar nome
 	private Loc_Method locMethod;
 	private CYCLO_method cycloMethod;
 	private Loc_Class locClass;
@@ -44,11 +44,10 @@ public class Central {
 	int separador = 0;
 
 	ArrayList<Resultado> all = new ArrayList<>();
-	
+
 	ArrayList<BoolResultado> boolResult = new ArrayList<>();
 
 	private Metrics metric;
-	
 
 	public Central(GodClass g) throws IOException {
 
@@ -71,24 +70,42 @@ public class Central {
 			fuelAll();
 		}
 		putMethodID();
-		
+		System.out.println("nomClass: "+all.get(0).getAllInts()[1]);
+		sys();
+		g.calculateThresholds(all, boolResult);
 		OutputStream fileOut = new FileOutputStream(file);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
-		System.out.println("\nExportação para Excel concluída!\n");
-		sys();
-		g.calculateThresholds(all, boolResult);
+		System.out.println("\n***Exportação para Excel concluída!***\n");
 	}
 
-	public void sys(){
-		for(int i=0; i<boolResult.size(); i++){
-			System.out.println(boolResult.get(i).getPath());
-			System.out.println(boolResult.get(i).getVerificacao());
-			
+//	public void sys(){
+//		for(int i=0; i<boolResult.size(); i++){
+//			System.out.println(boolResult.get(i).getPath());
+//			System.out.println(boolResult.get(i).getVerificacao());
+//			
+//			}
+//	}
+
+	public void sys() {
+		for (int i = 0; i < all.size(); i++) {
+			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
+				System.out.println(all.get(i).getAllInts()[j]);
+				System.out.println("size  ->" + all.get(i).getAllInts().length);
+//				System.out.println("nomClass: " + all.get(i).getAllInts()[0]);
+//				System.out.println("  locClass: " + all.get(i).getAllInts()[1]);
+//				System.out.println("    wmcClass: " + all.get(i).getAllInts()[2]);
+//				System.out.println("      locMethod: " + all.get(i).getAllInts()[3]);
+//				System.out.println("        cycloMethod: " + all.get(i).getAllInts()[4]);
+				System.out.println(boolResult.get(i).getPath());
+				System.out.println(boolResult.size());
+				System.out.println(boolResult.get(i).getVerificacao());
 			}
+				System.out.println("ID  " + all.get(i).getMethodID());
+		}
 	}
-	
+
 	public void fuelAll() {
 		all.addAll(cycloMethod.getResultados());
 		int k = 0;
@@ -104,22 +121,23 @@ public class Central {
 			all.get(i).setAllIntsWmcClass(wmcClass.getResultados().get(k).getLinhas());
 			all.get(i).setAllIntsLocMethod(locMethod.getResultados().get(i).getLinhas());
 			all.get(i).setAllIntsCycloMethod(cycloMethod.getResultados().get(i).getLinhas());
-			
+
 			boolResult.add(new BoolResultado(all.get(i).getPath(), false));
 
-			System.out.println("nomClass: "+all.get(i).getAllInts()[0]);
-			System.out.println("  locClass: "+all.get(i).getAllInts()[1]);
-			System.out.println("    wmcClass: "+all.get(i).getAllInts()[2]);
-			System.out.println("      locMethod: "+all.get(i).getAllInts()[3]);
-			System.out.println("        cycloMethod: "+all.get(i).getAllInts()[4]);
+//			System.out.println("nomClass: " + all.get(i).getAllInts()[0]);
+//			System.out.println("  locClass: " + all.get(i).getAllInts()[1]);
+//			System.out.println("    wmcClass: " + all.get(i).getAllInts()[2]);
+//			System.out.println("      locMethod: " + all.get(i).getAllInts()[3]);
+//			System.out.println("        cycloMethod: " + all.get(i).getAllInts()[4]);
 		}
-//		System.out.println("nomClass: "+all.get(0).getAllInts().get(10));
+//		System.out.println("nomClass: "+all.get(2).getAllInts()[0]);
 	}
 
 	public void putMethodID() {
-		for (int i = 0; i < all.size(); i++)
+		for (int i = 0; i < all.size(); i++){
 			all.get(i).setMethodID(i + 1);
-	}
+//		System.out.println(all.get(i).getMethodID());
+	}}
 
 	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
 		sheet.setDefaultColumnWidth(20);
@@ -166,7 +184,6 @@ public class Central {
 	public void verificacao(ArrayList<Resultado> res, Threshold t) {
 
 	}
-
 
 	public void cabecalho(Sheet sheet, XSSFWorkbook workBook) {
 		String[] c = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class", "LOC_method",
@@ -251,7 +268,7 @@ public class Central {
 		ArrayList<Integer> limits = new ArrayList<>();
 		ArrayList<operators> oper = new ArrayList<>();
 		GodClass r = new GodClass(ruleName, metricName, comp, limits, oper);
-		
+
 		Central c = new Central(r);
 //		for (int i = 0; i < c.getAll().size(); i++) {
 //			System.out.println("ID--> " + c.getAll().get(i).getMethodID());
