@@ -21,96 +21,82 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import luis.Metrics;
 
-
-
 public class Central {
 
-	private String SRC_PATH = "C:\\Users\\luisg\\Desktop\\Faculdade\\3� Ano\\ES\\jasml_0.10";
-	
+	private String SRC_PATH = "C:\\Users\\luisg\\Desktop\\Faculdade\\3º Ano\\ES\\jasml_0.10";
 	File file = new File("C:\\Users\\luisg\\Desktop\\jasml_metrics.xlsx"); // vai ser o nome
-	// private String SRC_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de
-	// Trabalho\\miniJasml";
-	// private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente
-	// de Trabalho\\SourceCodeParser.java";
-	// File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de
-	// Trabalho\\jasml_metrics.xlsx"); // vai ser o nome
-//	private String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes";
-//	private File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // vai ser o
-//																											// nome
-	// da
-	// pasta"_metric"
-//	private Loc_Method locMethod;
-//	private CYCLO_method cycloMethod;
-//	private Loc_Class locClass;
-//	private NOM_Class nomClass;
-//	private WMC_Class wmcClass;
 	private List<Metrics> metrics = new ArrayList<>();
 	int separador = 0;
 
-//	private Metrics metric;
-
 	public Central() throws IOException {
-		
-			File[] v = extracted();
+
+//		File[] v = extracted();
+		List<File> v = extracted();
 
 //		File dir = new File(SRC_PATH);
 //		File[] files = dir.listFiles();
+
 		XSSFWorkbook workBook = new XSSFWorkbook();
-		Sheet sheet = workBook.createSheet("aaa");
-		for (int i = 0; i < v.length; i++) {
+		Sheet sheet = workBook.createSheet("Code Smells");
 
-			metrics.add(new Metrics(v[i].getAbsolutePath()));
-
-//			locMethod = new Loc_Method(metric);
-//			cycloMethod = new CYCLO_method(metric);
-//			locClass = new Loc_Class(metric);
-//			nomClass = new NOM_Class(metric);
-//			wmcClass = new WMC_Class(metric);
-
-			writeExcel(sheet, workBook);
+//		for (int i = 0; i < v.length; i++) {
+//			new Metrics(v[i].getAbsolutePath()).getClassMetrics().forEach(m -> metrics.add(m));
+//		}
+		for (int i = 0; i < v.size(); i++) {
+			new Metrics(v.get(i).getAbsolutePath()).getClassMetrics().forEach(m -> metrics.add(m));
 		}
-			
+		writeExcel(sheet, workBook);	
 		OutputStream fileOut = new FileOutputStream(file);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
-			}
+	}
 
-
-
-
-	public File[] extracted() throws IOException {
+	public List<File> extracted() throws IOException {
 		File dir = new File(SRC_PATH);
-		ArrayList<File> lista = new ArrayList<File>();
-		File[] v = new File[0] ;
+//		ArrayList<File> lista = new ArrayList<File>();
+		List<File> v = new ArrayList<>();
 		if (dir.isDirectory()) {
 			Path path = Paths.get(dir.getAbsolutePath());
 			List<Path> paths = listFiles(path);
 			List<File> files = pathsToFiles(paths);
 			for (int i = 0; i < paths.size(); i++) {
 				if (files.get(i).isFile() && files.get(i).getPath().endsWith(".java")) {
-					lista.add(files.get(i));
+					v.add(files.get(i));
 				}
 			}
-			v = new File[lista.size()];
-			for (int i = 0; i < lista.size(); i++) {
-				v[i] = lista.get(i);
-			}
+//			v = new File[lista.size()];
+//			for (int i = 0; i < lista.size(); i++) {
+//				v[i] = lista.get(i);
+//			}
+//			v.addAll(lista);
 		}
 		return v;
-	}	
-	
-	
-//	
+	}
+
+	public List<Path> listFiles(Path path) throws IOException {
+		List<Path> result;
+		try (Stream<Path> walk = Files.walk(path)) {
+			result = walk.filter(Files::isRegularFile).collect(Collectors.toList());
+		}
+		return result;
+	}
+
+	public List<File> pathsToFiles(List<Path> path) {
+		List<File> files = new ArrayList<File>();
+		for (int i = 0; i < path.size(); i++) {
+			files.add(path.get(i).toFile());
+		}
+		return files;
+	}
 
 	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
 		sheet.setDefaultColumnWidth(20);
 		cabecalho(sheet, workBook);
-		int rowCount = 1;
-		int k = 0;
+//		int rowCount = 1;
+//		int k = 0;
 		for (Metrics metric : metrics) {
-			for (int i = 0; i < metric.getNumOfMethods(); i++) {
-
+			for (int i = 0; i < metric.getMethods().size(); i++) {
 				Row row = sheet.createRow(++separador);
 				int colCount = 0;
 				Cell pack = row.createCell(++colCount);
@@ -125,28 +111,17 @@ public class Central {
 				classes.setCellValue(metric.getClassName());
 				methods.setCellValue(metric.getMethodsName().get(i));
 
-//				if (!(cycloMethod.getResultados().get(i).getClasses()
-//						.equals(cycloMethod.getResultados().get(k).getClasses()))
-//						&& k < nomClass.getResultados().size() - 1) {
-//					System.out.println(i + " " + k);
-//					k++;
-//				}
-
 				cell4.setCellValue(metric.getNumOfMethods());
 				cell5.setCellValue(metric.getLOC_Class());
 				cell6.setCellValue(metric.getCYCLO_Class());
-
 				cell7.setCellValue(metric.getLOC_Method_Results().get(i));
 				cell8.setCellValue(metric.getCYCLO_Method_Results().get(i));
 
 				Cell methodID = row.createCell(0);
 				methodID.setCellValue(separador);
-				rowCount++;
-
+//				rowCount++;
 			}
 		}
-		
-
 	}
 
 	public void cabecalho(Sheet sheet, XSSFWorkbook workBook) {
@@ -167,26 +142,9 @@ public class Central {
 		}
 	}
 
-	public List<Path> listFiles(Path path) throws IOException {
-		List<Path> result;
-		try (Stream<Path> walk = Files.walk(path)) {
-			result = walk.filter(Files::isRegularFile).collect(Collectors.toList());
-		}
-		return result;
-	}
-	
-	public List<File> pathsToFiles(List<Path> path) {
-		List<File> files = new ArrayList<File>();
-		for (int i = 0; i < path.size(); i++) {
-			files.add(path.get(i).toFile());
-		}
-		return files;
-	}
-	
 	public String getSourcePath() {
 		return SRC_PATH;
 	}
-
 
 	public File getFile() {
 		return file;
@@ -195,7 +153,6 @@ public class Central {
 	public void setSourcePath(String SRC_PATH) {
 		this.SRC_PATH = SRC_PATH;
 	}
-
 
 	public void setFile(File f) {
 		this.file = f;

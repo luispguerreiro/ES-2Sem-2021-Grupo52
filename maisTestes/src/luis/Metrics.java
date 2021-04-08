@@ -20,7 +20,7 @@ public class Metrics {
 
 	private String classPackage, className;
 	private ClassOrInterfaceDeclaration mainClass;
-	private List<ClassOrInterfaceDeclaration> nestedClasses;
+	private List<ClassOrInterfaceDeclaration> nestedClasses = new ArrayList<>();
 	private List<Metrics> classMetrics = new ArrayList<>();
 	private List<CallableDeclaration<?>> methods = new ArrayList<>();
 	private List<Integer> LOC_Method_Results = new ArrayList<>();
@@ -32,30 +32,40 @@ public class Metrics {
 
 	public Metrics(String FILE_PATH) throws FileNotFoundException {
 		CompilationUnit cu = StaticJavaParser.parse(new FileInputStream(FILE_PATH));
-		classPackage = cu.getPackageDeclaration().get().getNameAsString();
-//		System.out.println(classPackage);
-
+		if(!cu.getPackageDeclaration().isEmpty()) {
+			classPackage = cu.getPackageDeclaration().get().getNameAsString();
+		}
+		else {
+			classPackage = "Default";
+		}
 		classMetrics.add(this);
 		listClasses(cu);
 		NOM_Class(mainClass);
-		
 		for (CallableDeclaration<?> method : methods) {
 			LOC_Method(method);
 			CYCLO_Method(method);
 		}
-		
 		LOC_Class(mainClass);
 		WMC_Class(CYCLO_Method_Results);
-
 		if (!nestedClasses.isEmpty()) {
 			for (ClassOrInterfaceDeclaration nested : nestedClasses) {
 				classMetrics.add(new Metrics(nested, className));
 			}
 		}
+//		for (Metrics m : classMetrics) {
+//			for (CallableDeclaration<?> md : m.getMethods()) {
+//				System.out.println("Class: " + m.className + " MD: " + md.getNameAsString());
+//			}	
+//		}
 	}
 
 	private Metrics(ClassOrInterfaceDeclaration nestedClass, String mainClassName) {
-		classPackage = nestedClass.findCompilationUnit().get().getPackageDeclaration().get().getNameAsString();
+		if(!nestedClass.findCompilationUnit().get().getPackageDeclaration().isEmpty()) {
+			classPackage = nestedClass.findCompilationUnit().get().getPackageDeclaration().get().getNameAsString();
+		}
+		else {
+			classPackage = "Default";
+		}
 		className = mainClassName + "." + nestedClass.getNameAsString();
 		NOM_Class(nestedClass);
 		for (CallableDeclaration<?> method : methods) {
@@ -67,12 +77,18 @@ public class Metrics {
 	}
 
 	private void listClasses(CompilationUnit cu) {
-		nestedClasses = cu.findAll(ClassOrInterfaceDeclaration.class);
-		if (!nestedClasses.isEmpty() && nestedClasses.size() >= 2 && !nestedClasses.getClass().isInterface()) {
+		List<ClassOrInterfaceDeclaration> aux = cu.findAll(ClassOrInterfaceDeclaration.class);
+		for (ClassOrInterfaceDeclaration c : aux) {
+			if(!c.isInterface()) {
+				nestedClasses.add(c);
+			}
+		}
+		if (!nestedClasses.isEmpty() && nestedClasses.size() > 1 && !nestedClasses.getClass().isInterface()) {
 			mainClass = nestedClasses.get(0);
 			nestedClasses.remove(mainClass);
 		} else {
 			mainClass = nestedClasses.get(0);
+			nestedClasses.clear();
 		}
 		className = mainClass.getNameAsString();
 	}
