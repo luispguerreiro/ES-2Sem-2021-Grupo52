@@ -14,7 +14,7 @@ import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
 public class CYCLO_method {
 
-	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\Jasml\\src\\com\\jasml\\classes\\Attribute_Code.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
 	private ArrayList<Resultado> resultados = new ArrayList<>();
@@ -40,12 +40,23 @@ public class CYCLO_method {
 					if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
 						parameters += ",";
 					}
-				}
+				} 
 			}
+			boolean a = false;
+			for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
+				for (CallableDeclaration ctest : nestClass.findAll(CallableDeclaration.class)) {
+					if (ctest.getName() == callableDeclaration.getName()) {
+						a = true;
+					}
+				}
 
+			}
+		
+		if (a == false) {
 			resultados.add(new Resultado(pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString() + "("
-					+ parameters + ")" + "/", cyclo, false));
+					+ parameters + ")" , cyclo, false));
 			cyclo = 1;
+		}
 		}
 
 		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
@@ -126,6 +137,7 @@ public class CYCLO_method {
 
 		CYCLO_method a = new CYCLO_method(new Metrics(FILE_PATH));
 		// a.Resolve();
+		System.out.println(a.getResultados().size());
 		for (Resultado string : a.getResultados()) {
 			// System.out.println(string.getPath());
 			System.out.println(string.getMethodNames());

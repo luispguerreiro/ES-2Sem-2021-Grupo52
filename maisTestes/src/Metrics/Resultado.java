@@ -13,12 +13,12 @@ public class Resultado {
 		
 	}
 	
-	private void setTrue() {
+	public void setTrue() {
 		verificacao= true;
 
 	}
 	
-	private boolean getVerificacao(){
+	public boolean getVerificacao(){
 		return verificacao;
 		
 	}
@@ -35,7 +35,8 @@ public class Resultado {
 		aux = path.trim().split("/");
 		String [] aux2=aux[0].trim().split(";");
 		String pack =  aux2[0].substring(9);
-		return pack;
+		String[] packf = pack.split(" "); 
+		return packf[1];
 	}
 	public String getClasses() {
 		
