@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import maisTestes.Excel;
+import maisTestes.Linha;
 import maisTestes.Procura;
 
 class ProcuraTest {
@@ -25,7 +26,7 @@ class ProcuraTest {
 		excel = new Excel();
 
 		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
-		p.getProcura(excel.getList(), "GrammerException");
+		p.getProcura(excel.getList(), "GrammerException", "GrammerException(int,String)");
 	}
 
 	@AfterAll
@@ -42,14 +43,15 @@ class ProcuraTest {
 
 	@Test
 	void testGetProcura() throws FileNotFoundException, IOException {
-		assertNotNull(p.getLista());
-		assertEquals(4, p.getLista().size());
-		assertFalse(p.getLista().isEmpty());
+		assertNotNull(p.getLinha());
 	}
 
 	@Test
-	void testGetLista() throws FileNotFoundException, IOException {
-		assertNotNull(p.getLista());
-		assertFalse(p.getLista().isEmpty());
+	void testGetLinha() {
+		Procura p1 = new Procura();
+		p1.getProcura(excel.getList(), "GrammerException", "GrammerException(int,String)");
+		
+		assertNotNull(p1.getLinha());
+		assertEquals(p.getLinha(), p1.getLinha());
 	}
 }
