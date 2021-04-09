@@ -34,9 +34,9 @@ import rules.Rule;
 
 public class Central {
 
-	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
+	private String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 
-	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // mudar nome
+	File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // mudar nome
 	private Loc_Method locMethod;
 	private CYCLO_method cycloMethod;
 	private Loc_Class locClass;
