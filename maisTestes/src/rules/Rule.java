@@ -9,7 +9,7 @@ import central.BoolResultado;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
 
-public abstract class Rule implements IRule, Serializable {
+	public class Rule implements IRule, Serializable {
 
 	/**
 	 * 
@@ -35,7 +35,7 @@ public abstract class Rule implements IRule, Serializable {
 		this.oper = oper;
 		this.ruleType = ruleType;
 
-		fuelArrays();
+//		fuelArrays();
 		check();
 
 		createThresholds();
