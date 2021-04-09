@@ -113,7 +113,7 @@ import rules.Rule;
 				 limits,  oper));
 		rules2.add(new Rule("LOC_class", 0, metricName, comp,
 				 limits,  oper));
-			Assertions.assertEquals(rulesEmpty.isEmpty(), true);
+			Assertions.assertTrue(rulesEmpty.isEmpty());
 			Assertions.assertEquals(rules1.size(),1); 
 			Assertions.assertEquals(rules2.size(),2); 
 			
