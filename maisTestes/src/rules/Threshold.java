@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import Metrics.CallMetrics;
 import Metrics.Resultado;
 import central.BoolResultado;
 import rules.GuiOutput.comparators;
