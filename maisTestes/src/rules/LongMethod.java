@@ -8,6 +8,10 @@ import rules.GuiOutput.operators;
 
 public class LongMethod extends Rule {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String locMethod = "LOC_method";
 	private static final String cycloMethod = "CYCLO_method";
 	private static final int ruleType=1;
@@ -43,5 +47,8 @@ public class LongMethod extends Rule {
 		System.out.println(ruleType);
 	
 	}
+
+
+
 
 }

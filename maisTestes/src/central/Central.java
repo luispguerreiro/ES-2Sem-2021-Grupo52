@@ -29,7 +29,6 @@ import Metrics.WMC_Class;
 import rules.GodClass;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
-import rules.Threshold;
 
 public class Central {
 
@@ -70,9 +69,9 @@ public class Central {
 			fuelAll();
 		}
 		putMethodID();
-		System.out.println("nomClass: "+all.get(0).getAllInts()[1]);
-		sys();
+		System.out.println("nomClass: " + all.get(0).getAllInts()[1]);
 		g.calculateThresholds(all, boolResult);
+		sys();
 		OutputStream fileOut = new FileOutputStream(file);
 		workBook.write(fileOut);
 		fileOut.flush();
@@ -80,34 +79,18 @@ public class Central {
 		System.out.println("\n***Exportação para Excel concluída!***\n");
 	}
 
-//	public void sys(){
-//		for(int i=0; i<boolResult.size(); i++){
-//			System.out.println(boolResult.get(i).getPath());
-//			System.out.println(boolResult.get(i).getVerificacao());
-//			
-//			}
-//	}
-
 	public void sys() {
 		for (int i = 0; i < all.size(); i++) {
+			System.out.println("Path: " + boolResult.get(i).getPath());
+			System.out.println("ID  " + all.get(i).getMethodID());
+			System.out.println("Boolean:  " + boolResult.get(i).getVerificacao());
 			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
-				System.out.println(all.get(i).getAllInts()[j]);
-				System.out.println("size  ->" + all.get(i).getAllInts().length);
-//				System.out.println("nomClass: " + all.get(i).getAllInts()[0]);
-//				System.out.println("  locClass: " + all.get(i).getAllInts()[1]);
-//				System.out.println("    wmcClass: " + all.get(i).getAllInts()[2]);
-//				System.out.println("      locMethod: " + all.get(i).getAllInts()[3]);
-//				System.out.println("        cycloMethod: " + all.get(i).getAllInts()[4]);
-				System.out.println(boolResult.get(i).getPath());
-				System.out.println(boolResult.size());
-				System.out.println(boolResult.get(i).getVerificacao());
+				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
 			}
-				System.out.println("ID  " + all.get(i).getMethodID());
 		}
 	}
 
 	public void fuelAll() {
-		all.addAll(cycloMethod.getResultados());
 		int k = 0;
 		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
 
@@ -116,28 +99,25 @@ public class Central {
 					&& k < nomClass.getResultados().size() - 1) {
 				k++;
 			}
-			all.get(i).setAllIntsNomClass(nomClass.getResultados().get(k).getLinhas());
-			all.get(i).setAllIntsLocClass(locClass.getResultados().get(k).getLinhas());
-			all.get(i).setAllIntsWmcClass(wmcClass.getResultados().get(k).getLinhas());
-			all.get(i).setAllIntsLocMethod(locMethod.getResultados().get(i).getLinhas());
-			all.get(i).setAllIntsCycloMethod(cycloMethod.getResultados().get(i).getLinhas());
+			int LinhasNomC = (nomClass.getResultados().get(k).getLinhas());
+			int LinhasLocC = (locClass.getResultados().get(k).getLinhas());
+			int LinhasWMC = (wmcClass.getResultados().get(k).getLinhas());
+			int LinhasMethod = (locMethod.getResultados().get(i).getLinhas());
+			int LinhasCyclo = (cycloMethod.getResultados().get(i).getLinhas());
 
-			boolResult.add(new BoolResultado(all.get(i).getPath(), false));
+			int[] vetorResultado = { LinhasNomC, LinhasLocC, LinhasWMC, LinhasMethod, LinhasCyclo };
 
-//			System.out.println("nomClass: " + all.get(i).getAllInts()[0]);
-//			System.out.println("  locClass: " + all.get(i).getAllInts()[1]);
-//			System.out.println("    wmcClass: " + all.get(i).getAllInts()[2]);
-//			System.out.println("      locMethod: " + all.get(i).getAllInts()[3]);
-//			System.out.println("        cycloMethod: " + all.get(i).getAllInts()[4]);
+			all.add(new Resultado(i, cycloMethod.getResultados().get(i).getPath(),
+					cycloMethod.getResultados().get(i).getLinhas(), vetorResultado));
+
+			boolResult.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
 		}
-//		System.out.println("nomClass: "+all.get(2).getAllInts()[0]);
 	}
 
 	public void putMethodID() {
-		for (int i = 0; i < all.size(); i++){
+		for (int i = 0; i < all.size(); i++)
 			all.get(i).setMethodID(i + 1);
-//		System.out.println(all.get(i).getMethodID());
-	}}
+	}
 
 	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
 		sheet.setDefaultColumnWidth(20);
@@ -178,10 +158,6 @@ public class Central {
 			rowCount++;
 
 		}
-
-	}
-
-	public void verificacao(ArrayList<Resultado> res, Threshold t) {
 
 	}
 

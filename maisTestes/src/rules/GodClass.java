@@ -3,16 +3,18 @@ package rules;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import Metrics.Resultado;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
 
 public class GodClass extends Rule {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String locClass = "LOC_class";
 	private static final String nomClass = "NOM_class";
 	private static final String wmcClass = "WMC_class";
-	private ArrayList<Resultado> results = new ArrayList<>();
 	private static final int ruleType = 0;
 
 	
@@ -24,19 +26,19 @@ public class GodClass extends Rule {
 
 	@Override
 	public void fuelArrays() {
-		metricName.add(locClass);
 		metricName.add(nomClass);
+//		metricName.add(locClass);
 //		metricName.add(wmcClass);
 		comp.add(comparators.BIGGER);
 //		comp.add(comparators.BIGGER);
-		comp.add(comparators.BIGGER);
+//		comp.add(comparators.SMALLER);
 		// ver limite da loc_class
-		limits.add(1);
-		limits.add(10);
+		limits.add(15);
 //		limits.add(50);
+//		limits.add(2);
+//		oper.add(operators.AND);
 //		oper.add(operators.OR);
-		oper.add(operators.OR);
-		//oper.add(operators.OR);
+//		oper.add(operators.OR);
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
@@ -49,18 +51,5 @@ public class GodClass extends Rule {
 		GodClass g = new GodClass(ruleName, metricName, comp, limits, oper);
 	}
 
-
-	@Override
-	public boolean logic() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public boolean logic(int valor) throws FileNotFoundException {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }

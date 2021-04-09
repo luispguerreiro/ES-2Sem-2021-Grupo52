@@ -78,18 +78,6 @@ public abstract class Rule implements IRule, Serializable {
 		System.out.println("Resultados booleanos: " + boolresult.get(20).getVerificacao() + " size " + boolresult.size());
 	}
 
-//	@Override
-//	public boolean logic(int valor) throws FileNotFoundException {
-//		if (thresholds.size() == 1)
-//			logic1(thresholds.get(0), valor);
-//		else if (thresholds.size() == 2)
-//			logic2(thresholds.get(0), thresholds.get(1), valor);
-//		else if (thresholds.size() == 3)
-//			logic3(thresholds.get(0), thresholds.get(1), thresholds.get(2), valor);
-//		throw new IllegalStateException("Erro ao identificar tamanho do vetor de thresholds\n");
-//
-//	}
-
 	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
 		return t.result(valor);
 	}
@@ -102,8 +90,17 @@ public abstract class Rule implements IRule, Serializable {
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
 
-	public boolean logic3(Threshold t, Threshold t1, Threshold t2, int valor1, int valor2, int valor3) {
-		return true;
+	public boolean logic3 (Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3) throws FileNotFoundException{
+		boolean aux= false;
+		if (oper.get(0).equals(operators.AND))
+			aux= and(t1.result(valor1), t2.result(valor2));
+		else if (oper.get(0).equals(operators.OR))
+			aux= or(t1.result(valor1), t2.result(valor2));
+		if (oper.get(1).equals(operators.AND)) 
+			return and(aux, t3.result(valor3));
+		if (oper.get(1).equals(operators.OR)) 
+			return or(aux, t3.result(valor3));
+		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
 
 	@Override
