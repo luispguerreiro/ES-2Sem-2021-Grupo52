@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.Sheet;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Metrics.Resultado;
 import maisTestes.Excel;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
@@ -98,10 +100,24 @@ import rules.Rule;
 
 	/**
 	 * Test method for {@link central.Central#chooseRules(java.util.ArrayList)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testChooseRules() {
-		fail("Not yet implemented"); // TODO
+	final void testChooseRules() throws FileNotFoundException {
+		ArrayList<Rule> rulesEmpty= new ArrayList<>();
+		ArrayList<Rule> rules1= new ArrayList<>();
+		rules1.add(new Rule("LONG_method", 1, metricName, comp,
+				 limits,  oper));
+		ArrayList<Rule> rules2= new ArrayList<>();
+		rules2.add(new Rule("NOM_class", 0, metricName, comp,
+				 limits,  oper));
+		rules2.add(new Rule("LOC_class", 0, metricName, comp,
+				 limits,  oper));
+			Assertions.assertEquals(rulesEmpty.isEmpty(), true);
+			Assertions.assertEquals(rules1.size(),1); 
+			Assertions.assertEquals(rules2.size(),2); 
+			
+		
 	}
 
 	/**
@@ -117,7 +133,11 @@ import rules.Rule;
 	 */
 	@Test
 	final void testPutMethodID() {
-		fail("Not yet implemented"); // TODO
+		ArrayList<Resultado> all = new ArrayList<>();
+		int[] ints= new int[5];
+		all.add(new Resultado(3, SRC_PATH, 30, ints));
+		c.putMethodID();
+		Assertions.assertEquals(3, all.get(0).getMethodID());
 	}
 
 	/**
