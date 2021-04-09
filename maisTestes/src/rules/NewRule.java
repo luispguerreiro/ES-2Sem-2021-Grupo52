@@ -5,17 +5,16 @@ import java.util.ArrayList;
 
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
-
+/*
 public class NewRule extends Rule {
 
-	public NewRule(String ruleName, ArrayList<String> metricName, ArrayList<comparators> comp, ArrayList<Integer> limits,
-			ArrayList<operators> oper) throws FileNotFoundException {
-		super(ruleName, metricName, comp, limits, oper);
+	public NewRule(String ruleName, ArrayList<String> metricName, ArrayList<comparators> comp,
+			ArrayList<Integer> limits, ArrayList<operators> oper) throws FileNotFoundException {
+		//super(ruleName, metricName, comp, limits, oper);
 	}
 
-	
 	public static void main(String[] args) throws FileNotFoundException {
-		String ruleName= "Nome da regra Aqui";
+		String ruleName = "Nome da regra Aqui";
 		ArrayList<String> metricName = new ArrayList<>();
 		ArrayList<comparators> comp = new ArrayList<>();
 		ArrayList<Integer> limits = new ArrayList<>();
@@ -25,4 +24,4 @@ public class NewRule extends Rule {
 		System.out.println(ruleName);
 	}
 
-}
+}*/

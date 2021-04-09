@@ -187,9 +187,9 @@ public class GuiOutput {
 
 		// Para testar, deixar apenas 1 operacional.
 //		NewRule r = new NewRule(ruleName, metricName, comp, limits, oper);
-		GodClass r = new GodClass(metricName, comp, limits, oper);
+		//GodClass r = new GodClass(metricName, comp, limits, oper);
 //		LongMethod r = new LongMethod(metricName, comp, limits, oper);
-		gui.writeFile(r);
+	//	gui.writeFile(r);
 //		Rule g1 = gui.readFile("Regra1");
 //		System.out.println("Nome da Regra guardada: " + g1.getRuleName());
 //		for (int i = 0; i < metricName.size(); i++) {
@@ -197,6 +197,6 @@ public class GuiOutput {
 //					+ "   Limite: " + g1.getLimits().get(i)); // FALTA O G1.GETCOMP.GET(J)
 //
 //		}
-
+		
 	}
 }

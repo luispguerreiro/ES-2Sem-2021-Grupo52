@@ -19,31 +19,164 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import luis.Metrics;
+import Metrics.CYCLO_method;
+import Metrics.Loc_Class;
+import Metrics.Loc_Method;
+import Metrics.Metrics;
+import Metrics.NOM_Class;
+import Metrics.Resultado;
+import Metrics.WMC_Class;
+import rules.GodClass;
+import rules.GuiOutput.comparators;
+import rules.GuiOutput.operators;
 
 public class Central {
 
+	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
 
-	private String SRC_PATH = "C:\\Users\\luisg\\Desktop\\Faculdade\\3º Ano\\ES\\jasml_0.10";
-
-	File file = new File("C:\\Users\\luisg\\Desktop\\jasml_metrics.xlsx"); // vai ser o nome
-	private List<Metrics> metrics = new ArrayList<>();
+	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // mudar nome
+	private Loc_Method locMethod;
+	private CYCLO_method cycloMethod;
+	private Loc_Class locClass;
+	private NOM_Class nomClass;
+	private WMC_Class wmcClass;
 	int separador = 0;
 
-//	private Metrics metric;
+	ArrayList<Resultado> all = new ArrayList<>();
 
-	public Central() throws IOException {
+	ArrayList<BoolResultado> boolResult = new ArrayList<>();
+
+	private Metrics metric;
+
+	public Central(GodClass g) throws IOException {
+
 		File[] v = extracted();
+
 		XSSFWorkbook workBook = new XSSFWorkbook();
-		Sheet sheet = workBook.createSheet("Code Smells");
+		Sheet sheet = workBook.createSheet(file.getName().replaceFirst("[.][^.]+$", ""));
 		for (int i = 0; i < v.length; i++) {
-			new Metrics(v[i].getAbsolutePath()).getClassMetrics().forEach(m -> metrics.add(m));
+
+			metric = new Metrics(v[i].getAbsolutePath());
+
+			locMethod = new Loc_Method(metric);
+			cycloMethod = new CYCLO_method(metric);
+			locClass = new Loc_Class(metric);
+			nomClass = new NOM_Class(metric);
+			wmcClass = new WMC_Class(metric);
+
+			writeExcel(sheet, workBook);
+
+			fuelAll();
 		}
-		writeExcel(sheet, workBook);	
+		putMethodID();
+		System.out.println("nomClass: " + all.get(0).getAllInts()[1]);
+		g.calculateThresholds(all, boolResult);
+		sys();
 		OutputStream fileOut = new FileOutputStream(file);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
+		System.out.println("\n***Exportação para Excel concluída!***\n");
+	}
+
+	public void sys() {
+		for (int i = 0; i < all.size(); i++) {
+			System.out.println("Path: " + boolResult.get(i).getPath());
+			System.out.println("ID  " + all.get(i).getMethodID());
+			System.out.println("Boolean:  " + boolResult.get(i).getVerificacao());
+			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
+				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
+			}
+		}
+	}
+
+	public void fuelAll() {
+		int k = 0;
+		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
+
+			if (!(cycloMethod.getResultados().get(i).getClasses()
+					.equals(cycloMethod.getResultados().get(k).getClasses()))
+					&& k < nomClass.getResultados().size() - 1) {
+				k++;
+			}
+			int LinhasNomC = (nomClass.getResultados().get(k).getLinhas());
+			int LinhasLocC = (locClass.getResultados().get(k).getLinhas());
+			int LinhasWMC = (wmcClass.getResultados().get(k).getLinhas());
+			int LinhasMethod = (locMethod.getResultados().get(i).getLinhas());
+			int LinhasCyclo = (cycloMethod.getResultados().get(i).getLinhas());
+
+			int[] vetorResultado = { LinhasNomC, LinhasLocC, LinhasWMC, LinhasMethod, LinhasCyclo };
+
+			all.add(new Resultado(i, cycloMethod.getResultados().get(i).getPath(),
+					cycloMethod.getResultados().get(i).getLinhas(), vetorResultado));
+
+			boolResult.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
+		}
+	}
+
+	public void putMethodID() {
+		for (int i = 0; i < all.size(); i++)
+			all.get(i).setMethodID(i + 1);
+	}
+
+	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
+		sheet.setDefaultColumnWidth(20);
+		cabecalho(sheet, workBook);
+		int rowCount = 1;
+		int k = 0;
+
+		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
+			Row row = sheet.createRow(++separador);
+			int colCount = 0;
+			Cell pack = row.createCell(++colCount);
+			Cell classes = row.createCell(++colCount);
+			Cell methods = row.createCell(++colCount);
+			Cell cell4 = row.createCell(++colCount);
+			Cell cell5 = row.createCell(++colCount);
+			Cell cell6 = row.createCell(++colCount);
+			Cell cell7 = row.createCell(++colCount);
+			Cell cell8 = row.createCell(++colCount);
+			pack.setCellValue(locMethod.getResultados().get(i).getPackage());
+			classes.setCellValue(locMethod.getResultados().get(i).getClasses());
+			methods.setCellValue(locMethod.getResultados().get(i).getMethodNames());
+
+			if (!(cycloMethod.getResultados().get(i).getClasses()
+					.equals(cycloMethod.getResultados().get(k).getClasses()))
+					&& k < nomClass.getResultados().size() - 1) {
+				k++;
+			}
+
+			cell4.setCellValue(nomClass.getResultados().get(k).getLinhas());
+			cell5.setCellValue(locClass.getResultados().get(k).getLinhas());
+			cell6.setCellValue(wmcClass.getResultados().get(k).getLinhas());
+
+			cell7.setCellValue(locMethod.getResultados().get(i).getLinhas());
+			cell8.setCellValue(cycloMethod.getResultados().get(i).getLinhas());
+
+			Cell methodID = row.createCell(0);
+			methodID.setCellValue(separador);
+			rowCount++;
+
+		}
+
+	}
+
+	public void cabecalho(Sheet sheet, XSSFWorkbook workBook) {
+		String[] c = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class", "LOC_method",
+				"CYCLO_method" };
+		Row cabecalho = sheet.createRow(0);
+		int cellCount = 0;
+		XSSFCellStyle style = workBook.createCellStyle();
+		XSSFFont font = workBook.createFont();
+		font.setFontHeightInPoints((short) 15);
+		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+		font.setBold(true);
+		style.setFont(font);
+		for (String s : c) {
+			Cell cell = cabecalho.createCell(cellCount++);
+			cell.setCellValue(s);
+			cell.setCellStyle(style);
+		}
 	}
 
 	public File[] extracted() throws IOException {
@@ -65,57 +198,6 @@ public class Central {
 			}
 		}
 		return v;
-	}
-
-	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
-		sheet.setDefaultColumnWidth(20);
-		cabecalho(sheet, workBook);
-		for (Metrics metric : metrics) {
-			for (int i = 0; i < metric.getNumOfMethods(); i++) {
-
-				Row row = sheet.createRow(++separador);
-				int colCount = 0;
-				Cell pack = row.createCell(++colCount);
-				Cell classes = row.createCell(++colCount);
-				Cell methods = row.createCell(++colCount);
-				Cell cell4 = row.createCell(++colCount);
-				Cell cell5 = row.createCell(++colCount);
-				Cell cell6 = row.createCell(++colCount);
-				Cell cell7 = row.createCell(++colCount);
-				Cell cell8 = row.createCell(++colCount);
-				pack.setCellValue(metric.getClassPackage());
-				classes.setCellValue(metric.getClassName());
-				methods.setCellValue(metric.getMethodsName().get(i));
-				cell4.setCellValue(metric.getNumOfMethods());
-				cell5.setCellValue(metric.getLOC_Class());
-				cell6.setCellValue(metric.getCYCLO_Class());
-
-				cell7.setCellValue(metric.getLOC_Method_Results().get(i));
-				cell8.setCellValue(metric.getCYCLO_Method_Results().get(i));
-
-				Cell methodID = row.createCell(0);
-				methodID.setCellValue(separador);
-//				rowCount++;
-			}
-		}
-	}
-
-	public void cabecalho(Sheet sheet, XSSFWorkbook workBook) {
-		String[] c = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class", "LOC_method",
-				"CYCLO_method" };
-		Row cabecalho = sheet.createRow(0);
-		int cellCount = 0;
-		XSSFCellStyle style = workBook.createCellStyle();
-		XSSFFont font = workBook.createFont();
-		font.setFontHeightInPoints((short) 15);
-		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
-		font.setBold(true);
-		style.setFont(font);
-		for (String s : c) {
-			Cell cell = cabecalho.createCell(cellCount++);
-			cell.setCellValue(s);
-			cell.setCellStyle(style);
-		}
 	}
 
 	public List<Path> listFiles(Path path) throws IOException {
@@ -150,8 +232,25 @@ public class Central {
 		this.file = f;
 	}
 
+	public ArrayList<Resultado> getAll() {
+		return all;
+	}
+
 	public static void main(String[] args) throws IOException {
-		Central c = new Central();
+		String ruleName = "Regra2";
+		int ruleType = 0;
+		ArrayList<String> metricName = new ArrayList<>();
+		ArrayList<comparators> comp = new ArrayList<>();
+		ArrayList<Integer> limits = new ArrayList<>();
+		ArrayList<operators> oper = new ArrayList<>();
+		GodClass r = new GodClass(ruleName, metricName, comp, limits, oper);
+
+		Central c = new Central(r);
+//		for (int i = 0; i < c.getAll().size(); i++) {
+//			System.out.println("ID--> " + c.getAll().get(i).getMethodID());
+//			System.out.println(c.getAll().get(i).getMetrica());
+//
+//		}
 	}
 
 }

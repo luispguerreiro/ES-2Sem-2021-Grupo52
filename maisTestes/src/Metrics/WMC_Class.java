@@ -15,12 +15,17 @@ import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
 public class WMC_Class {
 
-	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\Jasml\\src\\com\\jasml\\classes\\Attribute_Code.java";
+	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
 	private ArrayList<Resultado> resultados = new ArrayList<>();
 	private List<ClassOrInterfaceDeclaration> contructors = new ArrayList<>();
 	private String pack = "";
+	
+private int i = 1;
+	
+//	private ArrayList<Integer> empty = new ArrayList<>();
+	private int[] empty = new int[5];
 
 	public WMC_Class(Metrics m) {
 
@@ -38,7 +43,7 @@ public class WMC_Class {
 		}
 		int a = mainClassMet.size();
 
-		resultados.add(new Resultado(pack + "/" + mainClassName + "/" + mainClass.getNameAsString(), cyclo+a, false));
+		resultados.add(new Resultado(i, pack + "/" + mainClassName + "/" + mainClass.getNameAsString(), cyclo+a, empty));
 		cyclo = 0;
 
 		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
@@ -53,7 +58,7 @@ public class WMC_Class {
 				
 				int b = nestedClassMet.size();
 
-				resultados.add(new Resultado(pack + "/" + nestClass.getNameAsString(), cyclo+b, false));
+				resultados.add(new Resultado(i, pack + "/" + nestClass.getNameAsString(), cyclo+b, empty));
 
 				// System.out.println("Método " + " tem complexidade " + cyclo);
 				cyclo = 0;

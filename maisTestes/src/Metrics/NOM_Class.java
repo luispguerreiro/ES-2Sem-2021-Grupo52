@@ -13,6 +13,11 @@ public class NOM_Class {
 //	private static final String FILE_PATH = "C:\\Users\\luisg\\Desktop\\SourceCodeParser.java";
 	private int numOfMethods = 0;
 	
+	private int i = 1;
+	
+//	private ArrayList<Integer> empty = new ArrayList<>();
+	private int[] empty = new int[5];
+	
 	ArrayList<Resultado> resultados = new ArrayList<>();
 
 	public NOM_Class(Metrics m) {
@@ -21,7 +26,7 @@ public class NOM_Class {
 		numOfMethods += mainClass.getConstructors().size() + mainClass.getMethods().size();
 		//resultados.add(mainClass.getNameAsString());
 	//	resultados.add(Integer.toString(numOfMethods));
-		resultados.add(new Resultado(pack + "/" + mainClass.getNameAsString() , numOfMethods,false));
+		resultados.add(new Resultado(i, pack + "/" + mainClass.getNameAsString() , numOfMethods, empty));
 		// System.out.println(mainClass.getNameAsString());
 		// System.out.println(numOfMethods);
 		numOfMethods = 0;
@@ -32,7 +37,7 @@ public class NOM_Class {
 			numOfMethods += contructors.size() + methods.size();
 			//resultados.add(c.getNameAsString());
 		//	resultados.add(Integer.toString(numOfMethods));
-			resultados.add(new Resultado(pack + "/" + c.getNameAsString() , numOfMethods,false));
+			resultados.add(new Resultado(i, pack + "/" + c.getNameAsString() , numOfMethods, empty));
 			// System.out.println("Class " + c.getNameAsExpression() + " tem " +
 			// numOfMethods + " métodos");
 

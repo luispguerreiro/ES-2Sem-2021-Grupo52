@@ -6,11 +6,9 @@ package central;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +27,6 @@ class CentralTest {
 	static File file;
 	static Sheet sheet;
 	static Excel excel;
-	static XSSFWorkbook workBook;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -72,12 +69,10 @@ class CentralTest {
 
 	/**
 	 * Test method for {@link central.Central#writeExcel(org.apache.poi.ss.usermodel.Sheet, org.apache.poi.xssf.usermodel.XSSFWorkbook)}.
-	 * @throws IOException 
 	 */
 	@Test
-	final void testWriteExcel() throws IOException {
-		c.writeExcel(sheet, workBook);
-		Assertions.assertNotNull(c);
+	final void testWriteExcel() {
+		
 	}
 
 	/**
@@ -94,8 +89,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testCabecalho() {
-		Row cabecalho2= sheet.createRow(0);
-		Assertions.assertNotNull(cabecalho2);
+		fail("Not yet implemented"); // TODO
 	}
 
 	/**

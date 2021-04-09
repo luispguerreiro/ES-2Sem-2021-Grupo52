@@ -32,10 +32,9 @@ public class Metrics {
 
 	public Metrics(String FILE_PATH) throws FileNotFoundException {
 		CompilationUnit cu = StaticJavaParser.parse(new FileInputStream(FILE_PATH));
-		if(!cu.getPackageDeclaration().isEmpty()) {
+		if (!cu.getPackageDeclaration().isEmpty()) {
 			classPackage = cu.getPackageDeclaration().get().getNameAsString();
-		}
-		else {
+		} else {
 			classPackage = "Default";
 		}
 		classMetrics.add(this);
@@ -55,10 +54,9 @@ public class Metrics {
 	}
 
 	private Metrics(ClassOrInterfaceDeclaration nestedClass, String mainClassName) {
-		if(!nestedClass.findCompilationUnit().get().getPackageDeclaration().isEmpty()) {
+		if (!nestedClass.findCompilationUnit().get().getPackageDeclaration().isEmpty()) {
 			classPackage = nestedClass.findCompilationUnit().get().getPackageDeclaration().get().getNameAsString();
-		}
-		else {
+		} else {
 			classPackage = "Default";
 		}
 		className = mainClassName + "." + nestedClass.getNameAsString();
@@ -74,7 +72,7 @@ public class Metrics {
 	private void listClasses(CompilationUnit cu) {
 		List<ClassOrInterfaceDeclaration> aux = cu.findAll(ClassOrInterfaceDeclaration.class);
 		for (ClassOrInterfaceDeclaration c : aux) {
-			if(!c.isInterface()) {
+			if (!c.isInterface()) {
 				nestedClasses.add(c);
 			}
 		}
@@ -221,5 +219,5 @@ public class Metrics {
 	public int getLOC_Class() {
 		return LOC_Class;
 	}
-	
+
 }

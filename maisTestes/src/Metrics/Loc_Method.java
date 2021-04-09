@@ -15,7 +15,11 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 public class Loc_Method {
 	public ArrayList<Resultado> resultados = new ArrayList<>();
 	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\Jasml\\\\src\\\\com\\\\jasml\\\\classes\\\\Attribute_Code.java";
-	static int linhasfinal = 0;
+	static int linhasfinal = 0;	
+//	private ArrayList<Integer> empty = new ArrayList<>();
+	private int[] empty = new int[5];
+	
+	private int i = 1;
 
 	public Loc_Method(Metrics m) {
 		CompilationUnit cu = m.getCu();
@@ -52,13 +56,13 @@ public class Loc_Method {
 			int fim = callableDeclaration.getEnd().get().line + 1;
 			int linhasMethod = fim - inicio;
 			resultados.add(new Resultado(
-					pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString() + "(" + parameters + ")",
-					linhasMethod, false));
+					i, pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString() + "(" + parameters + ")",
+					linhasMethod, empty));
 		}
 	}
 
-	List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
-	for(ClassOrInterfaceDeclaration nestClass:nestedClasses)
+	List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();for(
+	ClassOrInterfaceDeclaration nestClass:nestedClasses)
 	{
 		String NestClassNames = nestClass.getNameAsString();
 		List<CallableDeclaration> contructorsNestClass = nestClass.findAll(CallableDeclaration.class);
@@ -74,16 +78,13 @@ public class Loc_Method {
 
 				}
 			}
-			
 			int inicio = c.getBegin().get().line;
 			int fim = c.getEnd().get().line + 1;
 			int linhasMethod = fim - inicio;
-			System.out.println(inicio);
-			System.out.println(fim);
 
 			resultados.add(new Resultado(
-					pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/",
-					linhasMethod, false));
+					i, pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/",
+					linhasMethod, empty));
 
 		}
 	}
@@ -95,6 +96,7 @@ public class Loc_Method {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
+		
 		Loc_Method a = new Loc_Method(new Metrics(FILE_PATH));
 		System.out.println(a.getResultados().size());
 		for (Resultado string : a.getResultados()) {

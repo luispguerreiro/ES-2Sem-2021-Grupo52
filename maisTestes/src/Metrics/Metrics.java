@@ -4,12 +4,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class Metrics {
 
@@ -48,7 +53,7 @@ public class Metrics {
 		if (!types.isEmpty() && !types.getClass().isInterface()) {
 			for (TypeDeclaration<?> t : types) {
 
-				System.out.println("Types: " + t.getNameAsString());
+//				System.out.println("Types: " + t.getNameAsString());
 				if (t.isClassOrInterfaceDeclaration()) {
 					mainClass = (ClassOrInterfaceDeclaration) t;
 //					System.out.println("Main Class: " + t.getNameAsString());
@@ -59,7 +64,7 @@ public class Metrics {
 		if (!nestedClasses.isEmpty() && nestedClasses.size() >= 2 && !nestedClasses.getClass().isInterface()) {
 			nestedClasses.remove(mainClass);
 			for (ClassOrInterfaceDeclaration nc : nestedClasses) {
-				System.out.println("Nested class: " + mainClass.getNameAsString() + "." + nc.getName());
+//				System.out.println("Nested class: " + mainClass.getNameAsString() + "." + nc.getName());
 //				new NOM_Class(nested);
 			}
 		} else {

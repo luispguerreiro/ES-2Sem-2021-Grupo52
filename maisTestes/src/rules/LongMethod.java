@@ -8,15 +8,19 @@ import rules.GuiOutput.operators;
 
 public class LongMethod extends Rule {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String locMethod = "LOC_method";
 	private static final String cycloMethod = "CYCLO_method";
-	private static final String ruleName= "Long_method";
+	private static final int ruleType=1;
 	
 
-	public LongMethod(ArrayList<String> metricName ,ArrayList<comparators> comp, ArrayList<Integer> limits,
+	public LongMethod(String ruleName, ArrayList<String> metricName ,ArrayList<comparators> comp, ArrayList<Integer> limits,
 			ArrayList<operators> oper) throws FileNotFoundException {
 		
-		super(ruleName, metricName, comp, limits, oper);
+		super(ruleName, ruleType, metricName, comp, limits, oper);
 	}
 	
 	
@@ -33,15 +37,18 @@ public class LongMethod extends Rule {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		
+		String ruleName = "regra10";
 		ArrayList<String> metricName = new ArrayList<>();
 		ArrayList<comparators> comp = new ArrayList<>();
 		ArrayList<Integer> limits = new ArrayList<>();
 		ArrayList<operators> oper = new ArrayList<>();
 		
-		LongMethod l = new LongMethod(metricName, comp, limits, oper);
-		System.out.println(ruleName);
+		LongMethod l = new LongMethod(ruleName, metricName, comp, limits, oper);
+		System.out.println(ruleType);
 	
 	}
+
+
+
 
 }
