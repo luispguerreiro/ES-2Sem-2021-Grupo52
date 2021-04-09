@@ -1,6 +1,7 @@
 package central;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -29,6 +30,7 @@ import Metrics.WMC_Class;
 import rules.GodClass;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
+import rules.Rule;
 
 public class Central {
 
@@ -44,11 +46,12 @@ public class Central {
 
 	ArrayList<Resultado> all = new ArrayList<>();
 
-	ArrayList<BoolResultado> boolResult = new ArrayList<>();
+	ArrayList<BoolResultado> boolResultClass = new ArrayList<>();
+	ArrayList<BoolResultado> boolResultMethod = new ArrayList<>();
 
 	private Metrics metric;
 
-	public Central(GodClass g) throws IOException {
+	public Central(ArrayList<Rule> rules) throws IOException {
 
 		File[] v = extracted();
 
@@ -70,23 +73,36 @@ public class Central {
 		}
 		putMethodID();
 		System.out.println("nomClass: " + all.get(0).getAllInts()[1]);
-		g.calculateThresholds(all, boolResult);
+		chooseRules(rules);
 		sys();
 		OutputStream fileOut = new FileOutputStream(file);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
-		System.out.println("\n***ExportaÃ§Ã£o para Excel concluÃ­da!***\n");
+		System.out.println("\n***Exportação para Excel concluída!***\n");
 	}
 
 	public void sys() {
 		for (int i = 0; i < all.size(); i++) {
-			System.out.println("Path: " + boolResult.get(i).getPath());
 			System.out.println("ID  " + all.get(i).getMethodID());
-			System.out.println("Boolean:  " + boolResult.get(i).getVerificacao());
+			System.out.println("CCC Path: " + boolResultClass.get(i).getPath());
+			System.out.println("CCC Boolean:  " + boolResultClass.get(i).getVerificacao());
+			System.out.println("MMM Path: " + boolResultMethod.get(i).getPath());
+			System.out.println("MMM Boolean:  " + boolResultMethod.get(i).getVerificacao());
 			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
 				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
 			}
+		}
+	}
+
+	public void chooseRules(ArrayList<Rule> rules) throws FileNotFoundException {
+		if (rules.isEmpty())
+			return;
+		for (int i = 0; i < rules.size(); i++) {
+			if (rules.get(i).getRuleType() == 0)
+				rules.get(i).calculateThresholds(all, boolResultClass);
+			if (rules.get(i).getRuleType() == 1)
+				rules.get(i).calculateThresholds(all, boolResultMethod);
 		}
 	}
 
@@ -110,7 +126,8 @@ public class Central {
 			all.add(new Resultado(i, cycloMethod.getResultados().get(i).getPath(),
 					cycloMethod.getResultados().get(i).getLinhas(), vetorResultado));
 
-			boolResult.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
+			boolResultClass.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
+			boolResultMethod.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
 		}
 	}
 
@@ -238,19 +255,44 @@ public class Central {
 
 	public static void main(String[] args) throws IOException {
 		String ruleName = "Regra2";
-		int ruleType = 0;
 		ArrayList<String> metricName = new ArrayList<>();
 		ArrayList<comparators> comp = new ArrayList<>();
 		ArrayList<Integer> limits = new ArrayList<>();
 		ArrayList<operators> oper = new ArrayList<>();
-		GodClass r = new GodClass(ruleName, metricName, comp, limits, oper);
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		metricName.add("WMC_class");
+		comp.add(comparators.BIGGER);
+		comp.add(comparators.BIGGER);
+		comp.add(comparators.SMALLER);
+		limits.add(20);
+		limits.add(30);
+		limits.add(40);
+		oper.add(operators.AND);
+		oper.add(operators.OR);
+		
+		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
+		
+		String ruleName1 = "Regra3";
+		ArrayList<String> metricName1 = new ArrayList<>();
+		ArrayList<comparators> comp1 = new ArrayList<>();
+		ArrayList<Integer> limits1 = new ArrayList<>();
+		ArrayList<operators> oper1 = new ArrayList<>();
+		metricName1.add("LOC_method");
+		metricName1.add("CYCLO_method");
+		comp1.add(comparators.BIGGER);
+		comp1.add(comparators.SMALLER);
+		limits1.add(20);
+		limits1.add(40);
+		oper1.add(operators.AND);
 
-		Central c = new Central(r);
-//		for (int i = 0; i < c.getAll().size(); i++) {
-//			System.out.println("ID--> " + c.getAll().get(i).getMethodID());
-//			System.out.println(c.getAll().get(i).getMetrica());
-//
-//		}
+		Rule r1 = new Rule(ruleName1, 1, metricName1, comp1, limits1, oper1);
+		
+		ArrayList<Rule> rules = new ArrayList();
+		rules.add(r);
+		rules.add(r1);
+		
+		Central c = new Central(rules);
 	}
 
 }
