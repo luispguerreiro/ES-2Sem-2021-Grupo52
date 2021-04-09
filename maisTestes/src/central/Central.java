@@ -252,6 +252,7 @@ public class Central {
 	public ArrayList<Resultado> getAll() {
 		return all;
 	}
+	
 
 	public static void main(String[] args) throws IOException {
 		String ruleName = "Regra2";
