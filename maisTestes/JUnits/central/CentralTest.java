@@ -222,7 +222,8 @@ import rules.Rule;
 	 */
 	@Test
 	final void testGetAll() {
-		fail("Not yet implemented"); // TODO
+		ArrayList<Resultado> all = c.getAll();
+		assertEquals(all, c.getAll());
 	}
 
 	/**
