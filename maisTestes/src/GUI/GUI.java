@@ -121,7 +121,6 @@ public class GUI extends JFrame {
 				frame.setBounds(100, 100, 200, 100);
 				frame.add(new JLabel("Atreve-te a passar a ponte"));
 				frame.setVisible(true);
-
 			}
 		});
 		contentPane.add(btnRun);
@@ -152,7 +151,6 @@ public class GUI extends JFrame {
 				JFrame editar = new JFrame("Editar...");
 				editar.setResizable(false);
 				editar.setBounds(100, 100, 500, 200);
-				editar.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				editar.setLayout(new GridLayout(2, 2));
 
 				editar.add(new JLabel("Regra1"));
@@ -261,7 +259,6 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					File file = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\Code_Smells.xlsx");
-					System.out.println(file.exists());
 					Desktop d = Desktop.getDesktop();
 					d.open(file);
 				} catch (IOException e1) {
@@ -333,20 +330,19 @@ public class GUI extends JFrame {
 				dataset.setValue("Adeus", 10);
 				dataset.setValue("Não", 3);
 				dataset.setValue("Sim", 14);
-				
+
 				JFreeChart pieChart = ChartFactory.createPieChart("gráfico", dataset, false, true, false);
-				
+
 				ChartPanel chartPanel = new ChartPanel(pieChart);
 				chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		        chartPanel.setBackground(Color.white);
-		        
-		        JFrame frame = new JFrame("Pie Chart");
-		        frame.setResizable(false);
-				frame.setBounds(100, 100, 500, 200);
-				frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-				
-				frame.add(chartPanel);
-				frame.setVisible(true);
+				chartPanel.setBackground(Color.white);
+
+				JFrame frame1 = new JFrame("Pie Chart");
+				frame1.setResizable(false);
+				frame1.setBounds(100, 100, 500, 200);
+
+				frame1.add(chartPanel);
+				frame1.setVisible(true);
 			}
 		});
 		panel_2.add(btnGrfico);
