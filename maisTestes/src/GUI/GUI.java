@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -30,6 +32,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class GUI extends JFrame {
 
@@ -321,9 +328,24 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame frame = new JFrame();
-				frame.setBounds(100, 100, 100, 100);
-				frame.add(new JLabel("Gráfico"));
+				DefaultPieDataset dataset = new DefaultPieDataset();
+				dataset.setValue("Olá", 21);
+				dataset.setValue("Adeus", 10);
+				dataset.setValue("Não", 3);
+				dataset.setValue("Sim", 14);
+				
+				JFreeChart pieChart = ChartFactory.createPieChart("gráfico", dataset, false, true, false);
+				
+				ChartPanel chartPanel = new ChartPanel(pieChart);
+				chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		        chartPanel.setBackground(Color.white);
+		        
+		        JFrame frame = new JFrame("Pie Chart");
+		        frame.setResizable(false);
+				frame.setBounds(100, 100, 500, 200);
+				frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+				
+				frame.add(chartPanel);
 				frame.setVisible(true);
 			}
 		});
