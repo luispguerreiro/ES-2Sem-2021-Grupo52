@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import Metrics.Resultado;
 import central.BoolResultado;
+import rules.GuiOutput.comparators;
+import rules.GuiOutput.operators;
 
 public interface IRule {
 	ArrayList<Threshold> getThresholds();
@@ -29,6 +31,14 @@ public interface IRule {
 	
 	public int getRuleType();
 
+	public ArrayList<comparators> getComp();
+	
+	public ArrayList<Integer> getLimits();
+	
+	public ArrayList<String> getMetricName();
+	
+	public ArrayList<operators> getOper();
+	
 	void setRuleName(String ruleName);
 
 	void fuelArrays();
