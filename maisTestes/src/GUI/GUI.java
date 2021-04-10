@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -30,6 +32,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class GUI extends JFrame {
 
@@ -114,7 +121,6 @@ public class GUI extends JFrame {
 				frame.setBounds(100, 100, 200, 100);
 				frame.add(new JLabel("Atreve-te a passar a ponte"));
 				frame.setVisible(true);
-
 			}
 		});
 		contentPane.add(btnRun);
@@ -145,7 +151,6 @@ public class GUI extends JFrame {
 				JFrame editar = new JFrame("Editar...");
 				editar.setResizable(false);
 				editar.setBounds(100, 100, 500, 200);
-				editar.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				editar.setLayout(new GridLayout(2, 2));
 
 				editar.add(new JLabel("Regra1"));
@@ -254,7 +259,6 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					File file = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\Code_Smells.xlsx");
-					System.out.println(file.exists());
 					Desktop d = Desktop.getDesktop();
 					d.open(file);
 				} catch (IOException e1) {
@@ -321,10 +325,24 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame frame = new JFrame();
-				frame.setBounds(100, 100, 100, 100);
-				frame.add(new JLabel("Gráfico"));
-				frame.setVisible(true);
+				DefaultPieDataset dataset = new DefaultPieDataset();
+				dataset.setValue("Olá", 21);
+				dataset.setValue("Adeus", 10);
+				dataset.setValue("Não", 3);
+				dataset.setValue("Sim", 14);
+
+				JFreeChart pieChart = ChartFactory.createPieChart("gráfico", dataset, false, true, false);
+
+				ChartPanel chartPanel = new ChartPanel(pieChart);
+				chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+				chartPanel.setBackground(Color.white);
+
+				JFrame frame1 = new JFrame("Pie Chart");
+				frame1.setResizable(false);
+				frame1.setBounds(100, 100, 500, 200);
+
+				frame1.add(chartPanel);
+				frame1.setVisible(true);
 			}
 		});
 		panel_2.add(btnGrfico);
