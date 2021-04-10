@@ -1,21 +1,21 @@
 package maisTestes;
+
 import java.util.ArrayList;
 
 public class Procura {
-	ArrayList<Linha> lista;
+	Linha linha;
 
-	public ArrayList<Linha> getProcura(ArrayList<Linha> listaOriginal, String classe) {
-		this.lista = new ArrayList<Linha>();
+	public Linha getProcura(ArrayList<Linha> listaOriginal, String classe, String metodo) {
 		for (int i = 0; i < listaOriginal.size(); i++) {
-			if (listaOriginal.get(i).getClasse().equals(classe)) {
-				lista.add(listaOriginal.get(i));
+			if (listaOriginal.get(i).getClasse().equals(classe) && listaOriginal.get(i).getMetodo().equals(metodo)) {
+				linha = listaOriginal.get(i);
 			}
 		}
 
-		return lista;
+		return linha;
 	}
-	
-	public ArrayList<Linha> getLista() {
-		return lista;
+
+	public Linha getLinha() {
+		return linha;
 	}
 }

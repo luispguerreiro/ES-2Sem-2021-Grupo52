@@ -14,11 +14,15 @@ import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
 public class CYCLO_method {
 
-	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
 	private ArrayList<Resultado> resultados = new ArrayList<>();
 	private String pack;
+	private int i = 1;
+	
+//	private ArrayList<Integer> empty = new ArrayList<>();
+	private int[] empty = new int[5];
 
 	public CYCLO_method(Metrics m) {
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
@@ -42,10 +46,21 @@ public class CYCLO_method {
 					}
 				}
 			}
+			boolean a = false;
+			for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
+				for (CallableDeclaration ctest : nestClass.findAll(CallableDeclaration.class)) {
+					if (ctest.getName() == callableDeclaration.getName()) {
+						a = true;
+					}
+				}
 
-			resultados.add(new Resultado(pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString() + "("
-					+ parameters + ")" + "/", cyclo, false));
-			cyclo = 1;
+			}
+
+			if (a == false) {
+				resultados.add(new Resultado(i, pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString()
+						+ "(" + parameters + ")", cyclo, empty));
+				cyclo = 1;
+			}
 		}
 
 		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
@@ -73,8 +88,8 @@ public class CYCLO_method {
 				}
 
 				resultados.add(new Resultado(
-						pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/", cyclo,
-						false));
+						i, pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/", cyclo,
+						empty));
 				// resultados.add(callableDeclaration.getNameAsString());
 				// resultados.add(Integer.toString(cyclo));
 
@@ -125,15 +140,13 @@ public class CYCLO_method {
 		// CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
 
 		CYCLO_method a = new CYCLO_method(new Metrics(FILE_PATH));
-		// a.Resolve();
+		System.out.println(a.getResultados().size());
 		for (Resultado string : a.getResultados()) {
 			// System.out.println(string.getPath());
+			System.out.println("methodID " + string.getMethodID());
 			System.out.println(string.getMethodNames());
 			System.out.println(string.getLinhas());
-//System.out.println(string.getClasses());
 		}
-
-		;
 	}
 
 }

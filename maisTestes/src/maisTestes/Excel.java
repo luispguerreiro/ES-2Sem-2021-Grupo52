@@ -1,12 +1,12 @@
 package maisTestes;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -16,73 +16,61 @@ public class Excel {
 
 	ArrayList<Linha> list;
 
-	public void lerExcel(File file) throws FileNotFoundException {
-		try {
-			FileInputStream fis = new FileInputStream(file);
-			XSSFWorkbook wb = new XSSFWorkbook(fis);
-			XSSFSheet sheet = wb.getSheetAt(0);
+	public void lerExcel(File file) throws FileNotFoundException, IOException {
 
-			Iterator<Row> itr = sheet.iterator();
-			itr.next();
+		FileInputStream fis = new FileInputStream(file);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sheet = wb.getSheetAt(0);
 
-			list = new ArrayList<Linha>();
-			Linha linha;
+		Iterator<Row> itr = sheet.iterator();
+		itr.next();
 
-			while (itr.hasNext()) {
-				Row row = itr.next();
-				Iterator<Cell> cellIterator = row.cellIterator();
-				linha = new Linha();
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-					switch (cell.getColumnIndex()) {
-					case 1:
-						linha.setPacote(cell.getStringCellValue());
-						break;
-					case 2:
-						linha.setClasse(cell.getStringCellValue());
-						break;
-					case 3:
-						linha.setMetodo(cell.getStringCellValue());
-						break;
-					case 7:
-						linha.setIs_God_Class(cell.getBooleanCellValue());
-						break;
-					case 10:
-						if (cell.getCellType() == 4) {
-							linha.setIs_Long_Method(cell.getBooleanCellValue());
+		list = new ArrayList<Linha>();
+		Linha linha;
+
+		while (itr.hasNext()) {
+			Row row = itr.next();
+			Iterator<Cell> cellIterator = row.cellIterator();
+			linha = new Linha();
+			while (cellIterator.hasNext()) {
+				Cell cell = cellIterator.next();
+				switch (cell.getColumnIndex()) {
+				case 1:
+					linha.setPacote(cell.getStringCellValue());
+					break;
+				case 2:
+					linha.setClasse(cell.getStringCellValue());
+					break;
+				case 3:
+					linha.setMetodo(cell.getStringCellValue());
+					break;
+				case 7:
+					linha.setIs_God_Class(cell.getBooleanCellValue());
+					break;
+				case 10:
+					if (cell.getCellType() == 4) {
+						linha.setIs_Long_Method(cell.getBooleanCellValue());
 //						System.out.print(cell.getBooleanCellValue() + " ");
-						} else {
-							linha.setIs_Long_Method(false);
-						}
-						break;
-					default:
+					} else {
+						linha.setIs_Long_Method(false);
 					}
+					break;
+				default:
 				}
-				list.add(linha);
 			}
-
-//			Procura p = new Procura();
-//			p.getProcura(list, "GrammerException");
-
-//			for (Linha l : p.getLista())
-//				System.out.println(l.toString());
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Ficheiro inexistente");
-
+			list.add(linha);
 		}
+
 	}
 
 	public ArrayList<Linha> getList() {
 		return list;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Excel excel = new Excel();
-		excel.lerExcel(new File("Code_Smells.xlsx"));
-
+		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		
 	}
 
 }
