@@ -8,9 +8,16 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -38,6 +45,7 @@ import rules.Rule;
 		static ArrayList<comparators> comp= new ArrayList<>();
 		static ArrayList<Integer> limits= new ArrayList<>();
 		static ArrayList<operators> oper= new ArrayList<>();
+<<<<<<< HEAD
 //		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 //		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
@@ -45,11 +53,17 @@ import rules.Rule;
 
 		static File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
+=======
+		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		static int separador;
+>>>>>>> branch 'henry&nazif' of https://github.com/luispguerreiro/ES-2Sem-2021-Grupo52
 		/**
 		 * @throws java.lang.Exception
 		 */
 		@BeforeAll
 		static void setUpBeforeClass() throws Exception {
+			separador= 0;
 			metricName.add("NOM_class");
 			metricName.add("LOC_class");
 			comp.add(comparators.BIGGER);
@@ -91,8 +105,6 @@ import rules.Rule;
 	@Test
 	final void testCentral() {
 		Assertions.assertNotNull(c);
-		
-//		assertEquals(rules, c.getAll());
 	}
 
 	/**
@@ -119,8 +131,11 @@ import rules.Rule;
 		rules2.add(new Rule("LOC_class", 0, metricName, comp,
 				 limits,  oper));
 			Assertions.assertTrue(rulesEmpty.isEmpty());
-			Assertions.assertEquals(rules1.size(),1); 
+			Assertions.assertNotNull(rulesEmpty);
+			Assertions.assertEquals(rules1.size(),1);
+			Assertions.assertNotNull(rules1);
 			Assertions.assertEquals(rules2.size(),2); 
+			Assertions.assertNotNull(rules2);
 			
 		
 	}
@@ -147,34 +162,72 @@ import rules.Rule;
 
 	/**
 	 * Test method for {@link central.Central#writeExcel(org.apache.poi.ss.usermodel.Sheet, org.apache.poi.xssf.usermodel.XSSFWorkbook)}.
+	 * @throws IOException 
 	 */
 	@Test
-	final void testWriteExcel() {
-		fail("Not yet implemented"); // TODO
-	}
+	final void testWriteExcel() throws IOException {
+		File file3 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		XSSFWorkbook workBook = new XSSFWorkbook();
+		Sheet sheet = workBook.createSheet(file3.getName().replaceFirst("[.][^.]+$", ""));
+		Row row = sheet.createRow(++separador);
+		Assertions.assertNotNull(row);
+		Assertions.assertNotNull(workBook);
+		Assertions.assertNotNull(sheet);
+		c.writeExcel(sheet, workBook);	
+		Assertions.assertNotNull(file3);
+		
+		}
 
 	/**
 	 * Test method for {@link central.Central#cabecalho(org.apache.poi.ss.usermodel.Sheet, org.apache.poi.xssf.usermodel.XSSFWorkbook)}.
 	 */
 	@Test
 	final void testCabecalho() {
-		fail("Not yet implemented"); // TODO
+		XSSFWorkbook workBook = new XSSFWorkbook();
+		String[] string = { "MethodID", "Package", "Class", "Method", "NOM_class", "LOC_class", "WMC_class", "LOC_method",
+		"CYCLO_method" };
+		int cellCount= 0;
+		Sheet sheet = workBook.createSheet(file.getName().replaceFirst("[.][^.]+$", ""));
+		Row cabecalho = sheet.createRow(0);
+		Cell cell = cabecalho.createCell(cellCount++);
+		Assertions.assertNotNull(cabecalho);
+		Assertions.assertNotNull(cell);
+		Assertions.assertEquals(9, string.length);
+		
 	}
 
 	/**
 	 * Test method for {@link central.Central#extracted()}.
+	 * @throws IOException 
 	 */
 	@Test
-	final void testExtracted() {
-		fail("Not yet implemented"); // TODO
+	final void testExtracted() throws IOException {
+		File dir = new File(SRC_PATH);
+		ArrayList<File> lista = new ArrayList<File>();
+		Assertions.assertNotNull(dir);
+		Assertions.assertNotNull(lista);
+		File[] v = c.extracted();
+		Assertions.assertNotNull(v);
+		Assertions.assertEquals(44, v.length);
 	}
 
 	/**
 	 * Test method for {@link central.Central#listFiles(java.nio.file.Path)}.
+	 * @throws IOException 
 	 */
 	@Test
-	final void testListFiles() {
-		fail("Not yet implemented"); // TODO
+	final void testListFiles() throws IOException {
+		List<Path> result= new ArrayList<>();
+		List<File> files = new ArrayList<File>();
+		File dir = new File(SRC_PATH);
+		Path path = Paths.get(dir.getAbsolutePath());
+		result=c.listFiles(path);
+		Assertions.assertNotNull(files);
+		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(dir);
+		Assertions.assertNotNull(path);
+		Assertions.assertEquals(result.size(), c.listFiles(path).size());
+		
 	}
 
 	/**
@@ -182,7 +235,18 @@ import rules.Rule;
 	 */
 	@Test
 	final void testPathsToFiles() {
-		fail("Not yet implemented"); // TODO
+		List<Path> paths= new ArrayList<>();
+		List<File> files = new ArrayList<File>();
+		File dir = new File(SRC_PATH);
+		Path path = Paths.get(dir.getAbsolutePath());
+		paths.add(path);
+		Assertions.assertNotNull(files);
+		Assertions.assertNotNull(paths);
+		Assertions.assertNotNull(dir);
+		Assertions.assertNotNull(path);
+		files= c.pathsToFiles(paths);
+		Assertions.assertEquals(files.size(), paths.size());
+		
 	}
 
 	/**
