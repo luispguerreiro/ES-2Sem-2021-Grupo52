@@ -40,18 +40,20 @@ public class Main {
 //		BoolResultado br= new BoolResultado("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx", );
 		for (int i=0; i< linhas.size(); i++) {
 			for (int j=0; j<c.getBoolMethod().size();j++){
-				if(linhas.get(i).getis_Long_Method() && c.getBoolMethod().get(j).getMethod()){
-					System.out.println("Verdadeiro Positivo");
-				}
-				if(!linhas.get(i).getis_Long_Method() && c.getBoolMethod().get(j).getMethod()){
-					System.out.println("Falso Positivo");
-				}
-				if(!linhas.get(i).getis_Long_Method() && !c.getBoolMethod().get(j).getMethod()){
-					System.out.println("Verdadeiro Negativo");
-				}
-				if(linhas.get(i).getis_Long_Method() && !method.aplicarRegra()){
-					System.out.println("Falso Negativo");
-				}
+				if(linhas.get(i).getPacote().equals(c.getBoolMethod().get(j).getMetodo())){
+				if(linhas.get(i).getMetodo().equals(c.getBoolMethod().get(j).getMetodo())){
+					if(linhas.get(i).getis_Long_Method() && c.getBoolMethod().get(j).getMetodo()){
+						System.out.println("Verdadeiro Positivo");
+					}
+					if(!linhas.get(i).getis_Long_Method() && c.getBoolMethod().get(j).getMethod()){
+						System.out.println("Falso Positivo");
+					}
+					if(!linhas.get(i).getis_Long_Method() && !c.getBoolMethod().get(j).getMethod()){
+						System.out.println("Verdadeiro Negativo");
+					}
+					if(linhas.get(i).getis_Long_Method() && !method.aplicarRegra()){
+						System.out.println("Falso Negativo");
+					}
 		
 //is_God_Class
 			if(linhas.get(i).getis_God_Class() && class.aplicarRegra()){

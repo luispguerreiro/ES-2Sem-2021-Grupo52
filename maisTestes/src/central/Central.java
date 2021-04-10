@@ -80,7 +80,7 @@ public class Central {
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
-		System.out.println("\n***Exportação para Excel concluída!***\n");
+		System.out.println("\n***Exportaï¿½ï¿½o para Excel concluï¿½da!***\n");
 	}
 
 	public void sys() {
@@ -255,16 +255,14 @@ public class Central {
 	public ArrayList<Resultado> getAll() {
 		return all;
 	}
-<<<<<<< HEAD
+
 	public ArrayList<BoolResultado> getBoolClass(){
 		return boolResultClass;
 	}
 	public ArrayList<BoolResultado> getBoolMethod(){
 		return boolResultMethod;
 	}
-=======
-	
->>>>>>> branch 'main' of https://github.com/luispguerreiro/ES-2Sem-2021-Grupo52
+
 
 	public static void main(String[] args) throws IOException {
 		String ruleName = "Regra2";
