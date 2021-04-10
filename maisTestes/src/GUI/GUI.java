@@ -258,7 +258,7 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					File file = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\Code_Smells.xlsx");
+					File file = new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
 					Desktop d = Desktop.getDesktop();
 					d.open(file);
 				} catch (IOException e1) {
