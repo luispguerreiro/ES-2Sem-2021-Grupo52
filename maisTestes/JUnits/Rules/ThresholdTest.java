@@ -30,6 +30,7 @@ class ThresholdTest {
 	static comparators o;
 	static int limit;
 	static ArrayList<Resultado> resultados;
+	static Threshold t;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -37,8 +38,10 @@ class ThresholdTest {
 	static void setUpBeforeClass() throws Exception {
 		serialVersionUID = 1L;
 		o= comparators.BIGGER;
-		FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ConstantPoolGenerator.java";
+		limit= 20;
+		FILE_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolGenerator.java";
 		resultados = new ArrayList<>();
+		t= new Threshold (metricName, o, limit);
 		
 	}
 
@@ -69,32 +72,38 @@ class ThresholdTest {
 	 */
 	@Test
 	final void testThreshold() throws FileNotFoundException {
-		Threshold t= new Threshold (metricName, o, limit);
+		
 		Assertions.assertNotNull(t);
 	}
 
 	/**
 	 * Test method for {@link rules.Threshold#isBigger(int)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testIsBigger() {
-		fail("Not yet implemented"); // TODO
+	final void testIsBigger() throws FileNotFoundException {
+		int smaller= 10;
+		Assertions.assertTrue(t.isBigger(smaller));
 	}
 
 	/**
 	 * Test method for {@link rules.Threshold#isSmaller(int)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testIsSmaller() {
-		fail("Not yet implemented"); // TODO
+	final void testIsSmaller() throws FileNotFoundException {
+		int bigger= 10;
+		Assertions.assertTrue(t.isSmaller(bigger));
 	}
 
 	/**
 	 * Test method for {@link rules.Threshold#isEquals(int)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testIsEquals() {
-		fail("Not yet implemented"); // TODO
+	final void testIsEquals() throws FileNotFoundException {
+		int equals= 20;
+		Assertions.assertTrue(t.isEquals(equals));
 	}
 
 	/**
