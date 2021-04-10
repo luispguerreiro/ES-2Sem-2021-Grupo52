@@ -2,11 +2,13 @@ package central;
 
 public class BoolResultado {
 	
-	private String path;
+	private String classes;
+	private String metodo;
 	private boolean verificacao;
 	
-	public BoolResultado(String path, boolean verificacao){
-		this.path=path;
+	public BoolResultado(String classes, String metodo, boolean verificacao){
+		this.classes=classes;
+		this.metodo=metodo;
 		this.verificacao=verificacao;
 	}
 	
@@ -14,11 +16,12 @@ public class BoolResultado {
 		this.verificacao = verificacao;
 	}
 	
-	public String getPath() {
-		return path;
+	public String getClasses() {
+		return classes;
 	}
-	public void setPath(String path) {
-		this.path = path;
+	
+	public String getMetodo() {
+		return metodo;
 	}
 	
 	public boolean getVerificacao(){

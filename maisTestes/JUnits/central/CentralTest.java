@@ -38,8 +38,12 @@ import rules.Rule;
 		static ArrayList<comparators> comp= new ArrayList<>();
 		static ArrayList<Integer> limits= new ArrayList<>();
 		static ArrayList<operators> oper= new ArrayList<>();
-		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+//		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+//		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		
+		static String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
+
+		static File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 		/**
 		 * @throws java.lang.Exception
@@ -56,7 +60,8 @@ import rules.Rule;
 			rules.add(new Rule("LONG_method", 1, metricName, comp,
 					 limits,  oper));
 			c= new Central(rules);
-			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+//			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 		}
 	/**
