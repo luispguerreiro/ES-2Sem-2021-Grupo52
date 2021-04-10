@@ -27,7 +27,6 @@ import Metrics.Metrics;
 import Metrics.NOM_Class;
 import Metrics.Resultado;
 import Metrics.WMC_Class;
-import rules.GodClass;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
 import rules.Rule;
