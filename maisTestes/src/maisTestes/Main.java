@@ -23,6 +23,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import central.BoolResultado;
+import central.Central;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -31,6 +32,9 @@ public class Main {
 		excel.lerExcel(file);
 		ArrayList<Linha> linhas= new ArrayList<Linha>(excel.getList());
 		System.out.println(linhas);
+//		Central c= new Central(;
+//		c.getBoolClass();
+		
 //		BoolResultado br= new BoolResultado("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx", );
 //		for (int i=0; i< linhas.size(); i++) {
 //			if(linhas.get(i).getis_Long_Method()){
