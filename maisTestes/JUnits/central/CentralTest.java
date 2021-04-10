@@ -187,10 +187,17 @@ import rules.Rule;
 
 	/**
 	 * Test method for {@link central.Central#extracted()}.
+	 * @throws IOException 
 	 */
 	@Test
-	final void testExtracted() {
-		fail("Not yet implemented"); // TODO
+	final void testExtracted() throws IOException {
+		File dir = new File(SRC_PATH);
+		ArrayList<File> lista = new ArrayList<File>();
+		Assertions.assertNotNull(dir);
+		Assertions.assertNotNull(lista);
+		File[] v = c.extracted();
+		Assertions.assertNotNull(v);
+		Assertions.assertEquals(44, v.length);
 	}
 
 	/**
