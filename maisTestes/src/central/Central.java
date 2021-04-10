@@ -79,7 +79,7 @@ public class Central {
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
-		System.out.println("\n***Exportação para Excel concluída!***\n");
+		System.out.println("\n***Exportaï¿½ï¿½o para Excel concluï¿½da!***\n");
 	}
 
 	public void sys() {
@@ -128,8 +128,8 @@ public class Central {
 			all.add(new Resultado(i, cycloMethod.getResultados().get(i).getPath(),
 					cycloMethod.getResultados().get(i).getLinhas(), vetorResultado));
 
-			boolResultClass.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), cycloMethod.getResultados().get(i).getMethodNames(), false));
-			boolResultMethod.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), cycloMethod.getResultados().get(i).getMethodNames(), false));
+			boolResultClass.add(new BoolResultado(cycloMethod.getResultados().get(i).getPackage(), cycloMethod.getResultados().get(i).getClasses(), cycloMethod.getResultados().get(i).getMethodNames(), false));
+			boolResultMethod.add(new BoolResultado(cycloMethod.getResultados().get(i).getPackage(), cycloMethod.getResultados().get(i).getClasses(), cycloMethod.getResultados().get(i).getMethodNames(), false));
 		}
 	}
 
