@@ -27,17 +27,17 @@ import Metrics.Metrics;
 import Metrics.NOM_Class;
 import Metrics.Resultado;
 import Metrics.WMC_Class;
-import rules.GodClass;
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
 import rules.Rule;
 
 public class Central {
 
-	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
+	 // mudar nome
+	private Loc_Method locMethod;private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
 
-	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // mudar nome
-	private Loc_Method locMethod;
+	private File excelFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private File historyFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	private CYCLO_method cycloMethod;
 	private Loc_Class locClass;
 	private NOM_Class nomClass;
@@ -56,7 +56,7 @@ public class Central {
 		File[] v = extracted();
 
 		XSSFWorkbook workBook = new XSSFWorkbook();
-		Sheet sheet = workBook.createSheet(file.getName().replaceFirst("[.][^.]+$", ""));
+		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
 		for (int i = 0; i < v.length; i++) {
 
 			metric = new Metrics(v[i].getAbsolutePath());
@@ -75,7 +75,7 @@ public class Central {
 		System.out.println("nomClass: " + all.get(0).getAllInts()[1]);
 		chooseRules(rules);
 		sys();
-		OutputStream fileOut = new FileOutputStream(file);
+		OutputStream fileOut = new FileOutputStream(excelFile);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
@@ -85,9 +85,11 @@ public class Central {
 	public void sys() {
 		for (int i = 0; i < all.size(); i++) {
 			System.out.println("ID  " + all.get(i).getMethodID());
-			System.out.println("CCC Path: " + boolResultClass.get(i).getPath());
+			System.out.println("CCC Path: " + boolResultClass.get(i).getClasses());
+			System.out.println("CCC Path: " + boolResultClass.get(i).getMetodo());
 			System.out.println("CCC Boolean:  " + boolResultClass.get(i).getVerificacao());
-			System.out.println("MMM Path: " + boolResultMethod.get(i).getPath());
+			System.out.println("MMM Path: " + boolResultMethod.get(i).getClasses());
+			System.out.println("MMM Path: " + boolResultMethod.get(i).getMetodo());
 			System.out.println("MMM Boolean:  " + boolResultMethod.get(i).getVerificacao());
 			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
 				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
@@ -126,8 +128,8 @@ public class Central {
 			all.add(new Resultado(i, cycloMethod.getResultados().get(i).getPath(),
 					cycloMethod.getResultados().get(i).getLinhas(), vetorResultado));
 
-			boolResultClass.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
-			boolResultMethod.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
+			boolResultClass.add(new BoolResultado(cycloMethod.getResultados().get(i).getPackage(), cycloMethod.getResultados().get(i).getClasses(), cycloMethod.getResultados().get(i).getMethodNames(), false));
+			boolResultMethod.add(new BoolResultado(cycloMethod.getResultados().get(i).getPackage(), cycloMethod.getResultados().get(i).getClasses(), cycloMethod.getResultados().get(i).getMethodNames(), false));
 		}
 	}
 
@@ -238,7 +240,7 @@ public class Central {
 	}
 
 	public File getFile() {
-		return file;
+		return excelFile;
 	}
 
 	public void setSourcePath(String SRC_PATH) {
@@ -246,18 +248,13 @@ public class Central {
 	}
 
 	public void setFile(File f) {
-		this.file = f;
+		this.excelFile = f;
 	}
 
 	public ArrayList<Resultado> getAll() {
 		return all;
 	}
-	public ArrayList<BoolResultado> boolClass(){
-		return boolResultClass;
-	}
-	public ArrayList<BoolResultado> boolMethod(){
-		return boolResultMethod;
-	}
+	
 
 	public static void main(String[] args) throws IOException {
 		String ruleName = "Regra2";
