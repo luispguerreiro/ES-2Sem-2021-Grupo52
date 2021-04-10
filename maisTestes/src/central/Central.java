@@ -54,6 +54,7 @@ public class Central {
 	public Central(ArrayList<Rule> rules) throws IOException {
 
 		File[] v = extracted();
+		
 
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(file.getName().replaceFirst("[.][^.]+$", ""));
@@ -252,10 +253,10 @@ public class Central {
 	public ArrayList<Resultado> getAll() {
 		return all;
 	}
-	public ArrayList<BoolResultado> boolClass(){
+	public ArrayList<BoolResultado> getBoolClass(){
 		return boolResultClass;
 	}
-	public ArrayList<BoolResultado> boolMethod(){
+	public ArrayList<BoolResultado> getBoolMethod(){
 		return boolResultMethod;
 	}
 

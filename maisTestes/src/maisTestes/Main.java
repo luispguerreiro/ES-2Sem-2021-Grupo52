@@ -23,51 +23,57 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import central.BoolResultado;
 import central.Central;
+import rules.Rule;
 public class Main {
-
+	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		File file= new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
 		Excel excel= new Excel();
 		excel.lerExcel(file);
 		ArrayList<Linha> linhas= new ArrayList<Linha>(excel.getList());
 		System.out.println(linhas);
-//		Central c= new Central(;
-//		c.getBoolClass();
+		ArrayList<Rule> rules= new ArrayList<Rule>();
+		rules.get(0).fuelArrays();
+		Central c= new Central(rules);
+		c.getBoolMethod();
 		
 //		BoolResultado br= new BoolResultado("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx", );
-//		for (int i=0; i< linhas.size(); i++) {
-//			if(linhas.get(i).getis_Long_Method()){
-//				System.out.println("Verdadeiro Positivo");
-//			}
-//			if(!linhas.get(i).getis_Long_Method() && method.aplicarRegra()){
-//				System.out.println("Falso Positivo");
-//			}
-//			if(!linhas.get(i).getis_Long_Method() && !method.aplicarRegra()){
-//				System.out.println("Verdadeiro Negativo");
-//			}
-//			if(linhas.get(i).getis_Long_Method() && !method.aplicarRegra()){
-//				System.out.println("Falso Negativo");
-//			}
-//		
-////is_God_Class
-//			if(linhas.get(i).getis_God_Class() && class.aplicarRegra()){
-//				System.out.println("Verdadeiro Positivo");
-//			}
-//			if(!linhas.get(i).getis_God_Class() && class.aplicarRegra()){
-//				System.out.println("Falso Positivo");
-//			}
-//			if(!linhas.get(i).getis_God_Class() && !class.aplicarRegra()){
-//				System.out.println("Verdadeiro Negativo");
-//			}
-//			if(linhas.get(i).getis_God_Class() && !class.aplicarRegra()){
-//				System.out.println("Falso Negativo");
-//			}
-//		
-//		
-//		}
+		for (int i=0; i< linhas.size(); i++) {
+			for (int j=0; j<c.getBoolMethod().size();j++){
+				if(linhas.get(i).getis_Long_Method() && c.getBoolMethod().get(j).getMethod()){
+					System.out.println("Verdadeiro Positivo");
+				}
+				if(!linhas.get(i).getis_Long_Method() && c.getBoolMethod().get(j).getMethod()){
+					System.out.println("Falso Positivo");
+				}
+				if(!linhas.get(i).getis_Long_Method() && !c.getBoolMethod().get(j).getMethod()){
+					System.out.println("Verdadeiro Negativo");
+				}
+				if(linhas.get(i).getis_Long_Method() && !method.aplicarRegra()){
+					System.out.println("Falso Negativo");
+				}
+		
+//is_God_Class
+			if(linhas.get(i).getis_God_Class() && class.aplicarRegra()){
+				System.out.println("Verdadeiro Positivo");
+			}
+			if(!linhas.get(i).getis_God_Class() && class.aplicarRegra()){
+				System.out.println("Falso Positivo");
+			}
+			if(!linhas.get(i).getis_God_Class() && !class.aplicarRegra()){
+				System.out.println("Verdadeiro Negativo");
+			}
+			if(linhas.get(i).getis_God_Class() && !class.aplicarRegra()){
+				System.out.println("Falso Negativo");
+			}
+			
+		
+		
+		}
 			
 		
 
+	}
 	}
 
 }
