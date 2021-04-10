@@ -131,6 +131,7 @@ class ThresholdTest {
 	}
 
 	/**
+	 * 
 	 * Test method for {@link rules.Threshold#getLimit()}.
 	 */
 	@Test
