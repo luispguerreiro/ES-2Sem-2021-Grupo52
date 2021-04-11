@@ -78,7 +78,6 @@ import rules.GuiOutput.operators;
 		System.out.println("Resultados booleanos: " + boolresult.get(20).getVerificacao() + " size " + boolresult.size());
 	}
 
-<<<<<<< HEAD
 	@Override
 	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
 		return t.result(valor);
@@ -93,21 +92,8 @@ import rules.GuiOutput.operators;
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
 
-	@Override
-=======
-	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
-		return t.result(valor);
-	}
 
-	public boolean logic2(Threshold t, Threshold t1, int valor, int valor1) throws FileNotFoundException {
-		if (oper.get(0).equals(operators.AND))
-			return and(t.result(valor), t1.result(valor1));
-		if (oper.get(0).equals(operators.OR))
-			return or(t.result(valor), t1.result(valor1));
-		throw new IllegalAccessError("Erro ao comparar thresholds\n");
-	}
 
->>>>>>> refs/heads/main
 	public boolean logic3 (Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3) throws FileNotFoundException{
 		boolean aux= false;
 		if (oper.get(0).equals(operators.AND))
@@ -144,45 +130,24 @@ import rules.GuiOutput.operators;
 		return ruleName;
 	}
 
-<<<<<<< HEAD
-	@Override
+
 	public int getRuleType() {
 		return ruleType;
 	}
 
-	@Override
-=======
-	public int getRuleType() {
-		return ruleType;
-	}
-
->>>>>>> refs/heads/main
 	public ArrayList<comparators> getComp() {
 		return comp;
 	}
 
-<<<<<<< HEAD
-	@Override
-=======
->>>>>>> refs/heads/main
 	public ArrayList<Integer> getLimits() {
 		return limits;
 	}
-<<<<<<< HEAD
 	
-	@Override
-=======
 
->>>>>>> refs/heads/main
 	public ArrayList<String> getMetricName() {
 		return metricName;
 	}
-<<<<<<< HEAD
 	
-	@Override
-=======
-
->>>>>>> refs/heads/main
 	public ArrayList<operators> getOper() {
 		return oper;
 	}
