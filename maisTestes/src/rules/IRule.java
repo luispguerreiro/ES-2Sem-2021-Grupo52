@@ -5,11 +5,8 @@ import java.util.ArrayList;
 
 import Metrics.Resultado;
 import central.BoolResultado;
-<<<<<<< HEAD
-import rules.GuiOutput.comparators;
-import rules.GuiOutput.operators;
-=======
->>>>>>> refs/heads/main
+import rules.Rule.comparator;
+import rules.Rule.operator;
 
 public interface IRule {
 	ArrayList<Threshold> getThresholds();
@@ -34,13 +31,13 @@ public interface IRule {
 	
 	public int getRuleType();
 
-	public ArrayList<comparators> getComp();
+	public ArrayList<comparator> getComp();
 	
 	public ArrayList<Integer> getLimits();
 	
 	public ArrayList<String> getMetricName();
 	
-	public ArrayList<operators> getOper();
+	public ArrayList<operator> getOper();
 	
 	void setRuleName(String ruleName);
 
