@@ -8,15 +8,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class Loc_MethodTest {
+class NOM_ClassTest {
 	private static String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	static Metrics m;
-	private static Loc_Method locMethod2;
-	
+	private static NOM_Class nomClass;
+
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		m = new Metrics(FILE_PATH);
-		 locMethod2 = new Loc_Method(m);
+		nomClass = new NOM_Class(m);
 	}
 
 	@AfterAll
@@ -25,6 +25,7 @@ class Loc_MethodTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+
 	}
 
 	@AfterEach
@@ -32,15 +33,15 @@ class Loc_MethodTest {
 	}
 
 	@Test
-	final void testLoc_Method() {
-		Loc_Method locMethod = new Loc_Method(m);
-		assertNotNull(locMethod);
+	final void testNOM_Class() {
+		NOM_Class nom = new NOM_Class(m);
+		assertNotNull(nom);
 	}
 
 	@Test
 	final void testGetResultados() {
-		assertNotNull(locMethod2.getResultados());
-		assertEquals(locMethod2.getResultados().size(), 32);
+		assertNotNull(nomClass.getResultados());
+		assertEquals(nomClass.getResultados().size(),3);
 	}
 
 }

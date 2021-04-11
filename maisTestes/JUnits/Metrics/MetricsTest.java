@@ -17,7 +17,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
 class MetricsTest {
-	private static String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\Jasml\\src\\com\\jasml\\classes\\Attribute.java";
+	private static String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	static Metrics metric;
 	static CompilationUnit cu;
 	private static List<ClassOrInterfaceDeclaration> clazz;
