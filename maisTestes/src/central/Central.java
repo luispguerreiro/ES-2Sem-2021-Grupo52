@@ -27,6 +27,7 @@ import Metrics.Metrics;
 import Metrics.NOM_Class;
 import Metrics.Resultado;
 import Metrics.WMC_Class;
+import maisTestes.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
@@ -34,10 +35,11 @@ import rules.Rule.operator;
 public class Central {
 
 	 // mudar nome
-	private Loc_Method locMethod;private String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+	private Loc_Method locMethod;
+	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
 
-	private File excelFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-	private File historyFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private File excelFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private File historyFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	private CYCLO_method cycloMethod;
 	private Loc_Class locClass;
 	private NOM_Class nomClass;
@@ -82,6 +84,8 @@ public class Central {
 		fileOut.flush();
 		fileOut.close();
 		System.out.println("\n***Exporta��o para Excel conclu�da!***\n");
+		
+		Comparador c = new Comparador(boolResultMethod, boolResultClass);
 	}
 
 	public void sys() {
