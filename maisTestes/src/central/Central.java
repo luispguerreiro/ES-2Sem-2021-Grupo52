@@ -54,10 +54,7 @@ public class Central {
 	public Central(ArrayList<Rule> rules) throws IOException {
 
 		File[] v = extracted();
-<<<<<<< HEAD
-=======
 		
->>>>>>> refs/heads/main
 
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
@@ -258,9 +255,6 @@ public class Central {
 	public ArrayList<Resultado> getAll() {
 		return all;
 	}
-<<<<<<< HEAD
-	
-=======
 
 	public ArrayList<BoolResultado> getBoolClass(){
 		return boolResultClass;
@@ -269,7 +263,6 @@ public class Central {
 		return boolResultMethod;
 	}
 
->>>>>>> refs/heads/main
 
 	public static void main(String[] args) throws IOException {
 		String ruleName = "Regra2";
