@@ -45,12 +45,12 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 public class GUI extends JFrame {
-	//commit final sprint - gui entregável 
+	//commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico com valores default -> faltam os restantes panels
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
 	
-	private File excelOutputFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	private String src_path;
 
 	/**
