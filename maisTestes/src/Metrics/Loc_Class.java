@@ -10,7 +10,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class Loc_Class {
-	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\Jasml\\\\src\\\\com\\\\jasml\\\\classes\\\\Attribute.java";
 	private int linhasClass;
 	private int linhasClassMain;
 	private int i = 1;
@@ -79,6 +79,7 @@ public class Loc_Class {
 			System.out.println(string.getLinhas());
 			System.out.println(string.getClasses());
 			System.out.println(string.getMethodID());
+			System.out.println(string.getPath());
 		}
 	}
 }
