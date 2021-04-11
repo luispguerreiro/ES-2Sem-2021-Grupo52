@@ -51,6 +51,7 @@ public class GUI extends JFrame {
 	private JTextField txtSrcPath;
 	
 	private File excelOutputFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private String src_path;
 
 	/**
 	 * Launch the application.
@@ -135,6 +136,7 @@ public class GUI extends JFrame {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = jfc.getSelectedFile();
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
+					 src_path = txtSrcPath.getText();
 				}
 				try {
 					File dir = new File(txtSrcPath.getText());
@@ -179,6 +181,7 @@ public class GUI extends JFrame {
 					try {
 						rules = PutCentralWorking();
 						Central c = new Central(rules);
+						c.setSourcePath(src_path);
 						c.setExcelFile(excelOutputFile);
 						c.ini();
 					} catch (IOException e1) {
