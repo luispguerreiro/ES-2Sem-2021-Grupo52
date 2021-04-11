@@ -34,10 +34,10 @@ import rules.Rule.operator;
 public class Central {
 
 	 // mudar nome
-	private Loc_Method locMethod;private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
+	private Loc_Method locMethod;private String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 
-	private File excelFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-	private File historyFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private File excelFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private File historyFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	private CYCLO_method cycloMethod;
 	private Loc_Class locClass;
 	private NOM_Class nomClass;
@@ -313,6 +313,9 @@ public static ArrayList<Rule> testMain() throws FileNotFoundException{
 		History hist = new History();
 		hist.writeFile(rules);
 		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
+//		History hist = new History();
+//		hist.writeFile(rules);
+//		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
 	}
-
+//asad
 }

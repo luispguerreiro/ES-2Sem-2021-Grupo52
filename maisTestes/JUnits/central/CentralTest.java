@@ -27,9 +27,11 @@ import org.junit.jupiter.api.Test;
 
 import Metrics.Resultado;
 import maisTestes.Excel;
-import rules.GuiOutput.comparators;
-import rules.GuiOutput.operators;
+//import rules.GuiOutput.comparators;
+//import rules.GuiOutput.operators;
 import rules.Rule;
+import rules.Rule.comparator;
+import rules.Rule.operator;
 
 /**
  * @author nmsid
@@ -42,8 +44,9 @@ import rules.Rule;
 		static Excel excel;
 		static ArrayList<Rule> rules= new ArrayList<>();
 		static ArrayList<String> metricName= new ArrayList<>();
-		static ArrayList<comparators> comp= new ArrayList<>();
+		static ArrayList<comparator> comp= new ArrayList<>();
 		static ArrayList<Integer> limits= new ArrayList<>();
+<<<<<<< HEAD
 		static ArrayList<operators> oper= new ArrayList<>();
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -306,6 +309,18 @@ import rules.Rule;
 
 }
 =======
+=======
+		static ArrayList<operator> oper= new ArrayList<>();
+
+//		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+//		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		
+//		static String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
+//
+//		static File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		
+
+>>>>>>> refs/heads/Junits
 		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		static int separador;
@@ -317,15 +332,16 @@ import rules.Rule;
 			separador= 0;
 			metricName.add("NOM_class");
 			metricName.add("LOC_class");
-			comp.add(comparators.BIGGER);
-			comp.add(comparators.BIGGER);
+			comp.add(comparator.BIGGER);
+			comp.add(comparator.BIGGER);
 			limits.add(13);
 			limits.add(20);
-			oper.add(operators.AND);
+			oper.add(operator.AND);
 			rules.add(new Rule("LONG_method", 1, metricName, comp,
 					 limits,  oper));
 			c= new Central(rules);
-			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+//			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 		}
 	/**
@@ -358,6 +374,7 @@ import rules.Rule;
 	}
 
 	/**
+	 * a
 	 * Test method for {@link central.Central#sys()}.
 	 */
 	@Test
@@ -554,4 +571,7 @@ import rules.Rule;
 	}
 
 }
+<<<<<<< HEAD
 >>>>>>> refs/heads/main
+=======
+>>>>>>> refs/heads/Junits
