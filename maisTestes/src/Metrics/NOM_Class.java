@@ -58,15 +58,5 @@ public class NOM_Class {
 		return resultados;
 	}
 
-	public static void main(String[] args) {
-		try {
-			NOM_Class a = new NOM_Class(new Metrics("C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java"));
-			for (Resultado string : a.getResultados()) {
-				System.out.println(string.getPath());
-				System.out.println(string.getLinhas());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+
 }
