@@ -34,7 +34,7 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 /**
- * @author nmsid
+ * @author nmsid e henrique
  *
  */
 
@@ -116,6 +116,7 @@ import rules.Rule.operator;
 		fail("Not yet implemented"); // TODO
 	}
 
+	
 	/**
 	 * Test method for {@link central.Central#chooseRules(java.util.ArrayList)}.
 	 * @throws FileNotFoundException 
