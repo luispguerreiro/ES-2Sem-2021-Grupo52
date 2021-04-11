@@ -9,12 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class Loc_MethodTest {
-	private static String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
+	private static String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\Jasml\\\\src\\\\com\\\\jasml\\\\classes\\\\Attribute.java";
 	static Metrics m;
-	private Loc_Method locMethod2;
+	private static Loc_Method locMethod2;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		m = new Metrics(FILE_PATH);
+		 locMethod2 = new Loc_Method(m);
 	}
 
 	@AfterAll
@@ -31,12 +33,14 @@ class Loc_MethodTest {
 
 	@Test
 	final void testLoc_Method() {
-		fail("Not yet implemented");
+		Loc_Method locMethod = new Loc_Method(m);
+		assertNotNull(locMethod);
 	}
 
 	@Test
 	final void testGetResultados() {
-		fail("Not yet implemented");
+		assertNotNull(locMethod2.getResultados());
+		assertEquals(locMethod2.getResultados().size(), 2);
 	}
 
 }

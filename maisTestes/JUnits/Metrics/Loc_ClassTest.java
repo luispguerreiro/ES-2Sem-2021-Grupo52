@@ -40,6 +40,7 @@ class Loc_ClassTest {
 	@Test
 	final void testGetResultados() {
 		assertNotNull(locClass2.getResultados());
+		assertEquals(locClass2.getResultados().size(), 1);
 	}
 
 }
