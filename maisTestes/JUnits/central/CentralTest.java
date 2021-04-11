@@ -48,8 +48,6 @@ import rules.Rule.operator;
 		static ArrayList<Integer> limits= new ArrayList<>();
 		static ArrayList<operator> oper= new ArrayList<>();
 
-//		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-//		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 //		static String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
 //

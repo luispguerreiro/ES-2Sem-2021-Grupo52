@@ -136,6 +136,7 @@ class ThresholdTest {
 
 	}
 	
+	
 	/**
 	 * Test method for {@link rules.Threshold#result(int)}.
 	 * 
