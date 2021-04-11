@@ -39,6 +39,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class GUI extends JFrame {
+	//commit final sprint - gui entregável 
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
