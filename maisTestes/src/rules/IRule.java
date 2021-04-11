@@ -5,8 +5,11 @@ import java.util.ArrayList;
 
 import Metrics.Resultado;
 import central.BoolResultado;
+<<<<<<< HEAD
 import rules.GuiOutput.comparators;
 import rules.GuiOutput.operators;
+=======
+>>>>>>> refs/heads/main
 
 public interface IRule {
 	ArrayList<Threshold> getThresholds();
