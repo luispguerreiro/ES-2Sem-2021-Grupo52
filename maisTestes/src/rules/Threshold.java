@@ -23,7 +23,7 @@ public class Threshold implements Serializable {
 	private ArrayList<Resultado> resultados = new ArrayList<>(); // vai ser ArrayList<Resultado>
 
 	public Threshold(String metricName, comparator o, int limit) throws FileNotFoundException {
-		this.metricName = metricName;
+		this.setMetricName(metricName);
 		this.o = o;
 		this.limit = limit;
 		System.out.println("Threshold: " + metricName + " " + o + " " + limit);
@@ -54,27 +54,24 @@ public class Threshold implements Serializable {
 		}
 		throw new IllegalStateException();
 	}
-	
-	public void setMetricBoolean(ArrayList<BoolResultado> r){
+
+	public void setMetricBoolean(ArrayList<BoolResultado> r) {
 		int position = positionToGet();
 	}
 
-	
-	public int positionToGet(){
-		if(metricName.equals("NOM_class"))
-				return 0;
-		else if(metricName.equals("LOC_class"))
-				return 1;
-		else if(metricName.equals("WMC_class"))
+	public int positionToGet() {
+		if (getMetricName().equals("NOM_class"))
+			return 0;
+		else if (getMetricName().equals("LOC_class"))
+			return 1;
+		else if (getMetricName().equals("WMC_class"))
 			return 2;
-		else if(metricName.equals("LOC_method"))
+		else if (getMetricName().equals("LOC_method"))
 			return 3;
-		else if(metricName.equals("CYCLO_method"))
+		else if (getMetricName().equals("CYCLO_method"))
 			return 4;
 		throw new IllegalArgumentException("metric name não encontrado\n");
 	}
-		
-
 
 	public int getLimit() {
 		return limit;
@@ -88,6 +85,19 @@ public class Threshold implements Serializable {
 		return metricName;
 	}
 
+	public void setMetricName(String metricName) {
+		this.metricName = metricName;
+	}
+
+	public void setComparator(comparator o) {
+		this.o= o;
+	}
+	
+	public void setLimit(int limit) {
+		this.limit=limit;
+		
+	}
+
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
@@ -96,5 +106,7 @@ public class Threshold implements Serializable {
 		Threshold t = new Threshold("LOC_method", comparator.SMALLER, 10);
 
 	}
+
+	
 
 }
