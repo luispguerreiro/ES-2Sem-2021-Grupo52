@@ -181,7 +181,6 @@ public class GUI extends JFrame {
 						Central c = new Central(rules);
 						c.setExcelFile(excelOutputFile);
 						c.ini();
-						System.out.println("oi");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
