@@ -45,6 +45,7 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 public class GUI extends JFrame {
+	//commit final sprint - gui entregável 
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;

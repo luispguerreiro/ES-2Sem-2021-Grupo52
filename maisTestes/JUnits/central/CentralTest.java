@@ -48,8 +48,6 @@ import rules.Rule.operator;
 		static ArrayList<Integer> limits= new ArrayList<>();
 		static ArrayList<operator> oper= new ArrayList<>();
 
-//		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-//		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 //		static String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
 //
@@ -75,8 +73,8 @@ import rules.Rule.operator;
 			rules.add(new Rule("LONG_method", 1, metricName, comp,
 					 limits,  oper));
 			c= new Central(rules);
-//			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+//			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 		}
 	/**
@@ -109,6 +107,7 @@ import rules.Rule.operator;
 	}
 
 	/**
+	 * a
 	 * Test method for {@link central.Central#sys()}.
 	 */
 	@Test

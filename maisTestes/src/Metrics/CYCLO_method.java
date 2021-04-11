@@ -127,9 +127,7 @@ public class CYCLO_method {
 		}
 	}
 
-	public int getCyclo() {
-		return cyclo;
-	}
+
 
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
