@@ -28,16 +28,26 @@ import rules.Rule;
 
 public class Comparador {
 	
-	
-
 	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass) throws FileNotFoundException, IOException {
 		File file= new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
 		Excel excel= new Excel();
 		excel.lerExcel(file);
 		ArrayList<Linha> linhas= new ArrayList<Linha>(excel.getList());
-//		System.out.println(linhas);
-
-
+		methodComp(boolMethod, linhas);
+		classComp(boolClass, linhas);
+		
+	}
+	public Comparador(ArrayList<BoolResultado> array) throws FileNotFoundException, IOException{
+		File file= new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
+		Excel excel= new Excel();
+		excel.lerExcel(file);
+		ArrayList<Linha> linhas= new ArrayList<Linha>(excel.getList());
+		
+	}
+		
+		
+		
+	public void methodComp(ArrayList<BoolResultado> boolMethod, ArrayList<Linha> linhas){
 		for (int i=0; i< linhas.size(); i++) {
 			for (int j=0; j<boolMethod.size();j++){
 				if(linhas.get(i).getPacote().equals(boolMethod.get(j).getPackage()) && linhas.get(i).getClasse().equals(boolMethod.get(j).getClasses()) && linhas.get(i).getMetodo().equals(boolMethod.get(j).getMetodo())){
@@ -57,9 +67,8 @@ public class Comparador {
 				}
 			}
 		}
-		
-//is_God_Class
-
+	}
+	public void classComp(ArrayList<BoolResultado> boolClass, ArrayList<Linha> linhas){
 		for (int i=0; i< linhas.size(); i++) {
 			for (int j=0; j<boolClass.size();j++){
 				if(linhas.get(i).getPacote().equals(boolClass.get(j).getPackage()) && linhas.get(i).getClasse().equals(boolClass.get(j).getClasses()) && linhas.get(i).getMetodo().equals(boolClass.get(j).getMetodo())){
@@ -78,10 +87,9 @@ public class Comparador {
 					
 				}
 			}
-		}		
+		}	
+	}
 		
-		
-		}
 
 }
 
