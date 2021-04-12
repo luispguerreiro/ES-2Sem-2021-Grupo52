@@ -25,6 +25,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Metrics.CYCLO_method;
+import Metrics.Metrics;
 import Metrics.Resultado;
 import maisTestes.Excel;
 //import rules.GuiOutput.comparators;
@@ -48,8 +50,6 @@ import rules.Rule.operator;
 		static ArrayList<Integer> limits= new ArrayList<>();
 		static ArrayList<operator> oper= new ArrayList<>();
 
-//		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-//		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 //		static String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
 //
@@ -57,8 +57,11 @@ import rules.Rule.operator;
 		
 
 		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+		static String PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
 		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		static int separador;
+		static Metrics metric;
+		static CYCLO_method cyclo;
 		/**
 		 * @throws java.lang.Exception
 		 */
@@ -74,6 +77,8 @@ import rules.Rule.operator;
 			oper.add(operator.AND);
 			rules.add(new Rule("LONG_method", 1, metricName, comp,
 					 limits,  oper));
+			metric= new Metrics(PATH2);
+			cyclo= new CYCLO_method(metric);
 			c= new Central(rules, file);
 //			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
@@ -170,6 +175,7 @@ import rules.Rule.operator;
 	final void testWriteExcel() throws IOException {
 		File file3 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		XSSFWorkbook workBook = new XSSFWorkbook();
+//		cyclo.getResultados();
 		Sheet sheet = workBook.createSheet(file3.getName().replaceFirst("[.][^.]+$", ""));
 		Row row = sheet.createRow(++separador);
 		Assertions.assertNotNull(row);
