@@ -143,7 +143,7 @@ import rules.Rule.operator;
 	}
 
 	/**
-	 * Test method for {@link central.Central#fuelAll()}.
+	 * Test method for {@link central.Central#fuelAllandBoolResults()}.
 	 */
 	@Test
 	final void testFuelAll() {
@@ -199,7 +199,7 @@ import rules.Rule.operator;
 	}
 
 	/**
-	 * Test method for {@link central.Central#extracted()}.
+	 * Test method for {@link central.Central#extracts()}.
 	 * @throws IOException 
 	 */
 	@Test
@@ -208,7 +208,7 @@ import rules.Rule.operator;
 		ArrayList<File> lista = new ArrayList<File>();
 		Assertions.assertNotNull(dir);
 		Assertions.assertNotNull(lista);
-		File[] v = c.extracted();
+		File[] v = c.extracts();
 		Assertions.assertNotNull(v);
 		Assertions.assertEquals(44, v.length);
 	}
