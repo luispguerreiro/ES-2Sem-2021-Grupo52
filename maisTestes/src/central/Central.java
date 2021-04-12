@@ -38,18 +38,8 @@ import rules.Rule.operator;
  */
 public class Central {
 
-<<<<<<< HEAD
-	// mudar nome
-	private Loc_Method locMethod;
-	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
-=======
 	private File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
->>>>>>> refs/remotes/origin/Rules&Thresholds
 
-<<<<<<< HEAD
-	private File excelFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-	private File historyFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-=======
 	private String excelFileDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; // vai estar em branco e é
 																						// necessário fazer
 																						// setExcelFileDir
@@ -57,7 +47,6 @@ public class Central {
 
 	private File historyFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 
->>>>>>> refs/remotes/origin/Rules&Thresholds
 	private CYCLO_method cycloMethod;
 	private Loc_Method locMethod;
 	private Loc_Class locClass;
@@ -72,30 +61,18 @@ public class Central {
 
 	private Metrics metric;
 
-<<<<<<< HEAD
-	public Central(ArrayList<Rule> rules) throws IOException {
-		this.rules = rules;
-//		ini();
-=======
 	public Central(ArrayList<Rule> rules, File srcPath) throws IOException {
 		this.rules = rules;
 		this.srcPath = srcPath;
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
 		System.out.println(excelFile.getAbsolutePath());
->>>>>>> refs/remotes/origin/Rules&Thresholds
 	}
 
-<<<<<<< HEAD
-	public void ini() throws IOException {
-		File[] v = extracted();
-
-=======
 	/*
 	 * initiates the main Central flow call all methods
 	 */
 	public void ini() throws IOException {
 		File[] v = extracts();
->>>>>>> refs/remotes/origin/Rules&Thresholds
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
 		for (int i = 0; i < v.length; i++) {
@@ -125,17 +102,6 @@ public class Central {
 
 //		Comparador c = new Comparador(boolResultMethod, boolResultClass);
 
-<<<<<<< HEAD
-	}
-	
-	public void setExcelFile(File excelFile) {
-		this.excelFile = excelFile;
-	}
-	
-	public void setSRC_PATH(String sRC_PATH) {
-		SRC_PATH = sRC_PATH;
-=======
->>>>>>> refs/remotes/origin/Rules&Thresholds
 	}
 
 	public void sys() {
@@ -425,76 +391,8 @@ public class Central {
 
 	}
 
-<<<<<<< HEAD
-	public ArrayList<Resultado> getAll() {
-		return all;
-	}
-
-	public ArrayList<BoolResultado> getBoolClass() {
-		return boolResultClass;
-	}
-
-	public ArrayList<BoolResultado> getBoolMethod() {
-		return boolResultMethod;
-	}
-
-	public static ArrayList<Rule> testMain() throws FileNotFoundException {
-		String ruleName = "RegraNew";
-		ArrayList<String> metricName = new ArrayList<>();
-		ArrayList<comparator> comp = new ArrayList<>();
-		ArrayList<Integer> limits = new ArrayList<>();
-		ArrayList<operator> oper = new ArrayList<>();
-		metricName.add("NOM_class");
-		metricName.add("LOC_class");
-		metricName.add("WMC_class");
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.SMALLER);
-		limits.add(20);
-		limits.add(30);
-		limits.add(40);
-		oper.add(operator.AND);
-		oper.add(operator.OR);
-
-		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
-
-		String ruleName1 = "Regra3";
-		ArrayList<String> metricName1 = new ArrayList<>();
-		ArrayList<comparator> comp1 = new ArrayList<>();
-		ArrayList<Integer> limits1 = new ArrayList<>();
-		ArrayList<operator> oper1 = new ArrayList<>();
-		metricName1.add("LOC_method");
-		metricName1.add("CYCLO_method");
-		comp1.add(comparator.BIGGER);
-		comp1.add(comparator.SMALLER);
-		limits1.add(20);
-		limits1.add(40);
-		oper1.add(operator.AND);
-
-		Rule r1 = new Rule(ruleName1, 1, metricName1, comp1, limits1, oper1);
-
-		ArrayList<Rule> rules = new ArrayList();
-		rules.add(r);
-		rules.add(r1);
-		return rules;
-
-	}
-
-=======
->>>>>>> refs/remotes/origin/Rules&Thresholds
 	public static void main(String[] args) throws IOException {
 		ArrayList<Rule> rules = testMain();
-<<<<<<< HEAD
-		Central c = new Central(rules);
-		
-
-		History hist = new History();
-		hist.writeFile(rules);
-		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
-//		History hist = new History();
-//		hist.writeFile(rules);
-//		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
-=======
 		File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
 		Central c = new Central(rules, srcPath);
 		c.ini();
@@ -503,6 +401,5 @@ public class Central {
 //		hist.writeFile(rules);
 //		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
 
->>>>>>> refs/remotes/origin/Rules&Thresholds
 	}
 }

@@ -21,10 +21,37 @@ public class Resultado {
 		this.intis = intis;
 	}
 
-
+//	public ArrayList<Integer> getAllInts() {
+//		return allInts;
+//	}
 
 	public int[] getAllInts() {
 		return intis;
+	}
+
+	public void setAllIntsNomClass(int nomClass) {
+//		allInts.add(0, nomClass);
+		intis[0] = nomClass;
+	}
+
+	public void setAllIntsLocClass(int locClass) {
+//		allInts.add(1, locClass);
+		intis[1] = locClass;
+	}
+
+	public void setAllIntsWmcClass(int wmcClass) {
+//		allInts.add(2, wmcClass);
+		intis[2] = wmcClass;
+	}
+
+	public void setAllIntsLocMethod(int locMethod) {
+//		allInts.add(3, locMethod);
+		intis[3] = locMethod;
+	}
+
+	public void setAllIntsCycloMethod(int cycloMethod) {
+//		allInts.add(4, cycloMethod);
+		intis[4] = cycloMethod;
 	}
 
 	public void setMethodID(int methodID) {

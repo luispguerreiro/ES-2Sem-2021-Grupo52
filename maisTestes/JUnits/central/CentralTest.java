@@ -36,7 +36,7 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 /**
- * @author nmsid e henrique
+ * @author nmsid
  *
  */
 
@@ -57,16 +57,11 @@ import rules.Rule.operator;
 		
 
 		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-<<<<<<< HEAD
-		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-		static int separador;
-=======
 		static String PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
 		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		static int separador;
 		static Metrics metric;
 		static CYCLO_method cyclo;
->>>>>>> refs/remotes/origin/Rules&Thresholds
 		/**
 		 * @throws java.lang.Exception
 		 */
@@ -82,17 +77,11 @@ import rules.Rule.operator;
 			oper.add(operator.AND);
 			rules.add(new Rule("LONG_method", 1, metricName, comp,
 					 limits,  oper));
-<<<<<<< HEAD
-			c= new Central(rules);
-			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-//			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-=======
 			metric= new Metrics(PATH2);
 			cyclo= new CYCLO_method(metric);
 			c= new Central(rules, file);
 //			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
->>>>>>> refs/remotes/origin/Rules&Thresholds
 		
 		}
 	/**
@@ -133,7 +122,6 @@ import rules.Rule.operator;
 		fail("Not yet implemented"); // TODO
 	}
 
-	
 	/**
 	 * Test method for {@link central.Central#chooseRules(java.util.ArrayList)}.
 	 * @throws FileNotFoundException 

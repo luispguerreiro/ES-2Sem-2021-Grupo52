@@ -45,24 +45,15 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 public class GUI extends JFrame {
-<<<<<<< HEAD
-	//commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico com valores default -> faltam os restantes panels
-=======
 	//commit final sprint - gui entregável 
->>>>>>> refs/remotes/origin/Rules&Thresholds
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
 	
-<<<<<<< HEAD
-	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-	private String src_path;
-=======
 	private String excelOutputDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; //vai ser dado pelo user na gui
 	private File src_path;
 	
 	private Central c;
->>>>>>> refs/remotes/origin/Rules&Thresholds
 
 	/**
 	 * Launch the application.
@@ -124,10 +115,6 @@ public class GUI extends JFrame {
 	
 	}
 	
-<<<<<<< HEAD
-	
-=======
->>>>>>> refs/remotes/origin/Rules&Thresholds
 	/**
 	 * Create the frame.
 	 */
@@ -150,7 +137,6 @@ public class GUI extends JFrame {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = jfc.getSelectedFile();
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
-					 src_path = txtSrcPath.getText();
 				}
 				try {
 					src_path=new File(txtSrcPath.getText());
@@ -194,14 +180,8 @@ public class GUI extends JFrame {
 				ArrayList<Rule> rules;
 					try {
 						rules = PutCentralWorking();
-<<<<<<< HEAD
-						Central c = new Central(rules);
-						c.setSourcePath(src_path);
-						c.setExcelFile(excelOutputFile);
-=======
 						c = new Central(rules, src_path);
 						c.setExcelFileDir(excelOutputDir);
->>>>>>> refs/remotes/origin/Rules&Thresholds
 						c.ini();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -344,12 +324,7 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-<<<<<<< HEAD
-//					File file = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\Code_Smells.xlsx");
-					File file = excelOutputFile;
-=======
 					File file = c.getExcelFile();
->>>>>>> refs/remotes/origin/Rules&Thresholds
 					Desktop d = Desktop.getDesktop();
 					d.open(file);
 				} catch (IOException e1) {
