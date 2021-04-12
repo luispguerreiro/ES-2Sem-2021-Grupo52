@@ -311,9 +311,9 @@ public class Central {
 		return files;
 	}
 
-//	public File getSourcePath() {
-//		return SRC_PATH;
-//	}
+	public File getSourcePath() {
+		return srcPath;
+	}
 
 	/*
 	 * @param excelFileDir Directory to save excel file
@@ -333,9 +333,9 @@ public class Central {
 		return excelFile;
 	}
 
-//	public File getFile() {
-//		return excelFile;
-//	}
+	public String getExcelFileDir() {
+		return excelFileDir;
+	}
 
 //	public ArrayList<Resultado> getAll() {
 //		return all;
