@@ -32,26 +32,29 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
+import central.BoolResultado;
 import central.Central;
+import maisTestes.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
 
 public class GUI extends JFrame {
 
-	//commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico com valores default -> faltam os restantes panels
-	//commit final sprint 2 - gui entregável 
+	// commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico
+	// com valores default -> faltam os restantes panels
+	// commit final sprint 2 - gui entregável
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
-	
+	JScrollPane scrollPane;
+
 	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	private String src_path;
 
@@ -71,7 +74,7 @@ public class GUI extends JFrame {
 		});
 	}
 
-	//Funciona sempre com as mesmas regras
+	// Funciona sempre com as mesmas regras
 	public ArrayList<Rule> PutCentralWorking() throws FileNotFoundException {
 		String ruleName = "RegraNew";
 		ArrayList<String> metricName = new ArrayList<>();
@@ -89,9 +92,9 @@ public class GUI extends JFrame {
 		limits.add(40);
 		oper.add(operator.AND);
 		oper.add(operator.OR);
-		
+
 		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
-		
+
 		String ruleName1 = "Regra3";
 		ArrayList<String> metricName1 = new ArrayList<>();
 		ArrayList<comparator> comp1 = new ArrayList<>();
@@ -106,20 +109,20 @@ public class GUI extends JFrame {
 		oper1.add(operator.AND);
 
 		Rule r1 = new Rule(ruleName1, 1, metricName1, comp1, limits1, oper1);
-		
+
 		ArrayList<Rule> rules = new ArrayList();
 		rules.add(r);
 		rules.add(r1);
 		return rules;
-		
-	
+
 	}
-	
-	
+
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws IOException
 	 */
-	public GUI() {
+	public GUI() throws IOException {
 		setResizable(false);
 		setTitle("Code Quality Assessor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -138,7 +141,7 @@ public class GUI extends JFrame {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = jfc.getSelectedFile();
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
-					 src_path = txtSrcPath.getText();
+					src_path = txtSrcPath.getText();
 				}
 				try {
 					File dir = new File(txtSrcPath.getText());
@@ -175,21 +178,18 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				JFrame frame = new JFrame();
-//				frame.setBounds(100, 100, 200, 100);
-//				frame.add(new JLabel("Atreve-te a passar a ponte"));
-//				frame.setVisible(true);
 				ArrayList<Rule> rules;
-					try {
-						rules = PutCentralWorking();
-						Central c = new Central(rules);
-						c.setSourcePath(src_path);
-						c.setExcelFile(excelOutputFile);
-						c.ini();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				try {
+					rules = PutCentralWorking();
+					Central c = new Central(rules);
+					c.setSourcePath(src_path);
+					c.setExcelFile(excelOutputFile);
+					c.ini();
+					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(), new Comparador(c.getBoolClass(), c.getBoolMethod()), 2));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		contentPane.add(btnRun);
@@ -396,10 +396,10 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultPieDataset dataset = new DefaultPieDataset();
-				dataset.setValue("Olá", 21);
-				dataset.setValue("Adeus", 10);
-				dataset.setValue("Não", 3);
-				dataset.setValue("Sim", 14);
+				dataset.setValue("VP", 21);
+				dataset.setValue("VN", 10);
+				dataset.setValue("FP", 3);
+				dataset.setValue("FN", 14);
 
 				JFreeChart pieChart = ChartFactory.createPieChart("gráfico", dataset, false, true, false);
 
@@ -417,138 +417,139 @@ public class GUI extends JFrame {
 		});
 		panel_2.add(btnGrfico);
 
-		JTable table = new JTable(247, 6);
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, },
-				new String[] { "Classe", "is_God_Class", "Verifica\u00E7\u00E3o", "Metodo", "is_Long_Method",
-						"Verifica\u00E7\u00E3o" }));
+//		table.setModel(new DefaultTableModel(
+//				new Object[][] { { null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, },
+//				new String[] { "Classe", "is_God_Class", "Verifica\u00E7\u00E3o", "Metodo", "is_Long_Method",
+//						"Verifica\u00E7\u00E3o" }));
+
+		JTable table = new JTable(30, 10);
 		table.setToolTipText("");
 		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(225, 10, 400, 395);
 		scrollPane.setViewportView(table);
@@ -569,6 +570,42 @@ public class GUI extends JFrame {
 			files.add(path.get(i).toFile());
 		}
 		return files;
+	}
+
+	public JTable escreveTabela(ArrayList<BoolResultado> isgodclass, ArrayList<BoolResultado> islongmethod,
+			Comparador c, int tipo) {
+		ArrayList<String[]> list = new ArrayList<>();
+		if(tipo == 1) {
+			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method", "Verificação" };
+			list.add(fixo);
+		}
+		if(tipo == 2) {
+			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação" };
+			list.add(fixo);
+		}
+		if(tipo == 3) {
+			String[] fixo = { "Pacote", "Classe", "Método", "is_Long_Method", "Verificação" };
+			list.add(fixo);
+		}
+		Object[][] data = new Object[isgodclass.size()][list.get(0).length];
+		for (int i = 0; i < data.length; i++) {
+			data[i][0] = isgodclass.get(i).getPackage();
+			data[i][1] = isgodclass.get(i).getClasses();
+			data[i][2] = isgodclass.get(i).getMetodo();
+			if (tipo == 1 || tipo == 2) { // caso utilizador selecione ambas ou apenas isgodclass
+				data[i][3] = isgodclass.get(i).getVerificacao();
+//				data[i][4] = resultado do comparador
+			}
+			if (tipo == 1 || tipo == 3) { // caso utilizador selecione ambas ou apenas islongmethod
+				data[i][5] = islongmethod.get(i).getVerificacao();
+//					data[i][6] = resultado2 do comparador
+			}
+		}
+
+		JTable table = new JTable(data, list.get(0));
+//		enable table
+		return table;
+
 	}
 
 }
