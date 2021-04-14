@@ -111,7 +111,7 @@ public class Central {
 		System.out.println("number of packages = " + numberOfPackages);
 		System.out.println("number of classes = " + numberOfClasses);
 		System.out.println("number of lines = " + numberOfLines);
-//		Comparador c = new Comparador(boolResultMethod, boolResultClass);
+//		Comparador c = new Comparador(boolResultMethod, boolResultClass);;
 
 	}
 
