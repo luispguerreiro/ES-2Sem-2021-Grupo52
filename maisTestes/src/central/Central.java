@@ -44,7 +44,6 @@ public class Central {
 																						// necessário fazer
 																						// setExcelFileDir
 	private File excelFile;
-
 	private File historyFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 
 	private CYCLO_method cycloMethod;
@@ -52,7 +51,12 @@ public class Central {
 	private Loc_Class locClass;
 	private NOM_Class nomClass;
 	private WMC_Class wmcClass;
-	int separador = 0;
+	
+	private int separador = 0;
+	private int numberOfPackages = 0;
+	private int numberOfClasses = 0;
+	private int numberOfMethods = 0;
+	private int numberOfLines = 0;
 
 	ArrayList<Resultado> all = new ArrayList<>();
 	ArrayList<BoolResultado> boolResultClass = new ArrayList<>();
@@ -65,7 +69,12 @@ public class Central {
 		this.rules = rules;
 		this.srcPath = srcPath;
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
-		System.out.println(excelFile.getAbsolutePath());
+		ini(); //apagar
+		
+		System.out.println("number of methods = " + numberOfMethods);
+		System.out.println("number of packages = " + numberOfPackages);
+		System.out.println("number of classes = " + numberOfClasses);
+		System.out.println("number of lines = " + numberOfLines);
 	}
 
 	/*
@@ -88,10 +97,13 @@ public class Central {
 			writeExcel(sheet, workBook);
 
 			fuelAllandBoolResults();
+			//numberOfClasses += wmcClass.getResultados().size();
 		}
 		putMethodID();
 		chooseRules(rules);
-
+		numberOfSomething();
+		numberOfMethods=boolResultMethod.size();
+		
 		// sys();
 
 		OutputStream fileOut = new FileOutputStream(excelFile);
@@ -156,6 +168,7 @@ public class Central {
 					&& k < nomClass.getResultados().size() - 1) {
 				k++;
 			}
+			
 			int LinhasNomC = (nomClass.getResultados().get(k).getLinhas());
 			int LinhasLocC = (locClass.getResultados().get(k).getLinhas());
 			int LinhasWMC = (wmcClass.getResultados().get(k).getLinhas());
@@ -231,6 +244,8 @@ public class Central {
 			cycloM.setCellValue(cycloMethod.getResultados().get(i).getLinhas());
 
 			rowCount++;
+			
+			numberOfLines+=locMethod.getResultados().get(i).getLinhas();
 		}
 	}
 
@@ -310,6 +325,22 @@ public class Central {
 		}
 		return files;
 	}
+	
+	public void numberOfSomething() {
+		int k = 0;
+		ArrayList<String> aux = new ArrayList();
+		ArrayList<String> aux2 = new ArrayList();
+		for(int i=0; i<boolResultMethod.size(); i++) {
+			if (!aux.contains(boolResultMethod.get(i).getClasses())) {
+				aux.add(boolResultMethod.get(i).getClasses());
+			}
+			if(!aux2.contains(boolResultMethod.get(i).getPackage())) {
+				aux2.add(boolResultMethod.get(i).getPackage());
+			}
+		}
+		numberOfClasses=aux.size();
+		numberOfPackages=aux2.size();
+	}
 
 	public File getSourcePath() {
 		return srcPath;
@@ -335,6 +366,22 @@ public class Central {
 
 	public String getExcelFileDir() {
 		return excelFileDir;
+	}
+	
+	public int getNumberOfClasses() {
+		return numberOfClasses;
+	}
+	 
+	public int getNumberOfLines() {
+		return numberOfLines;
+	}
+	
+	public int getNumberOfMethods() {
+		return numberOfMethods;
+	}
+	
+	public int getNumberOfPackages() {
+		return numberOfPackages;
 	}
 
 //	public ArrayList<Resultado> getAll() {
@@ -395,7 +442,7 @@ public class Central {
 		ArrayList<Rule> rules = testMain();
 		File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
 		Central c = new Central(rules, srcPath);
-		c.ini();
+//		c.ini();
 //
 //		History hist = new History();
 //		hist.writeFile(rules);
