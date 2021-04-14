@@ -46,7 +46,7 @@ import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
 
->>>>>>> refs/heads/main
+
 public class GUI extends JFrame {
 	//commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico com valores default -> faltam os restantes panels
 
