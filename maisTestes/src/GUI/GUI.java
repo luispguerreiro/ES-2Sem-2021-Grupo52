@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -189,7 +190,8 @@ public class GUI extends JFrame {
 					c.setSourcePath(src_path);
 					c.setExcelFile(excelOutputFile);
 					c.ini();
-					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(), new Comparador(c.getBoolClass(), c.getBoolMethod()), 2));
+					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(),
+							new Comparador(c.getBoolClass(), c.getBoolMethod()), 2));
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -219,68 +221,69 @@ public class GUI extends JFrame {
 		btnNewButton_1.setBounds(10, 333, 186, 21);
 		btnNewButton_1.addActionListener(new ActionListener() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame editar = new JFrame("Editar...");
-				editar.setBounds(100, 100, 371, 161);
+				editar.setBounds(100, 100, 406, 161);
 				JPanel contentPane1 = new JPanel();
 				contentPane1.setBorder(new EmptyBorder(5, 5, 5, 5));
 				contentPane1.setLayout(null);
-				
+
 				JCheckBox chckbxNewCheckBox = new JCheckBox("Long Method");
 				chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				chckbxNewCheckBox.setBounds(6, 10, 109, 21);
 				contentPane1.add(chckbxNewCheckBox);
-				
-				JComboBox comboBox = new JComboBox();
+
+				JComboBox<comparator> comboBox = new JComboBox<comparator>();
 				comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "AND", "OR"}));
+				comboBox.setModel(new DefaultComboBoxModel<>(comparator.values()));
 				comboBox.setToolTipText("");
-				comboBox.setBounds(217, 10, 48, 21);
+				comboBox.setBounds(217, 10, 80, 21);
 				contentPane1.add(comboBox);
-				
+
 				JLabel lblNewLabel = new JLabel("Lines of Code");
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				lblNewLabel.setBounds(121, 14, 86, 13);
 				contentPane1.add(lblNewLabel);
-				
-				JComboBox comboBox_1 = new JComboBox();
+
+				JComboBox<operator> comboBox_1 = new JComboBox<operator>();
 				comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "AND", "OR"}));
-				comboBox_1.setBounds(159, 53, 48, 21);
+				comboBox_1.setModel(new DefaultComboBoxModel<>(operator.values()));
+				comboBox_1.setBounds(159, 53, 80, 21);
 				contentPane1.add(comboBox_1);
-				
+
 				txtThreshold = new JTextField();
 				txtThreshold.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				txtThreshold.setText("Threshold");
-				txtThreshold.setBounds(275, 13, 70, 19);
+				txtThreshold.setBounds(312, 11, 70, 19);
 				contentPane1.add(txtThreshold);
 				txtThreshold.setColumns(10);
-				
+
 				JLabel lblNewLabel_1 = new JLabel("Cyclo");
 				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				lblNewLabel_1.setBounds(121, 101, 34, 13);
 				contentPane1.add(lblNewLabel_1);
-				
-				JComboBox comboBox_2 = new JComboBox();
-				comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"", "OR", "AND"}));
+
+				JComboBox<comparator> comboBox_2 = new JComboBox<comparator>();
+				comboBox_2.setModel(new DefaultComboBoxModel<>(comparator.values()));
 				comboBox_2.setToolTipText("");
 				comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_2.setBounds(217, 97, 48, 21);
+				comboBox_2.setBounds(217, 97, 80, 21);
 				contentPane1.add(comboBox_2);
-				
+
 				textField = new JTextField();
 				textField.setText("Threshold");
 				textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				textField.setColumns(10);
-				textField.setBounds(275, 98, 70, 19);
+				textField.setBounds(312, 98, 70, 19);
 				contentPane1.add(textField);
-				
+
 				JCheckBox chckbxGodClass = new JCheckBox("God Class");
 				chckbxGodClass.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				chckbxGodClass.setBounds(6, 99, 109, 21);
 				contentPane1.add(chckbxGodClass);
-				
+
 				editar.setContentPane(contentPane1);
 				editar.setVisible(true);
 			}
@@ -496,15 +499,16 @@ public class GUI extends JFrame {
 	public JTable escreveTabela(ArrayList<BoolResultado> isgodclass, ArrayList<BoolResultado> islongmethod,
 			Comparador c, int tipo) {
 		ArrayList<String[]> list = new ArrayList<>();
-		if(tipo == 1) {
-			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method", "Verificação" };
+		if (tipo == 1) {
+			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method",
+					"Verificação" };
 			list.add(fixo);
 		}
-		if(tipo == 2) {
+		if (tipo == 2) {
 			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação" };
 			list.add(fixo);
 		}
-		if(tipo == 3) {
+		if (tipo == 3) {
 			String[] fixo = { "Pacote", "Classe", "Método", "is_Long_Method", "Verificação" };
 			list.add(fixo);
 		}
