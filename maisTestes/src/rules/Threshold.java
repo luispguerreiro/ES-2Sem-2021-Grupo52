@@ -83,6 +83,7 @@ public class Threshold implements Serializable {
 	public comparator getComparator() {
 		return o;
 	}
+	
 
 	public String getMetricName() {
 		return metricName;
@@ -100,6 +101,10 @@ public class Threshold implements Serializable {
 	public void setMetricName(String metricName) {
 		this.metricName= metricName;
 		
+	}
+
+	public void setComparator(comparator o) {
+		this.o=o;
 	}
 
 }

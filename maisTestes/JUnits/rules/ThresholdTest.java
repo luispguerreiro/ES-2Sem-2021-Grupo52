@@ -114,12 +114,27 @@ class ThresholdTest {
 
 	/**
 	 * Test method for {@link rules.Threshold#result(int)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testResult() {
-		fail("Not yet implemented"); // TODO
+	final void testResult() throws FileNotFoundException {
+//		comparator bi= comparator.BIGGER;
+		int smaller= 10;
+		int bigger= 30;
+		int equals= 20;
+		t.setComparator(comparator.BIGGER);
+		Assertions.assertFalse(t.result(smaller));
+		Assertions.assertTrue(t.result(bigger));
+//		comparator sm= comparator.SMALLER;
+		t.setComparator(comparator.SMALLER);
+		Assertions.assertFalse(t.result(bigger));
+		Assertions.assertTrue(t.result(smaller));
+//		comparator eq= comparator.EQUALS;
+		t.setComparator(comparator.EQUALS);
+		Assertions.assertFalse(t.result(smaller));
+		Assertions.assertTrue(t.result(equals));
 	}
-
+	
 	/**
 	 * Test method for {@link rules.Threshold#setMetricBoolean(java.util.ArrayList)}.
 	 */
@@ -163,15 +178,15 @@ class ThresholdTest {
 	 */
 	@Test
 	final void testGetLimit() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertEquals(limit, t.getLimit());
 	}
-
+	
 	/**
 	 * Test method for {@link rules.Threshold#getComparator()}.
 	 */
 	@Test
 	final void testGetComparator() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertEquals(o, t.getComparator());
 	}
 
 	/**
@@ -179,7 +194,8 @@ class ThresholdTest {
 	 */
 	@Test
 	final void testGetMetricName() {
-		fail("Not yet implemented"); // TODO
+		t.setMetricName("LOC_class");
+		Assertions.assertEquals("LOC_class", t.getMetricName());
 	}
 
 	/**
@@ -187,8 +203,18 @@ class ThresholdTest {
 	 */
 	@Test
 	final void testGetResultados() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertEquals(resultados, t.getResultados());
 	}
+	
+	/**
+	 * Test method for {@link rules.Threshold#setMetricName()}.
+	 */
+	@Test
+	final void testSetMetricName() {
+		t.setMetricName("LOC_class");
+		Assertions.assertEquals("LOC_class", t.getMetricName());
+	}
+	
 
 	/**
 	 * Test method for {@link rules.Threshold#main(java.lang.String[])}.
