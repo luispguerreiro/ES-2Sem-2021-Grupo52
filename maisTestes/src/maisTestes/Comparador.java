@@ -28,23 +28,24 @@ import rules.Rule;
 
 public class Comparador {
 	
-	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass) throws FileNotFoundException, IOException {
+	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass, int tipo) throws FileNotFoundException, IOException {
 		File file= new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
 		Excel excel= new Excel();
 		excel.lerExcel(file);
 		ArrayList<Linha> linhas= new ArrayList<Linha>(excel.getList());
-		methodComp(boolMethod, linhas);
-		classComp(boolClass, linhas);
+		if(tipo==1){
+			methodComp(boolMethod, linhas);
+			classComp(boolClass, linhas);
+		}
+		if(tipo==2){
+			classComp(boolClass, linhas);
+		}
+		if(tipo==3){
+			methodComp(boolMethod, linhas);
+		}
 		
 	}
-	public Comparador(ArrayList<BoolResultado> array) throws FileNotFoundException, IOException{
-		getExcel("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
-//		File file= new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
-//		Excel excel= new Excel();
-//		excel.lerExcel(file);
-//		ArrayList<Linha> linhas= new ArrayList<Linha>(excel.getList());
-		
-	}
+
 	public ArrayList<Linha> getExcel(String path) throws FileNotFoundException, IOException{
 		File file= new File(path);
 		Excel excel=new Excel();
