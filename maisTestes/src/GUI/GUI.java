@@ -19,8 +19,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -54,6 +56,8 @@ public class GUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
 	JScrollPane scrollPane;
+	private JTextField txtThreshold;
+	private JTextField textField;
 
 	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	private String src_path;
@@ -218,22 +222,66 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame editar = new JFrame("Editar...");
-				editar.setResizable(false);
-				editar.setBounds(100, 100, 500, 200);
-				editar.setLayout(new GridLayout(2, 2));
-
-				editar.add(new JLabel("Regra1"));
-				JTextField regra1 = new JTextField();
-				editar.add(regra1);
-				editar.add(new JLabel("Regra2"));
-				JTextField regra2 = new JTextField();
-				editar.add(regra2);
-
-				editar.add(new JCheckBox("AND"));
-				editar.add(new JCheckBox("OR"));
-				editar.add(new JCheckBox("is_Long_Method"));
-				editar.add(new JCheckBox("is_God_Class"));
-
+				editar.setBounds(100, 100, 371, 161);
+				JPanel contentPane1 = new JPanel();
+				contentPane1.setBorder(new EmptyBorder(5, 5, 5, 5));
+				contentPane1.setLayout(null);
+				
+				JCheckBox chckbxNewCheckBox = new JCheckBox("Long Method");
+				chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				chckbxNewCheckBox.setBounds(6, 10, 109, 21);
+				contentPane1.add(chckbxNewCheckBox);
+				
+				JComboBox comboBox = new JComboBox();
+				comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "AND", "OR"}));
+				comboBox.setToolTipText("");
+				comboBox.setBounds(217, 10, 48, 21);
+				contentPane1.add(comboBox);
+				
+				JLabel lblNewLabel = new JLabel("Lines of Code");
+				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblNewLabel.setBounds(121, 14, 86, 13);
+				contentPane1.add(lblNewLabel);
+				
+				JComboBox comboBox_1 = new JComboBox();
+				comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "AND", "OR"}));
+				comboBox_1.setBounds(159, 53, 48, 21);
+				contentPane1.add(comboBox_1);
+				
+				txtThreshold = new JTextField();
+				txtThreshold.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				txtThreshold.setText("Threshold");
+				txtThreshold.setBounds(275, 13, 70, 19);
+				contentPane1.add(txtThreshold);
+				txtThreshold.setColumns(10);
+				
+				JLabel lblNewLabel_1 = new JLabel("Cyclo");
+				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblNewLabel_1.setBounds(121, 101, 34, 13);
+				contentPane1.add(lblNewLabel_1);
+				
+				JComboBox comboBox_2 = new JComboBox();
+				comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"", "OR", "AND"}));
+				comboBox_2.setToolTipText("");
+				comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_2.setBounds(217, 97, 48, 21);
+				contentPane1.add(comboBox_2);
+				
+				textField = new JTextField();
+				textField.setText("Threshold");
+				textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField.setColumns(10);
+				textField.setBounds(275, 98, 70, 19);
+				contentPane1.add(textField);
+				
+				JCheckBox chckbxGodClass = new JCheckBox("God Class");
+				chckbxGodClass.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				chckbxGodClass.setBounds(6, 99, 109, 21);
+				contentPane1.add(chckbxGodClass);
+				
+				editar.setContentPane(contentPane1);
 				editar.setVisible(true);
 			}
 		});
