@@ -52,6 +52,7 @@ public class GUI extends JFrame {
 	// commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico
 	// com valores default -> faltam os restantes panels
 	// commit final sprint 2 - gui entregável
+	//commit final sprint - gui entregável 
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
@@ -59,8 +60,13 @@ public class GUI extends JFrame {
 	private JTextField txtThreshold;
 	private JTextField textField;
 
-	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-	private String src_path;
+//	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+//	private String src_path;
+	
+	private String excelOutputDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; //vai ser dado pelo user na gui
+	private File src_path;
+	
+	private Central c;
 
 	/**
 	 * Launch the application.
@@ -121,6 +127,7 @@ public class GUI extends JFrame {
 
 	}
 
+	
 	/**
 	 * Create the frame.
 	 * 
@@ -145,13 +152,12 @@ public class GUI extends JFrame {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = jfc.getSelectedFile();
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
-					src_path = txtSrcPath.getText();
 				}
 				try {
-					File dir = new File(txtSrcPath.getText());
-					if (dir.isDirectory()) {
+					src_path=new File(txtSrcPath.getText());
+					if (src_path.isDirectory()) {
 						ArrayList<File> lista = new ArrayList<File>();
-						Path path = Paths.get(dir.getAbsolutePath());
+						Path path = Paths.get(src_path.getAbsolutePath());
 						List<Path> paths = listFiles(path);
 						List<File> files = pathsToFiles(paths);
 						for (int i = 0; i < paths.size(); i++) {
@@ -185,15 +191,23 @@ public class GUI extends JFrame {
 				ArrayList<Rule> rules;
 				try {
 					rules = PutCentralWorking();
-					Central c = new Central(rules);
-					c.setSourcePath(src_path);
-					c.setExcelFile(excelOutputFile);
+					Central c = new Central(rules, src_path);
+					c.setExcelFileDir(excelOutputDir);
 					c.ini();
 					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(), new Comparador(c.getBoolClass(), c.getBoolMethod()), 2));
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+					try {
+						rules = PutCentralWorking();
+						c = new Central(rules, src_path);
+						c.setExcelFileDir(excelOutputDir);
+						c.ini();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 			}
 		});
 		contentPane.add(btnRun);
@@ -375,12 +389,10 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-//					File file = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\Code_Smells.xlsx");
-					File file = excelOutputFile;
+					File file = c.getExcelFile();
 					Desktop d = Desktop.getDesktop();
 					d.open(file);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}

@@ -97,7 +97,9 @@ private int i = 1;
 		}
 	}
 
-
+	public int getCyclo() {
+		return cyclo;
+	}
 
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
