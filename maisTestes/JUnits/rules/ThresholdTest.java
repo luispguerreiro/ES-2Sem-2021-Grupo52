@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Metrics.Resultado;
+import central.BoolResultado;
 import rules.Rule.comparator;
 import rules.Threshold;
 
@@ -140,12 +141,13 @@ class ThresholdTest {
 	 */
 	@Test
 	final void testSetMetricBoolean() {
-//		metricName= "NOM_class";
-//		int position;
-//		t.setMetricName(metricName);
-//		t.positionToGet();
-//		position= t.positionToGet();
-//		Assertions.assertEquals(position, t.setMetricBoolean());	
+		metricName= "NOM_class";
+		int position;
+		t.setMetricName(metricName);
+		ArrayList<BoolResultado> r= new ArrayList<>();
+		t.positionToGet();
+//		Assertions.assertNotNull(t.setMetricBoolean(r));
+//		Assertions.assertEquals(position, t.positionToGet());	
 		fail("Not yet implemented"); // TODO
 		
 	}
