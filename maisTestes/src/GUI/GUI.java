@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,10 +39,22 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
+<<<<<<< HEAD
+=======
+import central.Central;
+import rules.Rule;
+import rules.Rule.comparator;
+import rules.Rule.operator;
+
+>>>>>>> refs/heads/main
 public class GUI extends JFrame {
+	//commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico com valores default -> faltam os restantes panels
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
+	
+	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private String src_path;
 
 	/**
 	 * Launch the application.
@@ -59,6 +72,51 @@ public class GUI extends JFrame {
 		});
 	}
 
+	//Funciona sempre com as mesmas regras
+	public ArrayList<Rule> PutCentralWorking() throws FileNotFoundException {
+		String ruleName = "RegraNew";
+		ArrayList<String> metricName = new ArrayList<>();
+		ArrayList<comparator> comp = new ArrayList<>();
+		ArrayList<Integer> limits = new ArrayList<>();
+		ArrayList<operator> oper = new ArrayList<>();
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		metricName.add("WMC_class");
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
+		limits.add(20);
+		limits.add(30);
+		limits.add(40);
+		oper.add(operator.AND);
+		oper.add(operator.OR);
+		
+		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
+		
+		String ruleName1 = "Regra3";
+		ArrayList<String> metricName1 = new ArrayList<>();
+		ArrayList<comparator> comp1 = new ArrayList<>();
+		ArrayList<Integer> limits1 = new ArrayList<>();
+		ArrayList<operator> oper1 = new ArrayList<>();
+		metricName1.add("LOC_method");
+		metricName1.add("CYCLO_method");
+		comp1.add(comparator.BIGGER);
+		comp1.add(comparator.SMALLER);
+		limits1.add(20);
+		limits1.add(40);
+		oper1.add(operator.AND);
+
+		Rule r1 = new Rule(ruleName1, 1, metricName1, comp1, limits1, oper1);
+		
+		ArrayList<Rule> rules = new ArrayList();
+		rules.add(r);
+		rules.add(r1);
+		return rules;
+		
+	
+	}
+	
+	
 	/**
 	 * Create the frame.
 	 */
@@ -81,6 +139,7 @@ public class GUI extends JFrame {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = jfc.getSelectedFile();
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
+					 src_path = txtSrcPath.getText();
 				}
 				try {
 					File dir = new File(txtSrcPath.getText());
@@ -117,12 +176,28 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				JFrame frame = new JFrame();
 				frame.setBounds(100, 100, 200, 100);
 				frame.add(new JLabel("Atreve-te a passar a ponte"));
 				frame.setVisible(true);
-			}
-		});
+
+//				JFrame frame = new JFrame();
+//				frame.setBounds(100, 100, 200, 100);
+//				frame.add(new JLabel("Atreve-te a passar a ponte"));
+//				frame.setVisible(true);
+				ArrayList<Rule> rules;
+					try {
+						rules = PutCentralWorking();
+						Central c = new Central(rules);
+						c.setSourcePath(src_path);
+						c.setExcelFile(excelOutputFile);
+						c.ini();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
 		contentPane.add(btnRun);
 
 		txtSrcPath = new JTextField();
@@ -258,7 +333,12 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+<<<<<<< HEAD
 					File file = new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
+=======
+//					File file = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\Code_Smells.xlsx");
+					File file = excelOutputFile;
+>>>>>>> refs/heads/main
 					Desktop d = Desktop.getDesktop();
 					d.open(file);
 				} catch (IOException e1) {

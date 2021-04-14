@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import Metrics.Resultado;
 import central.BoolResultado;
-import rules.GuiOutput.comparators;
-import rules.GuiOutput.operators;
 
 	public class Rule implements IRule, Serializable {
 
@@ -15,19 +13,27 @@ import rules.GuiOutput.operators;
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public enum operator {
+		OR, AND
+	};
+
+	public enum comparator {
+		BIGGER, SMALLER, EQUALS
+	};
 
 	private ArrayList<Threshold> thresholds = new ArrayList<>();
 
 	protected ArrayList<String> metricName = new ArrayList<>();
-	protected ArrayList<comparators> comp = new ArrayList<>();
+	protected ArrayList<comparator> comp = new ArrayList<>();
 	protected ArrayList<Integer> limits = new ArrayList<>();
-	protected ArrayList<operators> oper = new ArrayList<>();
+	protected ArrayList<operator> oper = new ArrayList<>();
 	private String ruleName;
 	private ArrayList<BoolResultado> ruleResults = new ArrayList<>();
 	private int ruleType; // 0 if ruleType=god_class, 1 if ruleType=long_method
 
-	public Rule(String ruleName, int ruleType, ArrayList<String> metricName, ArrayList<comparators> comp,
-			ArrayList<Integer> limits, ArrayList<operators> oper) throws FileNotFoundException {
+	public Rule(String ruleName, int ruleType, ArrayList<String> metricName, ArrayList<comparator> comp,
+			ArrayList<Integer> limits, ArrayList<operator> oper) throws FileNotFoundException {
 		this.ruleName = ruleName;
 		this.metricName = metricName;
 		this.comp = comp;
@@ -56,7 +62,6 @@ import rules.GuiOutput.operators;
 
 	public void calculateThresholds(ArrayList<Resultado> result, ArrayList<BoolResultado> boolresult)
 			throws FileNotFoundException {
-		System.out.println(result.get(2).getAllInts()[4]);
 		for (int j = 0; j < result.size(); j++) {
 			int pos = thresholds.get(0).positionToGet();
 			if (thresholds.size() == 1) {
@@ -75,30 +80,33 @@ import rules.GuiOutput.operators;
 						result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2], result.get(j).getAllInts()[pos3]));
 			}
 		}
-		System.out.println("Resultados booleanos: " + boolresult.get(20).getVerificacao() + " size " + boolresult.size());
 	}
 
+	@Override
 	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
 		return t.result(valor);
 	}
 
+	@Override
 	public boolean logic2(Threshold t, Threshold t1, int valor, int valor1) throws FileNotFoundException {
-		if (oper.get(0).equals(operators.AND))
+		if (oper.get(0).equals(operator.AND))
 			return and(t.result(valor), t1.result(valor1));
-		if (oper.get(0).equals(operators.OR))
+		if (oper.get(0).equals(operator.OR))
 			return or(t.result(valor), t1.result(valor1));
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
 
+
+
 	public boolean logic3 (Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3) throws FileNotFoundException{
 		boolean aux= false;
-		if (oper.get(0).equals(operators.AND))
+		if (oper.get(0).equals(operator.AND))
 			aux= and(t1.result(valor1), t2.result(valor2));
-		else if (oper.get(0).equals(operators.OR))
+		else if (oper.get(0).equals(operator.OR))
 			aux= or(t1.result(valor1), t2.result(valor2));
-		if (oper.get(1).equals(operators.AND)) 
+		if (oper.get(1).equals(operator.AND)) 
 			return and(aux, t3.result(valor3));
-		if (oper.get(1).equals(operators.OR)) 
+		if (oper.get(1).equals(operator.OR)) 
 			return or(aux, t3.result(valor3));
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
@@ -126,23 +134,25 @@ import rules.GuiOutput.operators;
 		return ruleName;
 	}
 
+
 	public int getRuleType() {
 		return ruleType;
 	}
 
-	public ArrayList<comparators> getComp() {
+	public ArrayList<comparator> getComp() {
 		return comp;
 	}
 
 	public ArrayList<Integer> getLimits() {
 		return limits;
 	}
+	
 
 	public ArrayList<String> getMetricName() {
 		return metricName;
 	}
-
-	public ArrayList<operators> getOper() {
+	
+	public ArrayList<operator> getOper() {
 		return oper;
 	}
 
@@ -156,14 +166,14 @@ import rules.GuiOutput.operators;
 		metricName.add("NOM_class");
 		metricName.add("LOC_class");
 		metricName.add("WMC_class");
-		comp.add(comparators.BIGGER);
-		comp.add(comparators.BIGGER);
-		comp.add(comparators.SMALLER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
 		limits.add(20);
 		limits.add(30);
 		limits.add(40);
-		oper.add(operators.AND);
-		oper.add(operators.OR);
+		oper.add(operator.AND);
+		oper.add(operator.OR);
 //		for (int i = 0, j = 0; i <= metricName.size() && j < metricName.size() - 1; i++, j++) {
 //			System.out.println("HELLOOOOO" + oper.get(0) + oper.get(1));
 //			System.out.println(

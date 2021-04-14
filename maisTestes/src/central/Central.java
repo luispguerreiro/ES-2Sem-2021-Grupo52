@@ -27,17 +27,19 @@ import Metrics.Metrics;
 import Metrics.NOM_Class;
 import Metrics.Resultado;
 import Metrics.WMC_Class;
-import rules.GodClass;
-import rules.GuiOutput.comparators;
-import rules.GuiOutput.operators;
+import maisTestes.Comparador;
 import rules.Rule;
+import rules.Rule.comparator;
+import rules.Rule.operator;
 
 public class Central {
 
+	// mudar nome
+	private Loc_Method locMethod;
 	private String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
 
-	File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx"); // mudar nome
-	private Loc_Method locMethod;
+	private File excelFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	private File historyFile = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	private CYCLO_method cycloMethod;
 	private Loc_Class locClass;
 	private NOM_Class nomClass;
@@ -48,15 +50,20 @@ public class Central {
 
 	ArrayList<BoolResultado> boolResultClass = new ArrayList<>();
 	ArrayList<BoolResultado> boolResultMethod = new ArrayList<>();
+	ArrayList<Rule> rules = new ArrayList<>();
 
 	private Metrics metric;
 
 	public Central(ArrayList<Rule> rules) throws IOException {
+		this.rules = rules;
+//		ini();
+	}
 
+	public void ini() throws IOException {
 		File[] v = extracted();
 
 		XSSFWorkbook workBook = new XSSFWorkbook();
-		Sheet sheet = workBook.createSheet(file.getName().replaceFirst("[.][^.]+$", ""));
+		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
 		for (int i = 0; i < v.length; i++) {
 
 			metric = new Metrics(v[i].getAbsolutePath());
@@ -72,22 +79,39 @@ public class Central {
 			fuelAll();
 		}
 		putMethodID();
-		System.out.println("nomClass: " + all.get(0).getAllInts()[1]);
 		chooseRules(rules);
-		sys();
-		OutputStream fileOut = new FileOutputStream(file);
+
+		// sys();
+
+		OutputStream fileOut = new FileOutputStream(excelFile);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
 		System.out.println("\n***Exporta��o para Excel conclu�da!***\n");
+<<<<<<< HEAD
+=======
+
+//		Comparador c = new Comparador(boolResultMethod, boolResultClass);
+
+	}
+	
+	public void setExcelFile(File excelFile) {
+		this.excelFile = excelFile;
+	}
+	
+	public void setSRC_PATH(String sRC_PATH) {
+		SRC_PATH = sRC_PATH;
+>>>>>>> refs/heads/main
 	}
 
 	public void sys() {
 		for (int i = 0; i < all.size(); i++) {
 			System.out.println("ID  " + all.get(i).getMethodID());
-			System.out.println("CCC Path: " + boolResultClass.get(i).getPath());
+			System.out.println("CCC Path: " + boolResultClass.get(i).getClasses());
+			System.out.println("CCC Path: " + boolResultClass.get(i).getMetodo());
 			System.out.println("CCC Boolean:  " + boolResultClass.get(i).getVerificacao());
-			System.out.println("MMM Path: " + boolResultMethod.get(i).getPath());
+			System.out.println("MMM Path: " + boolResultMethod.get(i).getClasses());
+			System.out.println("MMM Path: " + boolResultMethod.get(i).getMetodo());
 			System.out.println("MMM Boolean:  " + boolResultMethod.get(i).getVerificacao());
 			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
 				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
@@ -126,8 +150,12 @@ public class Central {
 			all.add(new Resultado(i, cycloMethod.getResultados().get(i).getPath(),
 					cycloMethod.getResultados().get(i).getLinhas(), vetorResultado));
 
-			boolResultClass.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
-			boolResultMethod.add(new BoolResultado(cycloMethod.getResultados().get(i).getClasses(), false));
+			boolResultClass.add(new BoolResultado(cycloMethod.getResultados().get(i).getPackage(),
+					cycloMethod.getResultados().get(i).getClasses(),
+					cycloMethod.getResultados().get(i).getMethodNames(), false));
+			boolResultMethod.add(new BoolResultado(cycloMethod.getResultados().get(i).getPackage(),
+					cycloMethod.getResultados().get(i).getClasses(),
+					cycloMethod.getResultados().get(i).getMethodNames(), false));
 		}
 	}
 
@@ -238,7 +266,7 @@ public class Central {
 	}
 
 	public File getFile() {
-		return file;
+		return excelFile;
 	}
 
 	public void setSourcePath(String SRC_PATH) {
@@ -246,7 +274,7 @@ public class Central {
 	}
 
 	public void setFile(File f) {
-		this.file = f;
+		this.excelFile = f;
 	}
 
 	public ArrayList<Resultado> getAll() {
@@ -259,46 +287,67 @@ public class Central {
 		return boolResultMethod;
 	}
 
-	public static void main(String[] args) throws IOException {
-		String ruleName = "Regra2";
+	public ArrayList<BoolResultado> getBoolClass() {
+		return boolResultClass;
+	}
+
+	public ArrayList<BoolResultado> getBoolMethod() {
+		return boolResultMethod;
+	}
+
+	public static ArrayList<Rule> testMain() throws FileNotFoundException {
+		String ruleName = "RegraNew";
 		ArrayList<String> metricName = new ArrayList<>();
-		ArrayList<comparators> comp = new ArrayList<>();
+		ArrayList<comparator> comp = new ArrayList<>();
 		ArrayList<Integer> limits = new ArrayList<>();
-		ArrayList<operators> oper = new ArrayList<>();
+		ArrayList<operator> oper = new ArrayList<>();
 		metricName.add("NOM_class");
 		metricName.add("LOC_class");
 		metricName.add("WMC_class");
-		comp.add(comparators.BIGGER);
-		comp.add(comparators.BIGGER);
-		comp.add(comparators.SMALLER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
 		limits.add(20);
 		limits.add(30);
 		limits.add(40);
-		oper.add(operators.AND);
-		oper.add(operators.OR);
-		
+		oper.add(operator.AND);
+		oper.add(operator.OR);
+
 		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
-		
+
 		String ruleName1 = "Regra3";
 		ArrayList<String> metricName1 = new ArrayList<>();
-		ArrayList<comparators> comp1 = new ArrayList<>();
+		ArrayList<comparator> comp1 = new ArrayList<>();
 		ArrayList<Integer> limits1 = new ArrayList<>();
-		ArrayList<operators> oper1 = new ArrayList<>();
+		ArrayList<operator> oper1 = new ArrayList<>();
 		metricName1.add("LOC_method");
 		metricName1.add("CYCLO_method");
-		comp1.add(comparators.BIGGER);
-		comp1.add(comparators.SMALLER);
+		comp1.add(comparator.BIGGER);
+		comp1.add(comparator.SMALLER);
 		limits1.add(20);
 		limits1.add(40);
-		oper1.add(operators.AND);
+		oper1.add(operator.AND);
 
 		Rule r1 = new Rule(ruleName1, 1, metricName1, comp1, limits1, oper1);
-		
+
 		ArrayList<Rule> rules = new ArrayList();
 		rules.add(r);
 		rules.add(r1);
-		
-		Central c = new Central(rules);
+		return rules;
+
 	}
 
+	public static void main(String[] args) throws IOException {
+		ArrayList<Rule> rules = testMain();
+		Central c = new Central(rules);
+		
+
+		History hist = new History();
+		hist.writeFile(rules);
+		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
+//		History hist = new History();
+//		hist.writeFile(rules);
+//		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
+	}
+//asad
 }
