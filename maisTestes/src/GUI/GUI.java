@@ -45,7 +45,9 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 public class GUI extends JFrame {
+
 	//commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico com valores default -> faltam os restantes panels
+	//commit final sprint 2 - gui entregável 
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
