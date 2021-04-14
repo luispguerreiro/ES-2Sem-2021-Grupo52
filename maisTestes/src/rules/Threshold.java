@@ -97,4 +97,9 @@ public class Threshold implements Serializable {
 
 	}
 
+	public void setMetricName(String metricName) {
+		this.metricName= metricName;
+		
+	}
+
 }

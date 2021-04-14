@@ -41,12 +41,14 @@ import rules.Rule.operator;
 	class CentralTest {
 		static Central c;
 		static Sheet sheet;
-		static Excel excel;
+//		static Excel excel;
 		static ArrayList<Rule> rules= new ArrayList<>();
 		static ArrayList<String> metricName= new ArrayList<>();
 		static ArrayList<comparator> comp= new ArrayList<>();
 		static ArrayList<Integer> limits= new ArrayList<>();
 		static ArrayList<operator> oper= new ArrayList<>();
+		static ArrayList<BoolResultado> boolResultClass;
+		static ArrayList<BoolResultado> boolResultMethod;
 
 //		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 //		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
@@ -64,6 +66,8 @@ import rules.Rule.operator;
 		 */
 		@BeforeAll
 		static void setUpBeforeClass() throws Exception {
+			boolResultClass= new ArrayList<>();
+			boolResultMethod= new ArrayList<>();
 			separador= 0;
 			metricName.add("NOM_class");
 			metricName.add("LOC_class");
@@ -75,8 +79,8 @@ import rules.Rule.operator;
 			rules.add(new Rule("LONG_method", 1, metricName, comp,
 					 limits,  oper));
 			c= new Central(rules);
-//			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+//			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 		}
 	/**
@@ -133,9 +137,12 @@ import rules.Rule.operator;
 		rules2.add(new Rule("LOC_class", 0, metricName, comp,
 				 limits,  oper));
 			Assertions.assertTrue(rulesEmpty.isEmpty());
+			Assertions.assertFalse(!rulesEmpty.isEmpty());
 			Assertions.assertNotNull(rulesEmpty);
+			Assertions.assertFalse(rules1.isEmpty());
 			Assertions.assertEquals(rules1.size(),1);
 			Assertions.assertNotNull(rules1);
+			Assertions.assertFalse(rules2.isEmpty());
 			Assertions.assertEquals(rules2.size(),2); 
 			Assertions.assertNotNull(rules2);
 			
@@ -266,6 +273,24 @@ import rules.Rule.operator;
 	@Test
 	final void testGetFile() {
 		assertEquals(file, c.getFile());
+	}
+	
+	/**
+	 * Test method for {@link central.Central#getBoolClass()}.
+	 */
+	@Test
+	final void testGetBoolClass() {
+		boolResultClass= c.getBoolClass();
+		assertEquals(boolResultClass, c.getBoolClass());
+	}
+	
+	/**
+	 * Test method for {@link central.Central#getBoolClass()}.
+	 */
+	@Test
+	final void testGetBoolMethod() {
+		boolResultMethod= c.getBoolMethod();
+		assertEquals(boolResultMethod, c.getBoolMethod());
 	}
 
 	/**

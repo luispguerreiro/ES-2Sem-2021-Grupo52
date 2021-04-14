@@ -80,7 +80,9 @@ class ThresholdTest {
 	@Test
 	final void testIsBigger() throws FileNotFoundException {
 		int smaller= 10;
+		int bigger= 30;
 		Assertions.assertFalse(t.isBigger(smaller));
+		Assertions.assertTrue(t.isBigger(bigger));
 	}
 
 	/**
@@ -89,8 +91,10 @@ class ThresholdTest {
 	 */
 	@Test
 	final void testIsSmaller() throws FileNotFoundException {
-		int bigger= 10;
-		Assertions.assertTrue(t.isSmaller(bigger));
+		int smaller= 10;
+		int bigger= 30;
+		Assertions.assertTrue(t.isSmaller(smaller));
+		Assertions.assertFalse(t.isSmaller(bigger));
 	}
 
 	/**
@@ -99,8 +103,13 @@ class ThresholdTest {
 	 */
 	@Test
 	final void testIsEquals() throws FileNotFoundException {
+		int smaller= 10;
+		int bigger= 30;
 		int equals= 20;
+		Assertions.assertFalse(t.isEquals(smaller));
+		Assertions.assertFalse(t.isEquals(bigger));
 		Assertions.assertTrue(t.isEquals(equals));
+		
 	}
 
 	/**
@@ -116,15 +125,36 @@ class ThresholdTest {
 	 */
 	@Test
 	final void testSetMetricBoolean() {
+//		metricName= "NOM_class";
+//		int position;
+//		t.setMetricName(metricName);
+//		t.positionToGet();
+//		position= t.positionToGet();
+//		Assertions.assertEquals(position, t.setMetricBoolean());	
 		fail("Not yet implemented"); // TODO
+		
 	}
 
 	/**
 	 * Test method for {@link rules.Threshold#positionToGet()}.
+	 * 	 * @throws IllegalArgumentException 
 	 */
 	@Test
 	final void testPositionToGet() {
-		fail("Not yet implemented"); // TODO
+		metricName= "NOM_class";
+		t.setMetricName(metricName);
+		Assertions.assertEquals(0, t.positionToGet());
+		t.setMetricName("LOC_class");
+		Assertions.assertEquals(1, t.positionToGet());
+		t.setMetricName("WMC_class");
+		Assertions.assertEquals(2, t.positionToGet());		
+		t.setMetricName("LOC_method");
+		Assertions.assertEquals(3, t.positionToGet());
+		t.setMetricName("CYCLO_method");
+		Assertions.assertEquals(4, t.positionToGet());
+		t.setMetricName("erro");
+//		Assertions.assertNotEquals(4, t.positionToGet());
+//		Assertions.assertThrows(IllegalArgumentException.class, t.positionToGet());
 	}
 
 	/**
