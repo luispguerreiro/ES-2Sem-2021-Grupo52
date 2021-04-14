@@ -64,7 +64,8 @@ public class GUI extends JFrame {
 //	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 //	private String src_path;
 	
-	private String excelOutputDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; //vai ser dado pelo user na gui
+//	private String excelOutputDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; //vai ser dado pelo user na gui
+	private String excelOutputDir = "C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx";
 	private File src_path;
 	
 	private Central c;
@@ -190,10 +191,19 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Rule> rules;
+				String pathexcel = "";
+				JFileChooser jfcrun = new JFileChooser();
+				jfcrun.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnValue = jfcrun.showOpenDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = jfcrun.getSelectedFile();
+					String pathimportar = selectedFile.getAbsolutePath();
+					pathexcel.concat(pathimportar);
+				}
 				try {
 					rules = PutCentralWorking();
 					Central c = new Central(rules, src_path);
-					c.setExcelFileDir(excelOutputDir);
+					c.setExcelFileDir(pathexcel);
 					c.ini();
 					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(),
 							new Comparador(c.getBoolClass(), c.getBoolMethod()), 2));
