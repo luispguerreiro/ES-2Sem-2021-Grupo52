@@ -90,16 +90,22 @@ class RuleTest {
 	@Test
 	final void testGetThresholds() throws FileNotFoundException {
 		r.createThresholds();
+		thresholds= r.getThresholds();
 		Assertions.assertEquals(thresholds, r.getThresholds());
 	}
 
 	/**
 	 * Test method for {@link rules.Rule#createThresholds()}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testCreateThresholds() {
-		fail("Not yet implemented"); // TODO
+	final void testCreateThresholds() throws FileNotFoundException {
+		Threshold t= new Threshold(metricName.get(0), comp.get(0), limits.get(0));
+		r.createThresholds();
+		Assertions.assertNotNull(t);
+		Assertions.assertNotNull(thresholds);
 	}
+	
 
 	/**
 	 * Test method for {@link rules.Rule#calculateThresholds(java.util.ArrayList, java.util.ArrayList)}.
@@ -141,8 +147,10 @@ class RuleTest {
 		boolean one= true;
 		boolean two= true;
 		boolean three= false;
+		boolean four= false;
 		Assertions.assertTrue(r.and(one, two));
 		Assertions.assertFalse(r.and(one, three));
+		Assertions.assertFalse(r.and(four, three));
 		
 	}
 
@@ -154,8 +162,10 @@ class RuleTest {
 		boolean one= true;
 		boolean two= false;
 		boolean three= false;
+		boolean four= true;
 		Assertions.assertTrue(r.or(one, two));
 		Assertions.assertFalse(r.or(two, three));
+		Assertions.assertTrue(r.or(one, four));
 	}
 
 	/**
