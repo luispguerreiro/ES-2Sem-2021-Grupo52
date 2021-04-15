@@ -148,13 +148,13 @@ public class GUI extends JFrame {
 		setResizable(false);
 		setTitle("Code Quality Assessor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 901, 541);
+		setBounds(100, 100, 1199, 681);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		JButton btnNewButton = new JButton("Pasta");
-		btnNewButton.setBounds(774, 415, 103, 33);
+		btnNewButton.setBounds(1072, 567, 103, 33);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jfc = new JFileChooser("Escolha a pasta");
@@ -193,7 +193,7 @@ public class GUI extends JFrame {
 		contentPane.add(btnNewButton);
 
 		JButton btnRun = new JButton("Run");
-		btnRun.setBounds(774, 458, 103, 33);
+		btnRun.setBounds(1072, 610, 103, 33);
 		btnRun.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnRun.addActionListener(new ActionListener() {
 
@@ -227,14 +227,14 @@ public class GUI extends JFrame {
 		contentPane.add(btnRun);
 
 		txtSrcPath = new JTextField();
-		txtSrcPath.setBounds(10, 415, 754, 33);
+		txtSrcPath.setBounds(10, 567, 923, 33);
 		txtSrcPath.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtSrcPath.setText("SRC PATH");
 		contentPane.add(txtSrcPath);
 		txtSrcPath.setColumns(10);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 10, 206, 395);
+		panel.setBounds(10, 10, 206, 547);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -434,7 +434,7 @@ public class GUI extends JFrame {
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(635, 10, 242, 210);
+		panel_1.setBounds(943, 10, 242, 210);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -507,7 +507,7 @@ public class GUI extends JFrame {
 		panel_1.add(btnAbrirExcel);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(635, 214, 242, 191);
+		panel_2.setBounds(943, 263, 242, 191);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -591,7 +591,7 @@ public class GUI extends JFrame {
 
 		scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(225, 10, 400, 395);
+		scrollPane.setBounds(225, 10, 708, 504);
 		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane);
 	}
