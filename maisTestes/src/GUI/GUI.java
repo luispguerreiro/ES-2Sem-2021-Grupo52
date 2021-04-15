@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -53,27 +54,31 @@ public class GUI extends JFrame {
 	// commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico
 	// com valores default -> faltam os restantes panels
 	// commit final sprint 2 - gui entregável
-	//commit final sprint - gui entregável 
+	// commit final sprint - gui entregável
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
 	JScrollPane scrollPane;
-	private JTextField txtThreshold;
-	private JTextField textField;
 
 //	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 //	private String src_path;
-	
+
 //	private String excelOutputDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; //vai ser dado pelo user na gui
 //	private String excelOutputDir = "C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx";
 	private File src_path;
-	
+
 	private Central c;
-	
+
 	private JLabel nPackagesLabel;
 	private JLabel nClassesLabel;
 	private JLabel nMethodsLabel;
 	private JLabel nLinesLabel;
+	
+	private JTextField txtThreshold;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
 
 	/**
 	 * Launch the application.
@@ -134,7 +139,6 @@ public class GUI extends JFrame {
 
 	}
 
-	
 	/**
 	 * Create the frame.
 	 * 
@@ -161,7 +165,7 @@ public class GUI extends JFrame {
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
 				}
 				try {
-					src_path=new File(txtSrcPath.getText());
+					src_path = new File(txtSrcPath.getText());
 					if (src_path.isDirectory()) {
 						ArrayList<File> lista = new ArrayList<File>();
 						Path path = Paths.get(src_path.getAbsolutePath());
@@ -197,7 +201,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Rule> rules;
 				String pathexcel = "";
-				JFileChooser jfcrun = new JFileChooser();
+				JFileChooser jfcrun = new JFileChooser("Selecione onde quer guardar o ficheiro Excel");
 				jfcrun.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfcrun.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -213,7 +217,7 @@ public class GUI extends JFrame {
 					writeStatsLabels();
 					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(),
 							new Comparador(c.getBoolClass(), c.getBoolMethod()), 2));
-					
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -243,13 +247,18 @@ public class GUI extends JFrame {
 		btnNewButton_1.setBounds(10, 333, 186, 21);
 		btnNewButton_1.addActionListener(new ActionListener() {
 
+			private JTextField textField_4;
+			private JTextField textField_5;
+
 			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame editar = new JFrame("Editar...");
-				editar.setBounds(100, 100, 406, 161);
+				editar.setTitle("Editar...");
+				editar.setBounds(100, 100, 443, 310);
 				JPanel contentPane1 = new JPanel();
 				contentPane1.setBorder(new EmptyBorder(5, 5, 5, 5));
+				editar.setContentPane(contentPane1);
 				contentPane1.setLayout(null);
 
 				JCheckBox chckbxNewCheckBox = new JCheckBox("Long Method");
@@ -261,7 +270,7 @@ public class GUI extends JFrame {
 				comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				comboBox.setModel(new DefaultComboBoxModel<>(comparator.values()));
 				comboBox.setToolTipText("");
-				comboBox.setBounds(217, 10, 80, 21);
+				comboBox.setBounds(257, 10, 82, 21);
 				contentPane1.add(comboBox);
 
 				JLabel lblNewLabel = new JLabel("Lines of Code");
@@ -272,41 +281,128 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1 = new JComboBox<operator>();
 				comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				comboBox_1.setModel(new DefaultComboBoxModel<>(operator.values()));
-				comboBox_1.setBounds(159, 53, 80, 21);
+				comboBox_1.setBounds(131, 37, 48, 21);
 				contentPane1.add(comboBox_1);
 
 				txtThreshold = new JTextField();
 				txtThreshold.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				txtThreshold.setText("Threshold");
-				txtThreshold.setBounds(312, 11, 70, 19);
-				contentPane1.add(txtThreshold);
+				txtThreshold.setBounds(315, 9, 70, 19);
+				contentPane.add(txtThreshold);
 				txtThreshold.setColumns(10);
 
-				JLabel lblNewLabel_1 = new JLabel("Cyclo");
+				JLabel lblNewLabel_1 = new JLabel("Lines of Code");
 				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lblNewLabel_1.setBounds(121, 101, 34, 13);
+				lblNewLabel_1.setBounds(121, 133, 86, 13);
 				contentPane1.add(lblNewLabel_1);
 
 				JComboBox<comparator> comboBox_2 = new JComboBox<comparator>();
 				comboBox_2.setModel(new DefaultComboBoxModel<>(comparator.values()));
 				comboBox_2.setToolTipText("");
 				comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_2.setBounds(217, 97, 80, 21);
+				comboBox_2.setBounds(257, 125, 82, 21);
 				contentPane1.add(comboBox_2);
 
 				textField = new JTextField();
 				textField.setText("Threshold");
 				textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				textField.setColumns(10);
-				textField.setBounds(312, 98, 70, 19);
+				textField.setBounds(349, 123, 70, 19);
 				contentPane1.add(textField);
 
 				JCheckBox chckbxGodClass = new JCheckBox("God Class");
 				chckbxGodClass.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				chckbxGodClass.setBounds(6, 99, 109, 21);
+				chckbxGodClass.setBounds(6, 131, 109, 21);
 				contentPane1.add(chckbxGodClass);
 
-				editar.setContentPane(contentPane1);
+				JLabel lblNewLabel_1_1 = new JLabel("Cyclo");
+				lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblNewLabel_1_1.setBounds(121, 69, 34, 13);
+				contentPane.add(lblNewLabel_1_1);
+
+				JComboBox<comparator> comboBox_3 = new JComboBox<comparator>();
+				comboBox_3.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBox_3.setToolTipText("");
+				comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_3.setBounds(257, 61, 82, 21);
+				contentPane1.add(comboBox_3);
+
+				textField_1 = new JTextField();
+				textField_1.setText("Threshold");
+				textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_1.setColumns(10);
+				textField_1.setBounds(349, 61, 70, 19);
+				contentPane1.add(textField_1);
+
+				JComboBox<operator> comboBox_1_1 = new JComboBox<operator>();
+				comboBox_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
+				comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_1_1.setBounds(131, 156, 48, 21);
+				contentPane1.add(comboBox_1_1);
+
+				JLabel lblNewLabel_1_2 = new JLabel("Number of Methods");
+				lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblNewLabel_1_2.setBounds(121, 191, 126, 13);
+				contentPane1.add(lblNewLabel_1_2);
+
+				textField_2 = new JTextField();
+				textField_2.setText("Threshold");
+				textField_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_2.setColumns(10);
+				textField_2.setBounds(315, 184, 70, 19);
+				contentPane.add(textField_2);
+
+				JComboBox<operator> comboBox_1_1_1 = new JComboBox<operator>();
+				comboBox_1_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
+				comboBox_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_1_1_1.setBounds(131, 214, 48, 21);
+				contentPane1.add(comboBox_1_1_1);
+
+				JLabel lblNewLabel_1_3 = new JLabel("WMC Class");
+				lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblNewLabel_1_3.setBounds(121, 249, 86, 13);
+				contentPane1.add(lblNewLabel_1_3);
+
+				JComboBox<comparator> comboBox_2_2 = new JComboBox<comparator>();
+				comboBox_2_2.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBox_2_2.setToolTipText("");
+				comboBox_2_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_2_2.setBounds(257, 241, 82, 21);
+				contentPane1.add(comboBox_2_2);
+
+				textField_3 = new JTextField();
+				textField_3.setText("Threshold");
+				textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_3.setColumns(10);
+				textField_3.setBounds(349, 239, 70, 19);
+				contentPane1.add(textField_3);
+				
+				JComboBox<comparator> comboBox_2_3 = new JComboBox<comparator>();
+				comboBox_2_3.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBox_2_3.setToolTipText("");
+				comboBox_2_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_2_3.setBounds(257, 183, 82, 21);
+				contentPane1.add(comboBox_2_3);
+				
+				textField_4 = new JTextField();
+				textField_4.setText("Threshold");
+				textField_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_4.setColumns(10);
+				textField_4.setBounds(349, 181, 70, 19);
+				contentPane1.add(textField_4);
+				
+				textField_5 = new JTextField();
+				textField_5.setText("Threshold");
+				textField_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_5.setColumns(10);
+				textField_5.setBounds(349, 10, 70, 19);
+				contentPane1.add(textField_5);
+				
+				JLabel lblCyclo = new JLabel("Cyclo");
+				lblCyclo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblCyclo.setBounds(121, 67, 86, 13);
+				contentPane1.add(lblCyclo);
+
 				editar.setVisible(true);
 			}
 		});
@@ -319,7 +415,7 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser jfc1 = new JFileChooser();
+				JFileChooser jfc1 = new JFileChooser("Escolha pasta a importar");
 				jfc1.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int returnValue = jfc1.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -552,7 +648,7 @@ public class GUI extends JFrame {
 		return table;
 
 	}
-	
+
 	public void writeStatsLabels() {
 		nPackagesLabel.setText(Integer.toString(c.getNumberOfPackages()));
 		nClassesLabel.setText(Integer.toString(c.getNumberOfClasses()));
