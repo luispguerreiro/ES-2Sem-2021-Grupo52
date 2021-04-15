@@ -33,6 +33,8 @@ public class Comparador {
 	private int countVN=0;
 	private int countFP=0;
 	private int countFN=0;
+	private ArrayList<String> methodCheck;
+	private ArrayList<String> classCheck;
 	
 	
 	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass, int tipo) throws FileNotFoundException, IOException {
@@ -64,22 +66,27 @@ public class Comparador {
 		
 		
 	public void methodComp(ArrayList<BoolResultado> boolMethod, ArrayList<Linha> linhas){
+		methodCheck= new ArrayList<>();
 		for (int i=0; i< linhas.size(); i++) {
 			for (int j=0; j<boolMethod.size();j++){
 				if(linhas.get(i).getPacote().equals(boolMethod.get(j).getPackage()) && linhas.get(i).getClasse().equals(boolMethod.get(j).getClasses()) && linhas.get(i).getMetodo().equals(boolMethod.get(j).getMetodo())){
 					if(linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()){
+						methodCheck.add("Verdadeiro Positivo");
 						System.out.println("Verdadeiro Positivo");
 						countVP++;
 					}
 					if(!linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()){
+						methodCheck.add("Falso Positivo");
 						System.out.println("Falso Positivo");
 						countFP++;
 					}
 					if(!linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()){
+						methodCheck.add("Verdadeiro Negativo");
 						System.out.println("Verdadeiro Negativo");
 						countVN++;
 					}
 					if(linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()){
+						methodCheck.add("Falso Negativo");
 						System.out.println("Falso Negativo");
 						countFN++;
 					}
@@ -89,22 +96,27 @@ public class Comparador {
 		}
 	}
 	public void classComp(ArrayList<BoolResultado> boolClass, ArrayList<Linha> linhas){
+		classCheck= new ArrayList<>();
 		for (int i=0; i< linhas.size(); i++) {
 			for (int j=0; j<boolClass.size();j++){
 				if(linhas.get(i).getPacote().equals(boolClass.get(j).getPackage()) && linhas.get(i).getClasse().equals(boolClass.get(j).getClasses()) && linhas.get(i).getMetodo().equals(boolClass.get(j).getMetodo())){
 					if(linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()){
+						classCheck.add("Verdadeiro Positivo");
 						System.out.println("Verdadeiro Positivo");
 						countVP++;
 					}
 					if(!linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()){
+						classCheck.add("Falso Positivo");
 						System.out.println("Falso Positivo");
 						countFP++;
 					}
 					if(!linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()){
+						classCheck.add("Verdadeiro Negativo");
 						System.out.println("Verdadeiro Negativo");
 						countVN++;
 					}
 					if(linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()){
+						classCheck.add("Falso Negativo");
 						System.out.println("Falso Negativo");
 						countFN++;
 					}
@@ -125,6 +137,12 @@ public class Comparador {
 	}
 	public int getCountFN() {
 		return countFN;
+	}
+	public ArrayList<String> getClassCheck() {
+		return classCheck;
+	}
+	public ArrayList<String> getMethodCheck() {
+		return methodCheck;
 	}
 
 }
