@@ -18,32 +18,32 @@ public class Comparador {
 //		System.out.println(linhas);
 
 		for (int i = 0; i < linhas.size(); i++) {
-			System.out.println(linhas.get(i).getMetodo());
+//			System.out.println(linhas.get(i).getMetodo());
 			for (int j = 0; j < boolMethod.size(); j++) {
 				if (linhas.get(i).getPacote().equals(boolMethod.get(j).getPackage())
 						&& linhas.get(i).getClasse().equals(boolMethod.get(j).getClasses())
 						&& linhas.get(i).getMetodo().equals(boolMethod.get(j).getMetodo())) {
 					if (linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()) {
-						System.out.println(boolMethod.get(j).getMetodo());
-						System.out.println("Verdadeiro Positivo");
+//						System.out.println(boolMethod.get(j).getMetodo());
+//						System.out.println("Verdadeiro Positivo");
 					}
 					if (!linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()) {
-						System.out.println("---->"+linhas.get(i).getis_Long_Method());
-						System.out.println("---->"+boolMethod.get(j).getVerificacao());
-						System.out.println(boolMethod.get(j).getMetodo());
+//						System.out.println("---->"+linhas.get(i).getis_Long_Method());
+//						System.out.println("---->"+boolMethod.get(j).getVerificacao());
+//						System.out.println(boolMethod.get(j).getMetodo());
+//						
 						
-						
-						System.out.println("Falso Positivo");
+//						System.out.println("Falso Positivo");
 					}
 					if (!linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()) {
-						System.out.println(boolMethod.get(j).getMetodo());
+//						System.out.println(boolMethod.get(j).getMetodo());
 
-						System.out.println("Verdadeiro Negativo");
+//						System.out.println("Verdadeiro Negativo");
 					}
 					if (linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()) {
-						System.out.println(boolMethod.get(j).getMetodo());
+//						System.out.println(boolMethod.get(j).getMetodo());
 
-						System.out.println("Falso Negativo");
+//						System.out.println("Falso Negativo");
 					}
 
 				}
@@ -53,23 +53,23 @@ public class Comparador {
 //is_God_Class
 
 		for (int i = 0; i < linhas.size(); i++) {
-			System.out.println(boolClass.get(i).getMetodo());
-			System.out.println(linhas.get(i).getMetodo());
+//			System.out.println(boolClass.get(i).getMetodo());
+//			System.out.println(linhas.get(i).getMetodo());
 			for (int j = 0; j < boolClass.size(); j++) {
 				if (linhas.get(i).getPacote().equals(boolClass.get(j).getPackage())
 						&& linhas.get(i).getClasse().equals(boolClass.get(j).getClasses())
 						&& linhas.get(i).getMetodo().equals(boolClass.get(j).getMetodo())) {
 					if (linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()) {
-						System.out.println("Verdadeiro Positivo");
+//						System.out.println("Verdadeiro Positivo");
 					}
 					if (!linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()) {
-						System.out.println("Falso Positivo");
+//						System.out.println("Falso Positivo");
 					}
 					if (!linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()) {
-						System.out.println("Verdadeiro Negativo");
+//						System.out.println("Verdadeiro Negativo");
 					}
 					if (linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()) {
-						System.out.println("Falso Negativo");
+//						System.out.println("Falso Negativo");
 					}
 				}
 			}

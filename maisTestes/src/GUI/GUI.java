@@ -65,10 +65,15 @@ public class GUI extends JFrame {
 //	private String src_path;
 	
 //	private String excelOutputDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; //vai ser dado pelo user na gui
-	private String excelOutputDir = "C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx";
+//	private String excelOutputDir = "C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx";
 	private File src_path;
 	
 	private Central c;
+	
+	private JLabel nPackagesLabel;
+	private JLabel nClassesLabel;
+	private JLabel nMethodsLabel;
+	private JLabel nLinesLabel;
 
 	/**
 	 * Launch the application.
@@ -202,24 +207,17 @@ public class GUI extends JFrame {
 				}
 				try {
 					rules = PutCentralWorking();
-					Central c = new Central(rules, src_path);
+					c = new Central(rules, src_path);
 					c.setExcelFileDir(pathexcel);
 					c.ini();
+					writeStatsLabels();
 					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(),
 							new Comparador(c.getBoolClass(), c.getBoolMethod()), 2));
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-					try {
-						rules = PutCentralWorking();
-						c = new Central(rules, src_path);
-						c.setExcelFileDir(excelOutputDir);
-						c.ini();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 			}
 		});
 		contentPane.add(btnRun);
@@ -370,29 +368,29 @@ public class GUI extends JFrame {
 		lblNewLabel_5.setBounds(10, 102, 98, 13);
 		panel_1.add(lblNewLabel_5);
 
-		JLabel lblNewLabel_6 = new JLabel("n");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_6.setBounds(187, 34, 45, 13);
-		panel_1.add(lblNewLabel_6);
+		nPackagesLabel = new JLabel("n");
+		nPackagesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		nPackagesLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		nPackagesLabel.setBounds(187, 34, 45, 13);
+		panel_1.add(nPackagesLabel);
 
-		JLabel lblNewLabel_6_1 = new JLabel("n");
-		lblNewLabel_6_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_6_1.setBounds(187, 57, 45, 13);
-		panel_1.add(lblNewLabel_6_1);
+		nClassesLabel = new JLabel("n");
+		nClassesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		nClassesLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		nClassesLabel.setBounds(187, 57, 45, 13);
+		panel_1.add(nClassesLabel);
 
-		JLabel lblNewLabel_6_2 = new JLabel("n");
-		lblNewLabel_6_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_6_2.setBounds(187, 80, 45, 13);
-		panel_1.add(lblNewLabel_6_2);
+		nMethodsLabel = new JLabel("n");
+		nMethodsLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		nMethodsLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		nMethodsLabel.setBounds(187, 80, 45, 13);
+		panel_1.add(nMethodsLabel);
 
-		JLabel lblNewLabel_6_3 = new JLabel("n");
-		lblNewLabel_6_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_6_3.setBounds(187, 103, 45, 13);
-		panel_1.add(lblNewLabel_6_3);
+		nLinesLabel = new JLabel("n");
+		nLinesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		nLinesLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		nLinesLabel.setBounds(187, 103, 45, 13);
+		panel_1.add(nLinesLabel);
 
 		JButton btnAbrirExcel = new JButton("Abrir Excel");
 		btnAbrirExcel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -553,6 +551,17 @@ public class GUI extends JFrame {
 		table.setEnabled(false);
 		return table;
 
+	}
+	
+	public void writeStatsLabels() {
+		nPackagesLabel.setText(Integer.toString(c.getNumberOfPackages()));
+		nClassesLabel.setText(Integer.toString(c.getNumberOfClasses()));
+		nMethodsLabel.setText(Integer.toString(c.getNumberOfMethods()));
+		nLinesLabel.setText(Integer.toString(c.getNumberOfLines()));
+		nPackagesLabel.updateUI();
+		nClassesLabel.updateUI();
+		nMethodsLabel.updateUI();
+		nLinesLabel.updateUI();
 	}
 
 }
