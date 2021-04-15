@@ -5,6 +5,7 @@ package rules;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterAll;
@@ -40,6 +41,15 @@ class RuleTest {
 		comp = new ArrayList<>();
 		limits = new ArrayList<>();
 		oper = new ArrayList<>();
+		ruleName= "Teste";
+		ruleType= 1;
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
+		oper.add(operator.AND);
+		limits.add(20);
+		limits.add(10);
 		r= new Rule(ruleName, ruleType, metricName, comp,
 				limits,  oper);
 	}
@@ -75,9 +85,11 @@ class RuleTest {
 
 	/**
 	 * Test method for {@link rules.Rule#getThresholds()}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testGetThresholds() {
+	final void testGetThresholds() throws FileNotFoundException {
+		r.createThresholds();
 		Assertions.assertEquals(thresholds, r.getThresholds());
 	}
 
@@ -126,7 +138,12 @@ class RuleTest {
 	 */
 	@Test
 	final void testAnd() {
-		fail("Not yet implemented"); // TODO
+		boolean one= true;
+		boolean two= true;
+		boolean three= false;
+		Assertions.assertTrue(r.and(one, two));
+		Assertions.assertFalse(r.and(one, three));
+		
 	}
 
 	/**
@@ -134,7 +151,11 @@ class RuleTest {
 	 */
 	@Test
 	final void testOr() {
-		fail("Not yet implemented"); // TODO
+		boolean one= true;
+		boolean two= false;
+		boolean three= false;
+		Assertions.assertTrue(r.or(one, two));
+		Assertions.assertFalse(r.or(two, three));
 	}
 
 	/**
@@ -142,7 +163,7 @@ class RuleTest {
 	 */
 	@Test
 	final void testGetRuleName() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertEquals(ruleName, r.getRuleName());
 	}
 
 	/**
@@ -150,7 +171,7 @@ class RuleTest {
 	 */
 	@Test
 	final void testGetRuleType() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertEquals(ruleType, r.getRuleType());
 	}
 
 	/**
@@ -158,7 +179,7 @@ class RuleTest {
 	 */
 	@Test
 	final void testGetComp() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertEquals(comp, r.getComp());
 	}
 
 	/**
@@ -166,7 +187,8 @@ class RuleTest {
 	 */
 	@Test
 	final void testGetLimits() {
-		fail("Not yet implemented"); // TODO
+		r.setLimits(limits);
+		Assertions.assertEquals(limits, r.getLimits());
 	}
 
 	/**
@@ -174,7 +196,7 @@ class RuleTest {
 	 */
 	@Test
 	final void testGetMetricName() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertEquals(metricName, r.getMetricName());
 	}
 
 	/**
@@ -182,7 +204,7 @@ class RuleTest {
 	 */
 	@Test
 	final void testGetOper() {
-		fail("Not yet implemented"); // TODO
+		Assertions.assertEquals(oper, r.getOper());
 	}
 
 	/**
@@ -190,7 +212,9 @@ class RuleTest {
 	 */
 	@Test
 	final void testSetRuleName() {
-		fail("Not yet implemented"); // TODO
+		ruleName= "teste2";
+		r.setRuleName(ruleName);
+		Assertions.assertEquals(ruleName, r.getRuleName());
 	}
 
 	/**
@@ -214,7 +238,11 @@ class RuleTest {
 	 */
 	@Test
 	final void testSetLimits() {
-		fail("Not yet implemented"); // TODO
+		ArrayList<Integer> limits2= new ArrayList<>();
+		limits2.add(15);
+		limits2.add(25);
+		r.setLimits(limits2);
+		Assertions.assertEquals(limits2, r.getLimits());
 	}
 
 }
