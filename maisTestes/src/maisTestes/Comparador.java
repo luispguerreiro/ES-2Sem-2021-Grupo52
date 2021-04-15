@@ -28,6 +28,13 @@ import rules.Rule;
 
 public class Comparador {
 	
+	
+	private int countVP=0;
+	private int countVN=0;
+	private int countFP=0;
+	private int countFN=0;
+	
+	
 	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass, int tipo) throws FileNotFoundException, IOException {
 		File file= new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx");
 		Excel excel= new Excel();
@@ -62,15 +69,19 @@ public class Comparador {
 				if(linhas.get(i).getPacote().equals(boolMethod.get(j).getPackage()) && linhas.get(i).getClasse().equals(boolMethod.get(j).getClasses()) && linhas.get(i).getMetodo().equals(boolMethod.get(j).getMetodo())){
 					if(linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()){
 						System.out.println("Verdadeiro Positivo");
+						countVP++;
 					}
 					if(!linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()){
 						System.out.println("Falso Positivo");
+						countFP++;
 					}
 					if(!linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()){
 						System.out.println("Verdadeiro Negativo");
+						countVN++;
 					}
 					if(linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()){
 						System.out.println("Falso Negativo");
+						countFN++;
 					}
 					
 				}
@@ -83,22 +94,38 @@ public class Comparador {
 				if(linhas.get(i).getPacote().equals(boolClass.get(j).getPackage()) && linhas.get(i).getClasse().equals(boolClass.get(j).getClasses()) && linhas.get(i).getMetodo().equals(boolClass.get(j).getMetodo())){
 					if(linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()){
 						System.out.println("Verdadeiro Positivo");
+						countVP++;
 					}
 					if(!linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()){
 						System.out.println("Falso Positivo");
+						countFP++;
 					}
 					if(!linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()){
 						System.out.println("Verdadeiro Negativo");
+						countVN++;
 					}
 					if(linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()){
 						System.out.println("Falso Negativo");
+						countFN++;
 					}
 					
 				}
 			}
 		}	
 	}
-		
+	
+	public int getCountVP() {
+		return countVP;
+	}
+	public int getCountFP() {
+		return countFP;
+	}
+	public int getCountVN() {
+		return countVN;
+	}
+	public int getCountFN() {
+		return countFN;
+	}
 
 }
 
