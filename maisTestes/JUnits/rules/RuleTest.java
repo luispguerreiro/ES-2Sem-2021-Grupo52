@@ -28,6 +28,7 @@ class RuleTest {
 	static ArrayList<comparator> comp;
 	static ArrayList<Integer> limits;
 	static ArrayList<operator> oper;
+	static ArrayList<operator> oper2;
 	static String ruleName;
 	static int ruleType;
 	static Rule r;
@@ -41,17 +42,25 @@ class RuleTest {
 		comp = new ArrayList<>();
 		limits = new ArrayList<>();
 		oper = new ArrayList<>();
+		oper2 = new ArrayList<>();
 		ruleName= "Teste";
 		ruleType= 1;
 		metricName.add("NOM_class");
 		metricName.add("LOC_class");
+		metricName.add("WMC_class");
 		comp.add(comparator.BIGGER);
 		comp.add(comparator.SMALLER);
+		comp.add(comparator.BIGGER);
 		oper.add(operator.AND);
+		oper.add(operator.AND);
+		oper2.add(operator.OR);
+		oper2.add(operator.OR);
 		limits.add(20);
 		limits.add(10);
+		limits.add(30);
 		r= new Rule(ruleName, ruleType, metricName, comp,
 				limits,  oper);
+		
 	}
 
 	/**
@@ -117,26 +126,51 @@ class RuleTest {
 
 	/**
 	 * Test method for {@link rules.Rule#logic1(rules.Threshold, int)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testLogic1() {
-		fail("Not yet implemented"); // TODO
+	final void testLogic1() throws FileNotFoundException {
+		Threshold t= new Threshold(metricName.get(0), comp.get(0), limits.get(0));
+		r.createThresholds();
+		Assertions.assertTrue(r.logic1(t, 25));
+		Assertions.assertFalse(r.logic1(t, 20));
 	}
 
 	/**
 	 * Test method for {@link rules.Rule#logic2(rules.Threshold, rules.Threshold, int, int)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testLogic2() {
-		fail("Not yet implemented"); // TODO
+	final void testLogic2() throws FileNotFoundException {
+		Threshold t= new Threshold(metricName.get(0), comp.get(0), limits.get(0));
+		Threshold t1= new Threshold(metricName.get(1), comp.get(1), limits.get(1));
+		r.createThresholds();
+		System.out.println(t1.getLimit());
+		Assertions.assertTrue(r.logic2(t, t1, 25, 5));
+		Assertions.assertFalse(r.logic2(t, t1, 20, 25));
+		Rule r2= new Rule(ruleName, ruleType, metricName, comp,
+				limits,  oper2);
+		Assertions.assertTrue(r2.logic2(t, t1, 25, 5));
+		Assertions.assertFalse(r2.logic2(t, t1, 20, 25));	
 	}
 
 	/**
 	 * Test method for {@link rules.Rule#logic3(rules.Threshold, rules.Threshold, rules.Threshold, int, int, int)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testLogic3() {
-		fail("Not yet implemented"); // TODO
+	final void testLogic3() throws FileNotFoundException {
+		Threshold t1= new Threshold(metricName.get(0), comp.get(0), limits.get(0));
+		Threshold t2= new Threshold(metricName.get(1), comp.get(1), limits.get(1));
+		Threshold t3= new Threshold(metricName.get(1), comp.get(1), limits.get(1));
+		r.createThresholds();
+		System.out.println(t1.getLimit());
+		Assertions.assertTrue(r.logic3(t1, t2, t3, 25, 5, 45));
+		Assertions.assertFalse(r.logic3(t1, t2, t3,  20, 25, 3));
+		Rule r2= new Rule(ruleName, ruleType, metricName, comp,
+				limits,  oper2);
+		Assertions.assertTrue(r2.logic3(t1, t2, t3, 25, 5, 45));
+		Assertions.assertFalse(r2.logic3(t1, t2, t3,  20, 5, 3));	
 	}
 
 	/**

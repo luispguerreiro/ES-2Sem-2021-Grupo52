@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import Metrics.Resultado;
 import central.BoolResultado;
 
-	public class Rule implements IRule, Serializable {
+public class Rule implements IRule, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public enum operator {
 		OR, AND
 	};
@@ -66,18 +66,17 @@ import central.BoolResultado;
 			int pos = thresholds.get(0).positionToGet();
 			if (thresholds.size() == 1) {
 				boolresult.get(j).setVerificacao(logic1(thresholds.get(0), result.get(j).getAllInts()[pos]));
-			}
-			else if (thresholds.size() == 2) {
+			} else if (thresholds.size() == 2) {
 				int pos2 = thresholds.get(1).positionToGet();
 				boolresult.get(j).setVerificacao(logic2(thresholds.get(0), thresholds.get(1),
-						result.get(j).getAllInts()[pos],
-						result.get(j).getAllInts()[pos2]));
-			} 
-			else if (thresholds.size() == 3) {
+						result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2]));
+			} else if (thresholds.size() == 3) {
 				int pos2 = thresholds.get(1).positionToGet();
 				int pos3 = thresholds.get(2).positionToGet();
-				boolresult.get(j).setVerificacao(logic3(thresholds.get(0), thresholds.get(1), thresholds.get(2),
-						result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2], result.get(j).getAllInts()[pos3]));
+				boolresult.get(j)
+						.setVerificacao(logic3(thresholds.get(0), thresholds.get(1), thresholds.get(2),
+								result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2],
+								result.get(j).getAllInts()[pos3]));
 			}
 		}
 	}
@@ -96,17 +95,16 @@ import central.BoolResultado;
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
 
-
-
-	public boolean logic3 (Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3) throws FileNotFoundException{
-		boolean aux= false;
+	public boolean logic3(Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3)
+			throws FileNotFoundException {
+		boolean aux = false;
 		if (oper.get(0).equals(operator.AND))
-			aux= and(t1.result(valor1), t2.result(valor2));
+			aux = and(t1.result(valor1), t2.result(valor2));
 		else if (oper.get(0).equals(operator.OR))
-			aux= or(t1.result(valor1), t2.result(valor2));
-		if (oper.get(1).equals(operator.AND)) 
+			aux = or(t1.result(valor1), t2.result(valor2));
+		if (oper.get(1).equals(operator.AND))
 			return and(aux, t3.result(valor3));
-		if (oper.get(1).equals(operator.OR)) 
+		if (oper.get(1).equals(operator.OR))
 			return or(aux, t3.result(valor3));
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
@@ -134,7 +132,6 @@ import central.BoolResultado;
 		return ruleName;
 	}
 
-
 	public int getRuleType() {
 		return ruleType;
 	}
@@ -146,12 +143,11 @@ import central.BoolResultado;
 	public ArrayList<Integer> getLimits() {
 		return limits;
 	}
-	
 
 	public ArrayList<String> getMetricName() {
 		return metricName;
 	}
-	
+
 	public ArrayList<operator> getOper() {
 		return oper;
 	}
