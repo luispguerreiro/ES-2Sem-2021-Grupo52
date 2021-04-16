@@ -291,13 +291,6 @@ public class GUI extends JFrame {
 				comboBox_1.setBounds(131, 37, 48, 21);
 				contentPane1.add(comboBox_1);
 
-				txtThreshold = new JTextField();
-				txtThreshold.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				txtThreshold.setText("Threshold");
-				txtThreshold.setBounds(315, 9, 70, 19);
-				contentPane.add(txtThreshold);
-				txtThreshold.setColumns(10);
-
 				JLabel lblNewLabel_1 = new JLabel("Lines of Code");
 				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				lblNewLabel_1.setBounds(121, 133, 86, 13);
@@ -351,13 +344,6 @@ public class GUI extends JFrame {
 				lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				lblNewLabel_1_2.setBounds(121, 191, 126, 13);
 				contentPane1.add(lblNewLabel_1_2);
-
-				textField_2 = new JTextField();
-				textField_2.setText("Threshold");
-				textField_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				textField_2.setColumns(10);
-				textField_2.setBounds(315, 184, 70, 19);
-				contentPane.add(textField_2);
 
 				JComboBox<operator> comboBox_1_1_1 = new JComboBox<operator>();
 				comboBox_1_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
