@@ -14,7 +14,7 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class Loc_Method {
 	public ArrayList<Resultado> resultados = new ArrayList<>();
-	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\Jasml\\\\src\\\\com\\\\jasml\\\\classes\\\\Attribute_Code.java";
+	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\SourceCodeParser.java";
 	static int linhasfinal = 0;	
 //	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
@@ -28,9 +28,10 @@ public class Loc_Method {
 		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
 		List<String> Resultados = new ArrayList<>();
 		List<TypeDeclaration> nodes = cu.findAll(TypeDeclaration.class);
+		String mainClassName = mainClass.getNameAsString();
 
 		for (CallableDeclaration callableDeclaration : mainClassMet) {
-			String mainClassName = mainClass.getNameAsString();
+			
 			List<Parameter> par = callableDeclaration.getParameters();
 			String parameters = "";
 			if (!par.isEmpty()) {
@@ -83,7 +84,7 @@ public class Loc_Method {
 			int linhasMethod = fim - inicio;
 
 			resultados.add(new Resultado(
-					i, pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/",
+					i, pack + "/"+ mainClassName +"." + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/",
 					linhasMethod, empty));
 
 		}
@@ -102,6 +103,7 @@ public class Loc_Method {
 		for (Resultado string : a.getResultados()) {
 			// System.out.println(string.getPath());
 			System.out.println(string.getLinhas());
+			System.out.println(string.getClasses());
 			System.out.println(string.getMethodNames());
 		}
 	}

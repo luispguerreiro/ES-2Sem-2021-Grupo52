@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -55,24 +54,33 @@ public class GUI extends JFrame {
 	// com valores default -> faltam os restantes panels
 	// commit final sprint 2 - gui entregável
 	// commit final sprint - gui entregável
+	//commit final sprint - gui entregável 
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
-	JScrollPane scrollPane;
 
 //	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 //	private String src_path;
 
 //	private String excelOutputDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; //vai ser dado pelo user na gui
 //	private String excelOutputDir = "C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx";
+	private JScrollPane scrollPane;
+
 	private File src_path;
 
 	private Central c;
-
+	
 	private JLabel nPackagesLabel;
 	private JLabel nClassesLabel;
 	private JLabel nMethodsLabel;
 	private JLabel nLinesLabel;
+	private JLabel verdPositLabel;
+	private JLabel verdNegatLabel;
+	private JLabel falsePositLabel;
+	private JLabel falseNegatLabel;
+	
+	private int tipoComparacao; //vai ser retirado consoante as checkbox de god class e long method
+
 	
 	private JTextField txtThreshold;
 	private JTextField textField;
@@ -98,6 +106,7 @@ public class GUI extends JFrame {
 
 	// Funciona sempre com as mesmas regras
 	public ArrayList<Rule> PutCentralWorking() throws FileNotFoundException {
+		tipoComparacao=1;
 		String ruleName = "RegraNew";
 		ArrayList<String> metricName = new ArrayList<>();
 		ArrayList<comparator> comp = new ArrayList<>();
@@ -126,7 +135,7 @@ public class GUI extends JFrame {
 		metricName1.add("CYCLO_method");
 		comp1.add(comparator.BIGGER);
 		comp1.add(comparator.SMALLER);
-		limits1.add(20);
+		limits1.add(10);
 		limits1.add(40);
 		oper1.add(operator.AND);
 
@@ -200,24 +209,22 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Rule> rules;
-				String pathexcel = "";
-				JFileChooser jfcrun = new JFileChooser("Selecione onde quer guardar o ficheiro Excel");
+				JFileChooser jfcrun = new JFileChooser();
+				jfcrun.setDialogTitle("Escolha onde guardar o excel");
 				jfcrun.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfcrun.showOpenDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = jfcrun.getSelectedFile();
-					String pathimportar = selectedFile.getAbsolutePath();
-					pathexcel.concat(pathimportar);
-				}
+//				if (returnValue == JFileChooser.APPROVE_OPTION) {
+//					File selectedFile = jfcrun.getSelectedFile();
+//				}
 				try {
 					rules = PutCentralWorking();
-					c = new Central(rules, src_path);
-					c.setExcelFileDir(pathexcel);
+					c = new Central(rules, src_path, tipoComparacao);
+					System.out.println(jfcrun.getSelectedFile().getAbsolutePath());
+					c.setExcelFileDir(jfcrun.getSelectedFile().getAbsolutePath());
 					c.ini();
 					writeStatsLabels();
-					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(),
-							new Comparador(c.getBoolClass(), c.getBoolMethod()), 2));
-
+					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(), c.getComparador(), tipoComparacao));
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -531,35 +538,36 @@ public class GUI extends JFrame {
 		lblNewLabel_2_4.setBounds(10, 79, 98, 13);
 		panel_2.add(lblNewLabel_2_4);
 
-		JLabel lblNewLabel_6_4 = new JLabel("n");
-		lblNewLabel_6_4.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_6_4.setBounds(187, 11, 45, 13);
-		panel_2.add(lblNewLabel_6_4);
+		verdPositLabel = new JLabel("n");
+		verdPositLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		verdPositLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		verdPositLabel.setBounds(187, 11, 45, 13);
+		panel_2.add(verdPositLabel);
 
-		JLabel lblNewLabel_6_5 = new JLabel("n");
-		lblNewLabel_6_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_6_5.setBounds(187, 34, 45, 13);
-		panel_2.add(lblNewLabel_6_5);
+		verdNegatLabel = new JLabel("n");
+		verdNegatLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		verdNegatLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		verdNegatLabel.setBounds(187, 34, 45, 13);
+		panel_2.add(verdNegatLabel);
 
-		JLabel lblNewLabel_6_6 = new JLabel("n");
-		lblNewLabel_6_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_6_6.setBounds(187, 57, 45, 13);
-		panel_2.add(lblNewLabel_6_6);
+		falsePositLabel = new JLabel("n");
+		falsePositLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		falsePositLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		falsePositLabel.setBounds(187, 57, 45, 13);
+		panel_2.add(falsePositLabel);
 
-		JLabel lblNewLabel_6_7 = new JLabel("n");
-		lblNewLabel_6_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_6_7.setBounds(187, 80, 45, 13);
-		panel_2.add(lblNewLabel_6_7);
+		falseNegatLabel = new JLabel("n");
+		falseNegatLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		falseNegatLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		falseNegatLabel.setBounds(187, 80, 45, 13);
+		panel_2.add(falseNegatLabel);
 
 		JButton btnGrfico = new JButton("Gr\u00E1fico");
 		btnGrfico.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnGrfico.setBounds(129, 103, 103, 33);
 		btnGrfico.addActionListener(new ActionListener() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultPieDataset dataset = new DefaultPieDataset();
@@ -567,6 +575,10 @@ public class GUI extends JFrame {
 				dataset.setValue("VN", 10);
 				dataset.setValue("FP", 3);
 				dataset.setValue("FN", 14);
+				dataset.setValue("VP", c.getComparador().getCountVP());
+				dataset.setValue("VN", c.getComparador().getCountVN());
+				dataset.setValue("FP", c.getComparador().getCountFP());
+				dataset.setValue("FN", c.getComparador().getCountFN());
 
 				JFreeChart pieChart = ChartFactory.createPieChart("gráfico", dataset, false, true, false);
 
@@ -612,8 +624,7 @@ public class GUI extends JFrame {
 		return files;
 	}
 
-	public JTable escreveTabela(ArrayList<BoolResultado> isgodclass, ArrayList<BoolResultado> islongmethod,
-			Comparador c, int tipo) {
+	public JTable escreveTabela(ArrayList<BoolResultado> isgodclass, ArrayList<BoolResultado> islongmethod, Comparador comparador, int tipo) {
 		ArrayList<String[]> list = new ArrayList<>();
 		if (tipo == 1) {
 			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method",
@@ -629,17 +640,18 @@ public class GUI extends JFrame {
 			list.add(fixo);
 		}
 		Object[][] data = new Object[isgodclass.size()][list.get(0).length];
+//		Object[][] data = new Object[c.getComparador().getClassCheck().size()][list.get(0).length];
 		for (int i = 0; i < data.length; i++) {
 			data[i][0] = isgodclass.get(i).getPackage();
 			data[i][1] = isgodclass.get(i).getClasses();
 			data[i][2] = isgodclass.get(i).getMetodo();
 			if (tipo == 1 || tipo == 2) { // caso utilizador selecione ambas ou apenas isgodclass
 				data[i][3] = isgodclass.get(i).getVerificacao();
-//				data[i][4] = resultado do comparador
+				data[i][4] = c.getComparador().getClassCheck().get(i);
 			}
 			if (tipo == 1 || tipo == 3) { // caso utilizador selecione ambas ou apenas islongmethod
 				data[i][5] = islongmethod.get(i).getVerificacao();
-//					data[i][6] = resultado2 do comparador
+					data[i][6] = c.getComparador().getMethodCheck().get(i);
 			}
 		}
 
@@ -648,16 +660,24 @@ public class GUI extends JFrame {
 		return table;
 
 	}
-
+	
 	public void writeStatsLabels() {
 		nPackagesLabel.setText(Integer.toString(c.getNumberOfPackages()));
 		nClassesLabel.setText(Integer.toString(c.getNumberOfClasses()));
 		nMethodsLabel.setText(Integer.toString(c.getNumberOfMethods()));
 		nLinesLabel.setText(Integer.toString(c.getNumberOfLines()));
+		verdPositLabel.setText(Integer.toString(c.getComparador().getCountVP()));
+		verdNegatLabel.setText(Integer.toString(c.getComparador().getCountVN()));
+		falsePositLabel.setText(Integer.toString(c.getComparador().getCountFP()));
+		falseNegatLabel.setText(Integer.toString(c.getComparador().getCountFN()));
 		nPackagesLabel.updateUI();
 		nClassesLabel.updateUI();
 		nMethodsLabel.updateUI();
 		nLinesLabel.updateUI();
+		verdPositLabel.updateUI();
+		verdNegatLabel.updateUI();
+		falsePositLabel.updateUI();
+		falseNegatLabel.updateUI();
 	}
 
 }

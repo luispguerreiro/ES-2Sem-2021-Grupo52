@@ -40,7 +40,7 @@ public class Central {
 
 	private File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
 
-	private String excelFileDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; // vai estar em branco e é
+	private String excelFileDir="C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; // vai estar em branco e é
 																						// necessário fazer
 																						// setExcelFileDir
 	private File excelFile;
@@ -57,24 +57,30 @@ public class Central {
 	private int numberOfClasses = 0;
 	private int numberOfMethods = 0;
 	private int numberOfLines = 0;
+	private int tipoComparacao;
 
-	ArrayList<Resultado> all = new ArrayList<>();
-	ArrayList<BoolResultado> boolResultClass = new ArrayList<>();
-	ArrayList<BoolResultado> boolResultMethod = new ArrayList<>();
-	ArrayList<Rule> rules = new ArrayList<>();
+	private ArrayList<Resultado> all = new ArrayList<>();
+	private ArrayList<BoolResultado> boolResultClass = new ArrayList<>();
+	private ArrayList<BoolResultado> boolResultMethod = new ArrayList<>();
+	private ArrayList<Rule> rules = new ArrayList<>();
 
 	private Metrics metric;
+	
+	private Comparador comparador;
 
-	public Central(ArrayList<Rule> rules, File srcPath) throws IOException {
+	public Central(ArrayList<Rule> rules, File srcPath, int tipoComparacao) throws IOException {
 		this.rules = rules;
 		this.srcPath = srcPath;
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
+		this.tipoComparacao=tipoComparacao;
 	}
 
 	/*
 	 * initiates the main Central flow call all methods
 	 */
 	public void ini() throws IOException {
+		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
+		System.out.println("ini sysout" +excelFile);
 		File[] v = extracts();
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
@@ -112,6 +118,7 @@ public class Central {
 		System.out.println("number of classes = " + numberOfClasses);
 		System.out.println("number of lines = " + numberOfLines);
 //		Comparador c = new Comparador(boolResultMethod, boolResultClass);;
+		comparador = new Comparador(boolResultMethod, boolResultClass, tipoComparacao);
 
 	}
 
@@ -350,6 +357,8 @@ public class Central {
 	 */
 	public void setExcelFileDir(String excelFileDir) {
 		this.excelFileDir = excelFileDir;
+//		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
+
 	}
 
 	/*
@@ -381,6 +390,10 @@ public class Central {
 	
 	public int getNumberOfPackages() {
 		return numberOfPackages;
+	}
+	
+	public Comparador getComparador() {
+		return comparador;
 	}
 
 //	public ArrayList<Resultado> getAll() {
@@ -440,8 +453,14 @@ public class Central {
 	public static void main(String[] args) throws IOException {
 		ArrayList<Rule> rules = testMain();
 		File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
-		Central c = new Central(rules, srcPath);
-//		c.ini();
+		int tipoComparacao=1;
+		Central c = new Central(rules, srcPath, tipoComparacao);
+		System.out.println("---<"+c.excelFileDir);
+		c.setExcelFileDir(c.excelFileDir);
+		c.ini();
+		for(int i=0; i<c.getComparador().getMethodCheck().size(); i++)
+		System.out.println(c.getComparador().getMethodCheck().get(i));
+		System.out.println(c.getComparador().getMethodCheck().size());
 //
 //		History hist = new History();
 //		hist.writeFile(rules);
