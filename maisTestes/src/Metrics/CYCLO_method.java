@@ -23,7 +23,7 @@ public class CYCLO_method {
 	
 //	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
-
+ 
 	public CYCLO_method(Metrics m) {
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		pack = m.getCu().getPackageDeclaration().toString();
