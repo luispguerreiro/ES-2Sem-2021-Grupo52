@@ -40,7 +40,7 @@ public class Central {
 
 	private File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
 
-	private String excelFileDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; // vai estar em branco e é
+	private String excelFileDir="C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; // vai estar em branco e é
 																						// necessário fazer
 																						// setExcelFileDir
 	private File excelFile;
@@ -72,18 +72,14 @@ public class Central {
 		this.rules = rules;
 		this.srcPath = srcPath;
 		this.tipoComparacao=tipoComparacao;
-		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
-		
-		System.out.println("number of methods = " + numberOfMethods);
-		System.out.println("number of packages = " + numberOfPackages);
-		System.out.println("number of classes = " + numberOfClasses);
-		System.out.println("number of lines = " + numberOfLines);
 	}
 
 	/*
 	 * initiates the main Central flow call all methods
 	 */
 	public void ini() throws IOException {
+		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
+		System.out.println("ini sysout" +excelFile);
 		File[] v = extracts();
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
@@ -354,6 +350,8 @@ public class Central {
 	 */
 	public void setExcelFileDir(String excelFileDir) {
 		this.excelFileDir = excelFileDir;
+//		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
+
 	}
 
 	/*
@@ -450,6 +448,8 @@ public class Central {
 		File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
 		int tipoComparacao=1;
 		Central c = new Central(rules, srcPath, tipoComparacao);
+		System.out.println("---<"+c.excelFileDir);
+		c.setExcelFileDir(c.excelFileDir);
 		c.ini();
 		for(int i=0; i<c.getComparador().getMethodCheck().size(); i++)
 		System.out.println(c.getComparador().getMethodCheck().get(i));

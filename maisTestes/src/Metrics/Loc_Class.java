@@ -42,7 +42,7 @@ public class Loc_Class {
 			int fim = nestClass.getEnd().get().line;
 			linhasClass = fim - inicio;
 			linhasClassMain = linhasClassMain - linhasClass;
-			resultados.add(new Resultado(i, pack + "/" + NestClassNames, linhasClass, empty));
+			resultados.add(new Resultado(i, pack + "/"+mainClassName+"." + NestClassNames, linhasClass, empty));
 
 		}
 		resultados.remove(0);
@@ -79,6 +79,8 @@ public class Loc_Class {
 			System.out.println(string.getLinhas());
 			System.out.println(string.getClasses());
 			System.out.println(string.getMethodID());
+			//System.out.println(string.getMethodID());
+			//System.out.println(string.getPath());
 		}
 	}
 }

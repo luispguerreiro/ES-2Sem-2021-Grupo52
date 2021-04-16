@@ -195,19 +195,17 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Rule> rules;
-				String pathexcel = "";
 				JFileChooser jfcrun = new JFileChooser();
 				jfcrun.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfcrun.showOpenDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = jfcrun.getSelectedFile();
-					String pathimportar = selectedFile.getAbsolutePath();
-					pathexcel.concat(pathimportar);
-				}
+//				if (returnValue == JFileChooser.APPROVE_OPTION) {
+//					File selectedFile = jfcrun.getSelectedFile();
+//				}
 				try {
 					rules = PutCentralWorking();
 					c = new Central(rules, src_path, tipoComparacao);
-					c.setExcelFileDir(pathexcel);
+					System.out.println(jfcrun.getSelectedFile().getAbsolutePath());
+					c.setExcelFileDir(jfcrun.getSelectedFile().getAbsolutePath());
 					c.ini();
 					writeStatsLabels();
 					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(), tipoComparacao));
