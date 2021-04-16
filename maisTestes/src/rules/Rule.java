@@ -17,11 +17,11 @@ import rules.Rule.operator;
 	private static final long serialVersionUID = 1L;
 	
 	public enum operator {
-		OR, AND
+		XXX, OR, AND
 	};
 
 	public enum comparator {
-		BIGGER, SMALLER, EQUALS
+		XXX, BIGGER, SMALLER, EQUALS
 	};
 
 	private ArrayList<Threshold> thresholds = new ArrayList<>();

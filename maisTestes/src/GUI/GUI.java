@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,27 +43,21 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import central.BoolResultado;
 import central.Central;
+import maisTestes.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
 
 public class GUI extends JFrame {
 
-	// commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico
-	// com valores default -> faltam os restantes panels
-	// commit final sprint 2 - gui entregável
-	//commit final sprint - gui entregável 
-
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
 	private JScrollPane scrollPane;
-	private JTextField txtThreshold;
-	private JTextField textField;
 
 	private File src_path;
-	
+
 	private Central c;
-	
+
 	private JLabel nPackagesLabel;
 	private JLabel nClassesLabel;
 	private JLabel nMethodsLabel;
@@ -70,8 +66,27 @@ public class GUI extends JFrame {
 	private JLabel verdNegatLabel;
 	private JLabel falsePositLabel;
 	private JLabel falseNegatLabel;
+
+	private int tipoComparacao; // vai ser retirado consoante as checkbox de god class e long method
+
+	private JTextField txtThreshold;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_3;
+
+	private ArrayList<String> metricNames = new ArrayList<>();
+	private ArrayList<comparator> comparators = new ArrayList<>();
+	private ArrayList<operator> operators = new ArrayList<>();
+	private ArrayList<Integer> limits = new ArrayList<>();
+	private ArrayList<String> metricNames1 = new ArrayList<>();
+	private ArrayList<comparator> comparators1 = new ArrayList<>();
+	private ArrayList<operator> operators1 = new ArrayList<>();
+	private ArrayList<Integer> limits1 = new ArrayList<>();
 	
-	private int tipoComparacao; //vai ser retirado consoante as checkbox de god class e long method
+	ArrayList<Rule> rules = new ArrayList();
+	
+	private JTextField textField_4;
+	private JTextField textField_5;
 
 	/**
 	 * Launch the application.
@@ -88,10 +103,23 @@ public class GUI extends JFrame {
 			}
 		});
 	}
+	
+	public void cleanArrays() {
+		metricNames.clear();
+		metricNames1.clear();
+		limits.clear();
+		limits1.clear();
+		operators.clear();
+		operators1.clear();
+		comparators.clear();
+		comparators1.clear();
+		rules.clear();
+		
+	}
 
 	// Funciona sempre com as mesmas regras
 	public ArrayList<Rule> PutCentralWorking() throws FileNotFoundException {
-		tipoComparacao=1;
+		tipoComparacao = 1;
 		String ruleName = "RegraNew";
 		ArrayList<String> metricName = new ArrayList<>();
 		ArrayList<comparator> comp = new ArrayList<>();
@@ -133,7 +161,6 @@ public class GUI extends JFrame {
 
 	}
 
-	
 	/**
 	 * Create the frame.
 	 * 
@@ -143,13 +170,13 @@ public class GUI extends JFrame {
 		setResizable(false);
 		setTitle("Code Quality Assessor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 901, 541);
+		setBounds(100, 100, 1199, 681);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		JButton btnNewButton = new JButton("Pasta");
-		btnNewButton.setBounds(774, 415, 103, 33);
+		btnNewButton.setBounds(1072, 567, 103, 33);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jfc = new JFileChooser("Escolha a pasta");
@@ -160,7 +187,7 @@ public class GUI extends JFrame {
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
 				}
 				try {
-					src_path=new File(txtSrcPath.getText());
+					src_path = new File(txtSrcPath.getText());
 					if (src_path.isDirectory()) {
 						ArrayList<File> lista = new ArrayList<File>();
 						Path path = Paths.get(src_path.getAbsolutePath());
@@ -188,28 +215,31 @@ public class GUI extends JFrame {
 		contentPane.add(btnNewButton);
 
 		JButton btnRun = new JButton("Run");
-		btnRun.setBounds(774, 458, 103, 33);
+		btnRun.setBounds(1072, 610, 103, 33);
 		btnRun.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnRun.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Rule> rules;
+//				ArrayList<Rule> rules;
 				JFileChooser jfcrun = new JFileChooser();
+				jfcrun.setDialogTitle("Escolha onde guardar o excel");
 				jfcrun.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfcrun.showOpenDialog(null);
 //				if (returnValue == JFileChooser.APPROVE_OPTION) {
 //					File selectedFile = jfcrun.getSelectedFile();
 //				}
 				try {
-					rules = PutCentralWorking();
+//					rules = PutCentralWorking();
 					c = new Central(rules, src_path, tipoComparacao);
 					System.out.println(jfcrun.getSelectedFile().getAbsolutePath());
 					c.setExcelFileDir(jfcrun.getSelectedFile().getAbsolutePath());
 					c.ini();
 					writeStatsLabels();
-					scrollPane.setViewportView(escreveTabela(c.getBoolClass(), c.getBoolMethod(), tipoComparacao));
-					
+					scrollPane.setViewportView(
+							escreveTabela(c.getBoolClass(), c.getBoolMethod(), c.getComparador(), tipoComparacao));
+					cleanArrays();
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -219,14 +249,14 @@ public class GUI extends JFrame {
 		contentPane.add(btnRun);
 
 		txtSrcPath = new JTextField();
-		txtSrcPath.setBounds(10, 415, 754, 33);
+		txtSrcPath.setBounds(10, 567, 923, 33);
 		txtSrcPath.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtSrcPath.setText("SRC PATH");
 		contentPane.add(txtSrcPath);
 		txtSrcPath.setColumns(10);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 10, 206, 395);
+		panel.setBounds(10, 10, 206, 547);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -243,12 +273,16 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame editar = new JFrame("Editar...");
-				editar.setBounds(100, 100, 406, 161);
+				editar.setDefaultCloseOperation(EXIT_ON_CLOSE);
+				editar.setTitle("Editar...");
+				editar.setBounds(100, 100, 443, 359);
 				JPanel contentPane1 = new JPanel();
 				contentPane1.setBorder(new EmptyBorder(5, 5, 5, 5));
+				editar.setContentPane(contentPane1);
 				contentPane1.setLayout(null);
 
 				JCheckBox chckbxNewCheckBox = new JCheckBox("Long Method");
+
 				chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				chckbxNewCheckBox.setBounds(6, 10, 109, 21);
 				contentPane1.add(chckbxNewCheckBox);
@@ -257,7 +291,7 @@ public class GUI extends JFrame {
 				comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				comboBox.setModel(new DefaultComboBoxModel<>(comparator.values()));
 				comboBox.setToolTipText("");
-				comboBox.setBounds(217, 10, 80, 21);
+				comboBox.setBounds(257, 10, 82, 21);
 				contentPane1.add(comboBox);
 
 				JLabel lblNewLabel = new JLabel("Lines of Code");
@@ -268,41 +302,218 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1 = new JComboBox<operator>();
 				comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				comboBox_1.setModel(new DefaultComboBoxModel<>(operator.values()));
-				comboBox_1.setBounds(159, 53, 80, 21);
+				comboBox_1.setBounds(131, 37, 57, 21);
 				contentPane1.add(comboBox_1);
 
-				txtThreshold = new JTextField();
-				txtThreshold.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				txtThreshold.setText("Threshold");
-				txtThreshold.setBounds(312, 11, 70, 19);
-				contentPane1.add(txtThreshold);
-				txtThreshold.setColumns(10);
-
-				JLabel lblNewLabel_1 = new JLabel("Cyclo");
+				JLabel lblNewLabel_1 = new JLabel("Lines of Code");
 				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lblNewLabel_1.setBounds(121, 101, 34, 13);
+				lblNewLabel_1.setBounds(121, 133, 86, 13);
 				contentPane1.add(lblNewLabel_1);
 
 				JComboBox<comparator> comboBox_2 = new JComboBox<comparator>();
 				comboBox_2.setModel(new DefaultComboBoxModel<>(comparator.values()));
 				comboBox_2.setToolTipText("");
 				comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_2.setBounds(217, 97, 80, 21);
+				comboBox_2.setBounds(257, 125, 82, 21);
 				contentPane1.add(comboBox_2);
 
 				textField = new JTextField();
 				textField.setText("Threshold");
+				textField.addMouseListener(new MouseAdapter(){
+		            @Override
+		            public void mouseClicked(MouseEvent e){
+		                textField.setText("");
+		            }
+		        });
 				textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				textField.setColumns(10);
-				textField.setBounds(312, 98, 70, 19);
+				textField.setBounds(349, 123, 70, 19);
 				contentPane1.add(textField);
 
 				JCheckBox chckbxGodClass = new JCheckBox("God Class");
 				chckbxGodClass.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				chckbxGodClass.setBounds(6, 99, 109, 21);
+				chckbxGodClass.setBounds(6, 131, 109, 21);
 				contentPane1.add(chckbxGodClass);
 
-				editar.setContentPane(contentPane1);
+				JLabel lblNewLabel_1_1 = new JLabel("Cyclo");
+				lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblNewLabel_1_1.setBounds(121, 69, 34, 13);
+				contentPane.add(lblNewLabel_1_1);
+
+				JComboBox<comparator> comboBox_3 = new JComboBox<comparator>();
+				comboBox_3.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBox_3.setToolTipText("");
+				comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_3.setBounds(257, 61, 82, 21);
+				contentPane1.add(comboBox_3);
+
+				textField_1 = new JTextField();
+				textField_1.setText("Threshold");
+				textField_1.addMouseListener(new MouseAdapter(){
+		            @Override
+		            public void mouseClicked(MouseEvent e){
+		                textField_1.setText("");
+		            }
+		        });
+				textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_1.setColumns(10);
+				textField_1.setBounds(349, 61, 70, 19);
+				contentPane1.add(textField_1);
+
+				JComboBox<operator> comboBox_1_1 = new JComboBox<operator>();
+				comboBox_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
+				comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_1_1.setBounds(131, 156, 57, 21);
+				contentPane1.add(comboBox_1_1);
+
+				JLabel lblNewLabel_1_2 = new JLabel("Number of Methods");
+				lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblNewLabel_1_2.setBounds(121, 191, 126, 13);
+				contentPane1.add(lblNewLabel_1_2);
+
+				JComboBox<operator> comboBox_1_1_1 = new JComboBox<operator>();
+				comboBox_1_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
+				comboBox_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_1_1_1.setBounds(131, 214, 57, 21);
+				contentPane1.add(comboBox_1_1_1);
+
+				JLabel lblNewLabel_1_3 = new JLabel("WMC Class");
+				lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblNewLabel_1_3.setBounds(121, 249, 86, 13);
+				contentPane1.add(lblNewLabel_1_3);
+
+				JComboBox<comparator> comboBox_2_2 = new JComboBox<comparator>();
+				comboBox_2_2.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBox_2_2.setToolTipText("");
+				comboBox_2_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_2_2.setBounds(257, 241, 82, 21);
+				contentPane1.add(comboBox_2_2);
+
+				textField_3 = new JTextField();
+				textField_3.setText("Threshold");
+				textField_3.addMouseListener(new MouseAdapter(){
+		            @Override
+		            public void mouseClicked(MouseEvent e){
+		                textField_3.setText("");
+		            }
+		        });
+				textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_3.setColumns(10);
+				textField_3.setBounds(349, 239, 70, 19);
+				contentPane1.add(textField_3);
+
+				JComboBox<comparator> comboBox_2_3 = new JComboBox<comparator>();
+				comboBox_2_3.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBox_2_3.setToolTipText("");
+				comboBox_2_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBox_2_3.setBounds(257, 183, 82, 21);
+				contentPane1.add(comboBox_2_3);
+
+				textField_4 = new JTextField();
+				textField_4.setText("Threshold");
+				textField_4.addMouseListener(new MouseAdapter(){
+		            @Override
+		            public void mouseClicked(MouseEvent e){
+		                textField_4.setText("");
+		            }
+		        });
+				textField_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_4.setColumns(10);
+				textField_4.setBounds(349, 181, 70, 19);
+				contentPane1.add(textField_4);
+
+				textField_5 = new JTextField();
+				textField_5.setText("Threshold");
+				textField_5.addMouseListener(new MouseAdapter(){
+		            @Override
+		            public void mouseClicked(MouseEvent e){
+		                textField_5.setText("");
+		            }
+		        });
+				textField_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textField_5.setColumns(10);
+				textField_5.setBounds(349, 10, 70, 19);
+				contentPane1.add(textField_5);
+
+				JLabel lblCyclo = new JLabel("Cyclo");
+				lblCyclo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				lblCyclo.setBounds(121, 67, 86, 13);
+				contentPane1.add(lblCyclo);
+
+				JButton btnNewButton = new JButton("Aplicar");
+				btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				btnNewButton.setBounds(334, 292, 85, 21);
+				contentPane1.add(btnNewButton);
+				btnNewButton.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (chckbxNewCheckBox.isSelected()) {
+							if (!textField_5.getText().equals("Threshold")) {
+								limits.add(Integer.parseInt(textField_5.getText()));
+								metricNames.add("LOC_method");
+							}
+							if (!textField_1.getText().equals("Threshold")) {
+								limits.add(Integer.parseInt(textField_1.getText()));
+								metricNames.add("CYCLO_method");
+							}
+							if (!comboBox.getSelectedItem().equals(comparator.XXX))
+								comparators.add((comparator) comboBox.getSelectedItem());
+							if (!comboBox_3.getSelectedItem().equals(comparator.XXX))
+								comparators.add((comparator) comboBox_3.getSelectedItem());
+							if (!comboBox_1.getSelectedItem().equals(operator.XXX))
+								operators.add((operator) comboBox_1.getSelectedItem());
+							
+							try {
+								rules.add(new Rule("OLAAA", 1, metricNames, comparators, limits, operators));
+							} catch (FileNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							tipoComparacao = 3;
+						}
+						if (chckbxGodClass.isSelected()) {
+							if (!textField.getText().equals("Threshold")) {
+								limits1.add(Integer.parseInt(textField.getText()));
+								metricNames1.add("LOC_class");
+							}
+							if (!textField_4.getText().equals("Threshold")) {
+								limits1.add(Integer.parseInt(textField_4.getText()));
+								metricNames1.add("NOM_class");
+							}
+							if (!textField_3.getText().equals("Threshold")) {
+								limits1.add(Integer.parseInt(textField_3.getText()));
+								metricNames1.add("WMC_class");
+							}
+							if (!comboBox_2.getSelectedItem().equals(comparator.XXX))
+								comparators1.add((comparator) comboBox_2.getSelectedItem());
+							if (!comboBox_2_3.getSelectedItem().equals(comparator.XXX))
+								comparators1.add((comparator) comboBox_2_3.getSelectedItem());
+							if (!comboBox_2_2.getSelectedItem().equals(comparator.XXX))
+								comparators1.add((comparator) comboBox_2_2.getSelectedItem());
+							if (!comboBox_1_1.getSelectedItem().equals(operator.XXX))
+								operators1.add((operator) comboBox_1_1.getSelectedItem());
+							if (!comboBox_1_1_1.getSelectedItem().equals(operator.XXX))
+								operators1.add((operator) comboBox_1_1_1.getSelectedItem());
+							
+							try {
+								
+								System.out.println(metricNames1.size()+ "  " + comparators1.size()+"  "+limits1.size()+ "  "+operators1.size());
+								rules.add(new Rule("OLA 222", 0, metricNames1, comparators1, limits1, operators1));
+							} catch (FileNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							tipoComparacao = 2;
+						}
+						if (chckbxNewCheckBox.isSelected() && chckbxGodClass.isSelected())
+							tipoComparacao = 1;
+						
+						editar.dispose();
+
+					}
+				});
+
 				editar.setVisible(true);
 			}
 		});
@@ -315,7 +526,7 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser jfc1 = new JFileChooser();
+				JFileChooser jfc1 = new JFileChooser("Escolha pasta a importar");
 				jfc1.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int returnValue = jfc1.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -334,7 +545,7 @@ public class GUI extends JFrame {
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(635, 10, 242, 210);
+		panel_1.setBounds(943, 10, 242, 210);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -407,7 +618,7 @@ public class GUI extends JFrame {
 		panel_1.add(btnAbrirExcel);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(635, 214, 242, 191);
+		panel_2.setBounds(943, 263, 242, 191);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -464,6 +675,10 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultPieDataset dataset = new DefaultPieDataset();
+				dataset.setValue("VP", 21);
+				dataset.setValue("VN", 10);
+				dataset.setValue("FP", 3);
+				dataset.setValue("FN", 14);
 				dataset.setValue("VP", c.getComparador().getCountVP());
 				dataset.setValue("VN", c.getComparador().getCountVN());
 				dataset.setValue("FP", c.getComparador().getCountFP());
@@ -492,7 +707,7 @@ public class GUI extends JFrame {
 
 		scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(225, 10, 400, 395);
+		scrollPane.setBounds(225, 10, 708, 504);
 		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane);
 	}
@@ -514,7 +729,7 @@ public class GUI extends JFrame {
 	}
 
 	public JTable escreveTabela(ArrayList<BoolResultado> isgodclass, ArrayList<BoolResultado> islongmethod,
-			 int tipo) {
+			Comparador comparador, int tipo) {
 		ArrayList<String[]> list = new ArrayList<>();
 		if (tipo == 1) {
 			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method",
@@ -535,13 +750,20 @@ public class GUI extends JFrame {
 			data[i][0] = isgodclass.get(i).getPackage();
 			data[i][1] = isgodclass.get(i).getClasses();
 			data[i][2] = isgodclass.get(i).getMetodo();
-			if (tipo == 1 || tipo == 2) { // caso utilizador selecione ambas ou apenas isgodclass
+			if (tipo == 2) { // caso utilizador selecione ambas ou apenas isgodclass
 				data[i][3] = isgodclass.get(i).getVerificacao();
 				data[i][4] = c.getComparador().getClassCheck().get(i);
 			}
-			if (tipo == 1 || tipo == 3) { // caso utilizador selecione ambas ou apenas islongmethod
+			if ( tipo == 3) { // caso utilizador selecione ambas ou apenas islongmethod
+				data[i][3] = islongmethod.get(i).getVerificacao();
+				data[i][4] = c.getComparador().getMethodCheck().get(i);
+			}
+			if(tipo == 1) {
+				data[i][3] = isgodclass.get(i).getVerificacao();
+				data[i][4] = c.getComparador().getClassCheck().get(i);
 				data[i][5] = islongmethod.get(i).getVerificacao();
-					data[i][6] = c.getComparador().getMethodCheck().get(i);
+				data[i][6] = c.getComparador().getMethodCheck().get(i);
+				
 			}
 		}
 
@@ -550,7 +772,7 @@ public class GUI extends JFrame {
 		return table;
 
 	}
-	
+
 	public void writeStatsLabels() {
 		nPackagesLabel.setText(Integer.toString(c.getNumberOfPackages()));
 		nClassesLabel.setText(Integer.toString(c.getNumberOfClasses()));
