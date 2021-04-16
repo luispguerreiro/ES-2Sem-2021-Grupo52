@@ -42,6 +42,14 @@ public class Threshold implements Serializable {
 		return z == limit;
 	}
 
+	public boolean isBiggerEquals(int z) throws FileNotFoundException {
+		return z >= limit;
+	}
+
+	public boolean isSmallerEquals(int z) throws FileNotFoundException {
+		return z <= limit;
+	}
+
 	public boolean result(int z) throws FileNotFoundException {
 		if (o == comparator.BIGGER) {
 			return isBigger(z);
@@ -52,29 +60,33 @@ public class Threshold implements Serializable {
 		if (o == comparator.SMALLER) {
 			return isSmaller(z);
 		}
+		if (o == comparator.SMALLEREQUALS) {
+			return isSmallerEquals(z);
+		}
+		if (o == comparator.BIGGEREQUALS) {
+			return isBiggerEquals(z);
+		}
+		
 		throw new IllegalStateException();
 	}
-	
-	public void setMetricBoolean(ArrayList<BoolResultado> r){
+
+	public void setMetricBoolean(ArrayList<BoolResultado> r) {
 		int position = positionToGet();
 	}
 
-	
-	public int positionToGet(){
-		if(metricName.equals("NOM_class"))
-				return 0;
-		else if(metricName.equals("LOC_class"))
-				return 1;
-		else if(metricName.equals("WMC_class"))
+	public int positionToGet() {
+		if (metricName.equals("NOM_class"))
+			return 0;
+		else if (metricName.equals("LOC_class"))
+			return 1;
+		else if (metricName.equals("WMC_class"))
 			return 2;
-		else if(metricName.equals("LOC_method"))
+		else if (metricName.equals("LOC_method"))
 			return 3;
-		else if(metricName.equals("CYCLO_method"))
+		else if (metricName.equals("CYCLO_method"))
 			return 4;
 		throw new IllegalArgumentException("metric name não encontrado\n");
 	}
-		
-
 
 	public int getLimit() {
 		return limit;
