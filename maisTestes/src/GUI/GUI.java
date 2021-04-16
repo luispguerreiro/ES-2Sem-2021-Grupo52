@@ -87,6 +87,8 @@ public class GUI extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
 
 	/**
 	 * Launch the application.
@@ -254,15 +256,12 @@ public class GUI extends JFrame {
 		btnNewButton_1.setBounds(10, 333, 186, 21);
 		btnNewButton_1.addActionListener(new ActionListener() {
 
-			private JTextField textField_4;
-			private JTextField textField_5;
-
 			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame editar = new JFrame("Editar...");
 				editar.setTitle("Editar...");
-				editar.setBounds(100, 100, 443, 310);
+				editar.setBounds(100, 100, 443, 359);
 				JPanel contentPane1 = new JPanel();
 				contentPane1.setBorder(new EmptyBorder(5, 5, 5, 5));
 				editar.setContentPane(contentPane1);
@@ -288,7 +287,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1 = new JComboBox<operator>();
 				comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				comboBox_1.setModel(new DefaultComboBoxModel<>(operator.values()));
-				comboBox_1.setBounds(131, 37, 48, 21);
+				comboBox_1.setBounds(131, 37, 57, 21);
 				contentPane1.add(comboBox_1);
 
 				JLabel lblNewLabel_1 = new JLabel("Lines of Code");
@@ -337,7 +336,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1_1 = new JComboBox<operator>();
 				comboBox_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
 				comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1_1.setBounds(131, 156, 48, 21);
+				comboBox_1_1.setBounds(131, 156, 57, 21);
 				contentPane1.add(comboBox_1_1);
 
 				JLabel lblNewLabel_1_2 = new JLabel("Number of Methods");
@@ -348,7 +347,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1_1_1 = new JComboBox<operator>();
 				comboBox_1_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
 				comboBox_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1_1_1.setBounds(131, 214, 48, 21);
+				comboBox_1_1_1.setBounds(131, 214, 57, 21);
 				contentPane1.add(comboBox_1_1_1);
 
 				JLabel lblNewLabel_1_3 = new JLabel("WMC Class");
@@ -395,6 +394,11 @@ public class GUI extends JFrame {
 				lblCyclo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				lblCyclo.setBounds(121, 67, 86, 13);
 				contentPane1.add(lblCyclo);
+				
+				JButton btnNewButton = new JButton("Aplicar");
+				btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				btnNewButton.setBounds(334, 292, 85, 21);
+				contentPane1.add(btnNewButton);
 
 				editar.setVisible(true);
 			}
