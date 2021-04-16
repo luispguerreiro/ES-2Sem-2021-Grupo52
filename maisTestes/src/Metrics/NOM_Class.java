@@ -10,7 +10,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 
 public class NOM_Class {
 
-//	private static final String FILE_PATH = "C:\\Users\\luisg\\Desktop\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private int numOfMethods = 0;
 	
 	private int i = 1;
@@ -37,7 +37,7 @@ public class NOM_Class {
 			numOfMethods += contructors.size() + methods.size();
 			//resultados.add(c.getNameAsString());
 		//	resultados.add(Integer.toString(numOfMethods));
-			resultados.add(new Resultado(i, pack + "/" + c.getNameAsString() , numOfMethods, empty));
+			resultados.add(new Resultado(i, pack + "/" + mainClass.getNameAsString() +"."+ c.getNameAsString() , numOfMethods, empty));
 			// System.out.println("Class " + c.getNameAsExpression() + " tem " +
 			// numOfMethods + " métodos");
 
@@ -58,5 +58,14 @@ public class NOM_Class {
 		return resultados;
 	}
 
+	public static void main(String[] args) throws FileNotFoundException {
+		NOM_Class a = new NOM_Class(new Metrics(FILE_PATH));
+		
+		for (Resultado string : a.getResultados()) {
+			// System.out.println(string.getPath());
+			System.out.println(string.getClasses());
+			System.out.println(string.getLinhas());
+		}
 
+	}
 }
