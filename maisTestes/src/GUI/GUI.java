@@ -17,9 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -50,20 +48,9 @@ import rules.Rule.operator;
 
 public class GUI extends JFrame {
 
-	// commit final sprint - gui entregável -> botão pasta, botão run, botão gráfico
-	// com valores default -> faltam os restantes panels
-	// commit final sprint 2 - gui entregável
-	// commit final sprint - gui entregável
-	//commit final sprint - gui entregável 
 
 	private JPanel contentPane;
 	private JTextField txtSrcPath;
-
-//	private File excelOutputFile = new File("C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-//	private String src_path;
-
-//	private String excelOutputDir = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; //vai ser dado pelo user na gui
-//	private String excelOutputDir = "C:\\Users\\joao_\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx";
 	private JScrollPane scrollPane;
 
 	private File src_path;
@@ -87,6 +74,11 @@ public class GUI extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	
+	private ArrayList<String> metricNames = new ArrayList<>();
+	private ArrayList<comparator> comparators = new ArrayList<>();
+	private ArrayList<operator> operators = new ArrayList<>();
+	private ArrayList<Integer> limits = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -269,6 +261,7 @@ public class GUI extends JFrame {
 				contentPane1.setLayout(null);
 
 				JCheckBox chckbxNewCheckBox = new JCheckBox("Long Method");
+				
 				chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				chckbxNewCheckBox.setBounds(6, 10, 109, 21);
 				contentPane1.add(chckbxNewCheckBox);
