@@ -16,7 +16,7 @@ public class Comparador {
 	private ArrayList<String> methodCheck;
 	private ArrayList<String> classCheck;
 
-	private File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\Code_Smells.xlsx");
+	private File file = new File("Code_Smells.xlsx");
 
 	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass, int tipo)
 			throws FileNotFoundException, IOException {
