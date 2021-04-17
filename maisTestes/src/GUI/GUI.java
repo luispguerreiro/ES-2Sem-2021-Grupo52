@@ -19,11 +19,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -87,6 +89,10 @@ public class GUI extends JFrame {
 	
 	private JTextField textField_4;
 	private JTextField textField_5;
+	
+	private JTextField txtSelecioneONome;
+	private JTextField txtSelecioneAPasta;
+
 
 	/**
 	 * Launch the application.
@@ -273,7 +279,6 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame editar = new JFrame("Editar...");
-				editar.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				editar.setTitle("Editar...");
 				editar.setBounds(100, 100, 443, 359);
 				JPanel contentPane1 = new JPanel();
@@ -448,6 +453,69 @@ public class GUI extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						JFrame frameaplicar = new JFrame("Aplicar...");
+						frameaplicar.setBounds(100, 100, 396, 158);
+						JPanel contentPaneaplicar = new JPanel();
+						contentPaneaplicar.setBorder(new EmptyBorder(5, 5, 5, 5));
+						contentPaneaplicar.setLayout(null);
+						
+						JButton btnNewButton = new JButton("Guardar");
+						btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						btnNewButton.setBounds(269, 92, 107, 21);
+						contentPaneaplicar.add(btnNewButton);
+						
+						JButton btnNewButton_1 = new JButton("Pasta");
+						btnNewButton_1.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								JFileChooser filechooseraplicar = new JFileChooser();
+								filechooseraplicar.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+								filechooseraplicar.setDialogTitle("Selecione a pasta onde quer guardar a regra");
+								int returnValue = filechooseraplicar.showOpenDialog(null);
+								if (returnValue == JFileChooser.APPROVE_OPTION) {
+									String nome = filechooseraplicar.getSelectedFile().getAbsolutePath();
+									txtSelecioneAPasta.setText(nome);
+								}
+							}
+						});
+						btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						btnNewButton_1.setBounds(269, 30, 107, 21);
+						contentPaneaplicar.add(btnNewButton_1);
+						
+						JButton btnNewButton_2 = new JButton("Nome regra");
+						btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						btnNewButton_2.setBounds(269, 61, 107, 21);
+						contentPaneaplicar.add(btnNewButton_2);
+						
+						txtSelecioneAPasta = new JTextField("Selecione a pasta onde quer guardar a regra");
+						txtSelecioneAPasta.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						txtSelecioneAPasta.setBounds(10, 32, 249, 19);
+						contentPaneaplicar.add(txtSelecioneAPasta);
+						txtSelecioneAPasta.setColumns(10);
+						
+						txtSelecioneONome = new JTextField();
+						txtSelecioneONome.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						txtSelecioneONome.setText("Selecione o nome da regra");
+						txtSelecioneONome.setBounds(10, 63, 249, 18);
+						contentPaneaplicar.add(txtSelecioneONome);
+						txtSelecioneONome.setColumns(10);
+						
+						JButton btnNewButton_3 = new JButton("Voltar");
+						btnNewButton_3.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								frameaplicar.dispose();
+							}
+						});
+						btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						btnNewButton_3.setBounds(10, 94, 85, 21);
+						contentPaneaplicar.add(btnNewButton_3);
+						
+						frameaplicar.setContentPane(contentPaneaplicar);
+						frameaplicar.setVisible(true);
+						
 						if (chckbxNewCheckBox.isSelected()) {
 							if (!textField_5.getText().equals("Threshold")) {
 								limits.add(Integer.parseInt(textField_5.getText()));
@@ -509,7 +577,8 @@ public class GUI extends JFrame {
 						if (chckbxNewCheckBox.isSelected() && chckbxGodClass.isSelected())
 							tipoComparacao = 1;
 						
-						editar.dispose();
+//						editar.dispose();
+// está comentado pois carregue no aplicar, a janela de editar feca-se
 
 					}
 				});
