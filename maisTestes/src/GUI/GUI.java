@@ -577,9 +577,8 @@ public class GUI extends JFrame {
 						if (chckbxNewCheckBox.isSelected() && chckbxGodClass.isSelected())
 							tipoComparacao = 1;
 						
-//						editar.dispose();
-// está comentado pois carregue no aplicar, a janela de editar feca-se
-
+						frameaplicar.dispose();
+						editar.dispose();
 					}
 				});
 
