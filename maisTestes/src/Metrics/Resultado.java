@@ -77,7 +77,7 @@ public class Resultado {
 		String pack = aux2[0].substring(9);
 		String[] packf = pack.split(" ");
 		if (packf[0].equals("empty"))
-			return " ";
+			return "(default package)";
 		return packf[1];
 //		return pack;
 	}
