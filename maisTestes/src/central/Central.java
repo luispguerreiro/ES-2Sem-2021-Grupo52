@@ -417,9 +417,9 @@ public class Central {
 		metricName.add("NOM_class");
 		metricName.add("LOC_class");
 		metricName.add("WMC_class");
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.SMALLER);
+		comp.add(comparator.BIGGEREQUALS);
+		comp.add(comparator.EQUALS	);
+		comp.add(comparator.EQUALS);
 		limits.add(20);
 		limits.add(30);
 		limits.add(40);
