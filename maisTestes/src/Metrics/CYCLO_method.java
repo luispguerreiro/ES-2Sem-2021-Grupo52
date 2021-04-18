@@ -14,7 +14,7 @@ import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
 public class CYCLO_method {
 
-	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\SourceCodeParser.java";
+	private static final String FILE_PATH = "C:\\\\\\\\Users\\\\\\\\r_f_g\\\\\\\\Desktop\\\\\\\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
 	private ArrayList<Resultado> resultados = new ArrayList<>();
@@ -23,13 +23,14 @@ public class CYCLO_method {
 	
 //	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
-
+ 
 	public CYCLO_method(Metrics m) {
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		pack = m.getCu().getPackageDeclaration().toString();
 		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
+		String mainClassName = mainClass.getNameAsString();
 		for (CallableDeclaration callableDeclaration : mainClassMet) {
-			String mainClassName = mainClass.getNameAsString();
+			
 			List<Statement> statements = callableDeclaration.findAll(Statement.class);
 			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
 			if (!statements.isEmpty() || !binExpressions.isEmpty()) {
@@ -88,7 +89,7 @@ public class CYCLO_method {
 				}
 
 				resultados.add(new Resultado(
-						i, pack + "/" + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/", cyclo,
+						i, pack + "/"+mainClassName+"." + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/", cyclo,
 						empty));
 				// resultados.add(callableDeclaration.getNameAsString());
 				// resultados.add(Integer.toString(cyclo));
@@ -127,7 +128,9 @@ public class CYCLO_method {
 		}
 	}
 
-
+	public int getCyclo() {
+		return cyclo;
+	}
 
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
@@ -141,8 +144,8 @@ public class CYCLO_method {
 		System.out.println(a.getResultados().size());
 		for (Resultado string : a.getResultados()) {
 			// System.out.println(string.getPath());
-			System.out.println("methodID " + string.getMethodID());
-			System.out.println(string.getMethodNames());
+			//System.out.println("methodID " + string.getMethodID());
+			System.out.println(string.getClasses());
 			System.out.println(string.getLinhas());
 		}
 	}

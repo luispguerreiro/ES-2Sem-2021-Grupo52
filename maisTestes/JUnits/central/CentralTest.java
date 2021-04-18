@@ -25,6 +25,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Metrics.CYCLO_method;
+import Metrics.Metrics;
 import Metrics.Resultado;
 import maisTestes.Excel;
 //import rules.GuiOutput.comparators;
@@ -34,7 +36,7 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 /**
- * @author nmsid e henrique
+ * @author nmsid
  *
  */
 
@@ -55,8 +57,11 @@ import rules.Rule.operator;
 		
 
 		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+		static String PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
 		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		static int separador;
+		static Metrics metric;
+		static CYCLO_method cyclo;
 		/**
 		 * @throws java.lang.Exception
 		 */
@@ -72,9 +77,11 @@ import rules.Rule.operator;
 			oper.add(operator.AND);
 			rules.add(new Rule("LONG_method", 1, metricName, comp,
 					 limits,  oper));
-			c= new Central(rules);
-			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-//			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+			metric= new Metrics(PATH2);
+			cyclo= new CYCLO_method(metric);
+			c= new Central(rules, file);
+//			file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 		}
 	/**
@@ -115,7 +122,6 @@ import rules.Rule.operator;
 		fail("Not yet implemented"); // TODO
 	}
 
-	
 	/**
 	 * Test method for {@link central.Central#chooseRules(java.util.ArrayList)}.
 	 * @throws FileNotFoundException 
@@ -142,7 +148,7 @@ import rules.Rule.operator;
 	}
 
 	/**
-	 * Test method for {@link central.Central#fuelAll()}.
+	 * Test method for {@link central.Central#fuelAllandBoolResults()}.
 	 */
 	@Test
 	final void testFuelAll() {
@@ -169,6 +175,7 @@ import rules.Rule.operator;
 	final void testWriteExcel() throws IOException {
 		File file3 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		XSSFWorkbook workBook = new XSSFWorkbook();
+//		cyclo.getResultados();
 		Sheet sheet = workBook.createSheet(file3.getName().replaceFirst("[.][^.]+$", ""));
 		Row row = sheet.createRow(++separador);
 		Assertions.assertNotNull(row);
@@ -198,7 +205,7 @@ import rules.Rule.operator;
 	}
 
 	/**
-	 * Test method for {@link central.Central#extracted()}.
+	 * Test method for {@link central.Central#extracts()}.
 	 * @throws IOException 
 	 */
 	@Test
@@ -207,7 +214,7 @@ import rules.Rule.operator;
 		ArrayList<File> lista = new ArrayList<File>();
 		Assertions.assertNotNull(dir);
 		Assertions.assertNotNull(lista);
-		File[] v = c.extracted();
+		File[] v = c.extracts();
 		Assertions.assertNotNull(v);
 		Assertions.assertEquals(44, v.length);
 	}
@@ -250,50 +257,51 @@ import rules.Rule.operator;
 		
 	}
 
+//	/**
+//	 * Test method for {@link central.Central#getSourcePath()}.
+//	 */
+//	@Test
+//	final void testGetSourcePath() {
+//		assertEquals(SRC_PATH, c.getSourcePath());
+//		
+//	}
+
 	/**
-	 * Test method for {@link central.Central#getSourcePath()}.
+	 * Test method for {@link central.Central#getExcelFile()}.
 	 */
 	@Test
-	final void testGetSourcePath() {
-		assertEquals(SRC_PATH, c.getSourcePath());
-		
+	final void testGetExcelFile() {
+		File file3 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		assertEquals(file3, c.getExcelFile());
 	}
 
 	/**
-	 * Test method for {@link central.Central#getFile()}.
+	 * Test method for {@link central.Central#setSRC_PATH(java.lang.String)}.
 	 */
 	@Test
-	final void testGetFile() {
-		assertEquals(file, c.getFile());
+	final void testSetSRC_PATH() {
+		File file4 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		 c.setSRC_PATH(file4);
+			assertEquals(file4, c.getSourcePath());
 	}
 
 	/**
-	 * Test method for {@link central.Central#setSourcePath(java.lang.String)}.
+	 * Test method for {@link central.Central#setExcelFileDir(java.io.File)}.
 	 */
 	@Test
-	final void testSetSourcePath() {
-		 String SRC_PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-		 c.setSourcePath(SRC_PATH2);
-			assertEquals(SRC_PATH2, c.getSourcePath());
+	final void testSetExcelFileDir() {
+		String excelDir = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";		
+		c.setExcelFileDir(excelDir);
+		assertEquals(excelDir, c.getExcelFileDir());
 	}
 
 	/**
-	 * Test method for {@link central.Central#setFile(java.io.File)}.
+	 * Test method for {@link central.Central#getExcelFileDir()}.
 	 */
 	@Test
-	final void testSetFile() {
-		File file2 = new File("C:\\Users\\nmsid\\OneDrive\\Documentos\\jasml_metrics.xlsx");
-				c.setFile(file2);
-		assertEquals(file2, c.getFile());
-	}
-
-	/**
-	 * Test method for {@link central.Central#getAll()}.
-	 */
-	@Test
-	final void testGetAll() {
-		ArrayList<Resultado> all = c.getAll();
-		assertEquals(all, c.getAll());
+	final void testGetExcelFileDir() {
+		String excelDir = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";		
+		assertEquals(excelDir, c.getExcelFileDir());
 	}
 
 	/**

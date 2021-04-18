@@ -23,7 +23,7 @@ public class Threshold implements Serializable {
 	private ArrayList<Resultado> resultados = new ArrayList<>(); // vai ser ArrayList<Resultado>
 
 	public Threshold(String metricName, comparator o, int limit) throws FileNotFoundException {
-		this.setMetricName(metricName);
+		this.metricName = metricName;
 		this.o = o;
 		this.limit = limit;
 		System.out.println("Threshold: " + metricName + " " + o + " " + limit);
@@ -42,6 +42,14 @@ public class Threshold implements Serializable {
 		return z == limit;
 	}
 
+	public boolean isBiggerEquals(int z) throws FileNotFoundException {
+		return z >= limit;
+	}
+
+	public boolean isSmallerEquals(int z) throws FileNotFoundException {
+		return z <= limit;
+	}
+
 	public boolean result(int z) throws FileNotFoundException {
 		if (o == comparator.BIGGER) {
 			return isBigger(z);
@@ -52,6 +60,13 @@ public class Threshold implements Serializable {
 		if (o == comparator.SMALLER) {
 			return isSmaller(z);
 		}
+		if (o == comparator.SMALLEREQUALS) {
+			return isSmallerEquals(z);
+		}
+		if (o == comparator.BIGGEREQUALS) {
+			return isBiggerEquals(z);
+		}
+		
 		throw new IllegalStateException();
 	}
 
@@ -60,15 +75,15 @@ public class Threshold implements Serializable {
 	}
 
 	public int positionToGet() {
-		if (getMetricName().equals("NOM_class"))
+		if (metricName.equals("NOM_class"))
 			return 0;
-		else if (getMetricName().equals("LOC_class"))
+		else if (metricName.equals("LOC_class"))
 			return 1;
-		else if (getMetricName().equals("WMC_class"))
+		else if (metricName.equals("WMC_class"))
 			return 2;
-		else if (getMetricName().equals("LOC_method"))
+		else if (metricName.equals("LOC_method"))
 			return 3;
-		else if (getMetricName().equals("CYCLO_method"))
+		else if (metricName.equals("CYCLO_method"))
 			return 4;
 		throw new IllegalArgumentException("metric name não encontrado\n");
 	}
@@ -85,29 +100,24 @@ public class Threshold implements Serializable {
 		return metricName;
 	}
 
+	public ArrayList<Resultado> getResultados() {
+		return resultados;
+	}
+	
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+	public void setComparator(comparator o) {
+		this.o = o;
+	}
 	public void setMetricName(String metricName) {
 		this.metricName = metricName;
 	}
 
-	public void setComparator(comparator o) {
-		this.o= o;
-	}
-	
-	public void setLimit(int limit) {
-		this.limit=limit;
-		
-	}
-
-	public ArrayList<Resultado> getResultados() {
-		return resultados;
-	}
-
-	
 	public static void main(String[] args) throws FileNotFoundException {
 		Threshold t = new Threshold("LOC_method", comparator.SMALLER, 10);
 
 	}
 
-	
 
 }

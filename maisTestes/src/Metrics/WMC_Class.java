@@ -58,7 +58,7 @@ private int i = 1;
 				
 				int b = nestedClassMet.size();
 
-				resultados.add(new Resultado(i, pack + "/" + nestClass.getNameAsString(), cyclo+b, empty));
+				resultados.add(new Resultado(i, pack + "/" + mainClassName + "." + nestClass.getNameAsString(), cyclo+b, empty));
 
 				// System.out.println("Método " + " tem complexidade " + cyclo);
 				cyclo = 0;
@@ -97,7 +97,9 @@ private int i = 1;
 		}
 	}
 
-
+	public int getCyclo() {
+		return cyclo;
+	}
 
 	public ArrayList<Resultado> getResultados() {
 		return resultados;

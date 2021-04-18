@@ -26,6 +26,7 @@ public class Metrics {
 	private List<ClassOrInterfaceDeclaration> clazz;
 	private ClassOrInterfaceDeclaration mainClass;
 	private List<ClassOrInterfaceDeclaration> nestedClasses;
+	private String s = new String();
 
 	public Metrics(String FILE_PATH) throws FileNotFoundException {
 		this.FILE_PATH = FILE_PATH;
@@ -83,7 +84,9 @@ public class Metrics {
 		return linhasClass;
 	}
 
-
+	public String getS() {
+		return s;
+	}
 
 	public static String getFilePath() {
 		return FILE_PATH;

@@ -6,20 +6,22 @@ import java.util.ArrayList;
 
 import Metrics.Resultado;
 import central.BoolResultado;
+import rules.Rule.comparator;
+import rules.Rule.operator;
 
-	public class Rule implements IRule, Serializable {
+public class Rule implements IRule, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public enum operator {
-		OR, AND
+		XXX, OR, AND
 	};
 
 	public enum comparator {
-		BIGGER, SMALLER, EQUALS
+		XXX, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
 	};
 
 	private ArrayList<Threshold> thresholds = new ArrayList<>();
@@ -66,28 +68,25 @@ import central.BoolResultado;
 			int pos = thresholds.get(0).positionToGet();
 			if (thresholds.size() == 1) {
 				boolresult.get(j).setVerificacao(logic1(thresholds.get(0), result.get(j).getAllInts()[pos]));
-			}
-			else if (thresholds.size() == 2) {
+			} else if (thresholds.size() == 2) {
 				int pos2 = thresholds.get(1).positionToGet();
 				boolresult.get(j).setVerificacao(logic2(thresholds.get(0), thresholds.get(1),
-						result.get(j).getAllInts()[pos],
-						result.get(j).getAllInts()[pos2]));
-			} 
-			else if (thresholds.size() == 3) {
+						result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2]));
+			} else if (thresholds.size() == 3) {
 				int pos2 = thresholds.get(1).positionToGet();
 				int pos3 = thresholds.get(2).positionToGet();
-				boolresult.get(j).setVerificacao(logic3(thresholds.get(0), thresholds.get(1), thresholds.get(2),
-						result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2], result.get(j).getAllInts()[pos3]));
+				boolresult.get(j)
+						.setVerificacao(logic3(thresholds.get(0), thresholds.get(1), thresholds.get(2),
+								result.get(j).getAllInts()[pos], result.get(j).getAllInts()[pos2],
+								result.get(j).getAllInts()[pos3]));
 			}
 		}
 	}
 
-	@Override
 	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
 		return t.result(valor);
 	}
 
-	@Override
 	public boolean logic2(Threshold t, Threshold t1, int valor, int valor1) throws FileNotFoundException {
 		if (oper.get(0).equals(operator.AND))
 			return and(t.result(valor), t1.result(valor1));
@@ -96,17 +95,16 @@ import central.BoolResultado;
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
 
-
-
-	public boolean logic3 (Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3) throws FileNotFoundException{
-		boolean aux= false;
+	public boolean logic3(Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3)
+			throws FileNotFoundException {
+		boolean aux = false;
 		if (oper.get(0).equals(operator.AND))
-			aux= and(t1.result(valor1), t2.result(valor2));
+			aux = and(t1.result(valor1), t2.result(valor2));
 		else if (oper.get(0).equals(operator.OR))
-			aux= or(t1.result(valor1), t2.result(valor2));
-		if (oper.get(1).equals(operator.AND)) 
+			aux = or(t1.result(valor1), t2.result(valor2));
+		if (oper.get(1).equals(operator.AND))
 			return and(aux, t3.result(valor3));
-		if (oper.get(1).equals(operator.OR)) 
+		if (oper.get(1).equals(operator.OR))
 			return or(aux, t3.result(valor3));
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
@@ -134,7 +132,6 @@ import central.BoolResultado;
 		return ruleName;
 	}
 
-
 	public int getRuleType() {
 		return ruleType;
 	}
@@ -146,12 +143,11 @@ import central.BoolResultado;
 	public ArrayList<Integer> getLimits() {
 		return limits;
 	}
-	
 
 	public ArrayList<String> getMetricName() {
 		return metricName;
 	}
-	
+
 	public ArrayList<operator> getOper() {
 		return oper;
 	}
@@ -194,6 +190,32 @@ import central.BoolResultado;
 	@Override
 	public void setLimits(ArrayList<Integer> limits) {
 		this.limits = limits;
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		String ruleName = "RegraNew";
+		ArrayList<String> metricName = new ArrayList<>();
+		ArrayList<comparator> comp = new ArrayList<>();
+		ArrayList<Integer> limits = new ArrayList<>();
+		ArrayList<operator> oper = new ArrayList<>();
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		metricName.add("WMC_class");
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
+		limits.add(20);
+		limits.add(30);
+		limits.add(40);
+		oper.add(operator.OR);
+		oper.add(operator.AND);
+
+		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
+		Threshold t = new Threshold("LOC_method", comparator.BIGGER, 10);
+		Threshold t1 = new Threshold("CYCLO_method", comparator.BIGGER, 10);
+
+		System.out.println(r.logic2(t, t1, 12, 12));
+
 	}
 
 }
