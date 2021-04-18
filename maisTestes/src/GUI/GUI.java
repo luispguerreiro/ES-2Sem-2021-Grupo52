@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -181,6 +182,11 @@ public class GUI extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(btnNewButton);
 
+		DefaultListModel dlm = new DefaultListModel();
+		JList list = new JList(dlm);
+		list.setBounds(10, 40, 186, 270);
+//		panel.add(list);
+
 		JButton btnRun = new JButton("Run");
 		btnRun.setBounds(1072, 610, 103, 33);
 		btnRun.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -206,6 +212,7 @@ public class GUI extends JFrame {
 					scrollPane.setViewportView(escreveTabela(central.getBoolClass(), central.getBoolMethod(),
 							central.getComparador(), tipoComparacao));
 					cleanArrays();
+					dlm.clear();
 
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -226,10 +233,6 @@ public class GUI extends JFrame {
 		panel.setBounds(10, 10, 206, 547);
 		contentPane.add(panel);
 		panel.setLayout(null);
-
-		JList list = new JList();
-		list.setBounds(10, 40, 186, 270);
-		panel.add(list);
 
 		JButton btnNewButton_1 = new JButton("Editar...");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -570,6 +573,11 @@ public class GUI extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
+//		DefaultListModel dlm = new DefaultListModel();
+//		JList list = new JList(dlm);
+//		list.setBounds(10, 40, 186, 270);
+////		panel.add(list);
+
 		JButton btnNewButton_2 = new JButton("Importar Regras");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton_2.setBounds(10, 364, 186, 21);
@@ -577,6 +585,8 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				dlm.clear();
+				rules.clear();
 				JFileChooser jfc1 = new JFileChooser("Escolha pasta a importar");
 				jfc1.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int returnValue = jfc1.showOpenDialog(null);
@@ -584,16 +594,37 @@ public class GUI extends JFrame {
 //					File selectedFile = jfc1.getSelectedFile();
 //					String pathimportar = selectedFile.getAbsolutePath();
 //					System.out.println(pathimportar);
-					rules.addAll( history.readFile(jfc1.getSelectedFile().getAbsolutePath()));
+					rules = (history.readFile(jfc1.getSelectedFile().getAbsolutePath()));
 					for (int i = 0; i < rules.size(); i++) {
-						for (int l = 0; l < rules.get(i).getMetricName().size(); l++) {
-							System.out.println(rules.get(i).getMetricName().get(l));
-							panel.add(new JLabel(rules.get(i).getMetricName().get(l)));
+						if (rules.size() == 1) {
+							if (rules.get(i).getRuleType() == 0) {
+								dlm.addElement("        ****GOD CLASS****");
+								tipoComparacao = 2;
+							} else {
+								dlm.addElement("        ****LONG METHOD****");
+								tipoComparacao = 3;
+							}
+						} else {
+							if (rules.get(i).getRuleType() == 0)
+								dlm.addElement("        ****GOD CLASS****");
+							else
+								dlm.addElement("        ****LONG METHOD****");
+
+							tipoComparacao = 1;
 						}
+						for (int l = 0; l < rules.get(i).getMetricName().size(); l++) {
+							String line = rules.get(i).getMetricName().get(l) + " " + rules.get(i).getComp().get(l)
+									+ " " + rules.get(i).getLimits().get(l);
+							dlm.addElement(line);
+							if (l < rules.get(i).getMetricName().size() - 1)
+								dlm.addElement(rules.get(i).getOper().get(i));
+						}
+						dlm.addElement("  ");
 					}
 				}
 			}
 		});
+		panel.add(list);
 		panel.add(btnNewButton_2);
 
 		JLabel lblNewLabel = new JLabel("Lista de Regras importadas");
