@@ -2,8 +2,10 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,13 +21,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,6 +45,7 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import central.BoolResultado;
 import central.Central;
+import central.History;
 import maisTestes.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
@@ -58,7 +59,9 @@ public class GUI extends JFrame {
 
 	private File src_path;
 
-	private Central c;
+	private Central central;
+
+	private History history;
 
 	private JLabel nPackagesLabel;
 	private JLabel nClassesLabel;
@@ -75,6 +78,8 @@ public class GUI extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
 
 	private ArrayList<String> metricNames = new ArrayList<>();
 	private ArrayList<comparator> comparators = new ArrayList<>();
@@ -84,15 +89,11 @@ public class GUI extends JFrame {
 	private ArrayList<comparator> comparators1 = new ArrayList<>();
 	private ArrayList<operator> operators1 = new ArrayList<>();
 	private ArrayList<Integer> limits1 = new ArrayList<>();
-	
-	ArrayList<Rule> rules = new ArrayList();
-	
-	private JTextField textField_4;
-	private JTextField textField_5;
-	
+
+	ArrayList<Rule> rules = new ArrayList<>();
+
 	private JTextField txtSelecioneONome;
 	private JTextField txtSelecioneAPasta;
-
 
 	/**
 	 * Launch the application.
@@ -102,6 +103,9 @@ public class GUI extends JFrame {
 			public void run() {
 				try {
 					GUI frame = new GUI();
+					Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+					frame.setLocation((int) (dimension.getWidth() - frame.getWidth()) / 2,
+							(int) (dimension.getHeight() - frame.getHeight()) / 2);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -109,7 +113,7 @@ public class GUI extends JFrame {
 			}
 		});
 	}
-	
+
 	public void cleanArrays() {
 		metricNames.clear();
 		metricNames1.clear();
@@ -120,50 +124,6 @@ public class GUI extends JFrame {
 		comparators.clear();
 		comparators1.clear();
 		rules.clear();
-		
-	}
-
-	// Funciona sempre com as mesmas regras
-	public ArrayList<Rule> PutCentralWorking() throws FileNotFoundException {
-		tipoComparacao = 1;
-		String ruleName = "RegraNew";
-		ArrayList<String> metricName = new ArrayList<>();
-		ArrayList<comparator> comp = new ArrayList<>();
-		ArrayList<Integer> limits = new ArrayList<>();
-		ArrayList<operator> oper = new ArrayList<>();
-		metricName.add("NOM_class");
-		metricName.add("LOC_class");
-		metricName.add("WMC_class");
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.SMALLER);
-		limits.add(20);
-		limits.add(30);
-		limits.add(40);
-		oper.add(operator.AND);
-		oper.add(operator.OR);
-
-		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
-
-		String ruleName1 = "Regra3";
-		ArrayList<String> metricName1 = new ArrayList<>();
-		ArrayList<comparator> comp1 = new ArrayList<>();
-		ArrayList<Integer> limits1 = new ArrayList<>();
-		ArrayList<operator> oper1 = new ArrayList<>();
-		metricName1.add("LOC_method");
-		metricName1.add("CYCLO_method");
-		comp1.add(comparator.BIGGER);
-		comp1.add(comparator.SMALLER);
-		limits1.add(10);
-		limits1.add(40);
-		oper1.add(operator.AND);
-
-		Rule r1 = new Rule(ruleName1, 1, metricName1, comp1, limits1, oper1);
-
-		ArrayList<Rule> rules = new ArrayList();
-		rules.add(r);
-		rules.add(r1);
-		return rules;
 
 	}
 
@@ -173,6 +133,7 @@ public class GUI extends JFrame {
 	 * @throws IOException
 	 */
 	public GUI() throws IOException {
+		history = new History();
 		setResizable(false);
 		setTitle("Code Quality Assessor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -207,7 +168,7 @@ public class GUI extends JFrame {
 						File[] v = new File[lista.size()];
 						for (int i = 0; i < lista.size(); i++) {
 							v[i] = lista.get(i);
-							System.out.println(v[i]);
+//							System.out.println(v[i]);
 						}
 					}
 
@@ -237,13 +198,13 @@ public class GUI extends JFrame {
 //				}
 				try {
 //					rules = PutCentralWorking();
-					c = new Central(rules, src_path, tipoComparacao);
+					central = new Central(rules, src_path, tipoComparacao);
 					System.out.println(jfcrun.getSelectedFile().getAbsolutePath());
-					c.setExcelFileDir(jfcrun.getSelectedFile().getAbsolutePath());
-					c.ini();
+					central.setExcelFileDir(jfcrun.getSelectedFile().getAbsolutePath());
+					central.ini();
 					writeStatsLabels();
-					scrollPane.setViewportView(
-							escreveTabela(c.getBoolClass(), c.getBoolMethod(), c.getComparador(), tipoComparacao));
+					scrollPane.setViewportView(escreveTabela(central.getBoolClass(), central.getBoolMethod(),
+							central.getComparador(), tipoComparacao));
 					cleanArrays();
 
 				} catch (IOException e1) {
@@ -324,12 +285,12 @@ public class GUI extends JFrame {
 
 				textField = new JTextField();
 				textField.setText("Threshold");
-				textField.addMouseListener(new MouseAdapter(){
-		            @Override
-		            public void mouseClicked(MouseEvent e){
-		                textField.setText("");
-		            }
-		        });
+				textField.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						textField.setText("");
+					}
+				});
 				textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				textField.setColumns(10);
 				textField.setBounds(349, 123, 70, 19);
@@ -354,12 +315,12 @@ public class GUI extends JFrame {
 
 				textField_1 = new JTextField();
 				textField_1.setText("Threshold");
-				textField_1.addMouseListener(new MouseAdapter(){
-		            @Override
-		            public void mouseClicked(MouseEvent e){
-		                textField_1.setText("");
-		            }
-		        });
+				textField_1.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						textField_1.setText("");
+					}
+				});
 				textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				textField_1.setColumns(10);
 				textField_1.setBounds(349, 61, 70, 19);
@@ -396,12 +357,12 @@ public class GUI extends JFrame {
 
 				textField_3 = new JTextField();
 				textField_3.setText("Threshold");
-				textField_3.addMouseListener(new MouseAdapter(){
-		            @Override
-		            public void mouseClicked(MouseEvent e){
-		                textField_3.setText("");
-		            }
-		        });
+				textField_3.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						textField_3.setText("");
+					}
+				});
 				textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				textField_3.setColumns(10);
 				textField_3.setBounds(349, 239, 70, 19);
@@ -416,12 +377,12 @@ public class GUI extends JFrame {
 
 				textField_4 = new JTextField();
 				textField_4.setText("Threshold");
-				textField_4.addMouseListener(new MouseAdapter(){
-		            @Override
-		            public void mouseClicked(MouseEvent e){
-		                textField_4.setText("");
-		            }
-		        });
+				textField_4.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						textField_4.setText("");
+					}
+				});
 				textField_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				textField_4.setColumns(10);
 				textField_4.setBounds(349, 181, 70, 19);
@@ -429,12 +390,12 @@ public class GUI extends JFrame {
 
 				textField_5 = new JTextField();
 				textField_5.setText("Threshold");
-				textField_5.addMouseListener(new MouseAdapter(){
-		            @Override
-		            public void mouseClicked(MouseEvent e){
-		                textField_5.setText("");
-		            }
-		        });
+				textField_5.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						textField_5.setText("");
+					}
+				});
 				textField_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				textField_5.setColumns(10);
 				textField_5.setBounds(349, 10, 70, 19);
@@ -458,15 +419,29 @@ public class GUI extends JFrame {
 						JPanel contentPaneaplicar = new JPanel();
 						contentPaneaplicar.setBorder(new EmptyBorder(5, 5, 5, 5));
 						contentPaneaplicar.setLayout(null);
-						
+
 						JButton btnNewButton = new JButton("Guardar");
 						btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 						btnNewButton.setBounds(269, 92, 107, 21);
 						contentPaneaplicar.add(btnNewButton);
-						
+						btnNewButton.addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+
+								history.setFolderPathToSave(txtSelecioneAPasta.getText());
+								history.setRuleName(txtSelecioneONome.getText());
+								history.writeFile(rules);
+
+								frameaplicar.dispose();
+								editar.dispose();
+
+							}
+						});
+
 						JButton btnNewButton_1 = new JButton("Pasta");
 						btnNewButton_1.addActionListener(new ActionListener() {
-							
+
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								JFileChooser filechooseraplicar = new JFileChooser();
@@ -482,40 +457,42 @@ public class GUI extends JFrame {
 						btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 						btnNewButton_1.setBounds(269, 30, 107, 21);
 						contentPaneaplicar.add(btnNewButton_1);
-						
-						JButton btnNewButton_2 = new JButton("Nome regra");
-						btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						btnNewButton_2.setBounds(269, 61, 107, 21);
-						contentPaneaplicar.add(btnNewButton_2);
-						
+
 						txtSelecioneAPasta = new JTextField("Selecione a pasta onde quer guardar a regra");
 						txtSelecioneAPasta.setFont(new Font("Tahoma", Font.PLAIN, 12));
 						txtSelecioneAPasta.setBounds(10, 32, 249, 19);
 						contentPaneaplicar.add(txtSelecioneAPasta);
 						txtSelecioneAPasta.setColumns(10);
-						
+
 						txtSelecioneONome = new JTextField();
 						txtSelecioneONome.setFont(new Font("Tahoma", Font.PLAIN, 12));
 						txtSelecioneONome.setText("Selecione o nome da regra");
 						txtSelecioneONome.setBounds(10, 63, 249, 18);
 						contentPaneaplicar.add(txtSelecioneONome);
 						txtSelecioneONome.setColumns(10);
-						
-						JButton btnNewButton_3 = new JButton("Voltar");
+						txtSelecioneONome.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								txtSelecioneONome.setText("");
+							}
+						});
+
+						JButton btnNewButton_3 = new JButton("Continuar sem guardar");
 						btnNewButton_3.addActionListener(new ActionListener() {
-							
+
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								frameaplicar.dispose();
+								editar.dispose();
 							}
 						});
 						btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						btnNewButton_3.setBounds(10, 94, 85, 21);
+						btnNewButton_3.setBounds(10, 94, 200, 21);
 						contentPaneaplicar.add(btnNewButton_3);
-						
+
 						frameaplicar.setContentPane(contentPaneaplicar);
 						frameaplicar.setVisible(true);
-						
+
 						if (chckbxNewCheckBox.isSelected()) {
 							if (!textField_5.getText().equals("Threshold")) {
 								limits.add(Integer.parseInt(textField_5.getText()));
@@ -531,11 +508,11 @@ public class GUI extends JFrame {
 								comparators.add((comparator) comboBox_3.getSelectedItem());
 							if (!comboBox_1.getSelectedItem().equals(operator.XXX))
 								operators.add((operator) comboBox_1.getSelectedItem());
-							
+
 							try {
-								rules.add(new Rule("OLAAA", 1, metricNames, comparators, limits, operators));
+								rules.add(new Rule(txtSelecioneONome.getText(), 1, metricNames, comparators, limits,
+										operators));
 							} catch (FileNotFoundException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							tipoComparacao = 3;
@@ -563,11 +540,12 @@ public class GUI extends JFrame {
 								operators1.add((operator) comboBox_1_1.getSelectedItem());
 							if (!comboBox_1_1_1.getSelectedItem().equals(operator.XXX))
 								operators1.add((operator) comboBox_1_1_1.getSelectedItem());
-							
+
 							try {
-								
-								System.out.println(metricNames1.size()+ "  " + comparators1.size()+"  "+limits1.size()+ "  "+operators1.size());
-								rules.add(new Rule("OLA 222", 0, metricNames1, comparators1, limits1, operators1));
+
+								System.out.println(metricNames1.size() + "  " + comparators1.size() + "  "
+										+ limits1.size() + "  " + operators1.size());
+								rules.add(new Rule("", 0, metricNames1, comparators1, limits1, operators1));
 							} catch (FileNotFoundException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -576,9 +554,9 @@ public class GUI extends JFrame {
 						}
 						if (chckbxNewCheckBox.isSelected() && chckbxGodClass.isSelected())
 							tipoComparacao = 1;
-						
-						frameaplicar.dispose();
-						editar.dispose();
+
+//						frameaplicar.dispose();
+//						editar.dispose();
 					}
 				});
 
@@ -586,6 +564,11 @@ public class GUI extends JFrame {
 			}
 		});
 		panel.add(btnNewButton_1);
+
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(943, 10, 242, 210);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
 
 		JButton btnNewButton_2 = new JButton("Importar Regras");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -598,9 +581,16 @@ public class GUI extends JFrame {
 				jfc1.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int returnValue = jfc1.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = jfc1.getSelectedFile();
-					String pathimportar = selectedFile.getAbsolutePath();
-					System.out.println(pathimportar);
+//					File selectedFile = jfc1.getSelectedFile();
+//					String pathimportar = selectedFile.getAbsolutePath();
+//					System.out.println(pathimportar);
+					rules.addAll( history.readFile(jfc1.getSelectedFile().getAbsolutePath()));
+					for (int i = 0; i < rules.size(); i++) {
+						for (int l = 0; l < rules.get(i).getMetricName().size(); l++) {
+							System.out.println(rules.get(i).getMetricName().get(l));
+							panel.add(new JLabel(rules.get(i).getMetricName().get(l)));
+						}
+					}
 				}
 			}
 		});
@@ -611,11 +601,6 @@ public class GUI extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setBounds(10, 10, 186, 31);
 		panel.add(lblNewLabel);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(943, 10, 242, 210);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("Resumo visualiza\u00E7\u00E3o das m\u00E9tricas:");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -675,7 +660,7 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					File file = c.getExcelFile();
+					File file = central.getExcelFile();
 					Desktop d = Desktop.getDesktop();
 					d.open(file);
 				} catch (IOException e1) {
@@ -747,10 +732,10 @@ public class GUI extends JFrame {
 				dataset.setValue("VN", 10);
 				dataset.setValue("FP", 3);
 				dataset.setValue("FN", 14);
-				dataset.setValue("VP", c.getComparador().getCountVP());
-				dataset.setValue("VN", c.getComparador().getCountVN());
-				dataset.setValue("FP", c.getComparador().getCountFP());
-				dataset.setValue("FN", c.getComparador().getCountFN());
+				dataset.setValue("VP", central.getComparador().getCountVP());
+				dataset.setValue("VN", central.getComparador().getCountVN());
+				dataset.setValue("FP", central.getComparador().getCountFP());
+				dataset.setValue("FN", central.getComparador().getCountFN());
 
 				JFreeChart pieChart = ChartFactory.createPieChart("gráfico", dataset, false, true, false);
 
@@ -820,18 +805,18 @@ public class GUI extends JFrame {
 			data[i][2] = isgodclass.get(i).getMetodo();
 			if (tipo == 2) { // caso utilizador selecione ambas ou apenas isgodclass
 				data[i][3] = isgodclass.get(i).getVerificacao();
-				data[i][4] = c.getComparador().getClassCheck().get(i);
+				data[i][4] = central.getComparador().getClassCheck().get(i);
 			}
-			if ( tipo == 3) { // caso utilizador selecione ambas ou apenas islongmethod
+			if (tipo == 3) { // caso utilizador selecione ambas ou apenas islongmethod
 				data[i][3] = islongmethod.get(i).getVerificacao();
-				data[i][4] = c.getComparador().getMethodCheck().get(i);
+				data[i][4] = central.getComparador().getMethodCheck().get(i);
 			}
-			if(tipo == 1) {
+			if (tipo == 1) {
 				data[i][3] = isgodclass.get(i).getVerificacao();
-				data[i][4] = c.getComparador().getClassCheck().get(i);
+				data[i][4] = central.getComparador().getClassCheck().get(i);
 				data[i][5] = islongmethod.get(i).getVerificacao();
-				data[i][6] = c.getComparador().getMethodCheck().get(i);
-				
+				data[i][6] = central.getComparador().getMethodCheck().get(i);
+
 			}
 		}
 
@@ -842,14 +827,14 @@ public class GUI extends JFrame {
 	}
 
 	public void writeStatsLabels() {
-		nPackagesLabel.setText(Integer.toString(c.getNumberOfPackages()));
-		nClassesLabel.setText(Integer.toString(c.getNumberOfClasses()));
-		nMethodsLabel.setText(Integer.toString(c.getNumberOfMethods()));
-		nLinesLabel.setText(Integer.toString(c.getNumberOfLines()));
-		verdPositLabel.setText(Integer.toString(c.getComparador().getCountVP()));
-		verdNegatLabel.setText(Integer.toString(c.getComparador().getCountVN()));
-		falsePositLabel.setText(Integer.toString(c.getComparador().getCountFP()));
-		falseNegatLabel.setText(Integer.toString(c.getComparador().getCountFN()));
+		nPackagesLabel.setText(Integer.toString(central.getNumberOfPackages()));
+		nClassesLabel.setText(Integer.toString(central.getNumberOfClasses()));
+		nMethodsLabel.setText(Integer.toString(central.getNumberOfMethods()));
+		nLinesLabel.setText(Integer.toString(central.getNumberOfLines()));
+		verdPositLabel.setText(Integer.toString(central.getComparador().getCountVP()));
+		verdNegatLabel.setText(Integer.toString(central.getComparador().getCountVN()));
+		falsePositLabel.setText(Integer.toString(central.getComparador().getCountFP()));
+		falseNegatLabel.setText(Integer.toString(central.getComparador().getCountFN()));
 		nPackagesLabel.updateUI();
 		nClassesLabel.updateUI();
 		nMethodsLabel.updateUI();

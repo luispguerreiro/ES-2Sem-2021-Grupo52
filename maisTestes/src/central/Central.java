@@ -67,6 +67,7 @@ public class Central {
 	private Metrics metric;
 	
 	private Comparador comparador;
+	
 
 	public Central(ArrayList<Rule> rules, File srcPath, int tipoComparacao) throws IOException {
 		this.rules = rules;
@@ -80,7 +81,6 @@ public class Central {
 	 */
 	public void ini() throws IOException {
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
-		System.out.println("ini sysout" +excelFile);
 		File[] v = extracts();
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
