@@ -13,13 +13,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -31,6 +25,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -59,6 +54,7 @@ public class GUI extends JFrame {
 	private JScrollPane scrollPane;
 
 	private File src_path;
+	private File excelFile;
 
 	private Central central;
 
@@ -156,23 +152,6 @@ public class GUI extends JFrame {
 				}
 				try {
 					src_path = new File(txtSrcPath.getText());
-					if (src_path.isDirectory()) {
-						ArrayList<File> lista = new ArrayList<File>();
-						Path path = Paths.get(src_path.getAbsolutePath());
-						List<Path> paths = listFiles(path);
-						List<File> files = pathsToFiles(paths);
-						for (int i = 0; i < paths.size(); i++) {
-							if (files.get(i).isFile() && files.get(i).getPath().endsWith(".java")) {
-								lista.add(files.get(i));
-							}
-						}
-						File[] v = new File[lista.size()];
-						for (int i = 0; i < lista.size(); i++) {
-							v[i] = lista.get(i);
-//							System.out.println(v[i]);
-						}
-					}
-
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -203,18 +182,23 @@ public class GUI extends JFrame {
 //					File selectedFile = jfcrun.getSelectedFile();
 //				}
 				try {
-//					rules = PutCentralWorking();
+					if (txtSrcPath.getText().equals("Selecione a pasta do seu projeto"))
+						JOptionPane.showMessageDialog(null, "Não selecionou uma pasta de projeto!");
+					if (rules.isEmpty())
+						JOptionPane.showMessageDialog(null,
+								"Precisa de selecionar pelo menos um Code Smell!\n Tente novamente");
+
 					central = new Central(rules, src_path, tipoComparacao);
 					System.out.println(jfcrun.getSelectedFile().getAbsolutePath());
 					central.setExcelFileDir(jfcrun.getSelectedFile().getAbsolutePath());
 					central.ini();
+					excelFile = central.getExcelFile();
 					writeStatsLabels();
 					scrollPane.setViewportView(escreveTabela(central.getBoolClass(), central.getBoolMethod(),
 							central.getComparador(), tipoComparacao));
 					cleanArrays();
 
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -691,9 +675,10 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					File file = central.getExcelFile();
+					if(excelFile==null)
+						JOptionPane.showMessageDialog(null, "Impossível abrir o ficheiro Excel!\n Por favor faça 'Run' para que o mesmo seja criado.");
 					Desktop d = Desktop.getDesktop();
-					d.open(file);
+					d.open(excelFile);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -758,6 +743,8 @@ public class GUI extends JFrame {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(central==null)
+					JOptionPane.showMessageDialog(null, "Impossível vizualizar o gráfico!\n Por favor faça 'Run' para que o mesmo seja criado.");
 				DefaultPieDataset dataset = new DefaultPieDataset();
 				dataset.setValue("VP", 21);
 				dataset.setValue("VN", 10);
@@ -794,22 +781,6 @@ public class GUI extends JFrame {
 		scrollPane.setBounds(225, 10, 708, 504);
 		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane);
-	}
-
-	public List<Path> listFiles(Path path) throws IOException {
-		List<Path> result;
-		try (Stream<Path> walk = Files.walk(path)) {
-			result = walk.filter(Files::isRegularFile).collect(Collectors.toList());
-		}
-		return result;
-	}
-
-	public List<File> pathsToFiles(List<Path> path) {
-		List<File> files = new ArrayList<File>();
-		for (int i = 0; i < path.size(); i++) {
-			files.add(path.get(i).toFile());
-		}
-		return files;
 	}
 
 	public JTable escreveTabela(ArrayList<BoolResultado> isgodclass, ArrayList<BoolResultado> islongmethod,
