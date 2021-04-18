@@ -32,7 +32,7 @@ import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
 
-/*
+/**
  * Central is where we write the excel, apply the thresholds given by the Rules in ArrayList<Rule>
  * and prepare the booResults arrays for the following comparations (false positive etc)
  */
@@ -76,7 +76,7 @@ public class Central {
 		this.tipoComparacao=tipoComparacao;
 	}
 
-	/*
+	/**
 	 * initiates the main Central flow call all methods
 	 */
 	public void ini() throws IOException {
@@ -137,7 +137,7 @@ public class Central {
 		}
 	}
 
-	/*
+	/**
 	 * Invoke calculateThresholds(ArrayList<Resultado> result,
 	 * ArrayList<BoolResultado> boolresult) for each position of ArrayList<Rule> and
 	 * considering the ruleType (0=godClass and 1=LongMethod)
@@ -156,7 +156,7 @@ public class Central {
 		}
 	}
 
-	/*
+	/**
 	 * Fills the ArrayList<Resultado> All with data like one of the metrics arrays
 	 * (in this case "cyclomethod") the data copied to "all" are the same in all
 	 * vectors, then fill in "all" the array with 5 integers in which each position
@@ -195,7 +195,7 @@ public class Central {
 		}
 	}
 
-	/*
+	/**
 	 * enumerates all array with a MethodID
 	 */
 	public void putMethodID() {
@@ -203,7 +203,7 @@ public class Central {
 			all.get(i).setMethodID(i + 1);
 	}
 
-	/*
+	/**
 	 * write to excel all the necessary information call cabecalho (Sheet sheet,
 	 * XSSFWorkbook workBook) to fill the excel header
 	 * 
@@ -255,7 +255,7 @@ public class Central {
 		}
 	}
 
-	/*
+	/**
 	 * Fills excel header with the strings below (String[] c) and bold format
 	 * 
 	 * @param sheet Excel sheet created when excel opens
@@ -280,7 +280,7 @@ public class Central {
 		}
 	}
 
-	/*
+	/**
 	 * Extracts all .java files from a given directory
 	 * 
 	 * @return File[] with all .java files.
@@ -306,7 +306,7 @@ public class Central {
 		return javaFiles;
 	}
 
-	/*
+	/**
 	 * auxiliar method from "extracts()".
 	 * 
 	 * @return all files in a List<Path>
@@ -319,7 +319,7 @@ public class Central {
 		return result;
 	}
 
-	/*
+	/**
 	 * auxiliar method from "extracts()".
 	 * 
 	 * @return all Path to File
@@ -352,7 +352,7 @@ public class Central {
 		return srcPath;
 	}
 
-	/*
+	/**
 	 * @param excelFileDir Directory to save excel file
 	 */
 	public void setExcelFileDir(String excelFileDir) {
@@ -361,7 +361,7 @@ public class Central {
 
 	}
 
-	/*
+	/**
 	 * @param sRC_PATH Java Project file
 	 */
 	public void setSRC_PATH(File sRC_PATH) {
