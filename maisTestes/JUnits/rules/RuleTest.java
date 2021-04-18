@@ -46,6 +46,7 @@ class RuleTest {
 		limits = new ArrayList<>();
 		oper = new ArrayList<>();
 		ruleResults = new ArrayList<>();
+//		ruleResults.add();
 		Rule rule= new Rule(ruleName, ruleType, metricName, comp, limits, oper);
 	}
 	
