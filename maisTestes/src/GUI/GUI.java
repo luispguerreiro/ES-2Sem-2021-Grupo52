@@ -212,7 +212,6 @@ public class GUI extends JFrame {
 					scrollPane.setViewportView(escreveTabela(central.getBoolClass(), central.getBoolMethod(),
 							central.getComparador(), tipoComparacao));
 					cleanArrays();
-					dlm.clear();
 
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -225,7 +224,8 @@ public class GUI extends JFrame {
 		txtSrcPath = new JTextField();
 		txtSrcPath.setBounds(10, 567, 923, 33);
 		txtSrcPath.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtSrcPath.setText("SRC PATH");
+		txtSrcPath.setText("Selecione a pasta do seu projeto");
+		txtSrcPath.setEditable(false);
 		contentPane.add(txtSrcPath);
 		txtSrcPath.setColumns(10);
 
