@@ -598,17 +598,17 @@ public class GUI extends JFrame {
 					for (int i = 0; i < rules.size(); i++) {
 						if (rules.size() == 1) {
 							if (rules.get(i).getRuleType() == 0) {
-								dlm.addElement("        ****GOD CLASS****");
+								dlm.addElement("        *GOD CLASS*");
 								tipoComparacao = 2;
 							} else {
-								dlm.addElement("        ****LONG METHOD****");
+								dlm.addElement("        *LONG METHOD*");
 								tipoComparacao = 3;
 							}
 						} else {
 							if (rules.get(i).getRuleType() == 0)
-								dlm.addElement("        ****GOD CLASS****");
+								dlm.addElement("        *GOD CLASS*");
 							else
-								dlm.addElement("        ****LONG METHOD****");
+								dlm.addElement("        *LONG METHOD*");
 
 							tipoComparacao = 1;
 						}

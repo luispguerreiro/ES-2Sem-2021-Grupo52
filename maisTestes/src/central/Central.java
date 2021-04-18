@@ -110,7 +110,7 @@ public class Central {
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
-		System.out.println("\n***Exporta��o para Excel conclu�da!***\n");
+		System.out.println("\n**Exporta��o para Excel conclu�da!**\n");
 
 		
 		System.out.println("number of methods = " + numberOfMethods);
