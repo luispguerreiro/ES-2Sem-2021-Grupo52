@@ -120,16 +120,6 @@ public class Threshold implements Serializable {
 
 	}
 
-<<<<<<< HEAD
-	public void setMetricName(String metricName) {
-		this.metricName= metricName;
-		
-	}
 
-	public void setComparator(comparator o) {
-		this.o=o;
-	}
-=======
->>>>>>> refs/heads/Central
 
 }
