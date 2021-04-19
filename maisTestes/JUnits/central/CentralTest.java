@@ -26,8 +26,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Metrics.CYCLO_method;
+import Metrics.Loc_Class;
+import Metrics.Loc_Method;
 import Metrics.Metrics;
+import Metrics.NOM_Class;
 import Metrics.Resultado;
+import Metrics.WMC_Class;
 import maisTestes.Comparador;
 import maisTestes.Excel;
 //import rules.GuiOutput.comparators;
@@ -51,8 +55,11 @@ class CentralTest {
 	static ArrayList<operator> oper= new ArrayList<>();
 	static ArrayList<BoolResultado> boolMethod= new ArrayList<>();
 	static ArrayList<BoolResultado> boolClass= new ArrayList<>();
+	static ArrayList<Resultado> all = new ArrayList<>();
+	
 
 	static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+	static File SRC_path = new File("C:\\Users\\nmsid\\Downloads\\jasml_0.10");
 	static String PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
 	static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	static int separador;
@@ -63,6 +70,8 @@ class CentralTest {
 	static int numberOfMethods = 0;
 	static int numberOfLines = 0;
 	static int tipoComparacao;
+	static XSSFWorkbook workBook = new XSSFWorkbook();
+	
 
 
 	/**
@@ -70,6 +79,7 @@ class CentralTest {
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+	
 		separador= 0;
 		metricName.add("NOM_class");
 		metricName.add("LOC_class");
@@ -110,18 +120,37 @@ class CentralTest {
 
 	/**
 	 * Test method for {@link central.Central#Central(java.util.ArrayList, java.io.File, int)}.
+	 * 
 	 */
 	@Test
-	final void testCentral() {
+	final void testCentral(){
 		Assertions.assertNotNull(c);
+		
 	}
 
 	/**
 	 * Test method for {@link central.Central#ini()}.
+	 * @throws IOException 
 	 */
 	@Test
-	final void testIni() {
-		fail("Not yet implemented"); // TODO
+	final void testIni() throws IOException {
+		String excelFileDir="C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho";	
+		c.setSRC_PATH(SRC_path);
+		File excelFile = new File(excelFileDir.concat("\\".concat(SRC_path.getName().concat("_metrics.xlsx"))));
+		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
+		File[] v = c.extracts();
+		Assertions.assertNotNull(v);
+		Assertions.assertNotEquals(v.length, 0);
+		metric = new Metrics(v[0].getAbsolutePath());
+
+		Loc_Method locMethod = new Loc_Method(metric);
+		CYCLO_method cycloMethod = new CYCLO_method(metric);
+		Loc_Class locClass = new Loc_Class(metric);
+		NOM_Class nomClass = new NOM_Class(metric);
+		WMC_Class wmcClass = new WMC_Class(metric);
+		c.ini();
+		Assertions.assertEquals(numberOfMethods, boolMethod.size());
+		
 	}
 
 	/**
@@ -170,16 +199,17 @@ class CentralTest {
 	 */
 	@Test
 	final void testPutMethodID() {
-		ArrayList<Resultado> all = new ArrayList<>();
+		
 		int[] ints= new int[5];
-		all.add(new Resultado(3, SRC_PATH, 30, ints));
-		all.add(new Resultado(6, SRC_PATH, 30, ints));
+		all.add(new Resultado(0, SRC_PATH, 30, ints));
+		all.add(new Resultado(1, SRC_PATH, 30, ints));
+		c.setAll(all);
 		c.putMethodID();
-		for (int i = 0; i < all.size(); i++){
-			all.get(i).setMethodID(i + 1);
-		}
-		Assertions.assertEquals(1, all.get(0).getMethodID());
-		Assertions.assertEquals(2, all.get(1).getMethodID());
+//		for (int i = 0; i < all.size(); i++){
+//			all.get(i).setMethodID(i + 1);
+//		}
+		Assertions.assertEquals(1,c.getAll().get(0).getMethodID());
+		Assertions.assertEquals(2, c.getAll().get(1).getMethodID());
 	}
 
 	/**
@@ -189,8 +219,6 @@ class CentralTest {
 	@Test
 	final void testWriteExcel() throws IOException {
 		File file3 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-		XSSFWorkbook workBook = new XSSFWorkbook();
-//		cyclo.getResultados();
 		Sheet sheet = workBook.createSheet(file3.getName().replaceFirst("[.][^.]+$", ""));
 		Row row = sheet.createRow(++separador);
 		Assertions.assertNotNull(row);
@@ -266,8 +294,11 @@ class CentralTest {
 	 */
 	@Test
 	final void testNumberOfSomething() {
+	
+		boolMethod.add(new BoolResultado("String1 ", "String2 ", "String3 ", false)); 
+		c.setBoolMethod(boolMethod);
 		c.numberOfSomething();
-		Assertions.assertEquals(numberOfClasses, c.getNumberOfClasses());
+		Assertions.assertEquals(boolMethod, c.getBoolMethod());
 	}
 
 	/**
@@ -377,6 +408,26 @@ class CentralTest {
 		c.setComparador(d);
 		assertEquals(d, c.getComparador());
 	}
+	
+	/**
+	 * Test method for {@link central.Central#getAll()}.
+	 *
+	 */
+	@Test
+	final void testGetAll() {
+		assertEquals(all, c.getAll());
+	}
+	
+	/**
+	 * Test method for {@link central.Central#getAll()}.
+	 *
+	 */
+	@Test
+	final void testSetAll() {
+		c.setAll(all);
+		assertEquals(all, c.getAll());
+	}
+	
 	/**
 	 * Test method for {@link central.Central#getBoolClass()}.
 	 */
@@ -392,6 +443,16 @@ class CentralTest {
 	final void testGetBoolMethod() {
 		assertEquals(boolMethod, c.getBoolMethod());
 	}
+	
+	/**
+	 * Test method for {@link central.Central#setBoolMethod()}.
+	 */
+	@Test
+	final void testsetBoolMethod() {
+		c.setBoolMethod(boolMethod);
+		assertEquals(boolMethod, c.getBoolMethod());
+	}
+
 
 	/**
 	 * Test method for {@link central.Central#testMain()}.

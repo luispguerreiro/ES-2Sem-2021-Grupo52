@@ -122,20 +122,20 @@ public class Central {
 
 	}
 
-	public void sys() {
-		for (int i = 0; i < all.size(); i++) {
-			System.out.println("ID  " + all.get(i).getMethodID());
-			System.out.println("CCC Path: " + boolResultClass.get(i).getClasses());
-			System.out.println("CCC Path: " + boolResultClass.get(i).getMetodo());
-			System.out.println("CCC Boolean:  " + boolResultClass.get(i).getVerificacao());
-			System.out.println("MMM Path: " + boolResultMethod.get(i).getClasses());
-			System.out.println("MMM Path: " + boolResultMethod.get(i).getMetodo());
-			System.out.println("MMM Boolean:  " + boolResultMethod.get(i).getVerificacao());
-			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
-				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
-			}
-		}
-	}
+//	public void sys() {
+//		for (int i = 0; i < all.size(); i++) {
+//			System.out.println("ID  " + all.get(i).getMethodID());
+//			System.out.println("CCC Path: " + boolResultClass.get(i).getClasses());
+//			System.out.println("CCC Path: " + boolResultClass.get(i).getMetodo());
+//			System.out.println("CCC Boolean:  " + boolResultClass.get(i).getVerificacao());
+//			System.out.println("MMM Path: " + boolResultMethod.get(i).getClasses());
+//			System.out.println("MMM Path: " + boolResultMethod.get(i).getMetodo());
+//			System.out.println("MMM Boolean:  " + boolResultMethod.get(i).getVerificacao());
+//			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
+//				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
+//			}
+//		}
+//	}
 
 	/*
 	 * Invoke calculateThresholds(ArrayList<Resultado> result,
@@ -396,9 +396,13 @@ public class Central {
 		return comparador;
 	}
 
-//	public ArrayList<Resultado> getAll() {
-//		return all;
-//	}
+	public ArrayList<Resultado> getAll() {
+		return all;
+	}
+	
+	public void setAll(ArrayList<Resultado> all) {
+		this.all= all;
+	}
 	
 	public void setComparador(Comparador comparador) {
 		this.comparador = comparador;
@@ -411,7 +415,11 @@ public class Central {
 	public ArrayList<BoolResultado> getBoolMethod() {
 		return boolResultMethod;
 	}
-
+	
+	public void setBoolMethod(ArrayList<BoolResultado> boolMethod) {
+		this.boolResultMethod=boolMethod;
+		
+	}
 	public static ArrayList<Rule> testMain() throws FileNotFoundException {
 		String ruleName = "RegraNew";
 		ArrayList<String> metricName = new ArrayList<>();
@@ -471,6 +479,8 @@ public class Central {
 //		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
 
 	}
+
+
 
 	
 }
