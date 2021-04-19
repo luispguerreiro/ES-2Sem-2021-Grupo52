@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Metrics.Resultado;
 import central.BoolResultado;
-import rules.Rule.comparator;
-import rules.Rule.operator;
 
 public class Rule implements IRule, Serializable {
 
@@ -17,11 +17,11 @@ public class Rule implements IRule, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public enum operator {
-		XXX, OR, AND
+		Select, OR, AND
 	};
 
 	public enum comparator {
-		XXX, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
+		Select, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
 	};
 
 	private ArrayList<Threshold> thresholds = new ArrayList<>();
@@ -43,7 +43,6 @@ public class Rule implements IRule, Serializable {
 		this.oper = oper;
 		this.ruleType = ruleType;
 
-//		fuelArrays();
 		check();
 
 		createThresholds();
@@ -170,12 +169,6 @@ public class Rule implements IRule, Serializable {
 		limits.add(40);
 		oper.add(operator.AND);
 		oper.add(operator.OR);
-//		for (int i = 0, j = 0; i <= metricName.size() && j < metricName.size() - 1; i++, j++) {
-//			System.out.println("HELLOOOOO" + oper.get(0) + oper.get(1));
-//			System.out.println(
-//					"HELOOOOO" + metricName.get(i) + " " + comp.get(i) + " " + limits.get(i) + " " + oper.get(j));
-//			System.out.print(oper.get(i));
-//		}
 
 	}
 
@@ -183,8 +176,14 @@ public class Rule implements IRule, Serializable {
 	public void check() {
 		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {
 			System.out.println("Vetores criados corretamente!");
-		} else
+		} else {
+			JOptionPane.showMessageDialog(null, "Não selecionou uma pasta de projeto!");
+			metricName.clear();
+			comp.clear();
+			limits.clear();
+			oper.clear();
 			throw new IllegalArgumentException("Não pode continuar! \nverificar tamanho dos vetores!");
+		}
 	}
 
 	@Override

@@ -77,7 +77,7 @@ public class Comparador {
 
 				}
 			}if(p==0)
-				methodCheck.add("Não encontrou");
+				methodCheck.add("** Não encontrou **");
 			}
 	}
 
@@ -114,7 +114,7 @@ public class Comparador {
 				}
 			}
 			if(p==0)
-				classCheck.add("Não encontrou");
+				classCheck.add("** Não encontrou **");
 		}
 	}
 

@@ -172,14 +172,10 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				ArrayList<Rule> rules;
 				JFileChooser jfcrun = new JFileChooser();
 				jfcrun.setDialogTitle("Escolha onde guardar o excel");
 				jfcrun.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfcrun.showOpenDialog(null);
-//				if (returnValue == JFileChooser.APPROVE_OPTION) {
-//					File selectedFile = jfcrun.getSelectedFile();
-//				}
 				try {
 					if (txtSrcPath.getText().equals("Selecione a pasta do seu projeto"))
 						JOptionPane.showMessageDialog(null, "Não selecionou uma pasta de projeto!");
@@ -254,7 +250,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1 = new JComboBox<operator>();
 				comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				comboBox_1.setModel(new DefaultComboBoxModel<>(operator.values()));
-				comboBox_1.setBounds(131, 37, 57, 21);
+				comboBox_1.setBounds(131, 37, 65, 21);
 				contentPane1.add(comboBox_1);
 
 				JLabel lblNewLabel_1 = new JLabel("Lines of Code");
@@ -315,7 +311,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1_1 = new JComboBox<operator>();
 				comboBox_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
 				comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1_1.setBounds(131, 156, 57, 21);
+				comboBox_1_1.setBounds(131, 156, 65, 21);
 				contentPane1.add(comboBox_1_1);
 
 				JLabel lblNewLabel_1_2 = new JLabel("Number of Methods");
@@ -326,7 +322,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1_1_1 = new JComboBox<operator>();
 				comboBox_1_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
 				comboBox_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1_1_1.setBounds(131, 214, 57, 21);
+				comboBox_1_1_1.setBounds(131, 214, 65, 21);
 				contentPane1.add(comboBox_1_1_1);
 
 				JLabel lblNewLabel_1_3 = new JLabel("WMC Class");
@@ -449,6 +445,7 @@ public class GUI extends JFrame {
 						txtSelecioneAPasta.setBounds(10, 32, 249, 19);
 						contentPaneaplicar.add(txtSelecioneAPasta);
 						txtSelecioneAPasta.setColumns(10);
+						txtSelecioneAPasta.setEditable(false);
 
 						txtSelecioneONome = new JTextField();
 						txtSelecioneONome.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -480,19 +477,19 @@ public class GUI extends JFrame {
 						frameaplicar.setVisible(true);
 
 						if (chckbxNewCheckBox.isSelected()) {
-							if (!textField_5.getText().equals("Threshold")) {
+							if (textField_5.getText().matches("[0-9]+")) {
 								limits.add(Integer.parseInt(textField_5.getText()));
 								metricNames.add("LOC_method");
 							}
-							if (!textField_1.getText().equals("Threshold")) {
+							if (textField_1.getText().matches("[0-9]+")) {
 								limits.add(Integer.parseInt(textField_1.getText()));
 								metricNames.add("CYCLO_method");
 							}
-							if (!comboBox.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox.getSelectedItem().equals(comparator.Select))
 								comparators.add((comparator) comboBox.getSelectedItem());
-							if (!comboBox_3.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox_3.getSelectedItem().equals(comparator.Select))
 								comparators.add((comparator) comboBox_3.getSelectedItem());
-							if (!comboBox_1.getSelectedItem().equals(operator.XXX))
+							if (!comboBox_1.getSelectedItem().equals(operator.Select))
 								operators.add((operator) comboBox_1.getSelectedItem());
 
 							try {
@@ -504,27 +501,27 @@ public class GUI extends JFrame {
 							tipoComparacao = 3;
 						}
 						if (chckbxGodClass.isSelected()) {
-							if (!textField.getText().equals("Threshold")) {
+							if (textField.getText().matches("[0-9]+")) {
 								limits1.add(Integer.parseInt(textField.getText()));
 								metricNames1.add("LOC_class");
 							}
-							if (!textField_4.getText().equals("Threshold")) {
+							if (textField_4.getText().matches("[0-9]+")) {
 								limits1.add(Integer.parseInt(textField_4.getText()));
 								metricNames1.add("NOM_class");
 							}
-							if (!textField_3.getText().equals("Threshold")) {
+							if (textField_3.getText().matches("[0-9]+")) {
 								limits1.add(Integer.parseInt(textField_3.getText()));
 								metricNames1.add("WMC_class");
 							}
-							if (!comboBox_2.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox_2.getSelectedItem().equals(comparator.Select))
 								comparators1.add((comparator) comboBox_2.getSelectedItem());
-							if (!comboBox_2_3.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox_2_3.getSelectedItem().equals(comparator.Select))
 								comparators1.add((comparator) comboBox_2_3.getSelectedItem());
-							if (!comboBox_2_2.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox_2_2.getSelectedItem().equals(comparator.Select))
 								comparators1.add((comparator) comboBox_2_2.getSelectedItem());
-							if (!comboBox_1_1.getSelectedItem().equals(operator.XXX))
+							if (!comboBox_1_1.getSelectedItem().equals(operator.Select))
 								operators1.add((operator) comboBox_1_1.getSelectedItem());
-							if (!comboBox_1_1_1.getSelectedItem().equals(operator.XXX))
+							if (!comboBox_1_1_1.getSelectedItem().equals(operator.Select))
 								operators1.add((operator) comboBox_1_1_1.getSelectedItem());
 
 							try {
@@ -552,7 +549,6 @@ public class GUI extends JFrame {
 		panel_1.setBounds(943, 10, 242, 210);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
-
 
 		JButton btnNewButton_2 = new JButton("Importar Regras");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -664,8 +660,9 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(excelFile==null)
-						JOptionPane.showMessageDialog(null, "Impossível abrir o ficheiro Excel!\nPor favor faça 'Run', para que o mesmo seja criado.");
+					if (excelFile == null)
+						JOptionPane.showMessageDialog(null,
+								"Impossível abrir o ficheiro Excel!\nPor favor faça 'Run', para que o mesmo seja criado.");
 					Desktop d = Desktop.getDesktop();
 					d.open(excelFile);
 				} catch (IOException e1) {
@@ -732,8 +729,9 @@ public class GUI extends JFrame {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(central==null)
-					JOptionPane.showMessageDialog(null, "Impossível vizualizar o gráfico!\nPor favor faça 'Run', para que o mesmo seja criado.");
+				if (central == null)
+					JOptionPane.showMessageDialog(null,
+							"Impossível vizualizar o gráfico!\nPor favor faça 'Run', para que o mesmo seja criado.");
 				DefaultPieDataset dataset = new DefaultPieDataset();
 				dataset.setValue("VP", 21);
 				dataset.setValue("VN", 10);
