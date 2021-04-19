@@ -164,7 +164,6 @@ public class GUI extends JFrame {
 		DefaultListModel dlm = new DefaultListModel();
 		JList list = new JList(dlm);
 		list.setBounds(10, 40, 186, 270);
-//		panel.add(list);
 
 		JButton btnRun = new JButton("Run");
 		btnRun.setBounds(1072, 610, 103, 33);
@@ -534,7 +533,6 @@ public class GUI extends JFrame {
 										+ limits1.size() + "  " + operators1.size());
 								rules.add(new Rule("", 0, metricNames1, comparators1, limits1, operators1));
 							} catch (FileNotFoundException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							tipoComparacao = 2;
@@ -542,8 +540,6 @@ public class GUI extends JFrame {
 						if (chckbxNewCheckBox.isSelected() && chckbxGodClass.isSelected())
 							tipoComparacao = 1;
 
-//						frameaplicar.dispose();
-//						editar.dispose();
 					}
 				});
 
@@ -557,10 +553,6 @@ public class GUI extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-//		DefaultListModel dlm = new DefaultListModel();
-//		JList list = new JList(dlm);
-//		list.setBounds(10, 40, 186, 270);
-////		panel.add(list);
 
 		JButton btnNewButton_2 = new JButton("Importar Regras");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -575,9 +567,6 @@ public class GUI extends JFrame {
 				jfc1.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int returnValue = jfc1.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-//					File selectedFile = jfc1.getSelectedFile();
-//					String pathimportar = selectedFile.getAbsolutePath();
-//					System.out.println(pathimportar);
 					rules = (history.readFile(jfc1.getSelectedFile().getAbsolutePath()));
 					for (int i = 0; i < rules.size(); i++) {
 						if (rules.size() == 1) {
@@ -676,7 +665,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(excelFile==null)
-						JOptionPane.showMessageDialog(null, "Impossível abrir o ficheiro Excel!\n Por favor faça 'Run' para que o mesmo seja criado.");
+						JOptionPane.showMessageDialog(null, "Impossível abrir o ficheiro Excel!\nPor favor faça 'Run', para que o mesmo seja criado.");
 					Desktop d = Desktop.getDesktop();
 					d.open(excelFile);
 				} catch (IOException e1) {
@@ -744,7 +733,7 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(central==null)
-					JOptionPane.showMessageDialog(null, "Impossível vizualizar o gráfico!\n Por favor faça 'Run' para que o mesmo seja criado.");
+					JOptionPane.showMessageDialog(null, "Impossível vizualizar o gráfico!\nPor favor faça 'Run', para que o mesmo seja criado.");
 				DefaultPieDataset dataset = new DefaultPieDataset();
 				dataset.setValue("VP", 21);
 				dataset.setValue("VN", 10);
@@ -800,20 +789,19 @@ public class GUI extends JFrame {
 			list.add(fixo);
 		}
 		Object[][] data = new Object[isgodclass.size()][list.get(0).length];
-//		Object[][] data = new Object[c.getComparador().getClassCheck().size()][list.get(0).length];
 		for (int i = 0; i < data.length; i++) {
 			data[i][0] = isgodclass.get(i).getPackage();
 			data[i][1] = isgodclass.get(i).getClasses();
 			data[i][2] = isgodclass.get(i).getMetodo();
-			if (tipo == 2) { // caso utilizador selecione ambas ou apenas isgodclass
+			if (tipo == 2) { // caso utilizador selecione apenas isgodclass
 				data[i][3] = isgodclass.get(i).getVerificacao();
 				data[i][4] = central.getComparador().getClassCheck().get(i);
 			}
-			if (tipo == 3) { // caso utilizador selecione ambas ou apenas islongmethod
+			if (tipo == 3) { // caso utilizador selecione apenas islongmethod
 				data[i][3] = islongmethod.get(i).getVerificacao();
 				data[i][4] = central.getComparador().getMethodCheck().get(i);
 			}
-			if (tipo == 1) {
+			if (tipo == 1) { // caso utilizador selecione ambas
 				data[i][3] = isgodclass.get(i).getVerificacao();
 				data[i][4] = central.getComparador().getClassCheck().get(i);
 				data[i][5] = islongmethod.get(i).getVerificacao();
