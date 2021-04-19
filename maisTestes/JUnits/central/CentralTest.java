@@ -25,7 +25,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Metrics.CYCLO_method;
+import Metrics.Loc_Class;
+import Metrics.Loc_Method;
+import Metrics.Metrics;
+import Metrics.NOM_Class;
 import Metrics.Resultado;
+import Metrics.WMC_Class;
+import maisTestes.Comparador;
 import maisTestes.Excel;
 //import rules.GuiOutput.comparators;
 //import rules.GuiOutput.operators;
@@ -37,7 +44,21 @@ import rules.Rule.operator;
  * @author nmsid
  *
  */
+class CentralTest {
+	static Central c;
+	static Sheet sheet;
+	static Excel excel;
+	static ArrayList<Rule> rules= new ArrayList<>();
+	static ArrayList<String> metricName= new ArrayList<>();
+	static ArrayList<comparator> comp= new ArrayList<>();
+	static ArrayList<Integer> limits= new ArrayList<>();
+	static ArrayList<operator> oper= new ArrayList<>();
+	static ArrayList<BoolResultado> boolMethod= new ArrayList<>();
+	static ArrayList<BoolResultado> boolClass= new ArrayList<>();
+	static ArrayList<Resultado> all = new ArrayList<>();
+	
 
+<<<<<<< HEAD
 	class CentralTest {
 		static Central c;
 		static Sheet sheet;
@@ -49,15 +70,25 @@ import rules.Rule.operator;
 		static ArrayList<operator> oper= new ArrayList<>();
 		static ArrayList<BoolResultado> boolResultClass;
 		static ArrayList<BoolResultado> boolResultMethod;
+=======
+	static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+	static File SRC_path = new File("C:\\Users\\nmsid\\Downloads\\jasml_0.10");
+	static String PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
+	static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	static int separador;
+	static Metrics metric;
+	static CYCLO_method cyclo;
+	static int numberOfPackages = 0;
+	static int numberOfClasses = 0;
+	static int numberOfMethods = 0;
+	static int numberOfLines = 0;
+	static int tipoComparacao;
+	static XSSFWorkbook workBook = new XSSFWorkbook();
+	
+>>>>>>> refs/heads/Central
 
-//		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-//		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-		
-//		static String SRC_PATH = "C:\\Users\\henri\\Downloads\\jasml_0.10";
-//
-//		static File file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-		
 
+<<<<<<< HEAD
 		static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 		static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		static int separador;
@@ -83,6 +114,31 @@ import rules.Rule.operator;
 //			file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 		
 		}
+=======
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+	
+		separador= 0;
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.BIGGER);
+		limits.add(13);
+		limits.add(20);
+		oper.add(operator.AND);
+		rules.add(new Rule("LONG_method", 1, metricName, comp,
+				 limits,  oper));
+		tipoComparacao=1;
+		metric= new Metrics(PATH2);
+		cyclo= new CYCLO_method(metric);
+		c= new Central(rules, file, tipoComparacao);
+		file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	}
+
+>>>>>>> refs/heads/Central
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -105,15 +161,41 @@ import rules.Rule.operator;
 	}
 
 	/**
-	 * Test method for {@link central.Central#Central(java.util.ArrayList)}.
+	 * Test method for {@link central.Central#Central(java.util.ArrayList, java.io.File, int)}.
+	 * 
 	 */
 	@Test
-	final void testCentral() {
+	final void testCentral(){
 		Assertions.assertNotNull(c);
+		
 	}
 
 	/**
-	 * a
+	 * Test method for {@link central.Central#ini()}.
+	 * @throws IOException 
+	 */
+	@Test
+	final void testIni() throws IOException {
+		String excelFileDir="C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho";	
+		c.setSRC_PATH(SRC_path);
+		File excelFile = new File(excelFileDir.concat("\\".concat(SRC_path.getName().concat("_metrics.xlsx"))));
+		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
+		File[] v = c.extracts();
+		Assertions.assertNotNull(v);
+		Assertions.assertNotEquals(v.length, 0);
+		metric = new Metrics(v[0].getAbsolutePath());
+
+		Loc_Method locMethod = new Loc_Method(metric);
+		CYCLO_method cycloMethod = new CYCLO_method(metric);
+		Loc_Class locClass = new Loc_Class(metric);
+		NOM_Class nomClass = new NOM_Class(metric);
+		WMC_Class wmcClass = new WMC_Class(metric);
+		c.ini();
+		Assertions.assertEquals(numberOfMethods, boolMethod.size());
+		
+	}
+
+	/**
 	 * Test method for {@link central.Central#sys()}.
 	 */
 	@Test
@@ -150,10 +232,10 @@ import rules.Rule.operator;
 	}
 
 	/**
-	 * Test method for {@link central.Central#fuelAll()}.
+	 * Test method for {@link central.Central#fuelAllandBoolResults()}.
 	 */
 	@Test
-	final void testFuelAll() {
+	final void testFuelAllandBoolResults() {
 		fail("Not yet implemented"); // TODO
 	}
 
@@ -162,11 +244,17 @@ import rules.Rule.operator;
 	 */
 	@Test
 	final void testPutMethodID() {
-		ArrayList<Resultado> all = new ArrayList<>();
+		
 		int[] ints= new int[5];
-		all.add(new Resultado(3, SRC_PATH, 30, ints));
+		all.add(new Resultado(0, SRC_PATH, 30, ints));
+		all.add(new Resultado(1, SRC_PATH, 30, ints));
+		c.setAll(all);
 		c.putMethodID();
-		Assertions.assertEquals(3, all.get(0).getMethodID());
+//		for (int i = 0; i < all.size(); i++){
+//			all.get(i).setMethodID(i + 1);
+//		}
+		Assertions.assertEquals(1,c.getAll().get(0).getMethodID());
+		Assertions.assertEquals(2, c.getAll().get(1).getMethodID());
 	}
 
 	/**
@@ -176,7 +264,6 @@ import rules.Rule.operator;
 	@Test
 	final void testWriteExcel() throws IOException {
 		File file3 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
-		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(file3.getName().replaceFirst("[.][^.]+$", ""));
 		Row row = sheet.createRow(++separador);
 		Assertions.assertNotNull(row);
@@ -184,8 +271,7 @@ import rules.Rule.operator;
 		Assertions.assertNotNull(sheet);
 		c.writeExcel(sheet, workBook);	
 		Assertions.assertNotNull(file3);
-		
-		}
+	}
 
 	/**
 	 * Test method for {@link central.Central#cabecalho(org.apache.poi.ss.usermodel.Sheet, org.apache.poi.xssf.usermodel.XSSFWorkbook)}.
@@ -202,22 +288,14 @@ import rules.Rule.operator;
 		Assertions.assertNotNull(cabecalho);
 		Assertions.assertNotNull(cell);
 		Assertions.assertEquals(9, string.length);
-		
 	}
 
 	/**
-	 * Test method for {@link central.Central#extracted()}.
-	 * @throws IOException 
+	 * Test method for {@link central.Central#extracts()}.
 	 */
 	@Test
-	final void testExtracted() throws IOException {
-		File dir = new File(SRC_PATH);
-		ArrayList<File> lista = new ArrayList<File>();
-		Assertions.assertNotNull(dir);
-		Assertions.assertNotNull(lista);
-		File[] v = c.extracted();
-		Assertions.assertNotNull(v);
-		Assertions.assertEquals(44, v.length);
+	final void testExtracts() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	/**
@@ -236,7 +314,6 @@ import rules.Rule.operator;
 		Assertions.assertNotNull(dir);
 		Assertions.assertNotNull(path);
 		Assertions.assertEquals(result.size(), c.listFiles(path).size());
-		
 	}
 
 	/**
@@ -255,7 +332,18 @@ import rules.Rule.operator;
 		Assertions.assertNotNull(path);
 		files= c.pathsToFiles(paths);
 		Assertions.assertEquals(files.size(), paths.size());
-		
+	}
+
+	/**
+	 * Test method for {@link central.Central#numberOfSomething()}.
+	 */
+	@Test
+	final void testNumberOfSomething() {
+	
+		boolMethod.add(new BoolResultado("String1 ", "String2 ", "String3 ", false)); 
+		c.setBoolMethod(boolMethod);
+		c.numberOfSomething();
+		Assertions.assertEquals(boolMethod, c.getBoolMethod());
 	}
 
 	/**
@@ -263,16 +351,19 @@ import rules.Rule.operator;
 	 */
 	@Test
 	final void testGetSourcePath() {
-		assertEquals(SRC_PATH, c.getSourcePath());
-		
+		File file4 = new File("C:\\Users\\nmsid\\Downloads\\jasml_0.10");
+		 c.setSRC_PATH(file4);
+			assertEquals(file4, c.getSourcePath());
 	}
 
 	/**
-	 * Test method for {@link central.Central#getFile()}.
+	 * Test method for {@link central.Central#setExcelFileDir(java.lang.String)}.
 	 */
 	@Test
-	final void testGetFile() {
-		assertEquals(file, c.getFile());
+	final void testSetExcelFileDir() {
+		String excelDir = "C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho";		
+		c.setExcelFileDir(excelDir);
+		assertEquals(excelDir, c.getExcelFileDir());
 	}
 	
 	/**
@@ -294,32 +385,144 @@ import rules.Rule.operator;
 	}
 
 	/**
-	 * Test method for {@link central.Central#setSourcePath(java.lang.String)}.
+	 * Test method for {@link central.Central#setSRC_PATH(java.io.File)}.
 	 */
 	@Test
-	final void testSetSourcePath() {
-		 String SRC_PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-		 c.setSourcePath(SRC_PATH2);
-			assertEquals(SRC_PATH2, c.getSourcePath());
+	final void testSetSRC_PATH() {
+		File file4 = new File("C:\\Users\\nmsid\\Downloads\\jasml_0.10");
+		 c.setSRC_PATH(file4);
+			assertEquals(file4, c.getSourcePath());
 	}
 
 	/**
-	 * Test method for {@link central.Central#setFile(java.io.File)}.
+	 * Test method for {@link central.Central#getExcelFile()}.
 	 */
 	@Test
-	final void testSetFile() {
-		File file2 = new File("C:\\Users\\nmsid\\OneDrive\\Documentos\\jasml_metrics.xlsx");
-				c.setFile(file2);
-		assertEquals(file2, c.getFile());
+	final void testGetExcelFile() {
+		File file3 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		assertEquals(file3, c.getExcelFile());
 	}
 
+	/**
+	 * Test method for {@link central.Central#getExcelFileDir()}.
+	 */
+	@Test
+	final void testGetExcelFileDir() {
+		String excelDir = "C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho";		
+		assertEquals(excelDir, c.getExcelFileDir());
+	}
+
+	/**
+	 * Test method for {@link central.Central#getNumberOfClasses()}.
+	 */
+	@Test
+	final void testGetNumberOfClasses() {
+		int numberOfClasses= 0;
+		assertEquals(numberOfClasses, c.getNumberOfClasses());
+	}
+
+	/**
+	 * Test method for {@link central.Central#getNumberOfLines()}.
+	 */
+	@Test
+	final void testGetNumberOfLines() {
+		int numberOfLines= 0;
+		assertEquals(numberOfLines, c.getNumberOfLines());
+	}
+
+	/**
+	 * Test method for {@link central.Central#getNumberOfMethods()}.
+	 */
+	@Test
+	final void testGetNumberOfMethods() {
+		int numberOfMethods= 0;
+		assertEquals(numberOfMethods, c.getNumberOfMethods());
+	}
+
+	/**
+	 * Test method for {@link central.Central#getNumberOfPackages()}.
+	 */
+	@Test
+	final void testGetNumberOfPackages() {
+		int numberOfPackages= 0;
+		assertEquals(numberOfPackages, c.getNumberOfPackages());
+	}
+
+	/**
+	 * Test method for {@link central.Central#getComparador()}.
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 */
+	@Test
+	final void testGetComparador() throws FileNotFoundException, IOException {
+		Comparador d= new Comparador (boolMethod,  boolClass, tipoComparacao);
+		c.setComparador(d);
+		assertEquals(d, c.getComparador());
+	}
+
+	/**
+	 * Test method for {@link central.Central#setComparador()}.
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 */
+	@Test
+	final void testSetComparador() throws FileNotFoundException, IOException {
+		Comparador d= new Comparador (boolMethod,  boolClass, tipoComparacao);
+		c.setComparador(d);
+		assertEquals(d, c.getComparador());
+	}
+	
 	/**
 	 * Test method for {@link central.Central#getAll()}.
+	 *
 	 */
 	@Test
 	final void testGetAll() {
-		ArrayList<Resultado> all = c.getAll();
 		assertEquals(all, c.getAll());
+	}
+	
+	/**
+	 * Test method for {@link central.Central#getAll()}.
+	 *
+	 */
+	@Test
+	final void testSetAll() {
+		c.setAll(all);
+		assertEquals(all, c.getAll());
+	}
+	
+	/**
+	 * Test method for {@link central.Central#getBoolClass()}.
+	 */
+	@Test
+	final void testGetBoolClass() {
+		assertEquals(boolClass, c.getBoolClass());
+	}
+
+	/**
+	 * Test method for {@link central.Central#getBoolMethod()}.
+	 */
+	@Test
+	final void testGetBoolMethod() {
+		assertEquals(boolMethod, c.getBoolMethod());
+	}
+	
+	/**
+	 * Test method for {@link central.Central#setBoolMethod()}.
+	 */
+	@Test
+	final void testsetBoolMethod() {
+		c.setBoolMethod(boolMethod);
+		assertEquals(boolMethod, c.getBoolMethod());
+	}
+
+
+	/**
+	 * Test method for {@link central.Central#testMain()}.
+	 */
+	@Test
+	final void testTestMain() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	/**

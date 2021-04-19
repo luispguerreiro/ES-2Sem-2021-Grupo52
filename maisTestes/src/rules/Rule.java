@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import Metrics.Resultado;
 import central.BoolResultado;
+import rules.Rule.comparator;
+import rules.Rule.operator;
 
 public class Rule implements IRule, Serializable {
 
@@ -15,11 +17,11 @@ public class Rule implements IRule, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public enum operator {
-		OR, AND
+		XXX, OR, AND
 	};
 
 	public enum comparator {
-		BIGGER, SMALLER, EQUALS
+		XXX, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
 	};
 
 	private ArrayList<Threshold> thresholds = new ArrayList<>();
@@ -81,12 +83,10 @@ public class Rule implements IRule, Serializable {
 		}
 	}
 
-	@Override
 	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
 		return t.result(valor);
 	}
 
-	@Override
 	public boolean logic2(Threshold t, Threshold t1, int valor, int valor1) throws FileNotFoundException {
 		if (oper.get(0).equals(operator.AND))
 			return and(t.result(valor), t1.result(valor1));
@@ -190,6 +190,32 @@ public class Rule implements IRule, Serializable {
 	@Override
 	public void setLimits(ArrayList<Integer> limits) {
 		this.limits = limits;
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		String ruleName = "RegraNew";
+		ArrayList<String> metricName = new ArrayList<>();
+		ArrayList<comparator> comp = new ArrayList<>();
+		ArrayList<Integer> limits = new ArrayList<>();
+		ArrayList<operator> oper = new ArrayList<>();
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		metricName.add("WMC_class");
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
+		limits.add(20);
+		limits.add(30);
+		limits.add(40);
+		oper.add(operator.OR);
+		oper.add(operator.AND);
+
+		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
+		Threshold t = new Threshold("LOC_method", comparator.BIGGER, 10);
+		Threshold t1 = new Threshold("CYCLO_method", comparator.BIGGER, 10);
+
+		System.out.println(r.logic2(t, t1, 12, 12));
+
 	}
 
 }
