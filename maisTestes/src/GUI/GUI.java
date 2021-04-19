@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -151,6 +153,16 @@ public class GUI extends JFrame {
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
 				}
 				try {
+					File f = new File(txtSrcPath.getText());
+					File[] aux = f.listFiles();
+					List<File> aux1 = Arrays.asList(aux);
+					for (File ficheiro : aux1) {
+						if (ficheiro.getAbsolutePath().endsWith(".java")) {
+							break;
+						} else {
+							JOptionPane.showMessageDialog(null, "Selecione uma pasta com um projeto Java.");
+						}
+					}
 					src_path = new File(txtSrcPath.getText());
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -675,8 +687,9 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(excelFile==null)
-						JOptionPane.showMessageDialog(null, "Impossível abrir o ficheiro Excel!\n Por favor faça 'Run' para que o mesmo seja criado.");
+					if (excelFile == null)
+						JOptionPane.showMessageDialog(null,
+								"Impossível abrir o ficheiro Excel!\n Por favor faça 'Run' para que o mesmo seja criado.");
 					Desktop d = Desktop.getDesktop();
 					d.open(excelFile);
 				} catch (IOException e1) {
@@ -743,8 +756,9 @@ public class GUI extends JFrame {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(central==null)
-					JOptionPane.showMessageDialog(null, "Impossível vizualizar o gráfico!\n Por favor faça 'Run' para que o mesmo seja criado.");
+				if (central == null)
+					JOptionPane.showMessageDialog(null,
+							"Impossível vizualizar o gráfico!\n Por favor faça 'Run' para que o mesmo seja criado.");
 				DefaultPieDataset dataset = new DefaultPieDataset();
 				dataset.setValue("VP", 21);
 				dataset.setValue("VN", 10);
