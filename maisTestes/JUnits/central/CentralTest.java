@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import Metrics.CYCLO_method;
 import Metrics.Metrics;
 import Metrics.Resultado;
+import maisTestes.Comparador;
 import maisTestes.Excel;
 //import rules.GuiOutput.comparators;
 //import rules.GuiOutput.operators;
@@ -48,6 +49,8 @@ class CentralTest {
 	static ArrayList<comparator> comp= new ArrayList<>();
 	static ArrayList<Integer> limits= new ArrayList<>();
 	static ArrayList<operator> oper= new ArrayList<>();
+	static ArrayList<BoolResultado> boolMethod= new ArrayList<>();
+	static ArrayList<BoolResultado> boolClass= new ArrayList<>();
 
 	static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 	static String PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
@@ -55,7 +58,12 @@ class CentralTest {
 	static int separador;
 	static Metrics metric;
 	static CYCLO_method cyclo;
+	static int numberOfPackages = 0;
+	static int numberOfClasses = 0;
+	static int numberOfMethods = 0;
+	static int numberOfLines = 0;
 	static int tipoComparacao;
+
 
 	/**
 	 * @throws java.lang.Exception
@@ -165,8 +173,13 @@ class CentralTest {
 		ArrayList<Resultado> all = new ArrayList<>();
 		int[] ints= new int[5];
 		all.add(new Resultado(3, SRC_PATH, 30, ints));
+		all.add(new Resultado(6, SRC_PATH, 30, ints));
 		c.putMethodID();
-		Assertions.assertEquals(3, all.get(0).getMethodID());
+		for (int i = 0; i < all.size(); i++){
+			all.get(i).setMethodID(i + 1);
+		}
+		Assertions.assertEquals(1, all.get(0).getMethodID());
+		Assertions.assertEquals(2, all.get(1).getMethodID());
 	}
 
 	/**
@@ -253,7 +266,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testNumberOfSomething() {
-		fail("Not yet implemented"); // TODO
+		c.numberOfSomething();
+		Assertions.assertEquals(numberOfClasses, c.getNumberOfClasses());
 	}
 
 	/**
@@ -309,7 +323,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfClasses() {
-		fail("Not yet implemented"); // TODO
+		int numberOfClasses= 0;
+		assertEquals(numberOfClasses, c.getNumberOfClasses());
 	}
 
 	/**
@@ -317,7 +332,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfLines() {
-		fail("Not yet implemented"); // TODO
+		int numberOfLines= 0;
+		assertEquals(numberOfLines, c.getNumberOfLines());
 	}
 
 	/**
@@ -325,7 +341,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfMethods() {
-		fail("Not yet implemented"); // TODO
+		int numberOfMethods= 0;
+		assertEquals(numberOfMethods, c.getNumberOfMethods());
 	}
 
 	/**
@@ -333,23 +350,39 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfPackages() {
-		fail("Not yet implemented"); // TODO
+		int numberOfPackages= 0;
+		assertEquals(numberOfPackages, c.getNumberOfPackages());
 	}
 
 	/**
 	 * Test method for {@link central.Central#getComparador()}.
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testGetComparador() {
-		fail("Not yet implemented"); // TODO
+	final void testGetComparador() throws FileNotFoundException, IOException {
+		Comparador d= new Comparador (boolMethod,  boolClass, tipoComparacao);
+		c.setComparador(d);
+		assertEquals(d, c.getComparador());
 	}
 
+	/**
+	 * Test method for {@link central.Central#setComparador()}.
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 */
+	@Test
+	final void testSetComparador() throws FileNotFoundException, IOException {
+		Comparador d= new Comparador (boolMethod,  boolClass, tipoComparacao);
+		c.setComparador(d);
+		assertEquals(d, c.getComparador());
+	}
 	/**
 	 * Test method for {@link central.Central#getBoolClass()}.
 	 */
 	@Test
 	final void testGetBoolClass() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(boolClass, c.getBoolClass());
 	}
 
 	/**
@@ -357,7 +390,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetBoolMethod() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(boolMethod, c.getBoolMethod());
 	}
 
 	/**

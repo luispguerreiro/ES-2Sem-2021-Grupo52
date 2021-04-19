@@ -118,7 +118,7 @@ public class Central {
 		System.out.println("number of classes = " + numberOfClasses);
 		System.out.println("number of lines = " + numberOfLines);
 //		Comparador c = new Comparador(boolResultMethod, boolResultClass);;
-		comparador = new Comparador(boolResultMethod, boolResultClass, tipoComparacao);
+		setComparador(new Comparador(boolResultMethod, boolResultClass, tipoComparacao));
 
 	}
 
@@ -399,6 +399,10 @@ public class Central {
 //	public ArrayList<Resultado> getAll() {
 //		return all;
 //	}
+	
+	public void setComparador(Comparador comparador) {
+		this.comparador = comparador;
+	}
 
 	public ArrayList<BoolResultado> getBoolClass() {
 		return boolResultClass;
@@ -467,4 +471,6 @@ public class Central {
 //		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
 
 	}
+
+	
 }
