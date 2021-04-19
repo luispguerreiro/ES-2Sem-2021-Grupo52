@@ -18,7 +18,7 @@ import maisTestes.Linha;
 import central.BoolResultado;
 
 class ComparadorTest {
-	
+
 	static Comparador c;
 
 	@BeforeAll
@@ -26,13 +26,13 @@ class ComparadorTest {
 		File file = new File("Code_Smells.xlsx");
 		Excel excel = new Excel();
 		excel.lerExcel(file);
-		ArrayList<BoolResultado> boolMethod= new ArrayList<>();
-		ArrayList<BoolResultado> boolClass= new ArrayList<>();
+		ArrayList<BoolResultado> boolMethod = new ArrayList<>();
+		ArrayList<BoolResultado> boolClass = new ArrayList<>();
 		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
-		c= new Comparador(boolMethod, boolClass, 1);
+		c = new Comparador(boolMethod, boolClass, 1);
 		c.methodComp(boolMethod, linhas);
 		c.classComp(boolClass, linhas);
-		
+
 	}
 
 	@AfterAll
@@ -49,24 +49,21 @@ class ComparadorTest {
 
 	@Test
 	void testComparador() throws FileNotFoundException, IOException {
-
 		assertNotNull(c);
-		
 	}
 
 	@Test
 	void testMethodComp() throws FileNotFoundException, IOException {
-		ArrayList<BoolResultado> boolMethod2= new ArrayList<>();
-		ArrayList<BoolResultado> boolClass2= new ArrayList<>();
-		Comparador c2= new Comparador(boolMethod2, boolClass2, 1);
+		ArrayList<BoolResultado> boolMethod2 = new ArrayList<>();
+		ArrayList<BoolResultado> boolClass2 = new ArrayList<>();
+		Comparador c2 = new Comparador(boolMethod2, boolClass2, 1);
 		assertNotNull(c.getMethodCheck());
 		assertEquals(c.getMethodCheck(), c2.getMethodCheck());
-		
-		
+
 	}
 
 	@Test
-	void testClassComp(){
+	void testClassComp() {
 		assertNotNull(c.getClassCheck());
 	}
 
@@ -96,14 +93,14 @@ class ComparadorTest {
 
 	@Test
 	void testGetClassCheck() {
-		ArrayList<String> nome= new ArrayList<>();
+		ArrayList<String> nome = new ArrayList<>();
 		assertNotNull(c.getClassCheck());
 		assertEquals(nome, c.getClassCheck());
 	}
 
 	@Test
 	void testGetMethodCheck() {
-		ArrayList<String> nome1= new ArrayList<>();
+		ArrayList<String> nome1 = new ArrayList<>();
 		assertNotNull(c.getMethodCheck());
 		assertEquals(nome1, c.getMethodCheck());
 	}
