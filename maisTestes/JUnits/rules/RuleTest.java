@@ -21,7 +21,7 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 /**
- * @author nmsid
+ * @author nmsidique and Henrique
  *
  */
 class RuleTest {
