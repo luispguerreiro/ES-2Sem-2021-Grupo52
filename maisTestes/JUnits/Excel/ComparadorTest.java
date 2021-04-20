@@ -20,18 +20,21 @@ import central.BoolResultado;
 class ComparadorTest {
 
 	static Comparador c;
+	static ArrayList<BoolResultado> boolMethod;
+	static ArrayList<BoolResultado> boolClass;
+	static ArrayList<Linha> linhas;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		File file = new File("Code_Smells.xlsx");
 		Excel excel = new Excel();
 		excel.lerExcel(file);
-		ArrayList<BoolResultado> boolMethod = new ArrayList<>();
-		ArrayList<BoolResultado> boolClass = new ArrayList<>();
-		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
+		boolMethod = new ArrayList<>();
+		boolClass = new ArrayList<>();
+		linhas = new ArrayList<Linha>(excel.getList());
 		c = new Comparador(boolMethod, boolClass, 1);
-		c.methodComp(boolMethod, linhas);
-		c.classComp(boolClass, linhas);
+//		c.methodComp(boolMethod, linhas);
+//		c.classComp(boolClass, linhas);
 
 	}
 
@@ -50,6 +53,14 @@ class ComparadorTest {
 	@Test
 	void testComparador() throws FileNotFoundException, IOException {
 		assertNotNull(c);
+		
+		c = new Comparador(boolMethod, boolClass, 2);
+		c.classComp(boolClass, linhas);
+		assertNotNull(c);
+		
+		c = new Comparador(boolMethod, boolClass, 3);
+		c.methodComp(boolMethod, linhas);
+		assertNotNull(c);
 	}
 
 	@Test
@@ -64,7 +75,7 @@ class ComparadorTest {
 
 	@Test
 	void testClassComp() {
-		assertNotNull(c.getClassCheck());
+//		assertNotNull(c.getClassCheck());
 	}
 
 	@Test
@@ -94,6 +105,8 @@ class ComparadorTest {
 	@Test
 	void testGetClassCheck() {
 		ArrayList<String> nome = new ArrayList<>();
+		c.classComp(boolClass, linhas);
+		
 		assertNotNull(c.getClassCheck());
 		assertEquals(nome, c.getClassCheck());
 	}
@@ -101,6 +114,7 @@ class ComparadorTest {
 	@Test
 	void testGetMethodCheck() {
 		ArrayList<String> nome1 = new ArrayList<>();
+		
 		assertNotNull(c.getMethodCheck());
 		assertEquals(nome1, c.getMethodCheck());
 	}
