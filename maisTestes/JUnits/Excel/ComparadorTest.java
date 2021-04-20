@@ -33,8 +33,6 @@ class ComparadorTest {
 		boolClass = new ArrayList<>();
 		linhas = new ArrayList<Linha>(excel.getList());
 		c = new Comparador(boolMethod, boolClass, 1);
-//		c.methodComp(boolMethod, linhas);
-//		c.classComp(boolClass, linhas);
 
 	}
 
@@ -44,6 +42,7 @@ class ComparadorTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		c = new Comparador(boolMethod, boolClass, 1);
 	}
 
 	@AfterEach
@@ -53,13 +52,11 @@ class ComparadorTest {
 	@Test
 	void testComparador() throws FileNotFoundException, IOException {
 		assertNotNull(c);
-		
+
 		c = new Comparador(boolMethod, boolClass, 2);
-		c.classComp(boolClass, linhas);
 		assertNotNull(c);
-		
+
 		c = new Comparador(boolMethod, boolClass, 3);
-		c.methodComp(boolMethod, linhas);
 		assertNotNull(c);
 	}
 
@@ -67,15 +64,24 @@ class ComparadorTest {
 	void testMethodComp() throws FileNotFoundException, IOException {
 		ArrayList<BoolResultado> boolMethod2 = new ArrayList<>();
 		ArrayList<BoolResultado> boolClass2 = new ArrayList<>();
-		Comparador c2 = new Comparador(boolMethod2, boolClass2, 1);
-		assertNotNull(c.getMethodCheck());
-		assertEquals(c.getMethodCheck(), c2.getMethodCheck());
+		Comparador c2 = new Comparador(boolMethod2, boolClass2,3);
 
+		assertNotNull(c2.getMethodCheck());
+		assertEquals(c.getMethodCheck(), c2.getMethodCheck());
+		assertFalse(linhas.isEmpty());
+		assertTrue(boolMethod2.isEmpty());
 	}
 
 	@Test
-	void testClassComp() {
-//		assertNotNull(c.getClassCheck());
+	void testClassComp() throws FileNotFoundException, IOException {
+		ArrayList<BoolResultado> boolMethod2 = new ArrayList<>();
+		ArrayList<BoolResultado> boolClass2 = new ArrayList<>();
+		Comparador c3 = new Comparador(boolMethod2, boolClass2, 2);
+		
+		assertNotNull(c3);
+		assertEquals(c.getClassCheck(), c3.getClassCheck());
+		assertFalse(linhas.isEmpty());
+		assertTrue(boolClass2.isEmpty());
 	}
 
 	@Test
@@ -106,7 +112,7 @@ class ComparadorTest {
 	void testGetClassCheck() {
 		ArrayList<String> nome = new ArrayList<>();
 		c.classComp(boolClass, linhas);
-		
+
 		assertNotNull(c.getClassCheck());
 		assertEquals(nome, c.getClassCheck());
 	}
@@ -114,7 +120,8 @@ class ComparadorTest {
 	@Test
 	void testGetMethodCheck() {
 		ArrayList<String> nome1 = new ArrayList<>();
-		
+		c.methodComp(boolMethod, linhas);
+
 		assertNotNull(c.getMethodCheck());
 		assertEquals(nome1, c.getMethodCheck());
 	}
