@@ -135,7 +135,32 @@ class RuleTest {
 		String path= "path";
 		int linhas= 40; 
 		int[] intis= {0,3,4,5};
+		String pack= "pack";
+		String classes= "classes"; 
+		String metodo= "metodo"; 
+		String metric= "LOC_class";
+		comparator o= comparator.BIGGER;
+		int limit= 20;
+		boolean verificacao= false;
+		thresholds.add(new Threshold(metric, o, limit));
+		
 		result.add(new Resultado(methodID, path, linhas, intis));
+		boolresult.add(new BoolResultado(pack, classes, metodo, verificacao));
+		result.add(new Resultado(methodID, path, linhas, intis));
+		boolresult.add(new BoolResultado(pack, classes, metodo, verificacao));
+		result.add(new Resultado(methodID, path, linhas, intis));
+		boolresult.add(new BoolResultado(pack, classes, metodo, verificacao));
+		r.setThresholds(thresholds);
+		r.calculateThresholds(result, boolresult);
+		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(boolresult);
+		Assertions.assertEquals(result.size(), boolresult.size());
+		thresholds.add(new Threshold(metric, o, limit+1));
+		r.calculateThresholds(result, boolresult);
+		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(boolresult);
+		Assertions.assertEquals(result.size(), boolresult.size());
+		thresholds.add(new Threshold(metric, o, limit+2));
 		r.calculateThresholds(result, boolresult);
 		Assertions.assertNotNull(result);
 		Assertions.assertNotNull(boolresult);
@@ -280,6 +305,15 @@ class RuleTest {
 		ruleName = "teste2";
 		r.setRuleName(ruleName);
 		Assertions.assertEquals(ruleName, r.getRuleName());
+	}
+	
+	/**
+	 * Test method for {@link rules.Rule#setThresholds(java.util.ArrayList;)}.
+	 */
+	@Test
+	final void testSetThresholds() {
+		r.setThresholds(thresholds);
+		Assertions.assertEquals(thresholds, r.getThresholds());
 	}
 
 	/**

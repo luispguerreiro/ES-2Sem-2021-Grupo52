@@ -46,4 +46,6 @@ public interface IRule {
 
 	public void setLimits(ArrayList<Integer> limits);
 
+	public void setThresholds(ArrayList<Threshold> thresholds);
+
 }

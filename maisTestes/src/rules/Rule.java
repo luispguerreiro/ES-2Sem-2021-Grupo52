@@ -165,6 +165,12 @@ public class Rule implements IRule, Serializable {
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
+	
+	@Override
+	public void setThresholds(ArrayList<Threshold> thresholds) {
+		this.thresholds=thresholds;
+		
+	}
 
 	@Override
 	public void fuelArrays() {
@@ -226,5 +232,6 @@ public class Rule implements IRule, Serializable {
 		System.out.println(r.logic2(t, t1, 12, 12));
 
 	}
+
 
 }
