@@ -9,10 +9,9 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 public interface IRule {
-	ArrayList<Threshold> getThresholds();
+	public ArrayList<Threshold> getThresholds();
 
-
-	void createThresholds() throws FileNotFoundException;
+	public void createThresholds() throws FileNotFoundException;
 	
 	public void calculateThresholds(ArrayList<Resultado> result, ArrayList<BoolResultado> boolresult)
 			throws FileNotFoundException;
@@ -23,11 +22,11 @@ public interface IRule {
 	
 	public boolean logic3(Threshold t, Threshold t1, Threshold t2, int valor1, int valor2, int valor3)throws FileNotFoundException;
 	
-	boolean and(boolean one, boolean two);
+	public boolean and(boolean one, boolean two);
 
-	boolean or(boolean one, boolean two);
+	public boolean or(boolean one, boolean two);
 
-	String getRuleName();
+	public String getRuleName();
 	
 	public int getRuleType();
 
@@ -39,12 +38,12 @@ public interface IRule {
 	
 	public ArrayList<operator> getOper();
 	
-	void setRuleName(String ruleName);
+	public void setRuleName(String ruleName);
 
-	void fuelArrays();
+	public void fuelArrays();
 
-	void check();
+	public void check();
 
-	void setLimits(ArrayList<Integer> limits);
+	public void setLimits(ArrayList<Integer> limits);
 
 }

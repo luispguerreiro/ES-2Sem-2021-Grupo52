@@ -101,7 +101,7 @@ class ThresholdTest {
 		int bigger= 30;
 		Assertions.assertTrue(t.isSmaller(smaller));
 		Assertions.assertFalse(t.isSmaller(bigger));
-		Assertions.assertTrue(t.isSmaller(bigger));
+		Assertions.assertTrue(t.isSmaller(smaller));
 		Assertions.assertFalse(t.isSmaller(40));
 	}
 
@@ -121,6 +121,40 @@ class ThresholdTest {
 		
 		Assertions.assertFalse(t.isEquals(19));
 	}
+	
+	/**
+	 * Test method for {@link rules.Threshold#isBiggerEquals(int)}.
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	@Test
+	final void testIsBiggerEquals() throws FileNotFoundException {
+		int smaller= 10;
+		int bigger= 30;
+		int equals= 20;
+		Assertions.assertFalse(t.isBiggerEquals(smaller));
+		Assertions.assertTrue(t.isBiggerEquals(bigger));
+		Assertions.assertTrue(t.isBiggerEquals(equals));
+		
+		Assertions.assertFalse(t.isBiggerEquals(19));
+	}
+	
+	/**
+	 * Test method for {@link rules.Threshold#isSmallerEquals(int)}.
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	@Test
+	final void testIsSmallerEquals() throws FileNotFoundException {
+		int smaller= 10;
+		int bigger= 30;
+		int equals= 20;
+		Assertions.assertTrue(t.isSmallerEquals(smaller));
+		Assertions.assertFalse(t.isSmallerEquals(bigger));
+		Assertions.assertTrue(t.isSmallerEquals(equals));
+		
+		Assertions.assertTrue(t.isSmallerEquals(19));
+	}
 
 	/**
 	 * Test method for {@link rules.Threshold#result(int)}.
@@ -131,21 +165,26 @@ class ThresholdTest {
 	
 	@Test
 	final void testResult() throws FileNotFoundException {
-//		comparator bi= comparator.BIGGER;
 		int smaller= 10;
 		int bigger= 30;
 		int equals= 20;
 		t.setComparator(comparator.BIGGER);
 		Assertions.assertFalse(t.result(smaller));
 		Assertions.assertTrue(t.result(bigger));
-//		comparator sm= comparator.SMALLER;
 		t.setComparator(comparator.SMALLER);
 		Assertions.assertFalse(t.result(bigger));
 		Assertions.assertTrue(t.result(smaller));
-//		comparator eq= comparator.EQUALS;
 		t.setComparator(comparator.EQUALS);
 		Assertions.assertFalse(t.result(smaller));
 		Assertions.assertTrue(t.result(equals));
+		t.setComparator(comparator.BIGGEREQUALS);
+		Assertions.assertFalse(t.result(smaller));
+		Assertions.assertTrue(t.result(equals));
+		Assertions.assertTrue(t.result(bigger));
+		t.setComparator(comparator.SMALLEREQUALS);
+		Assertions.assertFalse(t.result(bigger));
+		Assertions.assertTrue(t.result(equals));
+		Assertions.assertTrue(t.result(smaller));
 	}
 	
 	/**
@@ -170,20 +209,15 @@ class ThresholdTest {
 		t.setMetricName(metricName);
 		ArrayList<BoolResultado> r= new ArrayList<>();
 		t.positionToGet();
-//		Assertions.assertNotNull(t.setMetricBoolean(r));
+		t.setMetricBoolean(r);
 //		Assertions.assertEquals(position, t.positionToGet());	
-		fail("Not yet implemented"); // TODO
 		
 		Assertions.assertNotNull(r);
 	}
 
 	/**
 	 * Test method for {@link rules.Threshold#positionToGet()}.
-<<<<<<< HEAD
-	 * 	 * @throws IllegalArgumentException 
-=======
 	 * @throws IllegalArgumentException
->>>>>>> refs/heads/Central
 	 */
 	@Test
 	final void testPositionToGet() {
@@ -198,21 +232,6 @@ class ThresholdTest {
 		Assertions.assertEquals(3, t.positionToGet());
 		t.setMetricName("CYCLO_method");
 		Assertions.assertEquals(4, t.positionToGet());
-		t.setMetricName("erro");
-//		Assertions.assertNotEquals(4, t.positionToGet());
-//		Assertions.assertThrows(IllegalArgumentException.class, t.positionToGet());
-//		Throwable exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-//	        throw new IllegalArgumentException("error message");
-
-		Assertions.assertEquals(t.positionToGet(), 0);
-		t.setMetricName("LOC_class");
-		Assertions.assertEquals(t.positionToGet(), 1);
-		t.setMetricName("WMC_class");
-		Assertions.assertEquals(t.positionToGet(), 2);
-		t.setMetricName("LOC_method");
-		Assertions.assertEquals(t.positionToGet(), 3);
-		t.setMetricName("CYCLO_method");
-		Assertions.assertEquals(t.positionToGet(), 4);
 
 	}
 
@@ -242,7 +261,6 @@ class ThresholdTest {
 	final void testGetMetricName() {
 		t.setMetricName("LOC_class");
 		Assertions.assertEquals("LOC_class", t.getMetricName());
-		Assertions.assertEquals(t.getMetricName(), "NOM_class");
 		
 	}
 

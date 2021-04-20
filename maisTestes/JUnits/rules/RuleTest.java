@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Metrics.Resultado;
+import central.BoolResultado;
 import rules.Rule.comparator;
 import rules.Rule.operator;
 
@@ -29,6 +31,8 @@ class RuleTest {
 	static ArrayList<Integer> limits;
 	static ArrayList<operator> oper;
 	static ArrayList<operator> oper2;
+	static ArrayList<Resultado> result; 
+	static ArrayList<BoolResultado> boolresult;
 	static String ruleName;
 	static int ruleType;
 	static Rule r;
@@ -44,6 +48,8 @@ class RuleTest {
 		limits = new ArrayList<>();
 		oper = new ArrayList<>();
 		oper2 = new ArrayList<>();
+		result = new ArrayList<>();
+		boolresult = new ArrayList<>();
 		ruleName = "Teste";
 		ruleType = 1;
 		metricName.add("NOM_class");
@@ -121,10 +127,19 @@ class RuleTest {
 	/**
 	 * Test method for
 	 * {@link rules.Rule#calculateThresholds(java.util.ArrayList, java.util.ArrayList)}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testCalculateThresholds() {
-		fail("Not yet implemented"); // TODO
+	final void testCalculateThresholds() throws FileNotFoundException {
+		int methodID=2;
+		String path= "path";
+		int linhas= 40; 
+		int[] intis= {0,3,4,5};
+		result.add(new Resultado(methodID, path, linhas, intis));
+		r.calculateThresholds(result, boolresult);
+		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(boolresult);
+		Assertions.assertEquals(result.size(), boolresult.size());
 	}
 
 	/**
@@ -172,11 +187,11 @@ class RuleTest {
 		Threshold t3 = new Threshold(metricName.get(1), comp.get(1), limits.get(1));
 		r.createThresholds();
 		System.out.println(t1.getLimit());
-		Assertions.assertTrue(r.logic3(t1, t2, t3, 25, 5, 45));
+		Assertions.assertFalse(r.logic3(t1, t2, t3, 25, 5, 45));
 		Assertions.assertFalse(r.logic3(t1, t2, t3, 20, 25, 3));
 		Rule r2 = new Rule(ruleName, ruleType, metricName, comp, limits, oper2);
 		Assertions.assertTrue(r2.logic3(t1, t2, t3, 25, 5, 45));
-		Assertions.assertFalse(r2.logic3(t1, t2, t3, 20, 5, 3));
+		Assertions.assertTrue(r2.logic3(t1, t2, t3, 20, 5, 3));
 	}
 
 	/**
