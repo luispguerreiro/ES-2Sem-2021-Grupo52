@@ -13,9 +13,13 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -88,6 +92,8 @@ public class GUI extends JFrame {
 	private ArrayList<comparator> comparators1 = new ArrayList<>();
 	private ArrayList<operator> operators1 = new ArrayList<>();
 	private ArrayList<Integer> limits1 = new ArrayList<>();
+	private List<File> folders = new ArrayList<>();
+	private ArrayList<File> files = new ArrayList<>();
 
 	ArrayList<Rule> rules = new ArrayList<>();
 
@@ -145,23 +151,34 @@ public class GUI extends JFrame {
 		btnNewButton.setBounds(1072, 567, 103, 33);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				File selectedFile = new File("");
+				
+				
 				JFileChooser jfc = new JFileChooser("Escolha a pasta");
 				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfc.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = jfc.getSelectedFile();
+					selectedFile = jfc.getSelectedFile();
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
 				}
 				try {
-					File f = new File(txtSrcPath.getText());
-					File[] aux = f.listFiles();
-					List<File> aux1 = Arrays.asList(aux);
-					for (File ficheiro : aux1) {
-						if (ficheiro.getAbsolutePath().endsWith(".java")) {
-							break;
-						} else {
-							JOptionPane.showMessageDialog(null, "Selecione uma pasta com um projeto Java.");
+					Path directory = selectedFile.getAbsoluteFile().toPath();
+					List<Path> filePaths;
+					try (Stream<Path> walk = Files.walk(directory)) {
+						filePaths = walk.filter(Files::isRegularFile).collect(Collectors.toList());
+					}
+					for (int i = 0; i < filePaths.size(); i++) {
+						folders.add(filePaths.get(i).toFile());
+					}
+					boolean hasFiles = false;
+					for (File file : folders) {
+						if (file.getAbsolutePath().endsWith(".java")) {
+							hasFiles = true;
+							files.add(file);
 						}
+					}
+					if(hasFiles == false) {
+						JOptionPane.showMessageDialog(null, "Selecione uma pasta com um projeto Java.");
 					}
 					src_path = new File(txtSrcPath.getText());
 				} catch (Exception ex) {
@@ -195,7 +212,7 @@ public class GUI extends JFrame {
 						JOptionPane.showMessageDialog(null,
 								"Precisa de selecionar pelo menos um Code Smell!\n Tente novamente");
 
-					central = new Central(rules, src_path, tipoComparacao);
+					central = new Central(rules, src_path, tipoComparacao, files);
 					System.out.println(jfcrun.getSelectedFile().getAbsolutePath());
 					central.setExcelFileDir(jfcrun.getSelectedFile().getAbsolutePath());
 					central.ini();
