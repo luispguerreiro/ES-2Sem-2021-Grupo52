@@ -107,12 +107,6 @@ class BoolResultadoTest {
 		Assertions.assertEquals(b.getVerificacao(), verificacao);
 	}
 
-	/**
-	 * Test method for {@link central.BoolResultado#main(java.lang.String[])}.
-	 */
-	@Test
-	final void testMain() {
-		fail("Not yet implemented"); // TODO
-	}
+
 
 }

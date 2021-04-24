@@ -115,10 +115,7 @@ public class Threshold implements Serializable {
 		this.metricName = metricName;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		Threshold t = new Threshold("LOC_method", comparator.SMALLER, 10);
 
-	}
 
 
 

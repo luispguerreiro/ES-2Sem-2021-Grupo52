@@ -293,12 +293,5 @@ class ThresholdTest {
 	}
 	
 
-	/**
-	 * Test method for {@link rules.Threshold#main(java.lang.String[])}.
-	 */
-	@Test
-	final void testMain() {
-		fail("Not yet implemented"); // TODO
-	}
 
 }

@@ -60,7 +60,7 @@ class CentralTest {
 	static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 	static File SRC_path = new File("C:\\Users\\nmsid\\Downloads\\jasml_0.10");
 	static String PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
-	static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+	static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml");
 	static int separador;
 	static Metrics metric;
 	static CYCLO_method cyclo;
@@ -136,10 +136,10 @@ class CentralTest {
 		c.setSRC_PATH(SRC_path);
 		File excelFile = new File(excelFileDir.concat("\\".concat(SRC_path.getName().concat("_metrics.xlsx"))));
 		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
-		File[] v = c.extracts();
-		Assertions.assertNotNull(v);
-		Assertions.assertNotEquals(v.length, 0);
-		metric = new Metrics(v[0].getAbsolutePath());
+//		File[] v = c.extracts();
+//		Assertions.assertNotNull(v);
+//		Assertions.assertNotEquals(v.length, 0);
+//		metric = new Metrics(v[0].getAbsolutePath());
 
 		Loc_Method locMethod = new Loc_Method(metric);
 		CYCLO_method cycloMethod = new CYCLO_method(metric);
@@ -151,13 +151,6 @@ class CentralTest {
 
 	}
 
-	/**
-	 * Test method for {@link central.Central#sys()}.
-	 */
-	@Test
-	final void testSys() {
-		fail("Not yet implemented"); // TODO
-	}
 
 	/**
 	 * Test method for {@link central.Central#chooseRules(java.util.ArrayList)}.
@@ -246,13 +239,7 @@ class CentralTest {
 		Assertions.assertEquals(9, string.length);
 	}
 
-	/**
-	 * Test method for {@link central.Central#extracts()}.
-	 */
-	@Test
-	final void testExtracts() {
-		fail("Not yet implemented"); // TODO
-	}
+	
 
 	/**
 	 * Test method for {@link central.Central#listFiles(java.nio.file.Path)}.

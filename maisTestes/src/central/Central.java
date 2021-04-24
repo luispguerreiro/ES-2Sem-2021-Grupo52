@@ -81,7 +81,7 @@ public class Central {
 	 */
 	public void ini() throws IOException {
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
-		File[] v = extracts();
+		File[] v= new File[2];
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
 		for (int i = 0; i < v.length; i++) {
@@ -103,8 +103,6 @@ public class Central {
 		chooseRules(rules);
 		numberOfSomething();
 		numberOfMethods=boolResultMethod.size();
-		
-		// sys();
 
 		OutputStream fileOut = new FileOutputStream(excelFile);
 		workBook.write(fileOut);
@@ -122,20 +120,7 @@ public class Central {
 
 	}
 
-//	public void sys() {
-//		for (int i = 0; i < all.size(); i++) {
-//			System.out.println("ID  " + all.get(i).getMethodID());
-//			System.out.println("CCC Path: " + boolResultClass.get(i).getClasses());
-//			System.out.println("CCC Path: " + boolResultClass.get(i).getMetodo());
-//			System.out.println("CCC Boolean:  " + boolResultClass.get(i).getVerificacao());
-//			System.out.println("MMM Path: " + boolResultMethod.get(i).getClasses());
-//			System.out.println("MMM Path: " + boolResultMethod.get(i).getMetodo());
-//			System.out.println("MMM Boolean:  " + boolResultMethod.get(i).getVerificacao());
-//			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
-//				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
-//			}
-//		}
-//	}
+
 
 	/*
 	 * Invoke calculateThresholds(ArrayList<Resultado> result,
@@ -280,31 +265,7 @@ public class Central {
 		}
 	}
 
-	/*
-	 * Extracts all .java files from a given directory
-	 * 
-	 * @return File[] with all .java files.
-	 */
-	public File[] extracts() throws IOException {
-
-		ArrayList<File> lista = new ArrayList<File>();
-		File[] javaFiles = new File[0];
-		if (srcPath.isDirectory()) {
-			Path path = Paths.get(srcPath.getAbsolutePath());
-			List<Path> paths = listFiles(path);
-			List<File> files = pathsToFiles(paths);
-			for (int i = 0; i < paths.size(); i++) {
-				if (files.get(i).isFile() && files.get(i).getPath().endsWith(".java")) {
-					lista.add(files.get(i));
-				}
-			}
-			javaFiles = new File[lista.size()];
-			for (int i = 0; i < lista.size(); i++) {
-				javaFiles[i] = lista.get(i);
-			}
-		}
-		return javaFiles;
-	}
+	
 
 	/*
 	 * auxiliar method from "extracts()".

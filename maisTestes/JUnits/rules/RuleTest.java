@@ -316,13 +316,6 @@ class RuleTest {
 		Assertions.assertEquals(thresholds, r.getThresholds());
 	}
 
-	/**
-	 * Test method for {@link rules.Rule#fuelArrays()}.
-	 */
-	@Test
-	final void testFuelArrays() {
-		fail("Not yet implemented"); // TODO
-	}
 
 	/**
 	 * Test method for {@link rules.Rule#check()}.
