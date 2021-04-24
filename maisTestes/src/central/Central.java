@@ -344,11 +344,11 @@ public class Central {
 
 	public void setAll(ArrayList<Resultado> all) {
 		this.all= all;
-		
 	}
-
+		
 	public ArrayList<Resultado> getAll() {
 		return all;
+
 	}
 
 	public void setBoolMethod(ArrayList<BoolResultado> boolMethod) {

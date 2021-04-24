@@ -87,13 +87,10 @@ public class Metrics {
 	}
 
 	private void NOM_Class(ClassOrInterfaceDeclaration c) {
-//		List<ConstructorDeclaration> contructors = c.getConstructors();
-//		List<MethodDeclaration> methods = c.getMethods().;
 		c.getConstructors().forEach(cd -> methods.add(cd));
 		c.getMethods().forEach(m -> methods.add(m));
 		listMethods(methods);
 		numOfMethods += methods.size();
-//		System.out.println("Class " + className + " tem " + numOfMethods + " métodos");
 	}
 
 	private void listMethods(List<CallableDeclaration<?>> methods) {
@@ -119,7 +116,6 @@ public class Metrics {
 		int begin = method.getBegin().get().line;
 		int end = method.getEnd().get().line + 1;
 		int methodLines = end - begin;
-//		System.out.println("Metodo " + method.getName() + " tem " + methodLines + " linhas");
 		LOC_Method_Results.add(methodLines);
 	}
 
@@ -127,14 +123,12 @@ public class Metrics {
 		int begin = c.getBegin().get().line;
 		int end = c.getEnd().get().line;
 		LOC_Class = end - begin;
-//		System.out.println("Linhas da class " + LOC_Class);
 	}
 
 	private void WMC_Class(List<Integer> CYCLO_Results) {
 		for (Integer i : CYCLO_Results) {
 			CYCLO_Class += i;
 		}
-//		System.out.println("Complexidade Class " + className + " = " + CYCLO_Class);
 	}
 
 	private void CYCLO_Method(CallableDeclaration<?> method) {
@@ -148,7 +142,6 @@ public class Metrics {
 			cyclo += countBinaryExpressions(binExpressions);
 		}
 		CYCLO_Method_Results.add(cyclo);
-//		System.out.println("Complexidade método " + method.getName() + " = " + cyclo);
 	}
 
 	private int countStatements(List<Statement> statements) {
