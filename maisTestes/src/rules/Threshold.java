@@ -66,7 +66,7 @@ public class Threshold implements Serializable {
 		if (o == comparator.BIGGEREQUALS) {
 			return isBiggerEquals(z);
 		}
-		
+
 		throw new IllegalStateException();
 	}
 
@@ -103,21 +103,18 @@ public class Threshold implements Serializable {
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
-	
+
+	public void setMetricName(String string) {
+		this.metricName = string;
+	}
+
 	public void setLimit(int limit) {
 		this.limit = limit;
+
 	}
+
 	public void setComparator(comparator o) {
 		this.o = o;
 	}
-	public void setMetricName(String metricName) {
-		this.metricName = metricName;
-	}
-
-	public static void main(String[] args) throws FileNotFoundException {
-		Threshold t = new Threshold("LOC_method", comparator.SMALLER, 10);
-
-	}
-
 
 }

@@ -36,13 +36,13 @@ public class Comparador {
 
 	}
 
-	public ArrayList<Linha> getExcel(String path) throws FileNotFoundException, IOException {
-		File file = new File(path);
-		Excel excel = new Excel();
-		excel.lerExcel(file);
-		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
-		return linhas;
-	}
+//	public ArrayList<Linha> getExcel(String path) throws FileNotFoundException, IOException {
+//		File file = new File(path);
+//		Excel excel = new Excel();
+//		excel.lerExcel(file);
+//		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
+//		return linhas;
+//	}
 
 	public void methodComp(ArrayList<BoolResultado> boolMethod, ArrayList<Linha> linhas) {
 		methodCheck = new ArrayList<>();
