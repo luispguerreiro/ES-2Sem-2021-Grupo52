@@ -162,12 +162,12 @@ public class Rule implements IRule, Serializable {
 		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {
 			System.out.println("Vetores criados corretamente!");
 		} else {
-			JOptionPane.showMessageDialog(null, "Não selecionou uma pasta de projeto!");
+			JOptionPane.showMessageDialog(null, "Não pode continuar! \nVerificar tamanho dos vetores!");
 			metricName.clear();
 			comp.clear();
 			limits.clear();
 			oper.clear();
-			throw new IllegalArgumentException("Não pode continuar! \nverificar tamanho dos vetores!");
+			throw new IllegalArgumentException("Não pode continuar! \nVerificar tamanho dos vetores!");
 		}
 	}
 
