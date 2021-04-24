@@ -22,22 +22,36 @@ public class History {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 	public History() {
-//		deleteOlderFiles(folderPath, string_date);
-//		getRecentFiles(folderPath, string_date);
+//		this.ruleName= ruleName;
+//		this.folderPathToRead = folderPathToRead;
+//		this.folderPathToSave = folderPathToSave;
+		
 	}
 
 	public void setFolderPathToSave(String folderPath) {
 		this.folderPathToSave = folderPath;
 	}
 	
+	public String getFolderPathToSave() {
+		return folderPathToSave;
+	}
+	
 	public void setFolderPathToRead(String folderPathToRead) {
 		this.folderPathToRead = folderPathToRead;
+	}
+	
+	public String getFolderPathToRead() {
+		return folderPathToRead;
 	}
 
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
 
+	public String getRuleName() {
+		return ruleName;
+	}
+	
 	/*
 	 * file name will always be rules' rule name first position
 	 */
@@ -137,16 +151,5 @@ public class History {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) {
-		History h = new History();
-		h.setFolderPathToRead("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ES_Rules_History");
-		h.setRuleName("OII");
-		ArrayList<Rule> r = new ArrayList<>();
-		r = h.readFile("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ES_Rules_History\\RegraNew");
-
-		for(int i=0; i<r.size();i++)
-		System.out.println(r.get(i).getRuleType() + " " + r.get(i).getMetricName().get(i));
-	}
+	}	
 }
