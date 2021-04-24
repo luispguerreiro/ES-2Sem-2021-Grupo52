@@ -801,36 +801,37 @@ public class GUI extends JFrame {
 			Comparador comparador, int tipo) {
 		ArrayList<String[]> list = new ArrayList<>();
 		if (tipo == 1) {
-			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method",
+			String[] fixo = { "Method ID", "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method",
 					"Verificação" };
 			list.add(fixo);
 		}
 		if (tipo == 2) {
-			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação" };
+			String[] fixo = { "Method ID", "Pacote", "Classe", "Método", "is_God_Class", "Verifcação" };
 			list.add(fixo);
 		}
 		if (tipo == 3) {
-			String[] fixo = { "Pacote", "Classe", "Método", "is_Long_Method", "Verificação" };
+			String[] fixo = { "Method ID", "Pacote", "Classe", "Método", "is_Long_Method", "Verificação" };
 			list.add(fixo);
 		}
 		Object[][] data = new Object[isgodclass.size()][list.get(0).length];
 		for (int i = 0; i < data.length; i++) {
-			data[i][0] = isgodclass.get(i).getPackage();
-			data[i][1] = isgodclass.get(i).getClasses();
-			data[i][2] = isgodclass.get(i).getMetodo();
+			data[i][0] = isgodclass.get(i).getId();
+			data[i][1] = isgodclass.get(i).getPackage();
+			data[i][2] = isgodclass.get(i).getClasses();
+			data[i][3] = isgodclass.get(i).getMetodo();
 			if (tipo == 2) { // caso utilizador selecione apenas isgodclass
-				data[i][3] = isgodclass.get(i).getVerificacao();
-				data[i][4] = central.getComparador().getClassCheck().get(i);
+				data[i][4] = isgodclass.get(i).getVerificacao();
+				data[i][5] = central.getComparador().getClassCheck().get(i);
 			}
 			if (tipo == 3) { // caso utilizador selecione apenas islongmethod
-				data[i][3] = islongmethod.get(i).getVerificacao();
-				data[i][4] = central.getComparador().getMethodCheck().get(i);
+				data[i][4] = islongmethod.get(i).getVerificacao();
+				data[i][5] = central.getComparador().getMethodCheck().get(i);
 			}
 			if (tipo == 1) { // caso utilizador selecione ambas
-				data[i][3] = isgodclass.get(i).getVerificacao();
-				data[i][4] = central.getComparador().getClassCheck().get(i);
-				data[i][5] = islongmethod.get(i).getVerificacao();
-				data[i][6] = central.getComparador().getMethodCheck().get(i);
+				data[i][4] = isgodclass.get(i).getVerificacao();
+				data[i][5] = central.getComparador().getClassCheck().get(i);
+				data[i][6] = islongmethod.get(i).getVerificacao();
+				data[i][7] = central.getComparador().getMethodCheck().get(i);
 
 			}
 		}
