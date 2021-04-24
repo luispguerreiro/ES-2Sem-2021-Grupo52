@@ -22,6 +22,7 @@ class BoolResultadoTest {
 	static String metodo;
 	static String pack;
 	static boolean verificacao;
+	static int i;
 	static BoolResultado b;
 
 	/**
@@ -29,7 +30,8 @@ class BoolResultadoTest {
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		b= new BoolResultado(pack, classes, metodo, verificacao);
+		i= 1;
+		b= new BoolResultado(i, pack, classes, metodo, verificacao);
 	}
 
 	/**
@@ -82,7 +84,26 @@ class BoolResultadoTest {
 	final void testGetPackage(){
 		Assertions.assertEquals(b.getPackage(), pack);
 	}
+	
+	/**
+	 * Test method for {@link central.BoolResultado#getId()}.
+	 */
+	@Test
+	final void testGetId(){
+		Assertions.assertEquals(b.getId(), i);
+	}
 
+	/**
+	 * Test method for {@link central.BoolResultado#setId(int)}.
+	 */
+	@Test
+	final void testSetId() {
+		
+		int j= 2;
+		b.setId(j);
+		Assertions.assertEquals(b.getId(), j);
+
+	}
 	/**
 	 * Test method for {@link central.BoolResultado#getClasses()}.
 	 */

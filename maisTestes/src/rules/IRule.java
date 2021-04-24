@@ -41,8 +41,6 @@ public interface IRule {
 	
 	void setRuleName(String ruleName);
 
-	void fuelArrays();
-
 	void check();
 
 	void setLimits(ArrayList<Integer> limits);

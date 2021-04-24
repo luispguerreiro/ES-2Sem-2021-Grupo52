@@ -121,20 +121,7 @@ public class Central {
 
 	}
 
-	public void sys() {
-		for (int i = 0; i < all.size(); i++) {
-			System.out.println("ID  " + all.get(i).getMethodID());
-			System.out.println("CCC Path: " + boolResultClass.get(i).getClasses());
-			System.out.println("CCC Path: " + boolResultClass.get(i).getMetodo());
-			System.out.println("CCC Boolean:  " + boolResultClass.get(i).getVerificacao());
-			System.out.println("MMM Path: " + boolResultMethod.get(i).getClasses());
-			System.out.println("MMM Path: " + boolResultMethod.get(i).getMetodo());
-			System.out.println("MMM Boolean:  " + boolResultMethod.get(i).getVerificacao());
-			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
-				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
-			}
-		}
-	}
+
 
 	/*
 	 * Invoke calculateThresholds(ArrayList<Resultado> result,
@@ -346,10 +333,6 @@ public class Central {
 		return comparador;
 	}
 
-//	public ArrayList<Resultado> getAll() {
-//		return all;
-//	}
-
 	public ArrayList<BoolResultado> getBoolClass() {
 		return boolResultClass;
 	}
@@ -358,63 +341,27 @@ public class Central {
 		return boolResultMethod;
 	}
 
-	public static ArrayList<Rule> testMain() throws FileNotFoundException {
-		String ruleName = "RegraNew";
-		ArrayList<String> metricName = new ArrayList<>();
-		ArrayList<comparator> comp = new ArrayList<>();
-		ArrayList<Integer> limits = new ArrayList<>();
-		ArrayList<operator> oper = new ArrayList<>();
-		metricName.add("NOM_class");
-		metricName.add("LOC_class");
-		metricName.add("WMC_class");
-		comp.add(comparator.BIGGEREQUALS);
-		comp.add(comparator.EQUALS);
-		comp.add(comparator.EQUALS);
-		limits.add(20);
-		limits.add(30);
-		limits.add(40);
-		oper.add(operator.AND);
-		oper.add(operator.OR);
-
-		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
-
-		String ruleName1 = "Regra3";
-		ArrayList<String> metricName1 = new ArrayList<>();
-		ArrayList<comparator> comp1 = new ArrayList<>();
-		ArrayList<Integer> limits1 = new ArrayList<>();
-		ArrayList<operator> oper1 = new ArrayList<>();
-		metricName1.add("LOC_method");
-		metricName1.add("CYCLO_method");
-		comp1.add(comparator.BIGGER);
-		comp1.add(comparator.SMALLER);
-		limits1.add(20);
-		limits1.add(40);
-		oper1.add(operator.AND);
-
-		Rule r1 = new Rule(ruleName1, 1, metricName1, comp1, limits1, oper1);
-
-		ArrayList<Rule> rules = new ArrayList<>();
-		rules.add(r);
-		rules.add(r1);
-		return rules;
-
+	public void setAll(ArrayList<Resultado> all) {
+		this.all= all;
+		
 	}
 
-	public static void main(String[] args) throws IOException {
-//		ArrayList<Rule> rules = testMain();
-//		File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
-//		int tipoComparacao = 1;
-//		Central c = new Central(rules, srcPath, tipoComparacao);
-//		System.out.println("---<" + c.excelFileDir);
-//		c.setExcelFileDir(c.excelFileDir);
-//		c.ini();
-//		for (int i = 0; i < c.getComparador().getMethodCheck().size(); i++)
-//			System.out.println(c.getComparador().getMethodCheck().get(i));
-//		System.out.println(c.getComparador().getMethodCheck().size());
-//
-//		History hist = new History();
-//		hist.writeFile(rules);
-//		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
-
+	public ArrayList<Resultado> getAll() {
+		return all;
 	}
+
+	public void setBoolMethod(ArrayList<BoolResultado> boolMethod) {
+		this.boolResultMethod=  boolMethod;
+		
+	}
+
+	public void setComparador(Comparador d) {
+		this.comparador= d;
+		
+	}
+
+
+	
+
+
 }

@@ -145,11 +145,11 @@ class RuleTest {
 		thresholds.add(new Threshold(metric, o, limit));
 		
 		result.add(new Resultado(methodID, path, linhas, intis));
-		boolresult.add(new BoolResultado(pack, classes, metodo, verificacao));
+		boolresult.add(new BoolResultado(limit, pack, classes, metodo, verificacao));
 		result.add(new Resultado(methodID, path, linhas, intis));
-		boolresult.add(new BoolResultado(pack, classes, metodo, verificacao));
+		boolresult.add(new BoolResultado(limit, pack, classes, metodo, verificacao));
 		result.add(new Resultado(methodID, path, linhas, intis));
-		boolresult.add(new BoolResultado(pack, classes, metodo, verificacao));
+		boolresult.add(new BoolResultado(limit, pack, classes, metodo, verificacao));
 		r.setThresholds(thresholds);
 		r.calculateThresholds(result, boolresult);
 		Assertions.assertNotNull(result);

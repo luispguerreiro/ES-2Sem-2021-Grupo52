@@ -56,6 +56,7 @@ class CentralTest {
 	static ArrayList<BoolResultado> boolMethod = new ArrayList<>();
 	static ArrayList<BoolResultado> boolClass = new ArrayList<>();
 	static ArrayList<Resultado> all = new ArrayList<>();
+	static ArrayList<File> files = new ArrayList<>();
 
 	static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 	static File SRC_path = new File("C:\\Users\\nmsid\\Downloads\\jasml_0.10");
@@ -89,7 +90,7 @@ class CentralTest {
 		tipoComparacao = 1;
 		metric = new Metrics(PATH2);
 		cyclo = new CYCLO_method(metric);
-		c = new Central(rules, file, tipoComparacao);
+		c = new Central(rules, file, tipoComparacao, files);
 		file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	}
 
@@ -241,42 +242,9 @@ class CentralTest {
 
 	
 
-	/**
-	 * Test method for {@link central.Central#listFiles(java.nio.file.Path)}.
-	 * 
-	 * @throws IOException
-	 */
-	@Test
-	final void testListFiles() throws IOException {
-		List<Path> result = new ArrayList<>();
-		List<File> files = new ArrayList<File>();
-		File dir = new File(SRC_PATH);
-		Path path = Paths.get(dir.getAbsolutePath());
-		result = c.listFiles(path);
-		Assertions.assertNotNull(files);
-		Assertions.assertNotNull(result);
-		Assertions.assertNotNull(dir);
-		Assertions.assertNotNull(path);
-		Assertions.assertEquals(result.size(), c.listFiles(path).size());
-	}
 
-	/**
-	 * Test method for {@link central.Central#pathsToFiles(java.util.List)}.
-	 */
-	@Test
-	final void testPathsToFiles() {
-		List<Path> paths = new ArrayList<>();
-		List<File> files = new ArrayList<File>();
-		File dir = new File(SRC_PATH);
-		Path path = Paths.get(dir.getAbsolutePath());
-		paths.add(path);
-		Assertions.assertNotNull(files);
-		Assertions.assertNotNull(paths);
-		Assertions.assertNotNull(dir);
-		Assertions.assertNotNull(path);
-		files = c.pathsToFiles(paths);
-		Assertions.assertEquals(files.size(), paths.size());
-	}
+
+
 
 	/**
 	 * Test method for {@link central.Central#numberOfSomething()}.
@@ -284,7 +252,7 @@ class CentralTest {
 	@Test
 	final void testNumberOfSomething() {
 
-		boolMethod.add(new BoolResultado("String1 ", "String2 ", "String3 ", false));
+		boolMethod.add(new BoolResultado(5, "String1 ", "String2 ", "String3 ", false));
 		c.setBoolMethod(boolMethod);
 		c.numberOfSomething();
 		Assertions.assertEquals(boolMethod, c.getBoolMethod());
@@ -446,20 +414,6 @@ class CentralTest {
 		assertEquals(boolMethod, c.getBoolMethod());
 	}
 
-	/**
-	 * Test method for {@link central.Central#testMain()}.
-	 */
-	@Test
-	final void testTestMain() {
-		fail("Not yet implemented"); // TODO
-	}
 
-	/**
-	 * Test method for {@link central.Central#main(java.lang.String[])}.
-	 */
-	@Test
-	final void testMain() {
-		fail("Not yet implemented"); // TODO
-	}
 
 }

@@ -156,21 +156,6 @@ public class Rule implements IRule, Serializable {
 		this.ruleName = ruleName;
 	}
 
-	@Override
-	public void fuelArrays() {
-		metricName.add("NOM_class");
-		metricName.add("LOC_class");
-		metricName.add("WMC_class");
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.SMALLER);
-		limits.add(20);
-		limits.add(30);
-		limits.add(40);
-		oper.add(operator.AND);
-		oper.add(operator.OR);
-
-	}
 
 	@Override
 	public void check() {
@@ -191,30 +176,11 @@ public class Rule implements IRule, Serializable {
 		this.limits = limits;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		String ruleName = "RegraNew";
-		ArrayList<String> metricName = new ArrayList<>();
-		ArrayList<comparator> comp = new ArrayList<>();
-		ArrayList<Integer> limits = new ArrayList<>();
-		ArrayList<operator> oper = new ArrayList<>();
-		metricName.add("NOM_class");
-		metricName.add("LOC_class");
-		metricName.add("WMC_class");
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.BIGGER);
-		comp.add(comparator.SMALLER);
-		limits.add(20);
-		limits.add(30);
-		limits.add(40);
-		oper.add(operator.OR);
-		oper.add(operator.AND);
-
-		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
-		Threshold t = new Threshold("LOC_method", comparator.BIGGER, 10);
-		Threshold t1 = new Threshold("CYCLO_method", comparator.BIGGER, 10);
-
-		System.out.println(r.logic2(t, t1, 12, 12));
-
+	public void setThresholds(ArrayList<Threshold> thresholds) {
+		this.thresholds= thresholds;
+		
 	}
+
+	
 
 }
