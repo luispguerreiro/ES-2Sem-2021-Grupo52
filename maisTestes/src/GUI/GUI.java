@@ -15,8 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,6 +31,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -59,6 +60,7 @@ public class GUI extends JFrame {
 	private JScrollPane scrollPane;
 
 	private File src_path;
+	private File excelFile;
 
 	private Central central;
 
@@ -90,6 +92,8 @@ public class GUI extends JFrame {
 	private ArrayList<comparator> comparators1 = new ArrayList<>();
 	private ArrayList<operator> operators1 = new ArrayList<>();
 	private ArrayList<Integer> limits1 = new ArrayList<>();
+	private List<File> folders = new ArrayList<>();
+	private ArrayList<File> files = new ArrayList<>();
 
 	ArrayList<Rule> rules = new ArrayList<>();
 
@@ -147,32 +151,36 @@ public class GUI extends JFrame {
 		btnNewButton.setBounds(1072, 567, 103, 33);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				File selectedFile = new File("");
+				
+				
 				JFileChooser jfc = new JFileChooser("Escolha a pasta");
 				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfc.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = jfc.getSelectedFile();
+					selectedFile = jfc.getSelectedFile();
 					txtSrcPath.setText(selectedFile.getAbsolutePath());
 				}
 				try {
-					src_path = new File(txtSrcPath.getText());
-					if (src_path.isDirectory()) {
-						ArrayList<File> lista = new ArrayList<File>();
-						Path path = Paths.get(src_path.getAbsolutePath());
-						List<Path> paths = listFiles(path);
-						List<File> files = pathsToFiles(paths);
-						for (int i = 0; i < paths.size(); i++) {
-							if (files.get(i).isFile() && files.get(i).getPath().endsWith(".java")) {
-								lista.add(files.get(i));
-							}
-						}
-						File[] v = new File[lista.size()];
-						for (int i = 0; i < lista.size(); i++) {
-							v[i] = lista.get(i);
-//							System.out.println(v[i]);
+					Path directory = selectedFile.getAbsoluteFile().toPath();
+					List<Path> filePaths;
+					try (Stream<Path> walk = Files.walk(directory)) {
+						filePaths = walk.filter(Files::isRegularFile).collect(Collectors.toList());
+					}
+					for (int i = 0; i < filePaths.size(); i++) {
+						folders.add(filePaths.get(i).toFile());
+					}
+					boolean hasFiles = false;
+					for (File file : folders) {
+						if (file.getAbsolutePath().endsWith(".java")) {
+							hasFiles = true;
+							files.add(file);
 						}
 					}
-
+					if(hasFiles == false) {
+						JOptionPane.showMessageDialog(null, "Selecione uma pasta com um projeto Java.");
+					}
+					src_path = new File(txtSrcPath.getText());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -185,7 +193,6 @@ public class GUI extends JFrame {
 		DefaultListModel dlm = new DefaultListModel();
 		JList list = new JList(dlm);
 		list.setBounds(10, 40, 186, 270);
-//		panel.add(list);
 
 		JButton btnRun = new JButton("Run");
 		btnRun.setBounds(1072, 610, 103, 33);
@@ -194,27 +201,28 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				ArrayList<Rule> rules;
 				JFileChooser jfcrun = new JFileChooser();
 				jfcrun.setDialogTitle("Escolha onde guardar o excel");
 				jfcrun.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfcrun.showOpenDialog(null);
-//				if (returnValue == JFileChooser.APPROVE_OPTION) {
-//					File selectedFile = jfcrun.getSelectedFile();
-//				}
 				try {
-//					rules = PutCentralWorking();
-					central = new Central(rules, src_path, tipoComparacao);
+					if (txtSrcPath.getText().equals("Selecione a pasta do seu projeto"))
+						JOptionPane.showMessageDialog(null, "Não selecionou uma pasta de projeto!");
+					if (rules.isEmpty())
+						JOptionPane.showMessageDialog(null,
+								"Precisa de selecionar pelo menos um Code Smell!\n Tente novamente");
+
+					central = new Central(rules, src_path, tipoComparacao, files);
 					System.out.println(jfcrun.getSelectedFile().getAbsolutePath());
 					central.setExcelFileDir(jfcrun.getSelectedFile().getAbsolutePath());
 					central.ini();
+					excelFile = central.getExcelFile();
 					writeStatsLabels();
 					scrollPane.setViewportView(escreveTabela(central.getBoolClass(), central.getBoolMethod(),
 							central.getComparador(), tipoComparacao));
 					cleanArrays();
 
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -271,7 +279,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1 = new JComboBox<operator>();
 				comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				comboBox_1.setModel(new DefaultComboBoxModel<>(operator.values()));
-				comboBox_1.setBounds(131, 37, 57, 21);
+				comboBox_1.setBounds(131, 37, 65, 21);
 				contentPane1.add(comboBox_1);
 
 				JLabel lblNewLabel_1 = new JLabel("Lines of Code");
@@ -332,7 +340,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1_1 = new JComboBox<operator>();
 				comboBox_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
 				comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1_1.setBounds(131, 156, 57, 21);
+				comboBox_1_1.setBounds(131, 156, 65, 21);
 				contentPane1.add(comboBox_1_1);
 
 				JLabel lblNewLabel_1_2 = new JLabel("Number of Methods");
@@ -343,7 +351,7 @@ public class GUI extends JFrame {
 				JComboBox<operator> comboBox_1_1_1 = new JComboBox<operator>();
 				comboBox_1_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
 				comboBox_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1_1_1.setBounds(131, 214, 57, 21);
+				comboBox_1_1_1.setBounds(131, 214, 65, 21);
 				contentPane1.add(comboBox_1_1_1);
 
 				JLabel lblNewLabel_1_3 = new JLabel("WMC Class");
@@ -466,6 +474,7 @@ public class GUI extends JFrame {
 						txtSelecioneAPasta.setBounds(10, 32, 249, 19);
 						contentPaneaplicar.add(txtSelecioneAPasta);
 						txtSelecioneAPasta.setColumns(10);
+						txtSelecioneAPasta.setEditable(false);
 
 						txtSelecioneONome = new JTextField();
 						txtSelecioneONome.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -497,19 +506,19 @@ public class GUI extends JFrame {
 						frameaplicar.setVisible(true);
 
 						if (chckbxNewCheckBox.isSelected()) {
-							if (!textField_5.getText().equals("Threshold")) {
+							if (textField_5.getText().matches("[0-9]+")) {
 								limits.add(Integer.parseInt(textField_5.getText()));
 								metricNames.add("LOC_method");
 							}
-							if (!textField_1.getText().equals("Threshold")) {
+							if (textField_1.getText().matches("[0-9]+")) {
 								limits.add(Integer.parseInt(textField_1.getText()));
 								metricNames.add("CYCLO_method");
 							}
-							if (!comboBox.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox.getSelectedItem().equals(comparator.Select))
 								comparators.add((comparator) comboBox.getSelectedItem());
-							if (!comboBox_3.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox_3.getSelectedItem().equals(comparator.Select))
 								comparators.add((comparator) comboBox_3.getSelectedItem());
-							if (!comboBox_1.getSelectedItem().equals(operator.XXX))
+							if (!comboBox_1.getSelectedItem().equals(operator.Select))
 								operators.add((operator) comboBox_1.getSelectedItem());
 
 							try {
@@ -521,27 +530,27 @@ public class GUI extends JFrame {
 							tipoComparacao = 3;
 						}
 						if (chckbxGodClass.isSelected()) {
-							if (!textField.getText().equals("Threshold")) {
+							if (textField.getText().matches("[0-9]+")) {
 								limits1.add(Integer.parseInt(textField.getText()));
 								metricNames1.add("LOC_class");
 							}
-							if (!textField_4.getText().equals("Threshold")) {
+							if (textField_4.getText().matches("[0-9]+")) {
 								limits1.add(Integer.parseInt(textField_4.getText()));
 								metricNames1.add("NOM_class");
 							}
-							if (!textField_3.getText().equals("Threshold")) {
+							if (textField_3.getText().matches("[0-9]+")) {
 								limits1.add(Integer.parseInt(textField_3.getText()));
 								metricNames1.add("WMC_class");
 							}
-							if (!comboBox_2.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox_2.getSelectedItem().equals(comparator.Select))
 								comparators1.add((comparator) comboBox_2.getSelectedItem());
-							if (!comboBox_2_3.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox_2_3.getSelectedItem().equals(comparator.Select))
 								comparators1.add((comparator) comboBox_2_3.getSelectedItem());
-							if (!comboBox_2_2.getSelectedItem().equals(comparator.XXX))
+							if (!comboBox_2_2.getSelectedItem().equals(comparator.Select))
 								comparators1.add((comparator) comboBox_2_2.getSelectedItem());
-							if (!comboBox_1_1.getSelectedItem().equals(operator.XXX))
+							if (!comboBox_1_1.getSelectedItem().equals(operator.Select))
 								operators1.add((operator) comboBox_1_1.getSelectedItem());
-							if (!comboBox_1_1_1.getSelectedItem().equals(operator.XXX))
+							if (!comboBox_1_1_1.getSelectedItem().equals(operator.Select))
 								operators1.add((operator) comboBox_1_1_1.getSelectedItem());
 
 							try {
@@ -550,7 +559,6 @@ public class GUI extends JFrame {
 										+ limits1.size() + "  " + operators1.size());
 								rules.add(new Rule("", 0, metricNames1, comparators1, limits1, operators1));
 							} catch (FileNotFoundException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							tipoComparacao = 2;
@@ -558,8 +566,6 @@ public class GUI extends JFrame {
 						if (chckbxNewCheckBox.isSelected() && chckbxGodClass.isSelected())
 							tipoComparacao = 1;
 
-//						frameaplicar.dispose();
-//						editar.dispose();
 					}
 				});
 
@@ -572,11 +578,6 @@ public class GUI extends JFrame {
 		panel_1.setBounds(943, 10, 242, 210);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
-
-//		DefaultListModel dlm = new DefaultListModel();
-//		JList list = new JList(dlm);
-//		list.setBounds(10, 40, 186, 270);
-////		panel.add(list);
 
 		JButton btnNewButton_2 = new JButton("Importar Regras");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -591,24 +592,21 @@ public class GUI extends JFrame {
 				jfc1.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int returnValue = jfc1.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-//					File selectedFile = jfc1.getSelectedFile();
-//					String pathimportar = selectedFile.getAbsolutePath();
-//					System.out.println(pathimportar);
 					rules = (history.readFile(jfc1.getSelectedFile().getAbsolutePath()));
 					for (int i = 0; i < rules.size(); i++) {
 						if (rules.size() == 1) {
 							if (rules.get(i).getRuleType() == 0) {
-								dlm.addElement("        *GOD CLASS*");
+								dlm.addElement("        ****GOD CLASS****");
 								tipoComparacao = 2;
 							} else {
-								dlm.addElement("        *LONG METHOD*");
+								dlm.addElement("        ****LONG METHOD****");
 								tipoComparacao = 3;
 							}
 						} else {
 							if (rules.get(i).getRuleType() == 0)
-								dlm.addElement("        *GOD CLASS*");
+								dlm.addElement("        ****GOD CLASS****");
 							else
-								dlm.addElement("        *LONG METHOD*");
+								dlm.addElement("        ****LONG METHOD****");
 
 							tipoComparacao = 1;
 						}
@@ -691,9 +689,10 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					File file = central.getExcelFile();
+					if (excelFile == null)
+						JOptionPane.showMessageDialog(null,	"Impossível abrir o ficheiro Excel!\nPor favor faça 'Run', para que o mesmo seja criado.");
 					Desktop d = Desktop.getDesktop();
-					d.open(file);
+					d.open(excelFile);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -758,6 +757,8 @@ public class GUI extends JFrame {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (central == null)
+					JOptionPane.showMessageDialog(null,	"Impossível vizualizar o gráfico!\nPor favor faça 'Run', para que o mesmo seja criado.");
 				DefaultPieDataset dataset = new DefaultPieDataset();
 				dataset.setValue("VP", 21);
 				dataset.setValue("VN", 10);
@@ -796,57 +797,41 @@ public class GUI extends JFrame {
 		contentPane.add(scrollPane);
 	}
 
-	public List<Path> listFiles(Path path) throws IOException {
-		List<Path> result;
-		try (Stream<Path> walk = Files.walk(path)) {
-			result = walk.filter(Files::isRegularFile).collect(Collectors.toList());
-		}
-		return result;
-	}
-
-	public List<File> pathsToFiles(List<Path> path) {
-		List<File> files = new ArrayList<File>();
-		for (int i = 0; i < path.size(); i++) {
-			files.add(path.get(i).toFile());
-		}
-		return files;
-	}
-
 	public JTable escreveTabela(ArrayList<BoolResultado> isgodclass, ArrayList<BoolResultado> islongmethod,
 			Comparador comparador, int tipo) {
 		ArrayList<String[]> list = new ArrayList<>();
 		if (tipo == 1) {
-			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method",
+			String[] fixo = { "Method ID", "Pacote", "Classe", "Método", "is_God_Class", "Verifcação", "is_Long_Method",
 					"Verificação" };
 			list.add(fixo);
 		}
 		if (tipo == 2) {
-			String[] fixo = { "Pacote", "Classe", "Método", "is_God_Class", "Verifcação" };
+			String[] fixo = { "Method ID", "Pacote", "Classe", "Método", "is_God_Class", "Verifcação" };
 			list.add(fixo);
 		}
 		if (tipo == 3) {
-			String[] fixo = { "Pacote", "Classe", "Método", "is_Long_Method", "Verificação" };
+			String[] fixo = { "Method ID", "Pacote", "Classe", "Método", "is_Long_Method", "Verificação" };
 			list.add(fixo);
 		}
 		Object[][] data = new Object[isgodclass.size()][list.get(0).length];
-//		Object[][] data = new Object[c.getComparador().getClassCheck().size()][list.get(0).length];
 		for (int i = 0; i < data.length; i++) {
-			data[i][0] = isgodclass.get(i).getPackage();
-			data[i][1] = isgodclass.get(i).getClasses();
-			data[i][2] = isgodclass.get(i).getMetodo();
-			if (tipo == 2) { // caso utilizador selecione ambas ou apenas isgodclass
-				data[i][3] = isgodclass.get(i).getVerificacao();
-				data[i][4] = central.getComparador().getClassCheck().get(i);
+			data[i][0] = isgodclass.get(i).getId();
+			data[i][1] = isgodclass.get(i).getPackage();
+			data[i][2] = isgodclass.get(i).getClasses();
+			data[i][3] = isgodclass.get(i).getMetodo();
+			if (tipo == 2) { // caso utilizador selecione apenas isgodclass
+				data[i][4] = isgodclass.get(i).getVerificacao();
+				data[i][5] = central.getComparador().getClassCheck().get(i);
 			}
-			if (tipo == 3) { // caso utilizador selecione ambas ou apenas islongmethod
-				data[i][3] = islongmethod.get(i).getVerificacao();
-				data[i][4] = central.getComparador().getMethodCheck().get(i);
+			if (tipo == 3) { // caso utilizador selecione apenas islongmethod
+				data[i][4] = islongmethod.get(i).getVerificacao();
+				data[i][5] = central.getComparador().getMethodCheck().get(i);
 			}
-			if (tipo == 1) {
-				data[i][3] = isgodclass.get(i).getVerificacao();
-				data[i][4] = central.getComparador().getClassCheck().get(i);
-				data[i][5] = islongmethod.get(i).getVerificacao();
-				data[i][6] = central.getComparador().getMethodCheck().get(i);
+			if (tipo == 1) { // caso utilizador selecione ambas
+				data[i][4] = isgodclass.get(i).getVerificacao();
+				data[i][5] = central.getComparador().getClassCheck().get(i);
+				data[i][6] = islongmethod.get(i).getVerificacao();
+				data[i][7] = central.getComparador().getMethodCheck().get(i);
 
 			}
 		}

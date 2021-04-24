@@ -38,20 +38,19 @@ import rules.Rule.operator;
  */
 public class Central {
 
-	private File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
+	private File srcPath;
 
-//	private String excelFileDir="C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho"; // vai estar em branco e é
-	private String excelFileDir="C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho";																					// necessário fazer
-																						// setExcelFileDir
+	private String excelFileDir = ""; // vai estar em branco e é
+										// necessário fazer
+										// setExcelFileDir
 	private File excelFile;
-	private File historyFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 
 	private CYCLO_method cycloMethod;
 	private Loc_Method locMethod;
 	private Loc_Class locClass;
 	private NOM_Class nomClass;
 	private WMC_Class wmcClass;
-	
+
 	private int separador = 0;
 	private int numberOfPackages = 0;
 	private int numberOfClasses = 0;
@@ -63,17 +62,18 @@ public class Central {
 	private ArrayList<BoolResultado> boolResultClass = new ArrayList<>();
 	private ArrayList<BoolResultado> boolResultMethod = new ArrayList<>();
 	private ArrayList<Rule> rules = new ArrayList<>();
+	private ArrayList<File> files;
 
 	private Metrics metric;
-	
-	private Comparador comparador;
-	
 
-	public Central(ArrayList<Rule> rules, File srcPath, int tipoComparacao) throws IOException {
+	private Comparador comparador;
+
+	public Central(ArrayList<Rule> rules, File srcPath, int tipoComparacao, ArrayList<File> files) throws IOException {
 		this.rules = rules;
 		this.srcPath = srcPath;
+		this.files = files;
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
-		this.tipoComparacao=tipoComparacao;
+		this.tipoComparacao = tipoComparacao;
 	}
 
 	/*
@@ -81,12 +81,12 @@ public class Central {
 	 */
 	public void ini() throws IOException {
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
-		File[] v= new File[2];
+//		File[] v = extracts();
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
-		for (int i = 0; i < v.length; i++) {
+		for (int i = 0; i < files.size(); i++) {
 
-			metric = new Metrics(v[i].getAbsolutePath());
+			metric = new Metrics(files.get(i).getAbsolutePath());
 
 			locMethod = new Loc_Method(metric);
 			cycloMethod = new CYCLO_method(metric);
@@ -97,30 +97,44 @@ public class Central {
 			writeExcel(sheet, workBook);
 
 			fuelAllandBoolResults();
-			//numberOfClasses += wmcClass.getResultados().size();
+			// numberOfClasses += wmcClass.getResultados().size();
 		}
 		putMethodID();
 		chooseRules(rules);
 		numberOfSomething();
-		numberOfMethods=boolResultMethod.size();
+		numberOfMethods = boolResultMethod.size();
+
+		// sys();
 
 		OutputStream fileOut = new FileOutputStream(excelFile);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
-		System.out.println("\n**Exporta��o para Excel conclu�da!**\n");
+		System.out.println("\n***Exporta��o para Excel conclu�da!***\n");
 
-		
 		System.out.println("number of methods = " + numberOfMethods);
 		System.out.println("number of packages = " + numberOfPackages);
 		System.out.println("number of classes = " + numberOfClasses);
 		System.out.println("number of lines = " + numberOfLines);
 //		Comparador c = new Comparador(boolResultMethod, boolResultClass);;
-		setComparador(new Comparador(boolResultMethod, boolResultClass, tipoComparacao));
+		comparador = new Comparador(boolResultMethod, boolResultClass, tipoComparacao);
 
 	}
 
-
+	public void sys() {
+		for (int i = 0; i < all.size(); i++) {
+			System.out.println("ID  " + all.get(i).getMethodID());
+			System.out.println("CCC Path: " + boolResultClass.get(i).getClasses());
+			System.out.println("CCC Path: " + boolResultClass.get(i).getMetodo());
+			System.out.println("CCC Boolean:  " + boolResultClass.get(i).getVerificacao());
+			System.out.println("MMM Path: " + boolResultMethod.get(i).getClasses());
+			System.out.println("MMM Path: " + boolResultMethod.get(i).getMetodo());
+			System.out.println("MMM Boolean:  " + boolResultMethod.get(i).getVerificacao());
+			for (int j = 0; j < all.get(i).getAllInts().length; j++) {
+				System.out.println("INTS--  " + all.get(i).getAllInts()[j]);
+			}
+		}
+	}
 
 	/*
 	 * Invoke calculateThresholds(ArrayList<Resultado> result,
@@ -159,7 +173,7 @@ public class Central {
 					&& k < nomClass.getResultados().size() - 1) {
 				k++;
 			}
-			
+
 			int LinhasNomC = (nomClass.getResultados().get(k).getLinhas());
 			int LinhasLocC = (locClass.getResultados().get(k).getLinhas());
 			int LinhasWMC = (wmcClass.getResultados().get(k).getLinhas());
@@ -171,10 +185,10 @@ public class Central {
 			all.add(new Resultado(i, cycloMethod.getResultados().get(i).getPath(),
 					cycloMethod.getResultados().get(i).getLinhas(), vetorResultado));
 
-			boolResultClass.add(new BoolResultado(cycloMethod.getResultados().get(i).getPackage(),
+			boolResultClass.add(new BoolResultado(i, cycloMethod.getResultados().get(i).getPackage(),
 					cycloMethod.getResultados().get(i).getClasses(),
 					cycloMethod.getResultados().get(i).getMethodNames(), false));
-			boolResultMethod.add(new BoolResultado(cycloMethod.getResultados().get(i).getPackage(),
+			boolResultMethod.add(new BoolResultado(i, cycloMethod.getResultados().get(i).getPackage(),
 					cycloMethod.getResultados().get(i).getClasses(),
 					cycloMethod.getResultados().get(i).getMethodNames(), false));
 		}
@@ -184,8 +198,11 @@ public class Central {
 	 * enumerates all array with a MethodID
 	 */
 	public void putMethodID() {
-		for (int i = 0; i < all.size(); i++)
+		for (int i = 0; i < all.size(); i++) {
 			all.get(i).setMethodID(i + 1);
+			boolResultClass.get(i).setId(i+1);
+			boolResultMethod.get(i).setId(i+1);
+		}
 	}
 
 	/*
@@ -235,8 +252,8 @@ public class Central {
 			cycloM.setCellValue(cycloMethod.getResultados().get(i).getLinhas());
 
 			rowCount++;
-			
-			numberOfLines+=locMethod.getResultados().get(i).getLinhas();
+
+			numberOfLines += locMethod.getResultados().get(i).getLinhas();
 		}
 	}
 
@@ -265,48 +282,20 @@ public class Central {
 		}
 	}
 
-	
-
-	/*
-	 * auxiliar method from "extracts()".
-	 * 
-	 * @return all files in a List<Path>
-	 */
-	public List<Path> listFiles(Path path) throws IOException {
-		List<Path> result;
-		try (Stream<Path> walk = Files.walk(path)) {
-			result = walk.filter(Files::isRegularFile).collect(Collectors.toList());
-		}
-		return result;
-	}
-
-	/*
-	 * auxiliar method from "extracts()".
-	 * 
-	 * @return all Path to File
-	 */
-	public List<File> pathsToFiles(List<Path> path) {
-		List<File> files = new ArrayList<File>();
-		for (int i = 0; i < path.size(); i++) {
-			files.add(path.get(i).toFile());
-		}
-		return files;
-	}
-	
 	public void numberOfSomething() {
 		int k = 0;
 		ArrayList<String> aux = new ArrayList();
 		ArrayList<String> aux2 = new ArrayList();
-		for(int i=0; i<boolResultMethod.size(); i++) {
+		for (int i = 0; i < boolResultMethod.size(); i++) {
 			if (!aux.contains(boolResultMethod.get(i).getClasses())) {
 				aux.add(boolResultMethod.get(i).getClasses());
 			}
-			if(!aux2.contains(boolResultMethod.get(i).getPackage())) {
+			if (!aux2.contains(boolResultMethod.get(i).getPackage())) {
 				aux2.add(boolResultMethod.get(i).getPackage());
 			}
 		}
-		numberOfClasses=aux.size();
-		numberOfPackages=aux2.size();
+		numberOfClasses = aux.size();
+		numberOfPackages = aux2.size();
 	}
 
 	public File getSourcePath() {
@@ -328,7 +317,7 @@ public class Central {
 	public void setSRC_PATH(File sRC_PATH) {
 		srcPath = sRC_PATH;
 	}
-	
+
 	public File getExcelFile() {
 		return excelFile;
 	}
@@ -336,38 +325,30 @@ public class Central {
 	public String getExcelFileDir() {
 		return excelFileDir;
 	}
-	
+
 	public int getNumberOfClasses() {
 		return numberOfClasses;
 	}
-	 
+
 	public int getNumberOfLines() {
 		return numberOfLines;
 	}
-	
+
 	public int getNumberOfMethods() {
 		return numberOfMethods;
 	}
-	
+
 	public int getNumberOfPackages() {
 		return numberOfPackages;
 	}
-	
+
 	public Comparador getComparador() {
 		return comparador;
 	}
 
-	public ArrayList<Resultado> getAll() {
-		return all;
-	}
-	
-	public void setAll(ArrayList<Resultado> all) {
-		this.all= all;
-	}
-	
-	public void setComparador(Comparador comparador) {
-		this.comparador = comparador;
-	}
+//	public ArrayList<Resultado> getAll() {
+//		return all;
+//	}
 
 	public ArrayList<BoolResultado> getBoolClass() {
 		return boolResultClass;
@@ -376,11 +357,7 @@ public class Central {
 	public ArrayList<BoolResultado> getBoolMethod() {
 		return boolResultMethod;
 	}
-	
-	public void setBoolMethod(ArrayList<BoolResultado> boolMethod) {
-		this.boolResultMethod=boolMethod;
-		
-	}
+
 	public static ArrayList<Rule> testMain() throws FileNotFoundException {
 		String ruleName = "RegraNew";
 		ArrayList<String> metricName = new ArrayList<>();
@@ -391,7 +368,7 @@ public class Central {
 		metricName.add("LOC_class");
 		metricName.add("WMC_class");
 		comp.add(comparator.BIGGEREQUALS);
-		comp.add(comparator.EQUALS	);
+		comp.add(comparator.EQUALS);
 		comp.add(comparator.EQUALS);
 		limits.add(20);
 		limits.add(30);
@@ -416,7 +393,7 @@ public class Central {
 
 		Rule r1 = new Rule(ruleName1, 1, metricName1, comp1, limits1, oper1);
 
-		ArrayList<Rule> rules = new ArrayList();
+		ArrayList<Rule> rules = new ArrayList<>();
 		rules.add(r);
 		rules.add(r1);
 		return rules;
@@ -424,24 +401,20 @@ public class Central {
 	}
 
 	public static void main(String[] args) throws IOException {
-		ArrayList<Rule> rules = testMain();
-		File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
-		int tipoComparacao=1;
-		Central c = new Central(rules, srcPath, tipoComparacao);
-		System.out.println("---<"+c.excelFileDir);
-		c.setExcelFileDir(c.excelFileDir);
-		c.ini();
-		for(int i=0; i<c.getComparador().getMethodCheck().size(); i++)
-		System.out.println(c.getComparador().getMethodCheck().get(i));
-		System.out.println(c.getComparador().getMethodCheck().size());
+//		ArrayList<Rule> rules = testMain();
+//		File srcPath = new File("C:\\Users\\henri\\Downloads\\jasml_0.10");
+//		int tipoComparacao = 1;
+//		Central c = new Central(rules, srcPath, tipoComparacao);
+//		System.out.println("---<" + c.excelFileDir);
+//		c.setExcelFileDir(c.excelFileDir);
+//		c.ini();
+//		for (int i = 0; i < c.getComparador().getMethodCheck().size(); i++)
+//			System.out.println(c.getComparador().getMethodCheck().get(i));
+//		System.out.println(c.getComparador().getMethodCheck().size());
 //
 //		History hist = new History();
 //		hist.writeFile(rules);
 //		ArrayList<Rule> r = hist.readFile(rules.get(0).getRuleName());
 
 	}
-
-
-
-	
 }

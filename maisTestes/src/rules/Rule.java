@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Metrics.Resultado;
 import central.BoolResultado;
-import rules.Rule.comparator;
-import rules.Rule.operator;
 
 public class Rule implements IRule, Serializable {
 
@@ -17,11 +17,11 @@ public class Rule implements IRule, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public enum operator {
-		XXX, OR, AND
+		Select, OR, AND
 	};
 
 	public enum comparator {
-		XXX, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
+		Select, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
 	};
 
 	private ArrayList<Threshold> thresholds = new ArrayList<>();
@@ -43,7 +43,6 @@ public class Rule implements IRule, Serializable {
 		this.oper = oper;
 		this.ruleType = ruleType;
 
-//		fuelArrays();
 		check();
 
 		createThresholds();
@@ -62,7 +61,6 @@ public class Rule implements IRule, Serializable {
 		}
 	}
 
-	@Override
 	public void calculateThresholds(ArrayList<Resultado> result, ArrayList<BoolResultado> boolresult)
 			throws FileNotFoundException {
 		for (int j = 0; j < result.size(); j++) {
@@ -84,12 +82,10 @@ public class Rule implements IRule, Serializable {
 		}
 	}
 
-	@Override
 	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
 		return t.result(valor);
 	}
 
-	@Override
 	public boolean logic2(Threshold t, Threshold t1, int valor, int valor1) throws FileNotFoundException {
 		if (oper.get(0).equals(operator.AND))
 			return and(t.result(valor), t1.result(valor1));
@@ -97,8 +93,7 @@ public class Rule implements IRule, Serializable {
 			return or(t.result(valor), t1.result(valor1));
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
-	
-	@Override
+
 	public boolean logic3(Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3)
 			throws FileNotFoundException {
 		boolean aux = false;
@@ -135,28 +130,23 @@ public class Rule implements IRule, Serializable {
 	public String getRuleName() {
 		return ruleName;
 	}
-	
-	@Override
+
 	public int getRuleType() {
 		return ruleType;
 	}
 
-	@Override
 	public ArrayList<comparator> getComp() {
 		return comp;
 	}
-	
-	@Override
+
 	public ArrayList<Integer> getLimits() {
 		return limits;
 	}
 
-	@Override
 	public ArrayList<String> getMetricName() {
 		return metricName;
 	}
 
-	@Override
 	public ArrayList<operator> getOper() {
 		return oper;
 	}
@@ -165,21 +155,35 @@ public class Rule implements IRule, Serializable {
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
-	
+
 	@Override
-	public void setThresholds(ArrayList<Threshold> thresholds) {
-		this.thresholds=thresholds;
-		
+	public void fuelArrays() {
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		metricName.add("WMC_class");
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
+		limits.add(20);
+		limits.add(30);
+		limits.add(40);
+		oper.add(operator.AND);
+		oper.add(operator.OR);
+
 	}
-
-
 
 	@Override
 	public void check() {
 		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {
 			System.out.println("Vetores criados corretamente!");
-		} else
+		} else {
+			JOptionPane.showMessageDialog(null, "Não selecionou uma pasta de projeto!");
+			metricName.clear();
+			comp.clear();
+			limits.clear();
+			oper.clear();
 			throw new IllegalArgumentException("Não pode continuar! \nverificar tamanho dos vetores!");
+		}
 	}
 
 	@Override
@@ -187,6 +191,30 @@ public class Rule implements IRule, Serializable {
 		this.limits = limits;
 	}
 
+	public static void main(String[] args) throws FileNotFoundException {
+		String ruleName = "RegraNew";
+		ArrayList<String> metricName = new ArrayList<>();
+		ArrayList<comparator> comp = new ArrayList<>();
+		ArrayList<Integer> limits = new ArrayList<>();
+		ArrayList<operator> oper = new ArrayList<>();
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		metricName.add("WMC_class");
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
+		limits.add(20);
+		limits.add(30);
+		limits.add(40);
+		oper.add(operator.OR);
+		oper.add(operator.AND);
 
+		Rule r = new Rule(ruleName, 0, metricName, comp, limits, oper);
+		Threshold t = new Threshold("LOC_method", comparator.BIGGER, 10);
+		Threshold t1 = new Threshold("CYCLO_method", comparator.BIGGER, 10);
+
+		System.out.println(r.logic2(t, t1, 12, 12));
+
+	}
 
 }
