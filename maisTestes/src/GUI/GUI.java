@@ -77,12 +77,11 @@ public class GUI extends JFrame {
 
 	private int tipoComparacao; // vai ser retirado consoante as checkbox de god class e long method
 
-	private JTextField txtThreshold;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField textFieldIsLongMethodLOC;
+	private JTextField textFieldIsLongMethodCyclo;
+	private JTextField textFieldIsGodClassLOC;
+	private JTextField textFieldIsGodClassNOM;
+	private JTextField textFieldIsGodClassWMC;
 
 	private ArrayList<String> metricNames = new ArrayList<>();
 	private ArrayList<comparator> comparators = new ArrayList<>();
@@ -129,7 +128,6 @@ public class GUI extends JFrame {
 		comparators.clear();
 		comparators1.clear();
 		rules.clear();
-
 	}
 
 	/**
@@ -147,13 +145,11 @@ public class GUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JButton btnNewButton = new JButton("Pasta");
-		btnNewButton.setBounds(1072, 567, 103, 33);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton botaoPasta = new JButton("Pasta");
+		botaoPasta.setBounds(1072, 567, 103, 33);
+		botaoPasta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File selectedFile = new File("");
-				
-				
 				JFileChooser jfc = new JFileChooser("Escolha a pasta");
 				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfc.showOpenDialog(null);
@@ -177,7 +173,7 @@ public class GUI extends JFrame {
 							files.add(file);
 						}
 					}
-					if(hasFiles == false) {
+					if (hasFiles == false) {
 						JOptionPane.showMessageDialog(null, "Selecione uma pasta com um projeto Java.");
 					}
 					src_path = new File(txtSrcPath.getText());
@@ -187,17 +183,17 @@ public class GUI extends JFrame {
 			}
 		});
 		contentPane.setLayout(null);
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(btnNewButton);
+		botaoPasta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(botaoPasta);
 
 		DefaultListModel dlm = new DefaultListModel();
 		JList list = new JList(dlm);
 		list.setBounds(10, 40, 186, 270);
 
-		JButton btnRun = new JButton("Run");
-		btnRun.setBounds(1072, 610, 103, 33);
-		btnRun.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnRun.addActionListener(new ActionListener() {
+		JButton botaoRun = new JButton("Run");
+		botaoRun.setBounds(1072, 610, 103, 33);
+		botaoRun.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		botaoRun.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -227,7 +223,7 @@ public class GUI extends JFrame {
 				}
 			}
 		});
-		contentPane.add(btnRun);
+		contentPane.add(botaoRun);
 
 		txtSrcPath = new JTextField();
 		txtSrcPath.setBounds(10, 567, 923, 33);
@@ -242,10 +238,10 @@ public class GUI extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JButton btnNewButton_1 = new JButton("Editar...");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_1.setBounds(10, 333, 186, 21);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton botoaEditar = new JButton("Editar...");
+		botoaEditar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		botoaEditar.setBounds(10, 333, 186, 21);
+		botoaEditar.addActionListener(new ActionListener() {
 
 			@SuppressWarnings("unchecked")
 			@Override
@@ -253,175 +249,175 @@ public class GUI extends JFrame {
 				JFrame editar = new JFrame("Editar...");
 				editar.setTitle("Editar...");
 				editar.setBounds(100, 100, 443, 359);
-				JPanel contentPane1 = new JPanel();
-				contentPane1.setBorder(new EmptyBorder(5, 5, 5, 5));
-				editar.setContentPane(contentPane1);
-				contentPane1.setLayout(null);
+				JPanel contentPaneEditar = new JPanel();
+				contentPaneEditar.setBorder(new EmptyBorder(5, 5, 5, 5));
+				editar.setContentPane(contentPaneEditar);
+				contentPaneEditar.setLayout(null);
 
-				JCheckBox chckbxNewCheckBox = new JCheckBox("Long Method");
+				JCheckBox checkboxIsLongMethod = new JCheckBox("Long Method");
 
-				chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				chckbxNewCheckBox.setBounds(6, 10, 109, 21);
-				contentPane1.add(chckbxNewCheckBox);
+				checkboxIsLongMethod.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				checkboxIsLongMethod.setBounds(6, 10, 109, 21);
+				contentPaneEditar.add(checkboxIsLongMethod);
 
-				JComboBox<comparator> comboBox = new JComboBox<comparator>();
-				comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox.setModel(new DefaultComboBoxModel<>(comparator.values()));
-				comboBox.setToolTipText("");
-				comboBox.setBounds(257, 10, 82, 21);
-				contentPane1.add(comboBox);
+				JComboBox<comparator> comboBoxIsLongMethodLOC = new JComboBox<comparator>();
+				comboBoxIsLongMethodLOC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBoxIsLongMethodLOC.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBoxIsLongMethodLOC.setToolTipText("");
+				comboBoxIsLongMethodLOC.setBounds(257, 10, 82, 21);
+				contentPaneEditar.add(comboBoxIsLongMethodLOC);
 
-				JLabel lblNewLabel = new JLabel("Lines of Code");
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lblNewLabel.setBounds(121, 14, 86, 13);
-				contentPane1.add(lblNewLabel);
+				JLabel isLongMethodLOC = new JLabel("Lines of Code");
+				isLongMethodLOC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				isLongMethodLOC.setBounds(121, 14, 86, 13);
+				contentPaneEditar.add(isLongMethodLOC);
 
-				JComboBox<operator> comboBox_1 = new JComboBox<operator>();
-				comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1.setModel(new DefaultComboBoxModel<>(operator.values()));
-				comboBox_1.setBounds(131, 37, 65, 21);
-				contentPane1.add(comboBox_1);
+				JComboBox<operator> comboBoxIsLongMethodANDOR = new JComboBox<operator>();
+				comboBoxIsLongMethodANDOR.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBoxIsLongMethodANDOR.setModel(new DefaultComboBoxModel<>(operator.values()));
+				comboBoxIsLongMethodANDOR.setBounds(131, 37, 65, 21);
+				contentPaneEditar.add(comboBoxIsLongMethodANDOR);
 
-				JLabel lblNewLabel_1 = new JLabel("Lines of Code");
-				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lblNewLabel_1.setBounds(121, 133, 86, 13);
-				contentPane1.add(lblNewLabel_1);
+				JLabel labelGodClassLOC = new JLabel("Lines of Code");
+				labelGodClassLOC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				labelGodClassLOC.setBounds(121, 133, 86, 13);
+				contentPaneEditar.add(labelGodClassLOC);
 
-				JComboBox<comparator> comboBox_2 = new JComboBox<comparator>();
-				comboBox_2.setModel(new DefaultComboBoxModel<>(comparator.values()));
-				comboBox_2.setToolTipText("");
-				comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_2.setBounds(257, 125, 82, 21);
-				contentPane1.add(comboBox_2);
+				JComboBox<comparator> comboBoxIsGodClassLOC = new JComboBox<comparator>();
+				comboBoxIsGodClassLOC.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBoxIsGodClassLOC.setToolTipText("");
+				comboBoxIsGodClassLOC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBoxIsGodClassLOC.setBounds(257, 125, 82, 21);
+				contentPaneEditar.add(comboBoxIsGodClassLOC);
 
-				textField = new JTextField();
-				textField.setText("Threshold");
-				textField.addMouseListener(new MouseAdapter() {
+				textFieldIsGodClassLOC = new JTextField();
+				textFieldIsGodClassLOC.setText("Threshold");
+				textFieldIsGodClassLOC.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						textField.setText("");
+						textFieldIsGodClassLOC.setText("");
 					}
 				});
-				textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				textField.setColumns(10);
-				textField.setBounds(349, 123, 70, 19);
-				contentPane1.add(textField);
+				textFieldIsGodClassLOC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textFieldIsGodClassLOC.setColumns(10);
+				textFieldIsGodClassLOC.setBounds(349, 123, 70, 19);
+				contentPaneEditar.add(textFieldIsGodClassLOC);
 
-				JCheckBox chckbxGodClass = new JCheckBox("God Class");
-				chckbxGodClass.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				chckbxGodClass.setBounds(6, 131, 109, 21);
-				contentPane1.add(chckbxGodClass);
+				JCheckBox checkboxIsGodClass = new JCheckBox("God Class");
+				checkboxIsGodClass.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				checkboxIsGodClass.setBounds(6, 131, 109, 21);
+				contentPaneEditar.add(checkboxIsGodClass);
 
-				JLabel lblNewLabel_1_1 = new JLabel("Cyclo");
-				lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lblNewLabel_1_1.setBounds(121, 69, 34, 13);
-				contentPane.add(lblNewLabel_1_1);
+				JLabel labelIsLongMethodCYCLO = new JLabel("Cyclo");
+				labelIsLongMethodCYCLO.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				labelIsLongMethodCYCLO.setBounds(121, 69, 34, 13);
+				contentPane.add(labelIsLongMethodCYCLO);
 
-				JComboBox<comparator> comboBox_3 = new JComboBox<comparator>();
-				comboBox_3.setModel(new DefaultComboBoxModel<>(comparator.values()));
-				comboBox_3.setToolTipText("");
-				comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_3.setBounds(257, 61, 82, 21);
-				contentPane1.add(comboBox_3);
+				JComboBox<comparator> comboBoxIsLongMethodCYCLO = new JComboBox<comparator>();
+				comboBoxIsLongMethodCYCLO.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBoxIsLongMethodCYCLO.setToolTipText("");
+				comboBoxIsLongMethodCYCLO.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBoxIsLongMethodCYCLO.setBounds(257, 61, 82, 21);
+				contentPaneEditar.add(comboBoxIsLongMethodCYCLO);
 
-				textField_1 = new JTextField();
-				textField_1.setText("Threshold");
-				textField_1.addMouseListener(new MouseAdapter() {
+				textFieldIsLongMethodCyclo = new JTextField();
+				textFieldIsLongMethodCyclo.setText("Threshold");
+				textFieldIsLongMethodCyclo.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						textField_1.setText("");
+						textFieldIsLongMethodCyclo.setText("");
 					}
 				});
-				textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				textField_1.setColumns(10);
-				textField_1.setBounds(349, 61, 70, 19);
-				contentPane1.add(textField_1);
+				textFieldIsLongMethodCyclo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textFieldIsLongMethodCyclo.setColumns(10);
+				textFieldIsLongMethodCyclo.setBounds(349, 61, 70, 19);
+				contentPaneEditar.add(textFieldIsLongMethodCyclo);
 
-				JComboBox<operator> comboBox_1_1 = new JComboBox<operator>();
-				comboBox_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
-				comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1_1.setBounds(131, 156, 65, 21);
-				contentPane1.add(comboBox_1_1);
+				JComboBox<operator> comboBoxIsGodClassLOCNOM = new JComboBox<operator>();
+				comboBoxIsGodClassLOCNOM.setModel(new DefaultComboBoxModel<>(operator.values()));
+				comboBoxIsGodClassLOCNOM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBoxIsGodClassLOCNOM.setBounds(131, 156, 65, 21);
+				contentPaneEditar.add(comboBoxIsGodClassLOCNOM);
 
-				JLabel lblNewLabel_1_2 = new JLabel("Number of Methods");
-				lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lblNewLabel_1_2.setBounds(121, 191, 126, 13);
-				contentPane1.add(lblNewLabel_1_2);
+				JLabel labelIsGodClassNOM = new JLabel("Number of Methods");
+				labelIsGodClassNOM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				labelIsGodClassNOM.setBounds(121, 191, 126, 13);
+				contentPaneEditar.add(labelIsGodClassNOM);
 
-				JComboBox<operator> comboBox_1_1_1 = new JComboBox<operator>();
-				comboBox_1_1_1.setModel(new DefaultComboBoxModel<>(operator.values()));
-				comboBox_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_1_1_1.setBounds(131, 214, 65, 21);
-				contentPane1.add(comboBox_1_1_1);
+				JComboBox<operator> comboBoxIsGodClassNOMWMC = new JComboBox<operator>();
+				comboBoxIsGodClassNOMWMC.setModel(new DefaultComboBoxModel<>(operator.values()));
+				comboBoxIsGodClassNOMWMC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBoxIsGodClassNOMWMC.setBounds(131, 214, 65, 21);
+				contentPaneEditar.add(comboBoxIsGodClassNOMWMC);
 
-				JLabel lblNewLabel_1_3 = new JLabel("WMC Class");
-				lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lblNewLabel_1_3.setBounds(121, 249, 86, 13);
-				contentPane1.add(lblNewLabel_1_3);
+				JLabel labelIsGodClassWMC = new JLabel("WMC Class");
+				labelIsGodClassWMC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				labelIsGodClassWMC.setBounds(121, 249, 86, 13);
+				contentPaneEditar.add(labelIsGodClassWMC);
 
-				JComboBox<comparator> comboBox_2_2 = new JComboBox<comparator>();
-				comboBox_2_2.setModel(new DefaultComboBoxModel<>(comparator.values()));
-				comboBox_2_2.setToolTipText("");
-				comboBox_2_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_2_2.setBounds(257, 241, 82, 21);
-				contentPane1.add(comboBox_2_2);
+				JComboBox<comparator> comboBoxIsGodClassWMC = new JComboBox<comparator>();
+				comboBoxIsGodClassWMC.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBoxIsGodClassWMC.setToolTipText("");
+				comboBoxIsGodClassWMC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBoxIsGodClassWMC.setBounds(257, 241, 82, 21);
+				contentPaneEditar.add(comboBoxIsGodClassWMC);
 
-				textField_3 = new JTextField();
-				textField_3.setText("Threshold");
-				textField_3.addMouseListener(new MouseAdapter() {
+				textFieldIsGodClassWMC = new JTextField();
+				textFieldIsGodClassWMC.setText("Threshold");
+				textFieldIsGodClassWMC.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						textField_3.setText("");
+						textFieldIsGodClassWMC.setText("");
 					}
 				});
-				textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				textField_3.setColumns(10);
-				textField_3.setBounds(349, 239, 70, 19);
-				contentPane1.add(textField_3);
+				textFieldIsGodClassWMC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textFieldIsGodClassWMC.setColumns(10);
+				textFieldIsGodClassWMC.setBounds(349, 239, 70, 19);
+				contentPaneEditar.add(textFieldIsGodClassWMC);
 
-				JComboBox<comparator> comboBox_2_3 = new JComboBox<comparator>();
-				comboBox_2_3.setModel(new DefaultComboBoxModel<>(comparator.values()));
-				comboBox_2_3.setToolTipText("");
-				comboBox_2_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				comboBox_2_3.setBounds(257, 183, 82, 21);
-				contentPane1.add(comboBox_2_3);
+				JComboBox<comparator> comboBoxIsGodClassNOM = new JComboBox<comparator>();
+				comboBoxIsGodClassNOM.setModel(new DefaultComboBoxModel<>(comparator.values()));
+				comboBoxIsGodClassNOM.setToolTipText("");
+				comboBoxIsGodClassNOM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				comboBoxIsGodClassNOM.setBounds(257, 183, 82, 21);
+				contentPaneEditar.add(comboBoxIsGodClassNOM);
 
-				textField_4 = new JTextField();
-				textField_4.setText("Threshold");
-				textField_4.addMouseListener(new MouseAdapter() {
+				textFieldIsGodClassNOM = new JTextField();
+				textFieldIsGodClassNOM.setText("Threshold");
+				textFieldIsGodClassNOM.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						textField_4.setText("");
+						textFieldIsGodClassNOM.setText("");
 					}
 				});
-				textField_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				textField_4.setColumns(10);
-				textField_4.setBounds(349, 181, 70, 19);
-				contentPane1.add(textField_4);
+				textFieldIsGodClassNOM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textFieldIsGodClassNOM.setColumns(10);
+				textFieldIsGodClassNOM.setBounds(349, 181, 70, 19);
+				contentPaneEditar.add(textFieldIsGodClassNOM);
 
-				textField_5 = new JTextField();
-				textField_5.setText("Threshold");
-				textField_5.addMouseListener(new MouseAdapter() {
+				textFieldIsLongMethodLOC = new JTextField();
+				textFieldIsLongMethodLOC.setText("Threshold");
+				textFieldIsLongMethodLOC.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						textField_5.setText("");
+						textFieldIsLongMethodLOC.setText("");
 					}
 				});
-				textField_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				textField_5.setColumns(10);
-				textField_5.setBounds(349, 10, 70, 19);
-				contentPane1.add(textField_5);
+				textFieldIsLongMethodLOC.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				textFieldIsLongMethodLOC.setColumns(10);
+				textFieldIsLongMethodLOC.setBounds(349, 10, 70, 19);
+				contentPaneEditar.add(textFieldIsLongMethodLOC);
 
-				JLabel lblCyclo = new JLabel("Cyclo");
-				lblCyclo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				lblCyclo.setBounds(121, 67, 86, 13);
-				contentPane1.add(lblCyclo);
+				JLabel labelIsLongMethodCyclo = new JLabel("Cyclo");
+				labelIsLongMethodCyclo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				labelIsLongMethodCyclo.setBounds(121, 67, 86, 13);
+				contentPaneEditar.add(labelIsLongMethodCyclo);
 
-				JButton btnNewButton = new JButton("Aplicar");
-				btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				btnNewButton.setBounds(334, 292, 85, 21);
-				contentPane1.add(btnNewButton);
-				btnNewButton.addActionListener(new ActionListener() {
+				JButton botaoAplicar = new JButton("Aplicar");
+				botaoAplicar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				botaoAplicar.setBounds(334, 292, 85, 21);
+				contentPaneEditar.add(botaoAplicar);
+				botaoAplicar.addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -431,11 +427,11 @@ public class GUI extends JFrame {
 						contentPaneaplicar.setBorder(new EmptyBorder(5, 5, 5, 5));
 						contentPaneaplicar.setLayout(null);
 
-						JButton btnNewButton = new JButton("Guardar");
-						btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						btnNewButton.setBounds(269, 92, 107, 21);
-						contentPaneaplicar.add(btnNewButton);
-						btnNewButton.addActionListener(new ActionListener() {
+						JButton butaoAplicarGuardar = new JButton("Guardar");
+						butaoAplicarGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						butaoAplicarGuardar.setBounds(269, 92, 107, 21);
+						contentPaneaplicar.add(butaoAplicarGuardar);
+						butaoAplicarGuardar.addActionListener(new ActionListener() {
 
 							@Override
 							public void actionPerformed(ActionEvent e) {
@@ -450,8 +446,8 @@ public class GUI extends JFrame {
 							}
 						});
 
-						JButton btnNewButton_1 = new JButton("Pasta");
-						btnNewButton_1.addActionListener(new ActionListener() {
+						JButton botaoAplicarPasta = new JButton("Pasta");
+						botaoAplicarPasta.addActionListener(new ActionListener() {
 
 							@Override
 							public void actionPerformed(ActionEvent e) {
@@ -465,9 +461,9 @@ public class GUI extends JFrame {
 								}
 							}
 						});
-						btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						btnNewButton_1.setBounds(269, 30, 107, 21);
-						contentPaneaplicar.add(btnNewButton_1);
+						botaoAplicarPasta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						botaoAplicarPasta.setBounds(269, 30, 107, 21);
+						contentPaneaplicar.add(botaoAplicarPasta);
 
 						txtSelecioneAPasta = new JTextField("Selecione a pasta onde quer guardar a regra");
 						txtSelecioneAPasta.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -489,8 +485,8 @@ public class GUI extends JFrame {
 							}
 						});
 
-						JButton btnNewButton_3 = new JButton("Continuar sem guardar");
-						btnNewButton_3.addActionListener(new ActionListener() {
+						JButton botaoAplicarSemGuardar = new JButton("Continuar sem guardar");
+						botaoAplicarSemGuardar.addActionListener(new ActionListener() {
 
 							@Override
 							public void actionPerformed(ActionEvent e) {
@@ -498,28 +494,28 @@ public class GUI extends JFrame {
 								editar.dispose();
 							}
 						});
-						btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-						btnNewButton_3.setBounds(10, 94, 200, 21);
-						contentPaneaplicar.add(btnNewButton_3);
+						botaoAplicarSemGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+						botaoAplicarSemGuardar.setBounds(10, 94, 200, 21);
+						contentPaneaplicar.add(botaoAplicarSemGuardar);
 
 						frameaplicar.setContentPane(contentPaneaplicar);
 						frameaplicar.setVisible(true);
 
-						if (chckbxNewCheckBox.isSelected()) {
-							if (textField_5.getText().matches("[0-9]+")) {
-								limits.add(Integer.parseInt(textField_5.getText()));
+						if (checkboxIsLongMethod.isSelected()) {
+							if (textFieldIsLongMethodLOC.getText().matches("[0-9]+")) {
+								limits.add(Integer.parseInt(textFieldIsLongMethodLOC.getText()));
 								metricNames.add("LOC_method");
 							}
-							if (textField_1.getText().matches("[0-9]+")) {
-								limits.add(Integer.parseInt(textField_1.getText()));
+							if (textFieldIsLongMethodCyclo.getText().matches("[0-9]+")) {
+								limits.add(Integer.parseInt(textFieldIsLongMethodCyclo.getText()));
 								metricNames.add("CYCLO_method");
 							}
-							if (!comboBox.getSelectedItem().equals(comparator.Select))
-								comparators.add((comparator) comboBox.getSelectedItem());
-							if (!comboBox_3.getSelectedItem().equals(comparator.Select))
-								comparators.add((comparator) comboBox_3.getSelectedItem());
-							if (!comboBox_1.getSelectedItem().equals(operator.Select))
-								operators.add((operator) comboBox_1.getSelectedItem());
+							if (!comboBoxIsLongMethodLOC.getSelectedItem().equals(comparator.Select))
+								comparators.add((comparator) comboBoxIsLongMethodLOC.getSelectedItem());
+							if (!comboBoxIsLongMethodCYCLO.getSelectedItem().equals(comparator.Select))
+								comparators.add((comparator) comboBoxIsLongMethodCYCLO.getSelectedItem());
+							if (!comboBoxIsLongMethodANDOR.getSelectedItem().equals(operator.Select))
+								operators.add((operator) comboBoxIsLongMethodANDOR.getSelectedItem());
 
 							try {
 								rules.add(new Rule(txtSelecioneONome.getText(), 1, metricNames, comparators, limits,
@@ -529,29 +525,29 @@ public class GUI extends JFrame {
 							}
 							tipoComparacao = 3;
 						}
-						if (chckbxGodClass.isSelected()) {
-							if (textField.getText().matches("[0-9]+")) {
-								limits1.add(Integer.parseInt(textField.getText()));
+						if (checkboxIsGodClass.isSelected()) {
+							if (textFieldIsGodClassLOC.getText().matches("[0-9]+")) {
+								limits1.add(Integer.parseInt(textFieldIsGodClassLOC.getText()));
 								metricNames1.add("LOC_class");
 							}
-							if (textField_4.getText().matches("[0-9]+")) {
-								limits1.add(Integer.parseInt(textField_4.getText()));
+							if (textFieldIsGodClassNOM.getText().matches("[0-9]+")) {
+								limits1.add(Integer.parseInt(textFieldIsGodClassNOM.getText()));
 								metricNames1.add("NOM_class");
 							}
-							if (textField_3.getText().matches("[0-9]+")) {
-								limits1.add(Integer.parseInt(textField_3.getText()));
+							if (textFieldIsGodClassWMC.getText().matches("[0-9]+")) {
+								limits1.add(Integer.parseInt(textFieldIsGodClassWMC.getText()));
 								metricNames1.add("WMC_class");
 							}
-							if (!comboBox_2.getSelectedItem().equals(comparator.Select))
-								comparators1.add((comparator) comboBox_2.getSelectedItem());
-							if (!comboBox_2_3.getSelectedItem().equals(comparator.Select))
-								comparators1.add((comparator) comboBox_2_3.getSelectedItem());
-							if (!comboBox_2_2.getSelectedItem().equals(comparator.Select))
-								comparators1.add((comparator) comboBox_2_2.getSelectedItem());
-							if (!comboBox_1_1.getSelectedItem().equals(operator.Select))
-								operators1.add((operator) comboBox_1_1.getSelectedItem());
-							if (!comboBox_1_1_1.getSelectedItem().equals(operator.Select))
-								operators1.add((operator) comboBox_1_1_1.getSelectedItem());
+							if (!comboBoxIsGodClassLOC.getSelectedItem().equals(comparator.Select))
+								comparators1.add((comparator) comboBoxIsGodClassLOC.getSelectedItem());
+							if (!comboBoxIsGodClassNOM.getSelectedItem().equals(comparator.Select))
+								comparators1.add((comparator) comboBoxIsGodClassNOM.getSelectedItem());
+							if (!comboBoxIsGodClassWMC.getSelectedItem().equals(comparator.Select))
+								comparators1.add((comparator) comboBoxIsGodClassWMC.getSelectedItem());
+							if (!comboBoxIsGodClassLOCNOM.getSelectedItem().equals(operator.Select))
+								operators1.add((operator) comboBoxIsGodClassLOCNOM.getSelectedItem());
+							if (!comboBoxIsGodClassNOMWMC.getSelectedItem().equals(operator.Select))
+								operators1.add((operator) comboBoxIsGodClassNOMWMC.getSelectedItem());
 
 							try {
 
@@ -563,7 +559,7 @@ public class GUI extends JFrame {
 							}
 							tipoComparacao = 2;
 						}
-						if (chckbxNewCheckBox.isSelected() && chckbxGodClass.isSelected())
+						if (checkboxIsLongMethod.isSelected() && checkboxIsGodClass.isSelected())
 							tipoComparacao = 1;
 
 					}
@@ -572,17 +568,17 @@ public class GUI extends JFrame {
 				editar.setVisible(true);
 			}
 		});
-		panel.add(btnNewButton_1);
+		panel.add(botoaEditar);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(943, 10, 242, 210);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		JButton btnNewButton_2 = new JButton("Importar Regras");
-		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_2.setBounds(10, 364, 186, 21);
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton botaoImportarRegras = new JButton("Importar Regras");
+		botaoImportarRegras.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		botaoImportarRegras.setBounds(10, 364, 186, 21);
+		botaoImportarRegras.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -623,39 +619,39 @@ public class GUI extends JFrame {
 			}
 		});
 		panel.add(list);
-		panel.add(btnNewButton_2);
+		panel.add(botaoImportarRegras);
 
-		JLabel lblNewLabel = new JLabel("Lista de Regras importadas");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(10, 10, 186, 31);
-		panel.add(lblNewLabel);
+		JLabel labelRegrasImportadas = new JLabel("Lista de Regras importadas");
+		labelRegrasImportadas.setHorizontalAlignment(SwingConstants.CENTER);
+		labelRegrasImportadas.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelRegrasImportadas.setBounds(10, 10, 186, 31);
+		panel.add(labelRegrasImportadas);
 
-		JLabel lblNewLabel_1 = new JLabel("Resumo visualiza\u00E7\u00E3o das m\u00E9tricas:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(10, 10, 222, 13);
-		panel_1.add(lblNewLabel_1);
+		JLabel labelResumoRegras = new JLabel("Resumo visualiza\u00E7\u00E3o das m\u00E9tricas:");
+		labelResumoRegras.setHorizontalAlignment(SwingConstants.CENTER);
+		labelResumoRegras.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		labelResumoRegras.setBounds(10, 10, 222, 13);
+		panel_1.add(labelResumoRegras);
 
-		JLabel lblNewLabel_2 = new JLabel("N\u00BA packages:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(10, 33, 98, 13);
-		panel_1.add(lblNewLabel_2);
+		JLabel labelNPacotes = new JLabel("N\u00BA packages:");
+		labelNPacotes.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelNPacotes.setBounds(10, 33, 98, 13);
+		panel_1.add(labelNPacotes);
 
-		JLabel lblNewLabel_3 = new JLabel("N\u00BA classes:");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_3.setBounds(10, 56, 98, 13);
-		panel_1.add(lblNewLabel_3);
+		JLabel labelNClasses = new JLabel("N\u00BA classes:");
+		labelNClasses.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelNClasses.setBounds(10, 56, 98, 13);
+		panel_1.add(labelNClasses);
 
-		JLabel lblNewLabel_4 = new JLabel("N\u00BA m\u00E9todos:");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_4.setBounds(10, 79, 98, 13);
-		panel_1.add(lblNewLabel_4);
+		JLabel labelNMethods = new JLabel("N\u00BA m\u00E9todos:");
+		labelNMethods.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelNMethods.setBounds(10, 79, 98, 13);
+		panel_1.add(labelNMethods);
 
-		JLabel lblNewLabel_5 = new JLabel("N\u00BA linhas:");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_5.setBounds(10, 102, 98, 13);
-		panel_1.add(lblNewLabel_5);
+		JLabel labelNLinhas = new JLabel("N\u00BA linhas:");
+		labelNLinhas.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelNLinhas.setBounds(10, 102, 98, 13);
+		panel_1.add(labelNLinhas);
 
 		nPackagesLabel = new JLabel("n");
 		nPackagesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -690,7 +686,8 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (excelFile == null)
-						JOptionPane.showMessageDialog(null,	"Impossível abrir o ficheiro Excel!\nPor favor faça 'Run', para que o mesmo seja criado.");
+						JOptionPane.showMessageDialog(null,
+								"Impossível abrir o ficheiro Excel!\nPor favor faça 'Run', para que o mesmo seja criado.");
 					Desktop d = Desktop.getDesktop();
 					d.open(excelFile);
 				} catch (IOException e1) {
@@ -700,54 +697,54 @@ public class GUI extends JFrame {
 		});
 		panel_1.add(btnAbrirExcel);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(943, 263, 242, 191);
-		contentPane.add(panel_2);
-		panel_2.setLayout(null);
+		JPanel panelComparacaoMetricas = new JPanel();
+		panelComparacaoMetricas.setBounds(943, 263, 242, 191);
+		contentPane.add(panelComparacaoMetricas);
+		panelComparacaoMetricas.setLayout(null);
 
-		JLabel lblNewLabel_2_1 = new JLabel("Verdadeiros Positivos:");
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2_1.setBounds(10, 10, 121, 13);
-		panel_2.add(lblNewLabel_2_1);
+		JLabel labelVP = new JLabel("Verdadeiros Positivos:");
+		labelVP.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelVP.setBounds(10, 10, 121, 13);
+		panelComparacaoMetricas.add(labelVP);
 
-		JLabel lblNewLabel_2_2 = new JLabel("Verdadeiros Negativos:");
-		lblNewLabel_2_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2_2.setBounds(10, 33, 133, 13);
-		panel_2.add(lblNewLabel_2_2);
+		JLabel labelVN = new JLabel("Verdadeiros Negativos:");
+		labelVN.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelVN.setBounds(10, 33, 133, 13);
+		panelComparacaoMetricas.add(labelVN);
 
-		JLabel lblNewLabel_2_3 = new JLabel("Falsos Positvos:");
-		lblNewLabel_2_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2_3.setBounds(10, 56, 98, 13);
-		panel_2.add(lblNewLabel_2_3);
+		JLabel labelFP = new JLabel("Falsos Positvos:");
+		labelFP.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelFP.setBounds(10, 56, 98, 13);
+		panelComparacaoMetricas.add(labelFP);
 
-		JLabel lblNewLabel_2_4 = new JLabel("Falsos Negativos:");
-		lblNewLabel_2_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2_4.setBounds(10, 79, 98, 13);
-		panel_2.add(lblNewLabel_2_4);
+		JLabel labelFN = new JLabel("Falsos Negativos:");
+		labelFN.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelFN.setBounds(10, 79, 98, 13);
+		panelComparacaoMetricas.add(labelFN);
 
 		verdPositLabel = new JLabel("n");
 		verdPositLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		verdPositLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		verdPositLabel.setBounds(187, 11, 45, 13);
-		panel_2.add(verdPositLabel);
+		panelComparacaoMetricas.add(verdPositLabel);
 
 		verdNegatLabel = new JLabel("n");
 		verdNegatLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		verdNegatLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		verdNegatLabel.setBounds(187, 34, 45, 13);
-		panel_2.add(verdNegatLabel);
+		panelComparacaoMetricas.add(verdNegatLabel);
 
 		falsePositLabel = new JLabel("n");
 		falsePositLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		falsePositLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		falsePositLabel.setBounds(187, 57, 45, 13);
-		panel_2.add(falsePositLabel);
+		panelComparacaoMetricas.add(falsePositLabel);
 
 		falseNegatLabel = new JLabel("n");
 		falseNegatLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		falseNegatLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		falseNegatLabel.setBounds(187, 80, 45, 13);
-		panel_2.add(falseNegatLabel);
+		panelComparacaoMetricas.add(falseNegatLabel);
 
 		JButton btnGrfico = new JButton("Gr\u00E1fico");
 		btnGrfico.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -758,7 +755,8 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (central == null)
-					JOptionPane.showMessageDialog(null,	"Impossível vizualizar o gráfico!\nPor favor faça 'Run', para que o mesmo seja criado.");
+					JOptionPane.showMessageDialog(null,
+							"Impossível vizualizar o gráfico!\nPor favor faça 'Run', para que o mesmo seja criado.");
 				DefaultPieDataset dataset = new DefaultPieDataset();
 				dataset.setValue("VP", 21);
 				dataset.setValue("VN", 10);
@@ -783,7 +781,7 @@ public class GUI extends JFrame {
 				frame1.setVisible(true);
 			}
 		});
-		panel_2.add(btnGrfico);
+		panelComparacaoMetricas.add(btnGrfico);
 
 		JTable table = new JTable(30, 10);
 		table.setToolTipText("");
