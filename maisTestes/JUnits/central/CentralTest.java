@@ -183,7 +183,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testFuelAllandBoolResults() {
-		fail("Not yet implemented"); // TODO
+		c.fuelAllandBoolResults();
+		Assertions.assertNotNull(boolClass);
 	}
 
 	/**
