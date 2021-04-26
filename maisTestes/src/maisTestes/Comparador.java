@@ -77,7 +77,7 @@ public class Comparador {
 
 				}
 			}if(p==0)
-				methodCheck.add("errO");
+				methodCheck.add("erro");
 			}
 	}
 
