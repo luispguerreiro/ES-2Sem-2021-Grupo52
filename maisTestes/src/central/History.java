@@ -6,26 +6,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import rules.Rule;
 
+/**
+ * @author Nazif Sidique & Henrique Marques
+ *
+ */
 public class History {
-//	private final String folderPath = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\ES_Rules_History\\";
 	private String folderPathToSave;
 	private String folderPathToRead;
 	private String ruleName;
-	private String string_date = "01/04/2021 13:00:00";
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 	public History() {
-//		this.ruleName= ruleName;
-//		this.folderPathToRead = folderPathToRead;
-//		this.folderPathToSave = folderPathToSave;
-		
 	}
 
 	public void setFolderPathToSave(String folderPath) {
@@ -96,60 +90,5 @@ public class History {
 		return rules;
 	}
 
-	public void deleteOlderFiles(String path, String date) {
-		File folder = new File(path);
-		File[] folderFiles = folder.listFiles();
-		boolean a = false;
-		Date d;
-		try {
-			d = dateFormat.parse(date);
-
-			for (int i = 0; i < folderFiles.length; i++) {
-				if (folderFiles[i].isFile()) {
-					File file = folderFiles[i];
-					long diff = file.lastModified();
-
-					if (diff < d.getTime()) {
-						file.delete();
-						a = true;
-						System.out.println("Ficheiro " + file.getName() + " apagado!\n");
-					}
-				}
-			}
-			if (a == false)
-				System.out.println("Não foi encontrado nenhum ficheiro antes de " + d + " para ser apagado!\n");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void getRecentFiles(String path, String date) {
-		File folder = new File(path);
-		File[] folderFiles = folder.listFiles();
-		boolean a = false;
-		Date d;
-		try {
-			System.out.println("---HISTÓRICO DE REGRAS---");
-			d = dateFormat.parse(date);
-
-			for (int i = 0; i < folderFiles.length; i++) {
-				if (folderFiles[i].isFile()) {
-					File file = folderFiles[i];
-					long diff = file.lastModified();
-
-					if (diff > d.getTime()) {
-						a = true;
-						System.out.println("	Ficheiro existente no histórico: " + file.getName());
-					}
-				}
-			}
-			if (a == false)
-				System.out.println("Não foi encontrado nenhum ficheiro mais recente do que " + d + "\n");
-			System.out.println("---FIM DO HISTÓRICO---\n");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}	
+	
 }

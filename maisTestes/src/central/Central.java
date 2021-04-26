@@ -67,6 +67,11 @@ public class Central {
 	private Metrics metric;
 
 	private Comparador comparador;
+	
+	/*
+	 * 
+	 * @throws IOException
+	 */
 
 	public Central(ArrayList<Rule> rules, File srcPath, int tipoComparacao, ArrayList<File> files) throws IOException {
 		this.rules = rules;
@@ -78,6 +83,8 @@ public class Central {
 
 	/*
 	 * initiates the main Central flow call all methods
+	 * 
+	 * @throws IOException
 	 */
 	public void ini() throws IOException {
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
@@ -121,13 +128,12 @@ public class Central {
 
 	}
 
-
-
 	/*
 	 * Invoke calculateThresholds(ArrayList<Resultado> result,
 	 * ArrayList<BoolResultado> boolresult) for each position of ArrayList<Rule> and
 	 * considering the ruleType (0=godClass and 1=LongMethod)
 	 * 
+	 * @throws FileNotFoundException
 	 * @param rules zero, one or two rules given by the user and created in class
 	 * GUI
 	 */
@@ -182,13 +188,14 @@ public class Central {
 	}
 
 	/*
-	 * enumerates all array with a MethodID
+	 * enumerates all array with a MethodID 
+	 * enumerates the BoolResultado arrays with MethodID to appear in the GUI
 	 */
 	public void putMethodID() {
 		for (int i = 0; i < all.size(); i++) {
 			all.get(i).setMethodID(i + 1);
-			boolResultClass.get(i).setId(i+1);
-			boolResultMethod.get(i).setId(i+1);
+			boolResultClass.get(i).setId(i + 1);
+			boolResultMethod.get(i).setId(i + 1);
 		}
 	}
 
@@ -196,8 +203,8 @@ public class Central {
 	 * write to excel all the necessary information call cabecalho (Sheet sheet,
 	 * XSSFWorkbook workBook) to fill the excel header
 	 * 
+	 * @throws IOException
 	 * @param sheet Excel sheet created when excel opens
-	 * 
 	 * @param workBook Excel book
 	 */
 	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
@@ -342,8 +349,8 @@ public class Central {
 	}
 
 	public void setAll(ArrayList<Resultado> all) {
-		this.all= all;
-		
+		this.all = all;
+
 	}
 
 	public ArrayList<Resultado> getAll() {
@@ -351,17 +358,39 @@ public class Central {
 	}
 
 	public void setBoolMethod(ArrayList<BoolResultado> boolMethod) {
-		this.boolResultMethod=  boolMethod;
-		
+		this.boolResultMethod = boolMethod;
+
 	}
 
 	public void setComparador(Comparador d) {
-		this.comparador= d;
-		
+		this.comparador = d;
+
 	}
 
+	public void setBoolClass(ArrayList<BoolResultado> boolClass) {
+		this.boolResultClass = boolClass;
 
-	
+	}
 
+	/*
+	 * @param cyclo CYCLO_method
+	 * @param loc LOC_method
+	 * @param locc LOC_Class
+	 * @param nom NOM_Class
+	 * @param wmc WMC_Class
+	 */
+	public void setMetric(CYCLO_method cyclo, Loc_Method loc, Loc_Class locC, NOM_Class nom, WMC_Class wmc) {
+		this.cycloMethod = cyclo;
+		this.locMethod = loc;
+		this.locClass = locC;
+		this.nomClass = nom;
+		this.wmcClass = wmc;
+
+	}
+
+	public void setExcelFile(File file) {
+		this.excelFile = file;
+
+	}
 
 }

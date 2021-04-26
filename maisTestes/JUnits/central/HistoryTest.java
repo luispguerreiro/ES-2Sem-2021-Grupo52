@@ -3,14 +3,7 @@
  */
 package central;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterAll;
@@ -20,20 +13,32 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Metrics.Resultado;
 import rules.Rule;
+import rules.Rule.comparator;
+import rules.Rule.operator;
+import rules.Threshold;
 
 /**
- * @author nmsid
+ * @author Nazif Sidique & Henrique Marques
  *
  */
 class HistoryTest {
 	static ArrayList<Rule> rules= new ArrayList<>();
-
+	static ArrayList<Threshold> thresholds;
+	static ArrayList<String> metricName;
+	static ArrayList<comparator> comp;
+	static ArrayList<Integer> limits;
+	static ArrayList<operator> oper;
+	static ArrayList<operator> oper2;
+	static ArrayList<Resultado> result; 
+	static ArrayList<BoolResultado> boolresult;
+	
+	static int ruleType;
+	static Rule r;
 	static String folderPathToSave= "save";
 	static String folderPathToRead = "read";
 	static String ruleName= "name";
-	static String string_date = "01/04/2021 13:00:00";
-	static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	static History h;
 
 	/**
@@ -41,7 +46,31 @@ class HistoryTest {
 	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-
+		thresholds = new ArrayList<>();
+		metricName = new ArrayList<>();
+		comp = new ArrayList<>();
+		limits = new ArrayList<>();
+		oper = new ArrayList<>();
+		oper2 = new ArrayList<>();
+		result = new ArrayList<>();
+		boolresult = new ArrayList<>();
+		ruleName = "Teste";
+		ruleType = 1;
+		metricName.add("NOM_class");
+		metricName.add("LOC_class");
+		metricName.add("WMC_class");
+		comp.add(comparator.BIGGER);
+		comp.add(comparator.SMALLER);
+		comp.add(comparator.BIGGER);
+		oper.add(operator.AND);
+		oper.add(operator.AND);
+		oper2.add(operator.OR);
+		oper2.add(operator.OR);
+		limits.add(20);
+		limits.add(10);
+		limits.add(30);
+		r = new Rule(ruleName, ruleType, metricName, comp, limits, oper);
+		rules.add(r);
 	}
 
 	/**
@@ -70,13 +99,7 @@ class HistoryTest {
 	 */
 	@Test
 	final void testHistory() {
-//		h.setRuleName(ruleName);
-//		h.setFolderPathToRead(folderPathToRead);
-//		h.setFolderPathToSave(folderPathToSave);
 		h = new History();
-	
-		
-		
 	}
 
 	/**
@@ -89,8 +112,7 @@ class HistoryTest {
 		h.setFolderPathToSave(folder);
 		Assertions.assertEquals(h.getFolderPathToSave(), folder);
 	}
-
-
+	
 	/**
 	 * Test method for
 	 * {@link central.History#setFolderPathToRead(java.lang.String)}.
@@ -120,10 +142,11 @@ class HistoryTest {
 	 */
 	@Test
 	final void testWriteFile() throws IOException {
-		FileOutputStream f = new FileOutputStream(new File(folderPathToSave + "\\" + ruleName));
-
-		ObjectOutputStream o = new ObjectOutputStream(f);
-		h.writeFile(rules);
+		History h1= new History();
+		h1.setFolderPathToSave("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\");
+		h1.setRuleName("regra");
+		h1.writeFile(rules);
+		Assertions.assertNotNull(rules);
 	}
 
 	/**
@@ -131,24 +154,13 @@ class HistoryTest {
 	 */
 	@Test
 	final void testReadFile() {
-		fail("Not yet implemented"); // TODO
+		
+		History h1= new History();
+		h1.setFolderPathToSave("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\");
+		h1.setRuleName("regra");
+		h1.writeFile(rules);
+		ArrayList<Rule> rules1= h1.readFile("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\regra");
+		Assertions.assertFalse(rules1.isEmpty());
 	}
 
-	/**
-	 * Test method for
-	 * {@link central.History#deleteOlderFiles(java.lang.String, java.lang.String)}.
-	 */
-	@Test
-	final void testDeleteOlderFiles() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for
-	 * {@link central.History#getRecentFiles(java.lang.String, java.lang.String)}.
-	 */
-	@Test
-	final void testGetRecentFiles() {
-		fail("Not yet implemented"); // TODO
-	}
 }
