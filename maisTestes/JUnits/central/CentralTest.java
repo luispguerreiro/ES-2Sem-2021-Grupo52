@@ -22,8 +22,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Metrics.CYCLO_method;
+import Metrics.Loc_Class;
+import Metrics.Loc_Method;
 import Metrics.Metrics;
+import Metrics.NOM_Class;
 import Metrics.Resultado;
+import Metrics.WMC_Class;
 import maisTestes.Comparador;
 import maisTestes.Excel;
 //import rules.GuiOutput.comparators;
@@ -57,6 +61,10 @@ class CentralTest {
 	static int separador;
 	static Metrics metric;
 	static CYCLO_method cyclo;
+	static Loc_Method locMethod;
+	static Loc_Class locClass;
+	static NOM_Class nomClass;
+	static WMC_Class wmcClass;
 	static int numberOfPackages = 0;
 	static int numberOfClasses = 0;
 	static int numberOfMethods = 0;
@@ -125,16 +133,14 @@ class CentralTest {
 	 */
 	@Test
 	final void testIni() throws IOException {
-		File excelFile = new File(excelFileDir.concat("\\".concat(SRC_path.getName().concat("_metrics.xlsx"))));
+		locMethod = new Loc_Method(metric);
+		locClass = new Loc_Class(metric);
+		nomClass = new NOM_Class(metric);
+		wmcClass = new WMC_Class(metric);
+		cyclo= new CYCLO_method(metric);
+		c.setMetric(cyclo, locMethod, locClass, nomClass, wmcClass);
+		File excelFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml");
 		c.setSRC_PATH(excelFile);
-//		File excelFile = new File(excelFileDir.concat("\\".concat(SRC_path.getName().concat("_metrics.xlsx"))));
-//		Sheet sheet = workBook.createSheet(excelFile.getName().replaceFirst("[.][^.]+$", ""));
-//
-//		Loc_Method locMethod = new Loc_Method(metric);
-//		CYCLO_method cycloMethod = new CYCLO_method(metric);
-//		Loc_Class locClass = new Loc_Class(metric);
-//		NOM_Class nomClass = new NOM_Class(metric);
-//		WMC_Class wmcClass = new WMC_Class(metric);
 		c.ini();
 		Assertions.assertEquals(numberOfMethods, boolMethod.size());
 
@@ -171,6 +177,12 @@ class CentralTest {
 	 */
 	@Test
 	final void testFuelAllandBoolResults() {
+		locMethod = new Loc_Method(metric);
+		locClass = new Loc_Class(metric);
+		nomClass = new NOM_Class(metric);
+		wmcClass = new WMC_Class(metric);
+		cyclo= new CYCLO_method(metric);
+		c.setMetric(cyclo, locMethod, locClass, nomClass, wmcClass);
 		c.fuelAllandBoolResults();
 		Assertions.assertNotNull(boolClass);
 	}
@@ -235,11 +247,6 @@ class CentralTest {
 		Assertions.assertNotNull(cell);
 		Assertions.assertEquals(9, string.length);
 	}
-
-	
-
-
-
 
 
 	/**
@@ -308,6 +315,7 @@ class CentralTest {
 	@Test
 	final void testGetExcelFile() {
 		File file3 = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		c.setExcelFile(file3);
 		assertEquals(file3, c.getExcelFile());
 	}
 
@@ -317,6 +325,7 @@ class CentralTest {
 	@Test
 	final void testGetExcelFileDir() {
 		String excelDir = "C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho";
+		c.setExcelFileDir(excelDir);
 		assertEquals(excelDir, c.getExcelFileDir());
 	}
 
@@ -334,7 +343,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfLines() {
-		int numberOfLines = 0;
+		int numberOfLines = 4;
 		assertEquals(numberOfLines, c.getNumberOfLines());
 	}
 
