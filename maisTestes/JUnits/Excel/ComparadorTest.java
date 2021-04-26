@@ -33,7 +33,7 @@ class ComparadorTest {
 		boolClass = new ArrayList<>();
 		linhas = new ArrayList<Linha>(excel.getList());
 		c = new Comparador(boolMethod, boolClass, 1);
-
+		
 	}
 
 	@AfterAll

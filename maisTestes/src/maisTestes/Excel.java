@@ -67,10 +67,4 @@ public class Excel {
 	public ArrayList<Linha> getList() {
 		return list;
 	}
-
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		Excel excel = new Excel();
-		excel.lerExcel(new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx"));
-	}
-
 }
