@@ -360,6 +360,11 @@ public class Central {
 		
 	}
 
+	public void setBoolClass(ArrayList<BoolResultado> boolClass) {
+		this.boolResultClass= boolClass;
+		
+	}
+
 
 	
 
