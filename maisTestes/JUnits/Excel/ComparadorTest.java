@@ -39,7 +39,6 @@ class ComparadorTest {
 		c = new Comparador(boolMethod, boolClass, 1);
 		c.methodComp(boolMethod, linhas);
 		c.classComp(boolClass, linhas);
-		
 	}
 
 	@AfterAll
@@ -72,7 +71,7 @@ class ComparadorTest {
 		ArrayList<BoolResultado> boolClass2 = new ArrayList<>();
 		boolMethod2.add(new BoolResultado(1, "testpackage", "SimpleClass", "SimpleClass()", true));
 		boolMethod2.add(new BoolResultado(4, "com.jasml.classes", "Attribute", "Attribute(byte,int)", true));
-		Comparador c2 = new Comparador(boolMethod2, boolClass2,3);
+		Comparador c2 = new Comparador(boolMethod2, boolClass2, 3);
 		c2.methodComp(boolMethod2, linhas);
 
 		assertNotNull(c2.getMethodCheck());
@@ -88,7 +87,7 @@ class ComparadorTest {
 		boolClass2.add(new BoolResultado(4, "com.jasml.classes", "Attribute", "Attribute(byte,int)", true));
 		Comparador c3 = new Comparador(boolMethod2, boolClass2, 2);
 		c3.classComp(boolClass2, linhas);
-		
+
 		assertNotNull(c3);
 		assertEquals(c.getClassCheck(), c3.getClassCheck());
 		assertFalse(linhas.isEmpty());
@@ -122,10 +121,11 @@ class ComparadorTest {
 	void testGetClassCheck() {
 		ArrayList<String> nome = new ArrayList<>();
 		nome.add("erro");
+		nome.add("Falso Positivo");
 		c.classComp(boolClass, linhas);
 
 		assertNotNull(c.getClassCheck());
-//		assertEquals(nome, c.getClassCheck());
+		assertEquals(nome, c.getClassCheck());
 	}
 
 	@Test
@@ -138,5 +138,4 @@ class ComparadorTest {
 		assertNotNull(c.getMethodCheck());
 		assertEquals(nome1, c.getMethodCheck());
 	}
-
 }

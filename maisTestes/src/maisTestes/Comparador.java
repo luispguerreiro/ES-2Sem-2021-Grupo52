@@ -53,7 +53,7 @@ public class Comparador {
 				if (linhas.get(i).getPacote().equals(boolMethod.get(j).getPackage())
 						&& linhas.get(i).getClasse().equals(boolMethod.get(j).getClasses())
 						&& linhas.get(i).getMetodo().equals(boolMethod.get(j).getMetodo())) {
-					p=1;
+					p = 1;
 					if (linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Verdadeiro Positivo");
 //						System.out.println("Verdadeiro Positivo");
@@ -74,11 +74,11 @@ public class Comparador {
 //						System.out.println("Falso Negativo");
 						countFN++;
 					}
-
 				}
-			}if(p==0)
-				methodCheck.add("erro");
 			}
+			if (p == 0)
+				methodCheck.add("erro");
+		}
 	}
 
 	public void classComp(ArrayList<BoolResultado> boolClass, ArrayList<Linha> linhas) {
@@ -89,7 +89,7 @@ public class Comparador {
 				if (linhas.get(i).getPacote().equals(boolClass.get(j).getPackage())
 						&& linhas.get(i).getClasse().equals(boolClass.get(j).getClasses())
 						&& linhas.get(i).getMetodo().equals(boolClass.get(j).getMetodo())) {
-					p=1;
+					p = 1;
 					if (linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()) {
 						classCheck.add("Verdadeiro Positivo");
 //						System.out.println("Verdadeiro Positivo");
@@ -113,7 +113,7 @@ public class Comparador {
 
 				}
 			}
-			if(p==0)
+			if (p == 0)
 				classCheck.add("erro");
 		}
 	}
