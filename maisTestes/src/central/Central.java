@@ -68,7 +68,7 @@ public class Central {
 	private Metrics metric;
 
 	private Comparador comparador;
-	
+
 	/**
 	 * 
 	 * @throws IOException
@@ -135,7 +135,7 @@ public class Central {
 	 * 
 	 * @throws FileNotFoundException
 	 * @param rules zero, one or two rules given by the user and created in class
-	 * GUI
+	 *              GUI
 	 */
 	public void chooseRules(ArrayList<Rule> rules) throws FileNotFoundException {
 		if (rules.isEmpty())
@@ -188,8 +188,8 @@ public class Central {
 	}
 
 	/**
-	 * enumerates all array with a MethodID 
-	 * enumerates the BoolResultado arrays with MethodID to appear in the GUI
+	 * enumerates all array with a MethodID enumerates the BoolResultado arrays with
+	 * MethodID to appear in the GUI
 	 */
 	public void putMethodID() {
 		for (int i = 0; i < all.size(); i++) {
@@ -204,7 +204,7 @@ public class Central {
 	 * XSSFWorkbook workBook) to fill the excel header
 	 * 
 	 * @throws IOException
-	 * @param sheet Excel sheet created when excel opens
+	 * @param sheet    Excel sheet created when excel opens
 	 * @param workBook Excel book
 	 */
 	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
@@ -254,7 +254,7 @@ public class Central {
 	/**
 	 * Fills excel header with the strings below (String[] c) and bold format
 	 * 
-	 * @param sheet Excel sheet created when excel opens
+	 * @param sheet    Excel sheet created when excel opens
 	 * 
 	 * @param workBook Excel book
 	 */
@@ -275,10 +275,10 @@ public class Central {
 			cell.setCellStyle(style);
 		}
 	}
-	
+
 	/**
-	 * Extracts the number of Classes and Packages from the boolResult Arrays
-	 * to be written in the Excel file
+	 * Extracts the number of Classes and Packages from the boolResult Arrays to be
+	 * written in the Excel file
 	 */
 	public void numberOfSomething() {
 		int k = 0;
@@ -295,16 +295,17 @@ public class Central {
 		numberOfClasses = aux.size();
 		numberOfPackages = aux2.size();
 	}
-	
+
 	/**
 	 * Returns the scrPath of the File
-	 */ 
+	 */
 	public File getSourcePath() {
 		return srcPath;
 	}
 
 	/**
 	 * Sets a new Excel File Directory
+	 * 
 	 * @param excelFileDir Directory to save excel file
 	 */
 	public void setExcelFileDir(String excelFileDir) {
@@ -314,6 +315,7 @@ public class Central {
 
 	/**
 	 * Sets a new Source Path for the Java Project File
+	 * 
 	 * @param sRC_PATH Java Project file
 	 */
 	public void setSRC_PATH(File sRC_PATH) {
@@ -323,13 +325,13 @@ public class Central {
 	/**
 	 * Returns the Excel File
 	 */
-		public File getExcelFile() {
+	public File getExcelFile() {
 		return excelFile;
 	}
 
-		/**
-		 * Returns the Excel File Directory
-		 */
+	/**
+	 * Returns the Excel File Directory
+	 */
 	public String getExcelFileDir() {
 		return excelFileDir;
 	}
@@ -368,7 +370,7 @@ public class Central {
 	public Comparador getComparador() {
 		return comparador;
 	}
-	
+
 	/**
 	 * Returns an array with the Results of the Class metrics
 	 */
@@ -384,8 +386,8 @@ public class Central {
 	}
 
 	/**
-	 * Sets an array with the Results of the metrics
-	 *  * @param all an array with the Results of the all the metrics
+	 * Sets an array with the Results of the metrics * @param all an array with the
+	 * Results of the all the metrics
 	 */
 	public void setAll(ArrayList<Resultado> all) {
 		this.all = all;
@@ -400,14 +402,16 @@ public class Central {
 
 	/**
 	 * Sets an array with the Boolean Results of the Methods metrics
+	 * 
 	 * @param boolMethod an array with the Boolean Results of the Methods metrics
 	 */
 	public void setBoolMethod(ArrayList<BoolResultado> boolMethod) {
 		this.boolResultMethod = boolMethod;
 	}
-	
+
 	/**
 	 * Sets a new Comparator
+	 * 
 	 * @param d the value of the Comparador
 	 */
 	public void setComparador(Comparador d) {
@@ -417,6 +421,7 @@ public class Central {
 
 	/**
 	 * Sets an array with the Boolean Results of the Class metrics
+	 * 
 	 * @param boolClass an array with the Boolean Results of the Class metrics
 	 */
 	public void setBoolClass(ArrayList<BoolResultado> boolClass) {
@@ -426,11 +431,12 @@ public class Central {
 
 	/**
 	 * Sets the metrics to be evaluated
+	 * 
 	 * @param cyclo CYCLO_method
-	 * @param loc LOC_method
-	 * @param locc LOC_Class
-	 * @param nom NOM_Class
-	 * @param wmc WMC_Class
+	 * @param loc   LOC_method
+	 * @param locc  LOC_Class
+	 * @param nom   NOM_Class
+	 * @param wmc   WMC_Class
 	 */
 	public void setMetric(CYCLO_method cyclo, Loc_Method loc, Loc_Class locC, NOM_Class nom, WMC_Class wmc) {
 		this.cycloMethod = cyclo;
@@ -443,6 +449,7 @@ public class Central {
 
 	/**
 	 * Sets a new File for the Excel file
+	 * 
 	 * @param file File
 	 */
 	public void setExcelFile(File file) {

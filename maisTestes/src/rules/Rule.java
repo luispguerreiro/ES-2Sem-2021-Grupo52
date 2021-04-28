@@ -12,14 +12,20 @@ import central.BoolResultado;
 public class Rule implements IRule, Serializable {
 
 	/**
-	 * 
+	 * @author Grupo 52 Allows user to create a rule with multiple thresholds
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * User can only select OR and AND as operators for the Rules
+	 */
 	public enum operator {
 		Select, OR, AND
 	};
 
+	/**
+	 * User can only select the options bellow as comparators for the Rules
+	 */
 	public enum comparator {
 		Select, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
 	};
@@ -48,11 +54,21 @@ public class Rule implements IRule, Serializable {
 		createThresholds();
 	}
 
+	/**
+	 * Getter for the array of the Thresholds
+	 * 
+	 * @return arrayList with all the Thresholds of the rule
+	 */
 	@Override
 	public ArrayList<Threshold> getThresholds() {
 		return thresholds;
 	}
 
+	/**
+	 * creates the Thresholds and adds them to the Rule
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	@Override
 	public void createThresholds() throws FileNotFoundException {
 		for (int i = 0; i < metricName.size(); i++) {
@@ -61,6 +77,16 @@ public class Rule implements IRule, Serializable {
 		}
 	}
 
+	/**
+	 * Gets the results of the calculated Thresholds and inserts the result in a
+	 * boolResult array
+	 * 
+	 * @param result     the array with the results of all the calculated thresholds
+	 *                   of the Rule
+	 * @param boolresult the array with the boolean result of the calculated
+	 *                   thresholds of the Rule
+	 * @throws FileNotFoundException
+	 */
 	public void calculateThresholds(ArrayList<Resultado> result, ArrayList<BoolResultado> boolresult)
 			throws FileNotFoundException {
 		for (int j = 0; j < result.size(); j++) {
@@ -82,10 +108,26 @@ public class Rule implements IRule, Serializable {
 		}
 	}
 
+	/**
+	 * calculates the logic of a threshold
+	 * 
+	 * @param t     the threshold to be calculated
+	 * @param valor the limit of the respective threshold
+	 * @return the boolean result of the calculated threshold
+	 * @throws FileNotFoundException
+	 */
 	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
 		return t.result(valor);
 	}
 
+	/**
+	 * calculates the logic between two thresholds
+	 * 
+	 * @param t     & t1 the thresholds to be calculated
+	 * @param valor & valor1 the limits of the respective thresholds
+	 * @return the boolean logic between the thresholds using the operator selected
+	 * @throws FileNotFoundException
+	 */
 	public boolean logic2(Threshold t, Threshold t1, int valor, int valor1) throws FileNotFoundException {
 		if (oper.get(0).equals(operator.AND))
 			return and(t.result(valor), t1.result(valor1));
@@ -94,6 +136,14 @@ public class Rule implements IRule, Serializable {
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
 
+	/**
+	 * calculates the logic between three thresholds
+	 * 
+	 * @param t1     & t2 & t3 the thresholds to be calculated
+	 * @param valor1 & valor2 & valor3 the limits of the respective thresholds
+	 * @return the boolean logic between the thresholds using the operators selected
+	 * @throws FileNotFoundException
+	 */
 	public boolean logic3(Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3)
 			throws FileNotFoundException {
 		boolean aux = false;
@@ -108,6 +158,13 @@ public class Rule implements IRule, Serializable {
 		throw new IllegalAccessError("Erro ao comparar thresholds\n");
 	}
 
+	/**
+	 * calculates the thresholds if the operator choosen is AND
+	 * 
+	 * @param one the result of the first threshold calculated
+	 * @param two the result of the second threshold calculated
+	 * @return the result of a AND logic between two booleans
+	 */
 	@Override
 	public boolean and(boolean one, boolean two) {
 		if (one == true) {
@@ -117,6 +174,13 @@ public class Rule implements IRule, Serializable {
 		return false;
 	}
 
+	/**
+	 * calculates the thresholds if the operator choosen is OR
+	 * 
+	 * @param one the result of the first threshold calculated
+	 * @param two the result of the second threshold calculated
+	 * @return the result of a OR logic between two booleans
+	 */
 	@Override
 	public boolean or(boolean one, boolean two) {
 		if (one == false) {
@@ -126,37 +190,77 @@ public class Rule implements IRule, Serializable {
 		return true;
 	}
 
+	/**
+	 * Getter for the Rule Name
+	 * 
+	 * @return the String with the rule name
+	 */
 	@Override
 	public String getRuleName() {
 		return ruleName;
 	}
 
+	/**
+	 * Getter for the RuleType
+	 * 
+	 * @return the integer with the type of Rule created
+	 */
 	public int getRuleType() {
 		return ruleType;
 	}
 
+	/**
+	 * Getter for the array of the Comparators
+	 * 
+	 * @return arrayList with all the comparators of the rule
+	 */
 	public ArrayList<comparator> getComp() {
 		return comp;
 	}
 
+	/**
+	 * Getter for the array of the limits of the Thresholds
+	 * 
+	 * @return arrayList with all the limits of the Thresholds of the rule
+	 */
 	public ArrayList<Integer> getLimits() {
 		return limits;
 	}
 
+	/**
+	 * Getter for the array of the metric names
+	 * 
+	 * @return arrayList with all metric names in the rule
+	 */
 	public ArrayList<String> getMetricName() {
 		return metricName;
 	}
 
+	/**
+	 * Getter for the array of the Operators
+	 * 
+	 * @return arrayList with all the operators of the rule
+	 */
 	public ArrayList<operator> getOper() {
 		return oper;
 	}
 
+	/**
+	 * Set's a name for the rule created
+	 * 
+	 * @param ruleName a String chosen by the user to name the Rule created
+	 */
 	@Override
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
 
-
+	/**
+	 * Checks if the Rule is created correctly, with all arrays in the desired size
+	 * to be calculated
+	 * 
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void check() {
 		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {
@@ -171,16 +275,26 @@ public class Rule implements IRule, Serializable {
 		}
 	}
 
+	/**
+	 * Set's a array of limits for the rule created
+	 * 
+	 * @param limits gets the array of limits chosen by the user to calculate the
+	 *               thresholds of the Rule created
+	 */
 	@Override
 	public void setLimits(ArrayList<Integer> limits) {
 		this.limits = limits;
 	}
 
+	/**
+	 * Set's a array of thresholds for the rule created
+	 * 
+	 * @param thresholds gets the array of thresholds created by the user to insert
+	 *                   in the Rule created
+	 */
 	public void setThresholds(ArrayList<Threshold> thresholds) {
-		this.thresholds= thresholds;
-		
-	}
+		this.thresholds = thresholds;
 
-	
+	}
 
 }
