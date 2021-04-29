@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import Metrics.Resultado;
 import central.BoolResultado;
 
-public class Rule implements IRule, Serializable {
+public class Rule implements Serializable {
 
 	/**
 	 * @author Grupo 52 Allows user to create a rule with multiple thresholds
@@ -25,6 +25,7 @@ public class Rule implements IRule, Serializable {
 
 	/**
 	 * User can only select the options bellow as comparators for the Rules
+	 * "Select" is used in GUI class as default
 	 */
 	public enum comparator {
 		Select, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
@@ -59,7 +60,6 @@ public class Rule implements IRule, Serializable {
 	 * 
 	 * @return arrayList with all the Thresholds of the rule
 	 */
-	@Override
 	public ArrayList<Threshold> getThresholds() {
 		return thresholds;
 	}
@@ -69,7 +69,6 @@ public class Rule implements IRule, Serializable {
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	@Override
 	public void createThresholds() throws FileNotFoundException {
 		for (int i = 0; i < metricName.size(); i++) {
 			Threshold t = new Threshold(metricName.get(i), comp.get(i), limits.get(i));
@@ -165,7 +164,6 @@ public class Rule implements IRule, Serializable {
 	 * @param two the result of the second threshold calculated
 	 * @return the result of a AND logic between two booleans
 	 */
-	@Override
 	public boolean and(boolean one, boolean two) {
 		if (one == true) {
 			if (two == true)
@@ -181,7 +179,6 @@ public class Rule implements IRule, Serializable {
 	 * @param two the result of the second threshold calculated
 	 * @return the result of a OR logic between two booleans
 	 */
-	@Override
 	public boolean or(boolean one, boolean two) {
 		if (one == false) {
 			if (two == false)
@@ -189,13 +186,32 @@ public class Rule implements IRule, Serializable {
 		}
 		return true;
 	}
+	
+
+	/**
+	 * Checks if the Rule is created correctly, with all arrays in the desired size
+	 * to be calculated
+	 * 
+	 * @throws IllegalArgumentException
+	 */
+	public void check() {
+		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {
+			System.out.println("Vetores criados corretamente!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Não selecionou uma pasta de projeto!");
+			metricName.clear();
+			comp.clear();
+			limits.clear();
+			oper.clear();
+			throw new IllegalArgumentException("Não pode continuar! \nverificar tamanho dos vetores!");
+		}
+	}
 
 	/**
 	 * Getter for the Rule Name
 	 * 
 	 * @return the String with the rule name
 	 */
-	@Override
 	public String getRuleName() {
 		return ruleName;
 	}
@@ -250,30 +266,10 @@ public class Rule implements IRule, Serializable {
 	 * 
 	 * @param ruleName a String chosen by the user to name the Rule created
 	 */
-	@Override
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
 
-	/**
-	 * Checks if the Rule is created correctly, with all arrays in the desired size
-	 * to be calculated
-	 * 
-	 * @throws IllegalArgumentException
-	 */
-	@Override
-	public void check() {
-		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {
-			System.out.println("Vetores criados corretamente!");
-		} else {
-			JOptionPane.showMessageDialog(null, "Não selecionou uma pasta de projeto!");
-			metricName.clear();
-			comp.clear();
-			limits.clear();
-			oper.clear();
-			throw new IllegalArgumentException("Não pode continuar! \nverificar tamanho dos vetores!");
-		}
-	}
 
 	/**
 	 * Set's a array of limits for the rule created
@@ -281,7 +277,6 @@ public class Rule implements IRule, Serializable {
 	 * @param limits gets the array of limits chosen by the user to calculate the
 	 *               thresholds of the Rule created
 	 */
-	@Override
 	public void setLimits(ArrayList<Integer> limits) {
 		this.limits = limits;
 	}

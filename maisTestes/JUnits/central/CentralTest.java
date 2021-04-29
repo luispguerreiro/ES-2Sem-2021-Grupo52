@@ -7,7 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -53,11 +55,11 @@ class CentralTest {
 	static ArrayList<BoolResultado> boolClass = new ArrayList<>();
 	static ArrayList<Resultado> all = new ArrayList<>();
 	static ArrayList<File> files = new ArrayList<>();
-	static String excelFileDir ="C:\\Users\\nmsid\\Downloads\\jasml_0.10";
+	static String excelFileDir ="";
 	static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
 	static File SRC_path = new File("C:\\Users\\nmsid\\Downloads\\jasml_0.10");
-	static String PATH2 = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
-	static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml");
+	static String PATH2 = "C:\\Users\\henri\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
+	static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_0.10");
 	static int separador;
 	static Metrics metric;
 	static CYCLO_method cyclo;
@@ -90,8 +92,10 @@ class CentralTest {
 		tipoComparacao = 1;
 		metric = new Metrics(PATH2);
 		cyclo = new CYCLO_method(metric);
+		files.add(new File(PATH2));
 		c = new Central(rules, file, tipoComparacao, files);
-		file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		c.setExcelFileDir("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho");
+//		file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
 	}
 
 	/**
@@ -133,17 +137,8 @@ class CentralTest {
 	 */
 	@Test
 	final void testIni() throws IOException {
-		locMethod = new Loc_Method(metric);
-		locClass = new Loc_Class(metric);
-		nomClass = new NOM_Class(metric);
-		wmcClass = new WMC_Class(metric);
-		cyclo= new CYCLO_method(metric);
-		c.setMetric(cyclo, locMethod, locClass, nomClass, wmcClass);
-		File excelFile = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml");
-		c.setSRC_PATH(excelFile);
 		c.ini();
 		Assertions.assertEquals(numberOfMethods, boolMethod.size());
-
 	}
 
 
@@ -334,7 +329,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfClasses() {
-		int numberOfClasses = 0;
+		int numberOfClasses = 1;
 		assertEquals(numberOfClasses, c.getNumberOfClasses());
 	}
 
@@ -343,7 +338,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfLines() {
-		int numberOfLines = 4;
+		int numberOfLines = 8;
 		assertEquals(numberOfLines, c.getNumberOfLines());
 	}
 
@@ -352,7 +347,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfMethods() {
-		int numberOfMethods = 0;
+		int numberOfMethods = 1;
 		assertEquals(numberOfMethods, c.getNumberOfMethods());
 	}
 
@@ -361,7 +356,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfPackages() {
-		int numberOfPackages = 0;
+		int numberOfPackages = 1;
 		assertEquals(numberOfPackages, c.getNumberOfPackages());
 	}
 

@@ -33,7 +33,7 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 /*
- * @author Grupo 19
+ * @author Grupo 52
  * Central is where we write the excel, apply the thresholds given by the Rules in ArrayList<Rule>
  * and prepare the booResults arrays for the following comparations (false positive etc)
  */
