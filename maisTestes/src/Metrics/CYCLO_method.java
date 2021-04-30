@@ -12,8 +12,16 @@ import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.SwitchEntry;
 import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
+/**
+ * Calculates the Cyclomatic Complexity of the methods of the project imported
+ * 
+ */
 public class CYCLO_method {
 
+	/**
+	 * @author Grupo52
+	 * 
+	 */
 	private static final String FILE_PATH = "C:\\\\\\\\Users\\\\\\\\r_f_g\\\\\\\\Desktop\\\\\\\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
@@ -25,8 +33,9 @@ public class CYCLO_method {
 	private int[] empty = new int[5];
 
 	/**
-	 * Calculates the Cyclomatic Complexity of all the methods on the chosen Metrics object
-	 * and adds the result to an array of Resultados with the Name of the package and the class.
+	 * Calculates the Cyclomatic Complexity of all the methods on the chosen Metrics
+	 * object and adds the result to an array of Resultados with the Name of the
+	 * package and the class.
 	 * 
 	 * @param m the object Metrics chosen
 	 */
@@ -135,9 +144,9 @@ public class CYCLO_method {
 	/**
 	 * Counts the cyclomatic complexity of all binary expressions in the array
 	 * 
-	 * @param binExpression an array of Binary Expressions 
+	 * @param binExpression an array of Binary Expressions
 	 */
-	
+
 	private void countBinaryExpressions(List<BinaryExpr> binExpressions) {
 		for (BinaryExpr e : binExpressions) {
 			if (e.getOperator().equals(Operator.AND) || e.getOperator().equals(Operator.OR)) {
@@ -149,24 +158,10 @@ public class CYCLO_method {
 	/**
 	 * Getter for the array with the results
 	 * 
-	 * @return the array with the results 
+	 * @return the array with the results
 	 */
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
-	}
-	
-	public static void main(String[] args) throws Exception {
-
-		// CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
-
-		CYCLO_method a = new CYCLO_method(new Metrics(FILE_PATH));
-		System.out.println(a.getResultados().size());
-		for (Resultado string : a.getResultados()) {
-			// System.out.println(string.getPath());
-			// System.out.println("methodID " + string.getMethodID());
-			System.out.println(string.getClasses());
-			System.out.println(string.getLinhas());
-		}
 	}
 
 }

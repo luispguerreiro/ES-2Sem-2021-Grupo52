@@ -1,8 +1,15 @@
 package Metrics;
 
 import java.util.ArrayList;
-
+/**
+ *@author Grupo52  
+ * 
+ */
 public class Resultado {
+	/**
+	 *Joins the results of the thresholds of the rule
+	 * 
+	 */
 	private String path;
 	private int linhas;
 	private int methodID;
