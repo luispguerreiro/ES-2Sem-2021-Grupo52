@@ -90,16 +90,5 @@ public class Loc_Class {
 		return resultados;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		
-		
-		Loc_Class a = new Loc_Class(new Metrics(FILE_PATH));
-		for (Resultado string : a.getResultados()) {
-			// System.out.println(string.getPath());
-			System.out.println(string.getLinhas());
-			System.out.println(string.getClasses());
-			//System.out.println(string.getMethodID());
-			//System.out.println(string.getPath());
-		}
-	}
+
 }

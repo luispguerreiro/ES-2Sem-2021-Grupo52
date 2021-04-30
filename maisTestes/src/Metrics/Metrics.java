@@ -21,6 +21,11 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
  * 
  */
 public class Metrics {
+
+	/**
+	 * @author Grupo52
+	 * 
+	 */
 	private static String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\SourceCodeParser.java";
 	private static final String SRC_PATH = "C:\\Users\\r_f_g\\eclipse-workspace\\JparsecTeste";
 	private static CompilationUnit cu;
