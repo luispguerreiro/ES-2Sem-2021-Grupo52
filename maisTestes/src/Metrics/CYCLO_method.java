@@ -20,17 +20,24 @@ public class CYCLO_method {
 	private ArrayList<Resultado> resultados = new ArrayList<>();
 	private String pack;
 	private int i = 1;
-	
+
 //	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
- 
+
+	/**
+	 * Calculates the Cyclomatic Complexity of all the methods on the chosen Metrics object
+	 * and adds the result to an array of Resultados with the Name of the package and the class.
+	 * 
+	 * @param m the object Metrics chosen
+	 */
+
 	public CYCLO_method(Metrics m) {
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		pack = m.getCu().getPackageDeclaration().toString();
 		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
 		String mainClassName = mainClass.getNameAsString();
 		for (CallableDeclaration callableDeclaration : mainClassMet) {
-			
+
 			List<Statement> statements = callableDeclaration.findAll(Statement.class);
 			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
 			if (!statements.isEmpty() || !binExpressions.isEmpty()) {
@@ -88,9 +95,8 @@ public class CYCLO_method {
 					}
 				}
 
-				resultados.add(new Resultado(
-						i, pack + "/"+mainClassName+"." + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/", cyclo,
-						empty));
+				resultados.add(new Resultado(i, pack + "/" + mainClassName + "." + NestClassNames + "/"
+						+ c.getNameAsString() + "(" + parameters + ")" + "/", cyclo, empty));
 				// resultados.add(callableDeclaration.getNameAsString());
 				// resultados.add(Integer.toString(cyclo));
 
@@ -101,6 +107,12 @@ public class CYCLO_method {
 		}
 	}
 
+	/**
+	 * Counts the cyclomatic complexity of all the statements in the array.
+	 * 
+	 * @param statements an array of statements
+	 * 
+	 */
 	private void countStatements(List<Statement> statements) {
 
 		for (Statement s : statements) {
@@ -120,6 +132,12 @@ public class CYCLO_method {
 
 	}
 
+	/**
+	 * Counts the cyclomatic complexity of all binary expressions in the array
+	 * 
+	 * @param binExpression an array of Binary Expressions 
+	 */
+	
 	private void countBinaryExpressions(List<BinaryExpr> binExpressions) {
 		for (BinaryExpr e : binExpressions) {
 			if (e.getOperator().equals(Operator.AND) || e.getOperator().equals(Operator.OR)) {
@@ -128,12 +146,15 @@ public class CYCLO_method {
 		}
 	}
 
-
-
+	/**
+	 * Getter for the array with the results
+	 * 
+	 * @return the array with the results 
+	 */
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
-
+	
 	public static void main(String[] args) throws Exception {
 
 		// CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
@@ -142,7 +163,7 @@ public class CYCLO_method {
 		System.out.println(a.getResultados().size());
 		for (Resultado string : a.getResultados()) {
 			// System.out.println(string.getPath());
-			//System.out.println("methodID " + string.getMethodID());
+			// System.out.println("methodID " + string.getMethodID());
 			System.out.println(string.getClasses());
 			System.out.println(string.getLinhas());
 		}

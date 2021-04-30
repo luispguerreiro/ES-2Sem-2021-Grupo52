@@ -27,6 +27,12 @@ private int i = 1;
 //	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
 
+	/**
+	 * Calculates the Cyclomatic Complexity of all the classes on the chosen Metrics object
+	 * and adds the result to an array of Resultados with the Name of the package and the class.
+	 * 
+	 * @param m the object Metrics chosen
+	 */
 	public WMC_Class(Metrics m) {
 
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
@@ -69,7 +75,12 @@ private int i = 1;
 
 	}
 
-
+	/**
+	 * Counts the cyclomatic complexity of all the statements in the array.
+	 * 
+	 * @param statements an array of statements
+	 * 
+	 */
 	private void countStatements(List<Statement> statements) {
 
 		for (Statement s : statements) {
@@ -89,6 +100,11 @@ private int i = 1;
 
 	}
 
+	/**
+	 * Counts the cyclomatic complexity of all binary expressions in the array
+	 * 
+	 * @param binExpression an array of Binary Expressions 
+	 */
 	private void countBinaryExpressions(List<BinaryExpr> binExpressions) {
 		for (BinaryExpr e : binExpressions) {
 			if (e.getOperator().equals(Operator.AND) || e.getOperator().equals(Operator.OR)) {
@@ -98,7 +114,11 @@ private int i = 1;
 	}
 
 
-
+	/**
+	 * Getter for the array with the results
+	 * 
+	 * @return the array with the results
+	 */
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}

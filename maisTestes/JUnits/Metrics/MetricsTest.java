@@ -72,11 +72,7 @@ class MetricsTest {
 		assertEquals(metric.getClazz(), clazz);
 	}
 
-	@Test
-	final void testGetLinhasClass() {
-		assertNotNull(metric.getLinhasClass());
-		assertEquals(metric.getLinhasClass(), 0);
-	}
+	
 
 
 	@Test

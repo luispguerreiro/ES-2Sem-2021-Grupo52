@@ -17,16 +17,17 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class Metrics {
-
-	static int linhasClass;
-	int linhasMethod;
 	private static String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\SourceCodeParser.java";
 	private static final String SRC_PATH = "C:\\Users\\r_f_g\\eclipse-workspace\\JparsecTeste";
 	private static CompilationUnit cu;
 	private List<ClassOrInterfaceDeclaration> clazz;
 	private ClassOrInterfaceDeclaration mainClass;
 	private List<ClassOrInterfaceDeclaration> nestedClasses;
-
+/** 
+ * Class Constructor that turns the filePath into a file and separates the classes into a list
+ * @param FILE_PATH the path of the file to make a Metrics object out of.
+ * */
+	
 	public Metrics(String FILE_PATH) throws FileNotFoundException {
 		this.FILE_PATH = FILE_PATH;
 		this.cu = StaticJavaParser.parse(new File(FILE_PATH));
@@ -34,18 +35,25 @@ public class Metrics {
 		listClasses(cu);
 	}
 
+	/** Returns the main ClassOrInterfaceDeclaration of the file 
+	 * @return the main class*/
 	public ClassOrInterfaceDeclaration getMainClass() {
 		return mainClass;
 	}
-
+	
+	/** Returns a list of nested ClassOrInterfaceDeclaration of the file 
+	 * @return the list of nested classes*/
 	public List<ClassOrInterfaceDeclaration> getNestedClasses() {
 		return nestedClasses;
 	}
-
+	/** Returns the CompilationUnit of the file 
+	 * @return the CompilationUnit*/
 	public CompilationUnit getCu() {
 		return cu;
 	}
-
+	/** Makes a list of the classes that are in the CompilationUnit
+	 * @param cu the CompilationUnit
+	 */
 	private void listClasses(CompilationUnit cu) {
 		List<TypeDeclaration<?>> types = cu.getTypes();
 		nestedClasses = cu.findAll(ClassOrInterfaceDeclaration.class);
@@ -70,21 +78,16 @@ public class Metrics {
 			nestedClasses.clear();
 		}
 	}
-
+	/** Getter for the list of classes, clazz
+	 * @return list of classOrInterfaceDeclaration of the metric*/
 	public List<ClassOrInterfaceDeclaration> getClazz() {
 		return clazz;
 	}
 
-	public static void main(String[] args) throws ParseException, IOException {
-		Metrics m = new Metrics(FILE_PATH);
-	}
-
-	public static int getLinhasClass() {
-		return linhasClass;
-	}
 
 
-
+	/** Getter for the FILE_PATH
+	 * @return the path of the file*/
 	public static String getFilePath() {
 		return FILE_PATH;
 	}

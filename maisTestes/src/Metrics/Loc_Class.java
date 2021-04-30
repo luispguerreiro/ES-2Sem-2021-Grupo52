@@ -20,6 +20,14 @@ public class Loc_Class {
 //	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
 
+	
+	/**
+	 * Calculates the number of lines of all the class with comments on the Metrics object and empty spaces
+	 * and adds the result to an array of Resultados with the Name of the package and the class.
+	 * 
+	 * @param m the object Metrics chosen
+	 */
+
 	public Loc_Class(Metrics m) {
 
 	
@@ -65,7 +73,12 @@ public class Loc_Class {
 		 * System.out.println(binExpressions.size()); } }
 		 */
 	}
-
+	
+	/**
+	 * Getter for the array with the results
+	 * 
+	 * @return the array with the results
+	 */
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}

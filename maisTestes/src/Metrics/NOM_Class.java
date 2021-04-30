@@ -20,6 +20,15 @@ public class NOM_Class {
 	
 	ArrayList<Resultado> resultados = new ArrayList<>();
 
+	
+	/**
+	 * Calculates the number of methods of all the classes with comments on the Metrics object and empty spaces
+	 * and adds the result to an array of Resultados with the Name of the package and the class.
+	 * 
+	 * @param m the object Metrics chosen
+	 */
+
+	
 	public NOM_Class(Metrics m) {
 		String pack = m.getCu().getPackageDeclaration().toString();
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
@@ -43,16 +52,11 @@ public class NOM_Class {
 
 		}
 	}
-
-	/*
-	 * public NOM_Class(ClassOrInterfaceDeclaration c) {
-	 * List<ConstructorDeclaration> contructors = c.getConstructors();
-	 * List<MethodDeclaration> methods = c.getMethods(); numOfMethods +=
-	 * contructors.size() + methods.size(); System.out.println("Class " +
-	 * c.getNameAsExpression() + " tem " + numOfMethods + " métodos");
+	
+	/**
+	 * Getter for the array with the results
 	 * 
-	 * // System.out.println("Métodos: " + m.getDeclarationAsString(false, false, //
-	 * true)); }
+	 * @return the array with the results
 	 */
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
