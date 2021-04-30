@@ -68,14 +68,5 @@ public class NOM_Class {
 		return resultados;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		NOM_Class a = new NOM_Class(new Metrics(FILE_PATH));
-		
-		for (Resultado string : a.getResultados()) {
-			// System.out.println(string.getPath());
-			System.out.println(string.getClasses());
-			System.out.println(string.getLinhas());
-		}
 
-	}
 }

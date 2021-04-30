@@ -112,15 +112,5 @@ public class Loc_Method {
 		return resultados;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
 
-		Loc_Method a = new Loc_Method(new Metrics(FILE_PATH));
-		System.out.println(a.getResultados().size());
-		for (Resultado string : a.getResultados()) {
-			// System.out.println(string.getPath());
-			System.out.println(string.getLinhas());
-			System.out.println(string.getClasses());
-			System.out.println(string.getMethodNames());
-		}
-	}
 }
