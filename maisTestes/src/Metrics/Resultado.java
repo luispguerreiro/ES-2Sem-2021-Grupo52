@@ -50,7 +50,7 @@ public class Resultado {
 	/**
 	 * setter for the methodID
 	 * 
-	 * 
+	 * @param methodID the method ID to be displayed
 	 */
 	public void setMethodID(int methodID) {
 		this.methodID = methodID;

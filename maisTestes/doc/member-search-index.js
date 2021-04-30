@@ -1,1 +1,1 @@
-memberSearchIndex = [{"p":"Metrics","c":"Loc_Class","l":"getResultados()"},{"p":"Metrics","c":"Loc_Class","l":"Loc_Class(Metrics)","u":"%3Cinit%3E(Metrics.Metrics)"},{"p":"Metrics","c":"Loc_Class","l":"main(String[])","u":"main(java.lang.String[])"}];updateSearchResults();
+memberSearchIndex = [{"p":"Metrics","c":"WMC_Class","l":"getResultados()"},{"p":"Metrics","c":"WMC_Class","l":"WMC_Class(Metrics)","u":"%3Cinit%3E(Metrics.Metrics)"}];updateSearchResults();
