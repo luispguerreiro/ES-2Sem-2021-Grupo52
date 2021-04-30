@@ -34,8 +34,9 @@ import rules.Rule.operator;
 
 /*
  * @author Grupo 52
- * Central is where we write the excel, apply the thresholds given by the Rules in ArrayList<Rule>
- * and prepare the booResults arrays for the following comparations (false positive etc)
+ * 
+ * Writes the excel, applies the thresholds given by the Rules in the array of
+ * Resultado and prepares the booResults arrays for the following comparisons
  */
 public class Central {
 
@@ -70,8 +71,15 @@ public class Central {
 	private Comparador comparador;
 
 	/**
+	 * Writes the excel, applies the thresholds given by the Rules in the array of
+	 * Resultado and prepares the booResults arrays for the following comparisons
+	 * (false positive etc)
 	 * 
-	 * @throws IOException
+	 * @throws IOException in case the is a problem importing or exporting the files
+	 * @param rules          the array with the rules
+	 * @param srcPath        the File
+	 * @param tipoComparacao the comparation to be made
+	 * @param files          the array with the files
 	 */
 	public Central(ArrayList<Rule> rules, File srcPath, int tipoComparacao, ArrayList<File> files) throws IOException {
 		this.rules = rules;
@@ -84,7 +92,7 @@ public class Central {
 	/**
 	 * initiates the main Central flow and calls all methods
 	 * 
-	 * @throws IOException
+	 * @throws IOException in case the is a problem importing or exporting the files
 	 */
 	public void ini() throws IOException {
 		excelFile = new File(excelFileDir.concat("\\".concat(srcPath.getName().concat("_metrics.xlsx"))));
@@ -129,11 +137,10 @@ public class Central {
 	}
 
 	/**
-	 * Invokes calculateThresholds(ArrayList<Resultado> result,
-	 * ArrayList<BoolResultado> boolresult) for each position of ArrayList<Rule> and
-	 * considering the ruleType (0=godClass and 1=LongMethod)
+	 * Selects the rule choosen and calculates it's thresholds
 	 * 
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException in case the file imported isn't found by the
+	 *                               program
 	 * @param rules zero, one or two rules given by the user and created in class
 	 *              GUI
 	 */
@@ -149,8 +156,8 @@ public class Central {
 	}
 
 	/**
-	 * Fills the ArrayList<Resultado> All with data like one of the metrics arrays
-	 * (in this case "cyclomethod") the data copied to "all" are the same in all
+	 * Fills the array of the results with data like one of the metrics arrays (in
+	 * this case "cyclomethod") the data copied to "all" are the same in all
 	 * vectors, then fill in "all" the array with 5 integers in which each position
 	 * corresponds to a metric
 	 * 
@@ -203,7 +210,7 @@ public class Central {
 	 * Writes to excel all the necessary information call cabecalho (Sheet sheet,
 	 * XSSFWorkbook workBook) to fill the excel header
 	 * 
-	 * @throws IOException
+	 * @throws IOException error creating the excel
 	 * @param sheet    Excel sheet created when excel opens
 	 * @param workBook Excel book
 	 */
@@ -298,6 +305,8 @@ public class Central {
 
 	/**
 	 * Returns the scrPath of the File
+	 * 
+	 * @return the srcPath of the file
 	 */
 	public File getSourcePath() {
 		return srcPath;
@@ -324,6 +333,8 @@ public class Central {
 
 	/**
 	 * Returns the Excel File
+	 * 
+	 * @return the Excel file
 	 */
 	public File getExcelFile() {
 		return excelFile;
@@ -331,6 +342,8 @@ public class Central {
 
 	/**
 	 * Returns the Excel File Directory
+	 * 
+	 * @return the Excel file directory
 	 */
 	public String getExcelFileDir() {
 		return excelFileDir;
@@ -338,6 +351,8 @@ public class Central {
 
 	/**
 	 * Returns the Number of Classes in the Java Project File
+	 * 
+	 * @return the Number of Classes in the Java Project File
 	 */
 	public int getNumberOfClasses() {
 		return numberOfClasses;
@@ -345,6 +360,8 @@ public class Central {
 
 	/**
 	 * Returns the Number of Lines in the Java Project File
+	 * 
+	 * @return the Number of Lines in the Java Project File
 	 */
 	public int getNumberOfLines() {
 		return numberOfLines;
@@ -352,6 +369,8 @@ public class Central {
 
 	/**
 	 * Returns the Number of Methods in the Java Project File
+	 * 
+	 * @return the Number of Methods in the Java Project File
 	 */
 	public int getNumberOfMethods() {
 		return numberOfMethods;
@@ -359,42 +378,53 @@ public class Central {
 
 	/**
 	 * Returns the Number of Packages in the Java Project File
+	 * 
+	 * @return the Number of Packages in the Java Project File
 	 */
 	public int getNumberOfPackages() {
 		return numberOfPackages;
 	}
 
 	/**
-	 * Returns the Comparator use in the Rule to calculate the thresholds
+	 * Getter for the Comparator use in the Rule to calculate the thresholds
+	 * 
+	 * @return the Comparator use in the Rule to calculate the thresholds
 	 */
 	public Comparador getComparador() {
 		return comparador;
 	}
 
 	/**
-	 * Returns an array with the Results of the Class metrics
+	 * Getter for an array with the Results of the Class metrics
+	 * 
+	 * @return the array with the Results of the Class metrics
 	 */
 	public ArrayList<BoolResultado> getBoolClass() {
 		return boolResultClass;
 	}
 
 	/**
-	 * Returns an array with the Results of the Methods metrics
+	 * Getter for the array with the Results of the Methods metrics
+	 * 
+	 * @return an array with the Results of the Methods metrics
 	 */
 	public ArrayList<BoolResultado> getBoolMethod() {
 		return boolResultMethod;
 	}
 
 	/**
-	 * Sets an array with the Results of the metrics * @param all an array with the
-	 * Results of the all the metrics
+	 * Sets an array with the Results of the metrics
+	 * 
+	 * @param all an array with the Results of the all the metrics
 	 */
 	public void setAll(ArrayList<Resultado> all) {
 		this.all = all;
 	}
 
 	/**
-	 * Returns an array with the Results of the metrics
+	 * Getter for the array with the Results of the metrics
+	 * 
+	 * @return an array with the Results of the metrics
 	 */
 	public ArrayList<Resultado> getAll() {
 		return all;
@@ -434,7 +464,7 @@ public class Central {
 	 * 
 	 * @param cyclo CYCLO_method
 	 * @param loc   LOC_method
-	 * @param locc  LOC_Class
+	 * @param locC  LOC_Class
 	 * @param nom   NOM_Class
 	 * @param wmc   WMC_Class
 	 */

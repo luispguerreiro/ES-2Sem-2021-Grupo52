@@ -11,8 +11,7 @@ import rules.Rule.comparator;
 public class Threshold implements Serializable {
 
 	/**
-	 * @author Grupo 52 Allows user to create thresholds to compare the metric with
-	 *         the limit desired
+	 * @author Grupo 52
 	 */
 
 	private static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolGenerator.java";
@@ -24,6 +23,9 @@ public class Threshold implements Serializable {
 
 	private ArrayList<Resultado> resultados = new ArrayList<>();
 
+	/**
+	 * Allows user to create thresholds to compare the metric with the limit desired
+	 */
 	public Threshold(String metricName, comparator o, int limit) throws FileNotFoundException {
 		this.metricName = metricName;
 		this.o = o;
@@ -32,8 +34,7 @@ public class Threshold implements Serializable {
 	}
 
 	/**
-	 * Compares if the metric result is bigger then the limit the
-	 * user desires
+	 * Compares if the metric result is bigger then the limit the user desires
 	 * 
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
@@ -45,8 +46,7 @@ public class Threshold implements Serializable {
 	}
 
 	/**
-	 * Compares if the metric result is smaller then the limit the
-	 * user desires
+	 * Compares if the metric result is smaller then the limit the user desires
 	 * 
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
@@ -57,8 +57,7 @@ public class Threshold implements Serializable {
 	}
 
 	/**
-	 * Compares if the metric result is equals to the limit the user
-	 * desires
+	 * Compares if the metric result is equals to the limit the user desires
 	 * 
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
@@ -69,8 +68,8 @@ public class Threshold implements Serializable {
 	}
 
 	/**
-	 * Compares if the metric result is bigger or equals to the limit
-	 * the user desires
+	 * Compares if the metric result is bigger or equals to the limit the user
+	 * desires
 	 * 
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
@@ -81,8 +80,8 @@ public class Threshold implements Serializable {
 	}
 
 	/**
-	 * Compares if the metric result is smaller or equals to the
-	 * limit the user desires
+	 * Compares if the metric result is smaller or equals to the limit the user
+	 * desires
 	 * 
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project

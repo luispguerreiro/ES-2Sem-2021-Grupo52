@@ -12,7 +12,7 @@ import central.BoolResultado;
 public class Rule implements Serializable {
 
 	/**
-	 * @author Grupo 52 Allows user to create a rule with multiple thresholds
+	 * @author Grupo 52 
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +40,10 @@ public class Rule implements Serializable {
 	private String ruleName;
 	private ArrayList<BoolResultado> ruleResults = new ArrayList<>();
 	private int ruleType; // 0 if ruleType=god_class, 1 if ruleType=long_method
+	
+	/**
+	 * Allows user to create a rule with multiple thresholds
+	 */
 
 	public Rule(String ruleName, int ruleType, ArrayList<String> metricName, ArrayList<comparator> comp,
 			ArrayList<Integer> limits, ArrayList<operator> oper) throws FileNotFoundException {

@@ -11,16 +11,25 @@ import java.util.ArrayList;
 import rules.Rule;
 
 /**
- * @author Grupo 52 Allows user to create a file with rules previously selected
+ * @author Grupo 52
  */
 public class History {
 	private String folderPathToSave;
 	private String folderPathToRead;
 	private String ruleName;
 
+	/**
+	 * Allows user to create a file with rules previously selected
+	 */
+
 	public History() {
 	}
 
+	/**
+	 * Allows user to choose a folder to Save the Rules
+	 * 
+	 * @param folderPath a string with the intended path to save the file
+	 */
 	public void setFolderPathToSave(String folderPath) {
 		this.folderPathToSave = folderPath;
 	}
@@ -74,7 +83,6 @@ public class History {
 	 * file name will always be rules' rule name first position
 	 * 
 	 * @param rules the array with the rules the user wants to save
-	 * @throws {@link IOException}
 	 */
 	public void writeFile(ArrayList<Rule> rules) {
 		try {
@@ -97,8 +105,6 @@ public class History {
 	 * 
 	 * @param name the user's File name
 	 * @return ArrayList of rules with all the rules in the user's file
-	 * @throws {@link ClassNotFoundException}
-	 * @throws {@link IOException}
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<Rule> readFile(String name) {
