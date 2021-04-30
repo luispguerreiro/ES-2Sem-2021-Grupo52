@@ -9,6 +9,9 @@ import javax.swing.JOptionPane;
 import Metrics.Resultado;
 import central.BoolResultado;
 
+/**
+ * Allows user to create a rule with multiple thresholds
+ */
 public class Rule implements Serializable {
 
 	/**
@@ -20,7 +23,12 @@ public class Rule implements Serializable {
 	 * User can only select OR and AND as operators for the Rules
 	 */
 	public enum operator {
-		Select, OR, AND
+		/** the predifined option that appears on the GUI */
+		Select,
+		/** allows user to compare two boolean values using the OR logic */
+		OR,
+		/** allows user to compare two boolean values using the AND logic */
+		AND
 	};
 
 	/**
@@ -28,32 +36,48 @@ public class Rule implements Serializable {
 	 * is used in GUI class as default
 	 */
 	public enum comparator {
-		Select, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
+		/** the predifined option that appears on the GUI */
+		Select,
+		/** allows user to compare if one value is bigger then the other */
+		BIGGER,
+		/** allows user to compare if one value is smaller then the other */
+		SMALLER,
+		/** allows user to compare if one value is equals to another */
+		EQUALS,
+		/** allows user to compare if one value is bigger or equals to another */
+		BIGGEREQUALS,
+		/** allows user to compare if one value is smaller or equals to another */
+		SMALLEREQUALS
 	};
 
-	private ArrayList<Threshold> thresholds = new ArrayList<>();
 	/** the array with thresholds */
+	private ArrayList<Threshold> thresholds = new ArrayList<>();
 
-	protected ArrayList<String> metricName = new ArrayList<>();
 	/** the array with the metric names */
-	protected ArrayList<comparator> comp = new ArrayList<>();
+	protected ArrayList<String> metricName = new ArrayList<>();
 	/** the array with the comparators */
-	protected ArrayList<Integer> limits = new ArrayList<>();
+	protected ArrayList<comparator> comp = new ArrayList<>();
 	/** the array with the limits */
-	protected ArrayList<operator> oper = new ArrayList<>();
+	protected ArrayList<Integer> limits = new ArrayList<>();
 	/** the array with the operators */
-	private String ruleName;
+	protected ArrayList<operator> oper = new ArrayList<>();
 	/** the rule Name */
-	private ArrayList<BoolResultado> ruleResults = new ArrayList<>();
+	private String ruleName;
 	/** the array with the boolean results */
-	private int ruleType;
-
+	private ArrayList<BoolResultado> ruleResults = new ArrayList<>();
 	/** type of rule created (0 if ruleType=god_class, 1 if ruleType=long_method) */
+	private int ruleType;
 
 	/**
 	 * Allows user to create a rule with multiple thresholds
 	 * 
 	 * @throws FileNotFoundException if the file imported isn't found
+	 * @param ruleName   the name of the rule
+	 * @param ruleType   the type of rule created
+	 * @param metricName the array with the metric names to be calculated
+	 * @param comp       the array with the comparators
+	 * @param limits     the array with the limits defined by the user
+	 * @param oper       the array with the operators
 	 */
 
 	public Rule(String ruleName, int ruleType, ArrayList<String> metricName, ArrayList<comparator> comp,
@@ -212,7 +236,8 @@ public class Rule implements Serializable {
 	 * Checks if the Rule is created correctly, with all arrays in the desired size
 	 * to be calculated
 	 * 
-	 * @throws IllegalArgumentException if the user tries to create a rule with unwanted sizes of the arrays
+	 * @throws IllegalArgumentException if the user tries to create a rule with
+	 *                                  unwanted sizes of the arrays
 	 */
 	public void check() {
 		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {

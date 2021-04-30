@@ -8,6 +8,9 @@ import Metrics.Resultado;
 import central.BoolResultado;
 import rules.Rule.comparator;
 
+/**
+ * Allows user to create thresholds to compare the metric with the limit desired
+ */
 public class Threshold implements Serializable {
 
 	/**
@@ -17,14 +20,30 @@ public class Threshold implements Serializable {
 	private static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolGenerator.java";
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * the metric Name chosen by the user to be calculated
+	 */
 	private String metricName;
+	/**
+	 * the comparator chosen by the user to be calculated
+	 */
 	private comparator o;
+	/**
+	 * the limit defined by the user to be calculated
+	 */
 	private int limit;
 
+	/** the array in which the results of the calculated thresholds will be added */
 	private ArrayList<Resultado> resultados = new ArrayList<>();
 
 	/**
 	 * Allows user to create thresholds to compare the metric with the limit desired
+	 * 
+	 * @param metricName the metric Name chosen by the user to be calculated
+	 * @param o          the comparator chosen by the user to be calculated
+	 * @param limit      the limit defined by the user to be calculated
+	 * @throws FileNotFoundException if the metric can't be calculated due to the
+	 *                               file not being found
 	 */
 	public Threshold(String metricName, comparator o, int limit) throws FileNotFoundException {
 		this.metricName = metricName;
@@ -39,6 +58,8 @@ public class Threshold implements Serializable {
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
 	 * @return true if the number is bigger then the limit
+	 * @throws FileNotFoundException if the metric can't be calculated due to the
+	 *                               file not being found
 	 */
 	public boolean isBigger(int z) throws FileNotFoundException {
 
@@ -51,6 +72,8 @@ public class Threshold implements Serializable {
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
 	 * @return true if the number is smaller then the limit
+	 * @throws FileNotFoundException if the metric can't be calculated due to the
+	 *                               file not being found
 	 */
 	public boolean isSmaller(int z) throws FileNotFoundException {
 		return z < limit;
@@ -62,6 +85,8 @@ public class Threshold implements Serializable {
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
 	 * @return true if the number is equals to the limit
+	 * @throws FileNotFoundException if the metric can't be calculated due to the
+	 *                               file not being found
 	 */
 	public boolean isEquals(int z) throws FileNotFoundException {
 		return z == limit;
@@ -74,6 +99,8 @@ public class Threshold implements Serializable {
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
 	 * @return true if the number is bigger or equals to the limit
+	 * @throws FileNotFoundException if the metric can't be calculated due to the
+	 *                               file not being found
 	 */
 	public boolean isBiggerEquals(int z) throws FileNotFoundException {
 		return z >= limit;
@@ -86,6 +113,8 @@ public class Threshold implements Serializable {
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
 	 * @return true if the number is smaller or equals to the limit
+	 * @throws FileNotFoundException if the metric can't be calculated due to the
+	 *                               file not being found
 	 */
 	public boolean isSmallerEquals(int z) throws FileNotFoundException {
 		return z <= limit;
@@ -98,6 +127,8 @@ public class Threshold implements Serializable {
 	 * @param z the integer that represents the number of methods of classes in the
 	 *          user's project
 	 * @return the boolean result of the threshold based of the comparator used
+	 * @throws FileNotFoundException if the metric can't be calculated due to the
+	 *                               file not being found
 	 */
 	public boolean result(int z) throws FileNotFoundException {
 		if (o == comparator.BIGGER) {
@@ -133,7 +164,6 @@ public class Threshold implements Serializable {
 	 * Gets the metric type chosen and transforms to a integer
 	 * 
 	 * @return the metric type in integer
-	 * @throws IllegalArgumentException
 	 */
 	public int positionToGet() {
 		if (metricName.equals("NOM_class"))
