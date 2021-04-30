@@ -30,6 +30,7 @@ public class Metrics {
 /** 
  * Class Constructor that turns the filePath into a file and separates the classes into a list
  * @param FILE_PATH the path of the file to make a Metrics object out of.
+ * @throws FileNotFoundException in case the file imported isn't found
  * */
 	
 	public Metrics(String FILE_PATH) throws FileNotFoundException {
