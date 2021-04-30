@@ -12,7 +12,7 @@ import central.BoolResultado;
 public class Rule implements Serializable {
 
 	/**
-	 * @author Grupo 52 
+	 * @author Grupo 52
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -24,25 +24,36 @@ public class Rule implements Serializable {
 	};
 
 	/**
-	 * User can only select the options bellow as comparators for the Rules
-	 * "Select" is used in GUI class as default
+	 * User can only select the options bellow as comparators for the Rules "Select"
+	 * is used in GUI class as default
 	 */
 	public enum comparator {
 		Select, BIGGER, SMALLER, EQUALS, BIGGEREQUALS, SMALLEREQUALS
 	};
 
 	private ArrayList<Threshold> thresholds = new ArrayList<>();
+	/** the array with thresholds */
 
 	protected ArrayList<String> metricName = new ArrayList<>();
+	/** the array with the metric names */
 	protected ArrayList<comparator> comp = new ArrayList<>();
+	/** the array with the comparators */
 	protected ArrayList<Integer> limits = new ArrayList<>();
+	/** the array with the limits */
 	protected ArrayList<operator> oper = new ArrayList<>();
+	/** the array with the operators */
 	private String ruleName;
+	/** the rule Name */
 	private ArrayList<BoolResultado> ruleResults = new ArrayList<>();
-	private int ruleType; // 0 if ruleType=god_class, 1 if ruleType=long_method
-	
+	/** the array with the boolean results */
+	private int ruleType;
+
+	/** type of rule created (0 if ruleType=god_class, 1 if ruleType=long_method) */
+
 	/**
 	 * Allows user to create a rule with multiple thresholds
+	 * 
+	 * @throws FileNotFoundException if the file imported isn't found
 	 */
 
 	public Rule(String ruleName, int ruleType, ArrayList<String> metricName, ArrayList<comparator> comp,
@@ -71,7 +82,7 @@ public class Rule implements Serializable {
 	/**
 	 * creates the Thresholds and adds them to the Rule
 	 * 
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException if the file imported isn't found
 	 */
 	public void createThresholds() throws FileNotFoundException {
 		for (int i = 0; i < metricName.size(); i++) {
@@ -88,7 +99,7 @@ public class Rule implements Serializable {
 	 *                   of the Rule
 	 * @param boolresult the array with the boolean result of the calculated
 	 *                   thresholds of the Rule
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException if the file imported isn't found
 	 */
 	public void calculateThresholds(ArrayList<Resultado> result, ArrayList<BoolResultado> boolresult)
 			throws FileNotFoundException {
@@ -117,7 +128,7 @@ public class Rule implements Serializable {
 	 * @param t     the threshold to be calculated
 	 * @param valor the limit of the respective threshold
 	 * @return the boolean result of the calculated threshold
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException if the file imported isn't found
 	 */
 	public boolean logic1(Threshold t, int valor) throws FileNotFoundException {
 		return t.result(valor);
@@ -126,10 +137,12 @@ public class Rule implements Serializable {
 	/**
 	 * calculates the logic between two thresholds
 	 * 
-	 * @param t     & t1 the thresholds to be calculated
-	 * @param valor & valor1 the limits of the respective thresholds
+	 * @param t      the thresholds to be calculated
+	 * @param t1     the thresholds to be calculated
+	 * @param valor  the limits of the respective thresholds
+	 * @param valor1 the limits of the respective thresholds
 	 * @return the boolean logic between the thresholds using the operator selected
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException if the file imported isn't found
 	 */
 	public boolean logic2(Threshold t, Threshold t1, int valor, int valor1) throws FileNotFoundException {
 		if (oper.get(0).equals(operator.AND))
@@ -142,10 +155,14 @@ public class Rule implements Serializable {
 	/**
 	 * calculates the logic between three thresholds
 	 * 
-	 * @param t1     & t2 & t3 the thresholds to be calculated
-	 * @param valor1 & valor2 & valor3 the limits of the respective thresholds
+	 * @param t1     the thresholds to be calculated
+	 * @param t2     the thresholds to be calculated
+	 * @param t3     the thresholds to be calculated
+	 * @param valor1 the limits of the respective thresholds
+	 * @param valor2 the limits of the respective thresholds
+	 * @param valor3 the limits of the respective thresholds
 	 * @return the boolean logic between the thresholds using the operators selected
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException if the file imported isn't found
 	 */
 	public boolean logic3(Threshold t1, Threshold t2, Threshold t3, int valor1, int valor2, int valor3)
 			throws FileNotFoundException {
@@ -190,13 +207,12 @@ public class Rule implements Serializable {
 		}
 		return true;
 	}
-	
 
 	/**
 	 * Checks if the Rule is created correctly, with all arrays in the desired size
 	 * to be calculated
 	 * 
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException if the user tries to create a rule with unwanted sizes of the arrays
 	 */
 	public void check() {
 		if (metricName.size() == comp.size() && comp.size() == limits.size() && (limits.size() == oper.size() + 1)) {
@@ -273,7 +289,6 @@ public class Rule implements Serializable {
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
-
 
 	/**
 	 * Set's a array of limits for the rule created
