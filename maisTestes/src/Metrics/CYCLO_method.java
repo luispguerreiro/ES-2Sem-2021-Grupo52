@@ -13,7 +13,7 @@ import com.github.javaparser.ast.stmt.SwitchEntry;
 import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
 /**
- * Calculates the Cyclomatic Complexity of the methods of the project imported
+ * Calculates the Cyclomatic Complexity of the methods of the Metrics object imported
  * 
  */
 public class CYCLO_method {

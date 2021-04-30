@@ -11,8 +11,15 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.TypeDeclaration;
-
+/**
+ * Calculates the number of lines of each method on the Metrics object imported
+ * 
+ */
 public class Loc_Method {
+	/**
+	 * @author Grupo52
+	 * 
+	 */
 	public ArrayList<Resultado> resultados = new ArrayList<>();
 	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\SourceCodeParser.java";
 	static int linhasfinal = 0;

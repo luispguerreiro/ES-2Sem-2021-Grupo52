@@ -8,8 +8,15 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
-
+/**
+ * Calculates the number of lines of each class on the Metrics object imported
+ * 
+ */
 public class Loc_Class {
+	/**
+	 * @author Grupo52
+	 * 
+	 */
 	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\SourceCodeParser.java";
 	private int linhasClass;
 	private int linhasClassMain;

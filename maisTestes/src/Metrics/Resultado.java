@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * 
  */
 public class Resultado {
+	
 	/**
 	 *Joins the results of the thresholds of the rule
 	 * 

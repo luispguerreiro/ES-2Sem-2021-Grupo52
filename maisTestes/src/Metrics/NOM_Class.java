@@ -7,9 +7,15 @@ import java.util.List;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-
+/**
+ * Calculates the number of the methods of the Metrics object imported
+ * 
+ */
 public class NOM_Class {
-
+	/**
+	 * @author Grupo52
+	 * 
+	 */
 	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private int numOfMethods = 0;
 	

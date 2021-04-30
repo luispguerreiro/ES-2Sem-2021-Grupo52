@@ -12,9 +12,15 @@ import com.github.javaparser.ast.expr.BinaryExpr.Operator;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.SwitchEntry;
 import com.github.javaparser.ast.stmt.SwitchEntry.Type;
-
+/**
+ * Calculates the Cyclomatic Complexity of  the classes on the Metrics object imported
+ * 
+ */
 public class WMC_Class {
-
+	/**
+	 * @author Grupo52
+	 * 
+	 */
 	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
