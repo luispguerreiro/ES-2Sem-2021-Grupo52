@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 import central.BoolResultado;
 
+/**
+ * @author Grupo 52
+ */
+
 public class Comparador {
 
 	private int countVP = 0;
