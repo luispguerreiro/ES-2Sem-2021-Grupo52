@@ -12,7 +12,7 @@ public class Linha {
 	boolean is_Long_Method;
 
 	/**
-	 * Set's the package name for the object
+	 * Sets the package name for the object
 	 * 
 	 * @param pacote string with the package name
 	 */
@@ -21,7 +21,7 @@ public class Linha {
 	}
 
 	/**
-	 * Set's the class name for the object
+	 * Sets the class name for the object
 	 * 
 	 * @param classe string with the class name
 	 */
@@ -30,7 +30,7 @@ public class Linha {
 	}
 
 	/**
-	 * Set's the method name for the object
+	 * Sets the method name for the object
 	 * 
 	 * @param metodo string with the package name
 	 */
@@ -39,7 +39,7 @@ public class Linha {
 	}
 
 	/**
-	 * Set's the result of the is_God_Class to true or false
+	 * Sets the result of the is_God_Class to true or false
 	 * 
 	 * @param is_God_Class the result of the Code Smell
 	 */
