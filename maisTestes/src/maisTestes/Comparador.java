@@ -47,6 +47,16 @@ public class Comparador {
 //		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
 //		return linhas;
 //	}
+	
+	
+	/**
+	 * Determines the quality of detection of code smells by comparing the results of the Excel file
+	 * with the results of code smells using the thresholds chosen by the user (regarding methods)
+	 * 
+	 * @param boolMethod	the array list with all the results of code smells using the thresholds chosen by the user (regarding methods)
+	 * @param linhas	the array list with all the rows from an Excel File
+	 * 			
+	 */
 
 	public void methodComp(ArrayList<BoolResultado> boolMethod, ArrayList<Linha> linhas) {
 		methodCheck = new ArrayList<>();
@@ -85,6 +95,16 @@ public class Comparador {
 		}
 	}
 
+	
+	/**
+	 * Determines the quality of detection of code smells by comparing the results of the Excel file
+	 * with the results of code smells using the thresholds chosen by the user (regarding classes)
+	 * 
+	 * @param boolClass	the array list with all the results of code smells using the thresholds chosen by the user (regarding classes)
+	 * @param linhas	the array list with all the rows from an Excel File
+	 * 			
+	 */
+
 	public void classComp(ArrayList<BoolResultado> boolClass, ArrayList<Linha> linhas) {
 		classCheck = new ArrayList<>();
 		for (int j = 0; j < boolClass.size(); j++) {
@@ -121,26 +141,58 @@ public class Comparador {
 				classCheck.add("erro");
 		}
 	}
-
+	
+	/**
+	 * Getter for the number of VP
+	 * 
+	 * @return the number of VP
+	 */
 	public int getCountVP() {
 		return countVP;
 	}
-
+	
+	/**
+	 * Getter for the number of FP
+	 * 
+	 * @return the number of FP
+	 */
 	public int getCountFP() {
 		return countFP;
 	}
-
+	
+	/**
+	 * Getter for the number of VN
+	 * 
+	 * @return the number of VN
+	 */
 	public int getCountVN() {
 		return countVN;
 	}
-
+	
+	/**
+	 * Getter for the number of FN
+	 * 
+	 * @return the number of FN
+	 */
 	public int getCountFN() {
 		return countFN;
 	}
+	
+	/**
+	 * getter for the Array List of results obtained from the quality of the detection of code smells regarding classes
+	 * 
+	 * @return	the list itself			
+	 */
 
 	public ArrayList<String> getClassCheck() {
 		return classCheck;
 	}
+	
+	/**
+	 * getter for the Array List of results obtained from the quality of the detection of code smells regarding methods
+	 * 
+	 * @return	the list itself			
+	 */
 
 	public ArrayList<String> getMethodCheck() {
 		return methodCheck;
