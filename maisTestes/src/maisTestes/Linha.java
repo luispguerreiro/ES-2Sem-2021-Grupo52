@@ -48,7 +48,7 @@ public class Linha {
 	}
 
 	/**
-	 * Set's the result of the is_Long_Method to true or false
+	 * Sets the result of the is_Long_Method to true or false
 	 * 
 	 * @param is_Long_Method the result of the Code Smell
 	 */
@@ -66,7 +66,7 @@ public class Linha {
 	}
 
 	/**
-	 * Getter for the class name
+	 * Getter for the class's name
 	 * 
 	 * @return the name of the class
 	 */
@@ -75,7 +75,7 @@ public class Linha {
 	}
 
 	/**
-	 * Getter for the method name
+	 * Getter for the method's name
 	 * 
 	 * @return the name of the method
 	 */
@@ -102,7 +102,7 @@ public class Linha {
 	}
 
 	/**
-	 * Transform the object in a String
+	 * Transforms the object in a String
 	 * 
 	 * @return the string itself
 	 */

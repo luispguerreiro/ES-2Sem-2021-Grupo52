@@ -19,7 +19,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Excel {
 
 	ArrayList<Linha> list;
-
+	
+	/**
+	 * Reads an Excel file and transforms it into an Array List
+	 * 
+	 * 
+	 * @param file	the Excel file to be converted into an Array List
+	 * 			
+	 */
+	
 	public void lerExcel(File file) throws FileNotFoundException, IOException {
 
 		FileInputStream fis = new FileInputStream(file);
@@ -67,6 +75,12 @@ public class Excel {
 		}
 
 	}
+	
+	/**
+	 * getter for the Array List of linhas
+	 * 
+	 * @return	the list itself			
+	 */
 
 	public ArrayList<Linha> getList() {
 		return list;

@@ -10,12 +10,12 @@ public class Procura {
 	Linha linha;
 
 	/**
-	 * Search for a method of a given class in a ArrayList with all rows from a
+	 * Searches for a method of a given class in an ArrayList with all rows from an
 	 * Excel File
 	 * 
-	 * @param listaOriginal	the array with all row from a Excel File
-	 * @param classe	name of the class where the method is
-	 * @param metodo	name of the method to be searched for
+	 * @param listaOriginal	the array with all the rows from an Excel File
+	 * @param classe	name of the class that contains the method
+	 * @param metodo	name of the method to search for
 	 * 
 	 * @return	row from the Excel File with all the information of a given method			
 	 */
