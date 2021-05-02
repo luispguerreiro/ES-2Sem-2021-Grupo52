@@ -15,8 +15,10 @@ import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 /**
  * 
  * @author Grupo 52 
- */
 
+ * Calculates the Cyclomatic Complexity of the methods of the Metrics object imported
+ * 
+ */
 public class CYCLO_method {
 
 	private static final String FILE_PATH = "C:\\\\\\\\Users\\\\\\\\r_f_g\\\\\\\\Desktop\\\\\\\\SourceCodeParser.java";
@@ -30,10 +32,13 @@ public class CYCLO_method {
 	private int[] empty = new int[5];
 
 	/**
-	 * Calculates the Cyclomatic Complexity of the user's project
+	 * Calculates the Cyclomatic Complexity of all the methods on the chosen Metrics
+	 * object and adds the result to an array of Resultados with the Name of the
+	 * package and the class.
 	 * 
-	 * @param m the metric chosen
+	 * @param m the object Metrics chosen
 	 */
+
 	public CYCLO_method(Metrics m) {
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		pack = m.getCu().getPackageDeclaration().toString();
@@ -111,12 +116,11 @@ public class CYCLO_method {
 	}
 
 	/**
-	 * Counts the statements in the array
+	 * Counts the cyclomatic complexity of all the statements in the array.
 	 * 
-	 * @param statements an array with the cyclomatic complexity statements
+	 * @param statements an array of statements
 	 * 
 	 */
-
 	private void countStatements(List<Statement> statements) {
 
 		for (Statement s : statements) {
@@ -137,11 +141,11 @@ public class CYCLO_method {
 	}
 
 	/**
-	 * Counts the binary expressions in the array
+	 * Counts the cyclomatic complexity of all binary expressions in the array
 	 * 
-	 * @param binExpression an array with the Binary Expressions of the cyclomatic
-	 *                      complexity
+	 * @param binExpression an array of Binary Expressions
 	 */
+
 	private void countBinaryExpressions(List<BinaryExpr> binExpressions) {
 		for (BinaryExpr e : binExpressions) {
 			if (e.getOperator().equals(Operator.AND) || e.getOperator().equals(Operator.OR)) {
@@ -150,14 +154,6 @@ public class CYCLO_method {
 		}
 	}
 
-	/**
-	 * Getter for the cyclo int
-	 * 
-	 * @return the cycle int
-	 */
-	public int getCyclo() {
-		return cyclo;
-	}
 	
 	/**
 	 * Getter for the array with the results
@@ -168,18 +164,5 @@ public class CYCLO_method {
 		return resultados;
 	}
 
-	public static void main(String[] args) throws Exception {
-
-		// CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
-
-		CYCLO_method a = new CYCLO_method(new Metrics(FILE_PATH));
-		System.out.println(a.getResultados().size());
-		for (Resultado string : a.getResultados()) {
-			// System.out.println(string.getPath());
-			// System.out.println("methodID " + string.getMethodID());
-			System.out.println(string.getClasses());
-			System.out.println(string.getLinhas());
-		}
-	}
 
 }

@@ -12,9 +12,15 @@ import com.github.javaparser.ast.expr.BinaryExpr.Operator;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.SwitchEntry;
 import com.github.javaparser.ast.stmt.SwitchEntry.Type;
-
+/**
+ * Calculates the Cyclomatic Complexity of  the classes on the Metrics object imported
+ * 
+ */
 public class WMC_Class {
-
+	/**
+	 * @author Grupo52
+	 * 
+	 */
 	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
@@ -24,9 +30,14 @@ public class WMC_Class {
 	
 private int i = 1;
 	
-//	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
 
+	/**
+	 * Calculates the Cyclomatic Complexity of all the classes on the chosen Metrics object
+	 * and adds the result to an array of Resultados with the Name of the package and the class.
+	 * 
+	 * @param m the object Metrics chosen
+	 */
 	public WMC_Class(Metrics m) {
 
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
@@ -69,7 +80,12 @@ private int i = 1;
 
 	}
 
-
+	/**
+	 * Counts the cyclomatic complexity of all the statements in the array.
+	 * 
+	 * @param statements an array of statements
+	 * 
+	 */
 	private void countStatements(List<Statement> statements) {
 
 		for (Statement s : statements) {
@@ -89,6 +105,11 @@ private int i = 1;
 
 	}
 
+	/**
+	 * Counts the cyclomatic complexity of all binary expressions in the array
+	 * 
+	 * @param binExpression an array of Binary Expressions 
+	 */
 	private void countBinaryExpressions(List<BinaryExpr> binExpressions) {
 		for (BinaryExpr e : binExpressions) {
 			if (e.getOperator().equals(Operator.AND) || e.getOperator().equals(Operator.OR)) {
@@ -97,23 +118,16 @@ private int i = 1;
 		}
 	}
 
-	public int getCyclo() {
-		return cyclo;
-	}
 
+	/**
+	 * Getter for the array with the results
+	 * 
+	 * @return the array with the results
+	 */
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		WMC_Class a = new WMC_Class(new Metrics(FILE_PATH));
-		
-		for (Resultado string : a.getResultados()) {
-			// System.out.println(string.getPath());
-			System.out.println(string.getClasses());
-			System.out.println(string.getLinhas());
-		}
 
-	}
 
 }

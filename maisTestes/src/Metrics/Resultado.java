@@ -1,8 +1,17 @@
 package Metrics;
 
 import java.util.ArrayList;
+/**
+ * Makes the result of each metric organized into one object with all the information needed
+ * 
+ */
 
 public class Resultado {
+	/**
+	 *@author Grupo52  
+	 * 
+	 */
+	
 	private String path;
 	private int linhas;
 	private int methodID;
@@ -12,7 +21,14 @@ public class Resultado {
 	 * Posição do allInts e respetiva metrica: 0->nomClass 1->loc_class 2->wmcClass
 	 * 3->locMethod 4->cycloMethod
 	 */
-
+	
+	/** 
+	 * Class Constructor to store the metrics results.
+	 * @param methodID the id of the object result.
+	 * @param path the String with all the info of the result, including package, class and method if it has.
+	 * @param linhas the result of the metric.
+	 * @param intis an array used to identify what metric is used to get that result.
+	 * */
 	public Resultado(int methodID, String path, int linhas, int[] intis) {
 		this.path = path;
 		this.linhas = linhas;
@@ -21,55 +37,54 @@ public class Resultado {
 		this.intis = intis;
 	}
 
-//	public ArrayList<Integer> getAllInts() {
-//		return allInts;
-//	}
 
+	/**
+	 * Getter for the array that identifies what metric was used
+	 * 
+	 * @return the array with the results
+	 */
+	
 	public int[] getAllInts() {
 		return intis;
 	}
-
-	public void setAllIntsNomClass(int nomClass) {
-//		allInts.add(0, nomClass);
-		intis[0] = nomClass;
-	}
-
-	public void setAllIntsLocClass(int locClass) {
-//		allInts.add(1, locClass);
-		intis[1] = locClass;
-	}
-
-	public void setAllIntsWmcClass(int wmcClass) {
-//		allInts.add(2, wmcClass);
-		intis[2] = wmcClass;
-	}
-
-	public void setAllIntsLocMethod(int locMethod) {
-//		allInts.add(3, locMethod);
-		intis[3] = locMethod;
-	}
-
-	public void setAllIntsCycloMethod(int cycloMethod) {
-//		allInts.add(4, cycloMethod);
-		intis[4] = cycloMethod;
-	}
-
+	/**
+	 * setter for the methodID
+	 * 
+	 * @param methodID the method ID to be displayed
+	 */
 	public void setMethodID(int methodID) {
 		this.methodID = methodID;
 	}
-
+	/**
+	 * Getter for the methodID
+	 * 
+	 * @return the id of object result
+	 */
 	public int getMethodID() {
 		return methodID;
 	}
-
+	/**
+	 * Getter for the result
+	 * 
+	 * @return the result of the object
+	 */
 	public int getLinhas() {
 		return linhas;
 	}
 
+	/**
+	 * Getter for the path
+	 * 
+	 * @return the whole string with package, class and method
+	 */
 	public String getPath() {
 		return path;
 	}
-
+	/**
+	 * Changes the path String to get only the package
+	 * 
+	 * @return the string with the package name
+	 */
 	public String getPackage() {
 		String[] aux;
 		aux = path.trim().split("/");
@@ -81,7 +96,11 @@ public class Resultado {
 		return packf[1];
 //		return pack;
 	}
-
+	/**
+	 * Changes the path String to get only the class
+	 * 
+	 * @return the string with the class name
+	 */
 	public String getClasses() {
 
 		String[] aux;
@@ -89,7 +108,11 @@ public class Resultado {
 
 		return aux[1];
 	}
-
+	/**
+	 * Changes the path String to get only the method name
+	 * 
+	 * @return the string with the method name
+	 */
 	public String getMethodNames() {
 		String[] aux;
 
@@ -98,7 +121,5 @@ public class Resultado {
 
 	}
 
-	public static void main(String[] args) {
 
-	}
 }
