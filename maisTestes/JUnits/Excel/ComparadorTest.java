@@ -17,6 +17,10 @@ import maisTestes.Excel;
 import maisTestes.Linha;
 import central.BoolResultado;
 
+/**
+ * @author Grupo 52
+ */
+
 class ComparadorTest {
 
 	static Comparador c;

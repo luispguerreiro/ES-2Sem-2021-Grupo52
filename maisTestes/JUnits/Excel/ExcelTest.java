@@ -15,13 +15,17 @@ import org.junit.jupiter.api.Test;
 
 import maisTestes.Excel;
 
+/**
+ * @author Grupo 52
+ */
+
 class ExcelTest {
 	static Excel excel;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		excel = new Excel();
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		excel.lerExcel(new File("Code_Smells.xlsx"));
 	}
 
 	@AfterAll

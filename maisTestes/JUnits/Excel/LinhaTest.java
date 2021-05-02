@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 
 import maisTestes.Linha;
 
+/**
+ * @author Grupo 52
+ */
+
 class LinhaTest {
 	static Linha linha;
 

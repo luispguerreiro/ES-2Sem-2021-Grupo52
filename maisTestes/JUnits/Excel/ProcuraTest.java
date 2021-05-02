@@ -13,8 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import maisTestes.Excel;
-import maisTestes.Linha;
 import maisTestes.Procura;
+
+/**
+ * @author Grupo 52
+ */
 
 class ProcuraTest {
 	static Procura p;
@@ -25,7 +28,7 @@ class ProcuraTest {
 		p = new Procura();
 		excel = new Excel();
 
-		excel.lerExcel(new File("C:\\Users\\joao_\\Downloads\\Code_Smells.xlsx"));
+		excel.lerExcel(new File("Code_Smells.xlsx"));
 		p.getProcura(excel.getList(), "GrammerException", "GrammerException(int,String)");
 	}
 
