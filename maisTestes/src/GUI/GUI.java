@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,6 +51,10 @@ import maisTestes.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
+
+/**
+ * @author Grupo 52
+ */
 
 public class GUI extends JFrame {
 
@@ -119,6 +122,9 @@ public class GUI extends JFrame {
 		});
 	}
 
+	/**
+	 * Clean the arrays with rules.
+	 */
 	public void cleanArrays() {
 		metricNames.clear();
 		metricNames1.clear();
@@ -129,13 +135,13 @@ public class GUI extends JFrame {
 		comparators.clear();
 		comparators1.clear();
 		rules.clear();
-
 	}
 
 	/**
 	 * Create the frame.
 	 * 
-	 * @throws IOException
+	 * @throws IOException in case there is a problem importing or exporting the
+	 *                     files
 	 */
 	public GUI() throws IOException {
 		history = new History();
@@ -152,8 +158,7 @@ public class GUI extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File selectedFile = new File("");
-				
-				
+
 				JFileChooser jfc = new JFileChooser("Escolha a pasta");
 				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnValue = jfc.showOpenDialog(null);
@@ -177,7 +182,7 @@ public class GUI extends JFrame {
 							files.add(file);
 						}
 					}
-					if(hasFiles == false) {
+					if (hasFiles == false) {
 						JOptionPane.showMessageDialog(null, "Selecione uma pasta com um projeto Java.");
 					}
 					src_path = new File(txtSrcPath.getText());
@@ -690,7 +695,8 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (excelFile == null)
-						JOptionPane.showMessageDialog(null,	"Impossível abrir o ficheiro Excel!\nPor favor faça 'Run', para que o mesmo seja criado.");
+						JOptionPane.showMessageDialog(null,
+								"Impossível abrir o ficheiro Excel!\nPor favor faça 'Run', para que o mesmo seja criado.");
 					Desktop d = Desktop.getDesktop();
 					d.open(excelFile);
 				} catch (IOException e1) {
@@ -758,7 +764,8 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (central == null)
-					JOptionPane.showMessageDialog(null,	"Impossível vizualizar o gráfico!\nPor favor faça 'Run', para que o mesmo seja criado.");
+					JOptionPane.showMessageDialog(null,
+							"Impossível vizualizar o gráfico!\nPor favor faça 'Run', para que o mesmo seja criado.");
 				DefaultPieDataset dataset = new DefaultPieDataset();
 				dataset.setValue("VP", 21);
 				dataset.setValue("VN", 10);
@@ -797,6 +804,16 @@ public class GUI extends JFrame {
 		contentPane.add(scrollPane);
 	}
 
+	/**
+	 * Writes the table with the given information.
+	 * 
+	 * @param isgodclass
+	 * @param islongmethod
+	 * @param comparador
+	 * @param tipo
+	 * 
+	 * @return the table that will be shown at the GUI.
+	 */
 	public JTable escreveTabela(ArrayList<BoolResultado> isgodclass, ArrayList<BoolResultado> islongmethod,
 			Comparador comparador, int tipo) {
 		ArrayList<String[]> list = new ArrayList<>();
@@ -832,16 +849,16 @@ public class GUI extends JFrame {
 				data[i][5] = central.getComparador().getClassCheck().get(i);
 				data[i][6] = islongmethod.get(i).getVerificacao();
 				data[i][7] = central.getComparador().getMethodCheck().get(i);
-
 			}
 		}
-
 		JTable table = new JTable(data, list.get(0));
 		table.setEnabled(false);
 		return table;
-
 	}
 
+	/**
+	 * Writes the statistics from the search.
+	 */
 	public void writeStatsLabels() {
 		nPackagesLabel.setText(Integer.toString(central.getNumberOfPackages()));
 		nClassesLabel.setText(Integer.toString(central.getNumberOfClasses()));
@@ -860,5 +877,4 @@ public class GUI extends JFrame {
 		falsePositLabel.updateUI();
 		falseNegatLabel.updateUI();
 	}
-
 }

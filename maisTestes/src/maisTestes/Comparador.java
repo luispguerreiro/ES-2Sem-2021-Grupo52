@@ -22,6 +22,18 @@ public class Comparador {
 
 	private File file = new File("Code_Smells.xlsx");
 
+	/**
+	 * 
+	 * @throws IOException           in case there is a problem importing or
+	 *                               exporting the files
+	 * @throws FileNotFoundException in case there is a problem importing a file
+	 * 
+	 * @param boolMethod the array list with all the results of code smells using
+	 *                   the thresholds chosen by the user (regarding methods)
+	 * @param boolClass  the array list with all the results of code smells using
+	 *                   the thresholds chosen by the user (regarding classes)
+	 * @param tipo 
+	 */
 	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass, int tipo)
 			throws FileNotFoundException, IOException {
 		Excel excel = new Excel();
@@ -48,9 +60,7 @@ public class Comparador {
 	 * @param boolMethod the array list with all the results of code smells using
 	 *                   the thresholds chosen by the user (regarding methods)
 	 * @param linhas     the array list with all the rows from an Excel File
-	 * 
 	 */
-
 	public void methodComp(ArrayList<BoolResultado> boolMethod, ArrayList<Linha> linhas) {
 		methodCheck = new ArrayList<>();
 		for (int j = 0; j < boolMethod.size(); j++) {
@@ -92,9 +102,7 @@ public class Comparador {
 	 * @param boolClass the array list with all the results of code smells using the
 	 *                  thresholds chosen by the user (regarding classes)
 	 * @param linhas    the array list with all the rows from an Excel File
-	 * 
 	 */
-
 	public void classComp(ArrayList<BoolResultado> boolClass, ArrayList<Linha> linhas) {
 		classCheck = new ArrayList<>();
 		for (int j = 0; j < boolClass.size(); j++) {
@@ -169,7 +177,6 @@ public class Comparador {
 	 * 
 	 * @return the list itself
 	 */
-
 	public ArrayList<String> getClassCheck() {
 		return classCheck;
 	}
@@ -180,7 +187,6 @@ public class Comparador {
 	 * 
 	 * @return the list itself
 	 */
-
 	public ArrayList<String> getMethodCheck() {
 		return methodCheck;
 	}

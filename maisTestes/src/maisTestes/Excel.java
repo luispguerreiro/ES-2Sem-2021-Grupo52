@@ -23,9 +23,12 @@ public class Excel {
 	/**
 	 * Reads an Excel file and transforms it into an Array List
 	 * 
+	 * @throws IOException           in case there is a problem importing or
+	 *                               exporting the files
+	 * @throws FileNotFoundException in case there is a problem importing a file
+	 * 
 	 * @param file the Excel file to be converted into an Array List
 	 */
-
 	public void lerExcel(File file) throws FileNotFoundException, IOException {
 
 		FileInputStream fis = new FileInputStream(file);
@@ -78,7 +81,6 @@ public class Excel {
 	 * 
 	 * @return the list itself
 	 */
-
 	public ArrayList<Linha> getList() {
 		return list;
 	}
