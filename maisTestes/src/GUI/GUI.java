@@ -58,53 +58,90 @@ import rules.Rule.operator;
 
 public class GUI extends JFrame {
 
+	/** a panel */
 	private JPanel contentPane;
+	/** a text field */
 	private JTextField txtSrcPath;
+	/** a scroll pane */
 	private JScrollPane scrollPane;
 
+	/** imported project */
 	private File src_path;
+	/** exported excel file */
 	private File excelFile;
 
+	/** central class */
 	private Central central;
 
+	/** rules history */
 	private History history;
 
+	/** a label */
 	private JLabel nPackagesLabel;
+	/** a label */
 	private JLabel nClassesLabel;
+	/** a label */
 	private JLabel nMethodsLabel;
+	/** a label */
 	private JLabel nLinesLabel;
+	/** a label */
 	private JLabel verdPositLabel;
+	/** a label */
 	private JLabel verdNegatLabel;
+	/** a label */
 	private JLabel falsePositLabel;
+	/** a label */
 	private JLabel falseNegatLabel;
 
+	/** the integer that will determine the quality of detection of code smells */
 	private int tipoComparacao; // vai ser retirado consoante as checkbox de god class e long method
 
+	/** a text field */
 	private JTextField txtThreshold;
+	/** a text field */
 	private JTextField textField;
+	/** a text field */
 	private JTextField textField_1;
+	/** a text field */
 	private JTextField textField_3;
+	/** a text field */
 	private JTextField textField_4;
+	/** a text field */
 	private JTextField textField_5;
 
+	/** array list with metric names */
 	private ArrayList<String> metricNames = new ArrayList<>();
+	/** array list with comparators */
 	private ArrayList<comparator> comparators = new ArrayList<>();
+	/** array list with operators */
 	private ArrayList<operator> operators = new ArrayList<>();
+	/** array list with limits */
 	private ArrayList<Integer> limits = new ArrayList<>();
+	/** array list with another metric names */
 	private ArrayList<String> metricNames1 = new ArrayList<>();
+	/** array list with another comparators */
 	private ArrayList<comparator> comparators1 = new ArrayList<>();
+	/** array list with another operators */
 	private ArrayList<operator> operators1 = new ArrayList<>();
+	/** array list with another limits */
 	private ArrayList<Integer> limits1 = new ArrayList<>();
+	
+	/** array list with folders */
 	private List<File> folders = new ArrayList<>();
+	/** array list with files */
 	private ArrayList<File> files = new ArrayList<>();
 
+	/** array list with rules */
 	ArrayList<Rule> rules = new ArrayList<>();
 
+	/** a text field */
 	private JTextField txtSelecioneONome;
+	/** a text field */
 	private JTextField txtSelecioneAPasta;
 
 	/**
 	 * Launch the application.
+	 * 
 	 * @param args ...
 	 */
 	public static void main(String[] args) {
@@ -812,7 +849,8 @@ public class GUI extends JFrame {
 	 *                     the thresholds chosen by the user (regarding classes)
 	 * @param islongmethod the array list with all the results of code smells using
 	 *                     the thresholds chosen by the user (regarding methods)
-	 * @param comparador   the object Comparador that will determine the quality of detection of code smells
+	 * @param comparador   the object Comparador that will determine the quality of
+	 *                     detection of code smells
 	 * @param tipo         the integer that will determine the quality of detection
 	 *                     of code smells (1->both, 2->regarding classes,
 	 *                     3->regarding methods)
