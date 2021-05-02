@@ -40,14 +40,6 @@ public class Comparador {
 
 	}
 
-//	public ArrayList<Linha> getExcel(String path) throws FileNotFoundException, IOException {
-//		File file = new File(path);
-//		Excel excel = new Excel();
-//		excel.lerExcel(file);
-//		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
-//		return linhas;
-//	}
-
 	/**
 	 * Determines the quality of detection of code smells by comparing the results
 	 * of the Excel file with the results of code smells using the thresholds chosen
@@ -183,7 +175,7 @@ public class Comparador {
 	}
 
 	/**
-	 * getter for the Array List of results obtained from the quality of the
+	 * Getter for the Array List of results obtained from the quality of the
 	 * detection of code smells regarding methods
 	 * 
 	 * @return the list itself
