@@ -12,6 +12,11 @@ import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.stmt.SwitchEntry;
 import com.github.javaparser.ast.stmt.SwitchEntry.Type;
 
+/**
+ * 
+ * @author Grupo 52 
+ */
+
 public class CYCLO_method {
 
 	private static final String FILE_PATH = "C:\\\\\\\\Users\\\\\\\\r_f_g\\\\\\\\Desktop\\\\\\\\SourceCodeParser.java";
@@ -20,17 +25,22 @@ public class CYCLO_method {
 	private ArrayList<Resultado> resultados = new ArrayList<>();
 	private String pack;
 	private int i = 1;
-	
+
 //	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
- 
+
+	/**
+	 * Calculates the Cyclomatic Complexity of the user's project
+	 * 
+	 * @param m the metric chosen
+	 */
 	public CYCLO_method(Metrics m) {
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		pack = m.getCu().getPackageDeclaration().toString();
 		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
 		String mainClassName = mainClass.getNameAsString();
 		for (CallableDeclaration callableDeclaration : mainClassMet) {
-			
+
 			List<Statement> statements = callableDeclaration.findAll(Statement.class);
 			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
 			if (!statements.isEmpty() || !binExpressions.isEmpty()) {
@@ -88,9 +98,8 @@ public class CYCLO_method {
 					}
 				}
 
-				resultados.add(new Resultado(
-						i, pack + "/"+mainClassName+"." + NestClassNames + "/" + c.getNameAsString() + "(" + parameters + ")" + "/", cyclo,
-						empty));
+				resultados.add(new Resultado(i, pack + "/" + mainClassName + "." + NestClassNames + "/"
+						+ c.getNameAsString() + "(" + parameters + ")" + "/", cyclo, empty));
 				// resultados.add(callableDeclaration.getNameAsString());
 				// resultados.add(Integer.toString(cyclo));
 
@@ -100,6 +109,13 @@ public class CYCLO_method {
 			}
 		}
 	}
+
+	/**
+	 * Counts the statements in the array
+	 * 
+	 * @param statements an array with the cyclomatic complexity statements
+	 * 
+	 */
 
 	private void countStatements(List<Statement> statements) {
 
@@ -120,6 +136,12 @@ public class CYCLO_method {
 
 	}
 
+	/**
+	 * Counts the binary expressions in the array
+	 * 
+	 * @param binExpression an array with the Binary Expressions of the cyclomatic
+	 *                      complexity
+	 */
 	private void countBinaryExpressions(List<BinaryExpr> binExpressions) {
 		for (BinaryExpr e : binExpressions) {
 			if (e.getOperator().equals(Operator.AND) || e.getOperator().equals(Operator.OR)) {
@@ -128,10 +150,20 @@ public class CYCLO_method {
 		}
 	}
 
+	/**
+	 * Getter for the cyclo int
+	 * 
+	 * @return the cycle int
+	 */
 	public int getCyclo() {
 		return cyclo;
 	}
-
+	
+	/**
+	 * Getter for the array with the results
+	 * 
+	 * @return the array with the results
+	 */
 	public ArrayList<Resultado> getResultados() {
 		return resultados;
 	}
@@ -144,7 +176,7 @@ public class CYCLO_method {
 		System.out.println(a.getResultados().size());
 		for (Resultado string : a.getResultados()) {
 			// System.out.println(string.getPath());
-			//System.out.println("methodID " + string.getMethodID());
+			// System.out.println("methodID " + string.getMethodID());
 			System.out.println(string.getClasses());
 			System.out.println(string.getLinhas());
 		}

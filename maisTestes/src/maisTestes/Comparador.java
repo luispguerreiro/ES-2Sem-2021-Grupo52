@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 import central.BoolResultado;
 
+/**
+ * @author Grupo 52
+ */
+
 public class Comparador {
 
 	private int countVP = 0;
@@ -18,6 +22,23 @@ public class Comparador {
 
 	private File file = new File("Code_Smells.xlsx");
 
+	/**
+	 * Determines the quality of detection of code smells by comparing the results
+	 * of the Excel file with the results of code smells using the thresholds chosen
+	 * by the user
+	 * 
+	 * @throws IOException           in case there is a problem importing or
+	 *                               exporting the files
+	 * @throws FileNotFoundException in case there is a problem importing a file
+	 * 
+	 * @param boolMethod the array list with all the results of code smells using
+	 *                   the thresholds chosen by the user (regarding methods)
+	 * @param boolClass  the array list with all the results of code smells using
+	 *                   the thresholds chosen by the user (regarding classes)
+	 * @param tipo       the integer that will determine the quality of detection of
+	 *                   code smells (1->both, 2->regarding classes, 3->regarding
+	 *                   methods)
+	 */
 	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass, int tipo)
 			throws FileNotFoundException, IOException {
 		Excel excel = new Excel();
@@ -33,17 +54,17 @@ public class Comparador {
 		if (tipo == 3) {
 			methodComp(boolMethod, linhas);
 		}
-
 	}
 
-//	public ArrayList<Linha> getExcel(String path) throws FileNotFoundException, IOException {
-//		File file = new File(path);
-//		Excel excel = new Excel();
-//		excel.lerExcel(file);
-//		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
-//		return linhas;
-//	}
-
+	/**
+	 * Determines the quality of detection of code smells by comparing the results
+	 * of the Excel file with the results of code smells using the thresholds chosen
+	 * by the user (regarding methods)
+	 * 
+	 * @param boolMethod the array list with all the results of code smells using
+	 *                   the thresholds chosen by the user (regarding methods)
+	 * @param linhas     the array list with all the rows from an Excel File
+	 */
 	public void methodComp(ArrayList<BoolResultado> boolMethod, ArrayList<Linha> linhas) {
 		methodCheck = new ArrayList<>();
 		for (int j = 0; j < boolMethod.size(); j++) {
@@ -53,34 +74,39 @@ public class Comparador {
 				if (linhas.get(i).getPacote().equals(boolMethod.get(j).getPackage())
 						&& linhas.get(i).getClasse().equals(boolMethod.get(j).getClasses())
 						&& linhas.get(i).getMetodo().equals(boolMethod.get(j).getMetodo())) {
-					p=1;
+					p = 1;
 					if (linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Verdadeiro Positivo");
-//						System.out.println("Verdadeiro Positivo");
 						countVP++;
 					}
 					if (!linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Falso Positivo");
-//						System.out.println("Falso Positivo");
 						countFP++;
 					}
 					if (!linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Verdadeiro Negativo");
-//						System.out.println("Verdadeiro Negativo");
 						countVN++;
 					}
 					if (linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Falso Negativo");
-//						System.out.println("Falso Negativo");
 						countFN++;
 					}
-
 				}
-			}if(p==0)
-				methodCheck.add("** Não encontrou **");
 			}
+			if (p == 0)
+				methodCheck.add("** Não encontrou **");
+		}
 	}
 
+	/**
+	 * Determines the quality of detection of code smells by comparing the results
+	 * of the Excel file with the results of code smells using the thresholds chosen
+	 * by the user (regarding classes)
+	 * 
+	 * @param boolClass the array list with all the results of code smells using the
+	 *                  thresholds chosen by the user (regarding classes)
+	 * @param linhas    the array list with all the rows from an Excel File
+	 */
 	public void classComp(ArrayList<BoolResultado> boolClass, ArrayList<Linha> linhas) {
 		classCheck = new ArrayList<>();
 		for (int j = 0; j < boolClass.size(); j++) {
@@ -89,57 +115,83 @@ public class Comparador {
 				if (linhas.get(i).getPacote().equals(boolClass.get(j).getPackage())
 						&& linhas.get(i).getClasse().equals(boolClass.get(j).getClasses())
 						&& linhas.get(i).getMetodo().equals(boolClass.get(j).getMetodo())) {
-					p=1;
+					p = 1;
 					if (linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()) {
 						classCheck.add("Verdadeiro Positivo");
-//						System.out.println("Verdadeiro Positivo");
 						countVP++;
 					}
 					if (!linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()) {
 						classCheck.add("Falso Positivo");
-//						System.out.println("Falso Positivo");
 						countFP++;
 					}
 					if (!linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()) {
 						classCheck.add("Verdadeiro Negativo");
-//						System.out.println("Verdadeiro Negativo");
 						countVN++;
 					}
 					if (linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()) {
 						classCheck.add("Falso Negativo");
-//						System.out.println("Falso Negativo");
 						countFN++;
 					}
-
 				}
 			}
-			if(p==0)
+			if (p == 0)
 				classCheck.add("** Não encontrou **");
 		}
 	}
 
+	/**
+	 * Getter for the number of VP
+	 * 
+	 * @return the number of VP
+	 */
 	public int getCountVP() {
 		return countVP;
 	}
 
+	/**
+	 * Getter for the number of FP
+	 * 
+	 * @return the number of FP
+	 */
 	public int getCountFP() {
 		return countFP;
 	}
 
+	/**
+	 * Getter for the number of VN
+	 * 
+	 * @return the number of VN
+	 */
 	public int getCountVN() {
 		return countVN;
 	}
 
+	/**
+	 * Getter for the number of FN
+	 * 
+	 * @return the number of FN
+	 */
 	public int getCountFN() {
 		return countFN;
 	}
 
+	/**
+	 * Getter for the Array List of results obtained from the quality of the
+	 * detection of code smells regarding classes
+	 * 
+	 * @return the list itself
+	 */
 	public ArrayList<String> getClassCheck() {
 		return classCheck;
 	}
 
+	/**
+	 * Getter for the Array List of results obtained from the quality of the
+	 * detection of code smells regarding methods
+	 * 
+	 * @return the list itself
+	 */
 	public ArrayList<String> getMethodCheck() {
 		return methodCheck;
 	}
-
 }

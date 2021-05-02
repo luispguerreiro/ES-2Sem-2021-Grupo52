@@ -12,10 +12,23 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * @author Grupo 52
+ */
+
 public class Excel {
 
 	ArrayList<Linha> list;
 
+	/**
+	 * Reads an Excel file and transforms it into an Array List
+	 * 
+	 * @throws IOException           in case there is a problem importing or
+	 *                               exporting the files
+	 * @throws FileNotFoundException in case there is a problem importing a file
+	 * 
+	 * @param file the Excel file to be converted into an Array List
+	 */
 	public void lerExcel(File file) throws FileNotFoundException, IOException {
 
 		FileInputStream fis = new FileInputStream(file);
@@ -50,7 +63,6 @@ public class Excel {
 				case 10:
 					if (cell.getCellType() == 4) {
 						linha.setIs_Long_Method(cell.getBooleanCellValue());
-//						System.out.print(cell.getBooleanCellValue() + " ");
 					} else {
 						linha.setIs_Long_Method(false);
 					}
@@ -64,13 +76,12 @@ public class Excel {
 
 	}
 
+	/**
+	 * Getter for the Array List of linhas
+	 * 
+	 * @return the list itself
+	 */
 	public ArrayList<Linha> getList() {
 		return list;
 	}
-
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		Excel excel = new Excel();
-		excel.lerExcel(new File("C:\\Users\\Vasco\\Downloads\\Code_Smells.xlsx"));
-	}
-
 }

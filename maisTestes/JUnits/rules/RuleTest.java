@@ -3,8 +3,6 @@
  */
 package rules;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -31,7 +29,7 @@ class RuleTest {
 	static ArrayList<Integer> limits;
 	static ArrayList<operator> oper;
 	static ArrayList<operator> oper2;
-	static ArrayList<Resultado> result; 
+	static ArrayList<Resultado> result;
 	static ArrayList<BoolResultado> boolresult;
 	static String ruleName;
 	static int ruleType;
@@ -127,23 +125,24 @@ class RuleTest {
 	/**
 	 * Test method for
 	 * {@link rules.Rule#calculateThresholds(java.util.ArrayList, java.util.ArrayList)}.
-	 * @throws FileNotFoundException 
+	 * 
+	 * @throws FileNotFoundException
 	 */
 	@Test
 	final void testCalculateThresholds() throws FileNotFoundException {
-		int methodID=2;
-		String path= "path";
-		int linhas= 40; 
-		int[] intis= {0,3,4,5};
-		String pack= "pack";
-		String classes= "classes"; 
-		String metodo= "metodo"; 
-		String metric= "LOC_class";
-		comparator o= comparator.BIGGER;
-		int limit= 20;
-		boolean verificacao= false;
+		int methodID = 2;
+		String path = "path";
+		int linhas = 40;
+		int[] intis = { 0, 3, 4, 5 };
+		String pack = "pack";
+		String classes = "classes";
+		String metodo = "metodo";
+		String metric = "LOC_class";
+		comparator o = comparator.BIGGER;
+		int limit = 20;
+		boolean verificacao = false;
 		thresholds.add(new Threshold(metric, o, limit));
-		
+
 		result.add(new Resultado(methodID, path, linhas, intis));
 		boolresult.add(new BoolResultado(limit, pack, classes, metodo, verificacao));
 		result.add(new Resultado(methodID, path, linhas, intis));
@@ -155,12 +154,12 @@ class RuleTest {
 		Assertions.assertNotNull(result);
 		Assertions.assertNotNull(boolresult);
 		Assertions.assertEquals(result.size(), boolresult.size());
-		thresholds.add(new Threshold(metric, o, limit+1));
+		thresholds.add(new Threshold(metric, o, limit + 1));
 		r.calculateThresholds(result, boolresult);
 		Assertions.assertNotNull(result);
 		Assertions.assertNotNull(boolresult);
 		Assertions.assertEquals(result.size(), boolresult.size());
-		thresholds.add(new Threshold(metric, o, limit+2));
+		thresholds.add(new Threshold(metric, o, limit + 2));
 		r.calculateThresholds(result, boolresult);
 		Assertions.assertNotNull(result);
 		Assertions.assertNotNull(boolresult);
@@ -306,7 +305,7 @@ class RuleTest {
 		r.setRuleName(ruleName);
 		Assertions.assertEquals(ruleName, r.getRuleName());
 	}
-	
+
 	/**
 	 * Test method for {@link rules.Rule#setThresholds(java.util.ArrayList;)}.
 	 */
@@ -316,13 +315,22 @@ class RuleTest {
 		Assertions.assertEquals(thresholds, r.getThresholds());
 	}
 
-
 	/**
 	 * Test method for {@link rules.Rule#check()}.
+	 * @throws FileNotFoundException 
 	 */
 	@Test
-	final void testCheck() {
-		fail("Not yet implemented"); // TODO
+	final void testCheck() throws FileNotFoundException {
+		Rule check = new Rule(ruleName, ruleType, metricName, comp, limits, oper);
+		check.check();
+		Assertions.assertNotNull(metricName);
+//		Rule check2 = new Rule(ruleName, ruleType, metricName, comp, limitcheck, oper);
+//		ArrayList<Integer>limits3 = new ArrayList<>();
+//		Rule r2= new Rule(ruleName, ruleType, metricName, comp, limits3, oper);
+//		Assertions.assertThrows(IllegalArgumentException.class,
+//		            ()->{
+//		check2.check();
+//		            });
 	}
 
 	/**
