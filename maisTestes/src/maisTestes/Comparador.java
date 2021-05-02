@@ -23,6 +23,9 @@ public class Comparador {
 	private File file = new File("Code_Smells.xlsx");
 
 	/**
+	 * Determines the quality of detection of code smells by comparing the results
+	 * of the Excel file with the results of code smells using the thresholds chosen
+	 * by the user
 	 * 
 	 * @throws IOException           in case there is a problem importing or
 	 *                               exporting the files
@@ -32,7 +35,9 @@ public class Comparador {
 	 *                   the thresholds chosen by the user (regarding methods)
 	 * @param boolClass  the array list with all the results of code smells using
 	 *                   the thresholds chosen by the user (regarding classes)
-	 * @param tipo 
+	 * @param tipo       the integer that will determine the quality of detection of
+	 *                   code smells (1->both, 2->regarding classes, 3->regarding
+	 *                   methods)
 	 */
 	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass, int tipo)
 			throws FileNotFoundException, IOException {
@@ -49,7 +54,6 @@ public class Comparador {
 		if (tipo == 3) {
 			methodComp(boolMethod, linhas);
 		}
-
 	}
 
 	/**

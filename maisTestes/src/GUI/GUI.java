@@ -807,10 +807,14 @@ public class GUI extends JFrame {
 	/**
 	 * Writes the table with the given information.
 	 * 
-	 * @param isgodclass
-	 * @param islongmethod
+	 * @param isgodclass   the array list with all the results of code smells using
+	 *                     the thresholds chosen by the user (regarding classes)
+	 * @param islongmethod the array list with all the results of code smells using
+	 *                     the thresholds chosen by the user (regarding methods)
 	 * @param comparador
-	 * @param tipo
+	 * @param tipo         the integer that will determine the quality of detection
+	 *                     of code smells (1->both, 2->regarding classes,
+	 *                     3->regarding methods)
 	 * 
 	 * @return the table that will be shown at the GUI.
 	 */
