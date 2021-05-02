@@ -12,7 +12,7 @@ class ResultadoTest {
 	static String Path;
 	static String Package;
 	static String Classe;
-	private static String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\Jasml\\src\\com\\jasml\\classes\\Attribute.java";
+	private static String FILE_PATH = "SourceCodeParser.java";
 	private static Metrics m;
 	private static Resultado rlc;
 	private static Resultado rlm;

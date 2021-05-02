@@ -3,6 +3,7 @@
  */
 package central;
 
+import java.awt.Desktop;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ import rules.Rule.operator;
 import rules.Threshold;
 
 /**
- * @author Nazif Sidique & Henrique Marques
+ * @author Grupo52
  *
  */
 class HistoryTest {
@@ -34,12 +35,15 @@ class HistoryTest {
 	static ArrayList<Resultado> result; 
 	static ArrayList<BoolResultado> boolresult;
 	
+	static Desktop d =Desktop.getDesktop();
+	
 	static int ruleType;
 	static Rule r;
 	static String folderPathToSave= "save";
 	static String folderPathToRead = "read";
 	static String ruleName= "name";
 	static History h;
+	static String desktopPath = System.getProperty("user.home") + "/Desktop";
 
 	/**
 	 * @throws java.lang.Exception
@@ -143,7 +147,7 @@ class HistoryTest {
 	@Test
 	final void testWriteFile() throws IOException {
 		History h1= new History();
-		h1.setFolderPathToSave("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\");
+		h1.setFolderPathToSave(desktopPath.replace("\\", "/"));
 		h1.setRuleName("regra");
 		h1.writeFile(rules);
 		Assertions.assertNotNull(rules);
@@ -156,10 +160,10 @@ class HistoryTest {
 	final void testReadFile() {
 		
 		History h1= new History();
-		h1.setFolderPathToSave("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\");
+		h1.setFolderPathToSave(desktopPath.replace("\\", "/"));
 		h1.setRuleName("regra");
 		h1.writeFile(rules);
-		ArrayList<Rule> rules1= h1.readFile("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\regra");
+		ArrayList<Rule> rules1= h1.readFile("todas");
 		Assertions.assertFalse(rules1.isEmpty());
 	}
 
