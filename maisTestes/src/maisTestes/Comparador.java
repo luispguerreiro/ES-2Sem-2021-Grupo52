@@ -47,15 +47,16 @@ public class Comparador {
 //		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
 //		return linhas;
 //	}
-	
-	
+
 	/**
-	 * Determines the quality of detection of code smells by comparing the results of the Excel file
-	 * with the results of code smells using the thresholds chosen by the user (regarding methods)
+	 * Determines the quality of detection of code smells by comparing the results
+	 * of the Excel file with the results of code smells using the thresholds chosen
+	 * by the user (regarding methods)
 	 * 
-	 * @param boolMethod	the array list with all the results of code smells using the thresholds chosen by the user (regarding methods)
-	 * @param linhas	the array list with all the rows from an Excel File
-	 * 			
+	 * @param boolMethod the array list with all the results of code smells using
+	 *                   the thresholds chosen by the user (regarding methods)
+	 * @param linhas     the array list with all the rows from an Excel File
+	 * 
 	 */
 
 	public void methodComp(ArrayList<BoolResultado> boolMethod, ArrayList<Linha> linhas) {
@@ -70,22 +71,18 @@ public class Comparador {
 					p = 1;
 					if (linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Verdadeiro Positivo");
-//						System.out.println("Verdadeiro Positivo");
 						countVP++;
 					}
 					if (!linhas.get(i).getis_Long_Method() && boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Falso Positivo");
-//						System.out.println("Falso Positivo");
 						countFP++;
 					}
 					if (!linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Verdadeiro Negativo");
-//						System.out.println("Verdadeiro Negativo");
 						countVN++;
 					}
 					if (linhas.get(i).getis_Long_Method() && !boolMethod.get(j).getVerificacao()) {
 						methodCheck.add("Falso Negativo");
-//						System.out.println("Falso Negativo");
 						countFN++;
 					}
 				}
@@ -95,14 +92,15 @@ public class Comparador {
 		}
 	}
 
-	
 	/**
-	 * Determines the quality of detection of code smells by comparing the results of the Excel file
-	 * with the results of code smells using the thresholds chosen by the user (regarding classes)
+	 * Determines the quality of detection of code smells by comparing the results
+	 * of the Excel file with the results of code smells using the thresholds chosen
+	 * by the user (regarding classes)
 	 * 
-	 * @param boolClass	the array list with all the results of code smells using the thresholds chosen by the user (regarding classes)
-	 * @param linhas	the array list with all the rows from an Excel File
-	 * 			
+	 * @param boolClass the array list with all the results of code smells using the
+	 *                  thresholds chosen by the user (regarding classes)
+	 * @param linhas    the array list with all the rows from an Excel File
+	 * 
 	 */
 
 	public void classComp(ArrayList<BoolResultado> boolClass, ArrayList<Linha> linhas) {
@@ -116,32 +114,27 @@ public class Comparador {
 					p = 1;
 					if (linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()) {
 						classCheck.add("Verdadeiro Positivo");
-//						System.out.println("Verdadeiro Positivo");
 						countVP++;
 					}
 					if (!linhas.get(i).getis_God_Class() && boolClass.get(j).getVerificacao()) {
 						classCheck.add("Falso Positivo");
-//						System.out.println("Falso Positivo");
 						countFP++;
 					}
 					if (!linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()) {
 						classCheck.add("Verdadeiro Negativo");
-//						System.out.println("Verdadeiro Negativo");
 						countVN++;
 					}
 					if (linhas.get(i).getis_God_Class() && !boolClass.get(j).getVerificacao()) {
 						classCheck.add("Falso Negativo");
-//						System.out.println("Falso Negativo");
 						countFN++;
 					}
-
 				}
 			}
 			if (p == 0)
 				classCheck.add("erro");
 		}
 	}
-	
+
 	/**
 	 * Getter for the number of VP
 	 * 
@@ -150,7 +143,7 @@ public class Comparador {
 	public int getCountVP() {
 		return countVP;
 	}
-	
+
 	/**
 	 * Getter for the number of FP
 	 * 
@@ -159,7 +152,7 @@ public class Comparador {
 	public int getCountFP() {
 		return countFP;
 	}
-	
+
 	/**
 	 * Getter for the number of VN
 	 * 
@@ -168,7 +161,7 @@ public class Comparador {
 	public int getCountVN() {
 		return countVN;
 	}
-	
+
 	/**
 	 * Getter for the number of FN
 	 * 
@@ -177,25 +170,26 @@ public class Comparador {
 	public int getCountFN() {
 		return countFN;
 	}
-	
+
 	/**
-	 * getter for the Array List of results obtained from the quality of the detection of code smells regarding classes
+	 * Getter for the Array List of results obtained from the quality of the
+	 * detection of code smells regarding classes
 	 * 
-	 * @return	the list itself			
+	 * @return the list itself
 	 */
 
 	public ArrayList<String> getClassCheck() {
 		return classCheck;
 	}
-	
+
 	/**
-	 * getter for the Array List of results obtained from the quality of the detection of code smells regarding methods
+	 * getter for the Array List of results obtained from the quality of the
+	 * detection of code smells regarding methods
 	 * 
-	 * @return	the list itself			
+	 * @return the list itself
 	 */
 
 	public ArrayList<String> getMethodCheck() {
 		return methodCheck;
 	}
-
 }
