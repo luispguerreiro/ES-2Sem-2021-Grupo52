@@ -56,10 +56,10 @@ class CentralTest {
 	static ArrayList<Resultado> all = new ArrayList<>();
 	static ArrayList<File> files = new ArrayList<>();
 	static String excelFileDir ="";
-	static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10";
-	static File SRC_path = new File("C:\\Users\\nmsid\\Downloads\\jasml_0.10");
-	static String PATH2 = "C:\\Users\\henri\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolItem.java";
-	static File file = new File("C:\\Users\\nmsid\\OneDrive\\Ambiente de Trabalho\\jasml_0.10");
+	static String SRC_PATH = "SourceCodeParser.java";
+	static File SRC_path = new File("SourceCodeParser.java");
+	static String PATH2 = "SourceCodeParser.java";
+	static File file = new File("SourceCodeParser.java");
 	static int separador;
 	static Metrics metric;
 	static CYCLO_method cyclo;
@@ -329,7 +329,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfClasses() {
-		int numberOfClasses = 1;
+		int numberOfClasses = 3;
 		assertEquals(numberOfClasses, c.getNumberOfClasses());
 	}
 
@@ -338,7 +338,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfLines() {
-		int numberOfLines = 8;
+		int numberOfLines = 2550;
 		assertEquals(numberOfLines, c.getNumberOfLines());
 	}
 
@@ -347,7 +347,7 @@ class CentralTest {
 	 */
 	@Test
 	final void testGetNumberOfMethods() {
-		int numberOfMethods = 1;
+		int numberOfMethods = 32;
 		assertEquals(numberOfMethods, c.getNumberOfMethods());
 	}
 

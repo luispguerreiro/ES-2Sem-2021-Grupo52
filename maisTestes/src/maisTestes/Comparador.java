@@ -94,7 +94,7 @@ public class Comparador {
 				}
 			}
 			if (p == 0)
-				methodCheck.add("erro");
+				methodCheck.add("** Não encontrou **");
 		}
 	}
 
@@ -135,7 +135,7 @@ public class Comparador {
 				}
 			}
 			if (p == 0)
-				classCheck.add("erro");
+				classCheck.add("** Não encontrou **");
 		}
 	}
 

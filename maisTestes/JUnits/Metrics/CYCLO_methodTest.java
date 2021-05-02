@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CYCLO_methodTest {
-	private static String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
+	private static String FILE_PATH = "SourceCodeParser.java";
 	static Metrics m;
 	private static CYCLO_method cyclo;
 	@BeforeAll

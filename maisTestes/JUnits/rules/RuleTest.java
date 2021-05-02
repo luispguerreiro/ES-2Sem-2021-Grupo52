@@ -19,7 +19,7 @@ import rules.Rule.comparator;
 import rules.Rule.operator;
 
 /**
- * @author nmsidique and Henrique
+ * @author Grupo52
  *
  */
 class RuleTest {
@@ -324,13 +324,6 @@ class RuleTest {
 		Rule check = new Rule(ruleName, ruleType, metricName, comp, limits, oper);
 		check.check();
 		Assertions.assertNotNull(metricName);
-//		Rule check2 = new Rule(ruleName, ruleType, metricName, comp, limitcheck, oper);
-//		ArrayList<Integer>limits3 = new ArrayList<>();
-//		Rule r2= new Rule(ruleName, ruleType, metricName, comp, limits3, oper);
-//		Assertions.assertThrows(IllegalArgumentException.class,
-//		            ()->{
-//		check2.check();
-//		            });
 	}
 
 	/**

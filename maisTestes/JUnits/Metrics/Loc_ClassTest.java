@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class Loc_ClassTest {
-	private static String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\Jasml\\src\\com\\jasml\\classes\\Attribute.java";
+	private static String FILE_PATH = "SourceCodeParser.java";
 	static Metrics m;
 	private static Loc_Class locClass2;
 

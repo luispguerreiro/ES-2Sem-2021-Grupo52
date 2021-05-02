@@ -1,7 +1,5 @@
 package rules;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -17,7 +15,7 @@ import central.BoolResultado;
 import rules.Rule.comparator;
 
 /**
- * @author nmsid henri
+ * @author Grupo52
  *
  */
 class ThresholdTest {
@@ -38,7 +36,7 @@ class ThresholdTest {
 		metricName = "NOM_class";
 		o = comparator.BIGGER;
 		limit = 20;
-		FILE_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolGenerator.java";
+		FILE_PATH = "SourceCodeParser.java";
 		resultados = new ArrayList<>();
 		t = new Threshold(metricName, o, limit);
 

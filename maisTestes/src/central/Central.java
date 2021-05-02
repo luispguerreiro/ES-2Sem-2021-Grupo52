@@ -32,7 +32,7 @@ import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
 
-/*
+/**
  * @author Grupo 52
  * 
  * Writes the excel, applies the thresholds given by the Rules in the array of
@@ -420,6 +420,7 @@ public class Central {
 	public void setAll(ArrayList<Resultado> all) {
 		this.all = all;
 	}
+		
 
 	/**
 	 * Getter for the array with the Results of the metrics
@@ -428,6 +429,7 @@ public class Central {
 	 */
 	public ArrayList<Resultado> getAll() {
 		return all;
+
 	}
 
 	/**
