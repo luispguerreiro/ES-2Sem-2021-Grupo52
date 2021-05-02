@@ -811,7 +811,7 @@ public class GUI extends JFrame {
 	 *                     the thresholds chosen by the user (regarding classes)
 	 * @param islongmethod the array list with all the results of code smells using
 	 *                     the thresholds chosen by the user (regarding methods)
-	 * @param comparador
+	 * @param comparador   the object Comparador that will determine the quality of detection of code smells
 	 * @param tipo         the integer that will determine the quality of detection
 	 *                     of code smells (1->both, 2->regarding classes,
 	 *                     3->regarding methods)
