@@ -21,6 +21,12 @@ public class Excel {
 	ArrayList<Linha> list;
 
 	/**
+	 * Initializes a newly created Excel object
+	 */
+	public Excel() {
+	}
+
+	/**
 	 * Reads an Excel file and transforms it into an Array List
 	 * 
 	 * @throws IOException           in case there is a problem importing or

@@ -10,6 +10,12 @@ public class Procura {
 	Linha linha;
 
 	/**
+	 * Initializes a newly created Procura object
+	 */
+	public Procura() {
+	}
+
+	/**
 	 * Searches for a method of a given class in an ArrayList with all rows from an
 	 * Excel File
 	 * 

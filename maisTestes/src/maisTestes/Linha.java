@@ -12,6 +12,12 @@ public class Linha {
 	boolean is_Long_Method;
 
 	/**
+	 * Initializes a newly created Linha object
+	 */
+	public Linha() {
+	}
+
+	/**
 	 * Sets the package name for the object
 	 * 
 	 * @param pacote string with the package name
