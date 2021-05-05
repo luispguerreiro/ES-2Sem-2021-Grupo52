@@ -47,7 +47,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import central.BoolResultado;
 import central.Central;
 import central.History;
-import maisTestes.Comparador;
+import excel.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;

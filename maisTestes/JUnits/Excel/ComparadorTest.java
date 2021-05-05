@@ -12,10 +12,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import maisTestes.Comparador;
-import maisTestes.Excel;
-import maisTestes.Linha;
+
 import central.BoolResultado;
+import excel.Comparador;
+import excel.Excel;
+import excel.Linha;
 
 /**
  * @author Grupo 52

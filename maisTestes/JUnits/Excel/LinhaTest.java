@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import maisTestes.Linha;
+import excel.Linha;
 
 /**
  * @author Grupo 52

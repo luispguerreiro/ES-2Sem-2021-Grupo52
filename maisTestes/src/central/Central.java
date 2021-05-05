@@ -27,7 +27,7 @@ import Metrics.Metrics;
 import Metrics.NOM_Class;
 import Metrics.Resultado;
 import Metrics.WMC_Class;
-import maisTestes.Comparador;
+import excel.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
