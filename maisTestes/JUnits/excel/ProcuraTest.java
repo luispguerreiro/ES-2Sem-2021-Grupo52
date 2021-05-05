@@ -1,8 +1,7 @@
-package Excel;
+package excel;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,24 +12,28 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Excel.Excel;
+import excel.Excel;
+import excel.Procura;
 
 /**
  * @author Grupo 52
  */
 
-class ExcelTest {
+class ProcuraTest {
+	static Procura p;
 	static Excel excel;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		p = new Procura();
 		excel = new Excel();
+
 		excel.lerExcel(new File("Code_Smells.xlsx"));
+		p.getProcura(excel.getList(), "GrammerException", "GrammerException(int,String)");
 	}
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-	
 	}
 
 	@BeforeEach
@@ -42,22 +45,16 @@ class ExcelTest {
 	}
 
 	@Test
-	void testLerExcel() throws FileNotFoundException, IOException {
-
-		assertNotNull(excel.getList());
-		assertEquals(247, excel.getList().size());
+	void testGetProcura() throws FileNotFoundException, IOException {
+		assertNotNull(p.getLinha());
 	}
 
 	@Test
-	void testGetList() throws FileNotFoundException, IOException {
-		assertNotNull(excel.getList());
-		assertFalse(excel.getList().isEmpty());
+	void testGetLinha() {
+		Procura p1 = new Procura();
+		p1.getProcura(excel.getList(), "GrammerException", "GrammerException(int,String)");
+		
+		assertNotNull(p1.getLinha());
+		assertEquals(p.getLinha(), p1.getLinha());
 	}
-
-	@Test
-	void testMain() throws FileNotFoundException, IOException {
-		assertNotNull(excel.getList());
-		assertEquals(247, excel.getList().size());
-	}
-
 }

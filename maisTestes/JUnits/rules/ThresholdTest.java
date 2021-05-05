@@ -10,8 +10,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Metrics.Resultado;
 import central.BoolResultado;
+import metrics.Resultado;
 import rules.Rule.comparator;
 
 /**

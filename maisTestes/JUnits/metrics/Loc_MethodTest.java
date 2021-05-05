@@ -1,4 +1,4 @@
-package Metrics;
+package metrics;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,14 +8,17 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CYCLO_methodTest {
+import metrics.Loc_Method;
+
+class Loc_MethodTest {
 	private static String FILE_PATH = "SourceCodeParser.java";
 	static Metrics m;
-	private static CYCLO_method cyclo;
+	private static Loc_Method locMethod2;
+	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		m = new Metrics(FILE_PATH);
-		 cyclo = new CYCLO_method(m);
+		 locMethod2 = new Loc_Method(m);
 	}
 
 	@AfterAll
@@ -31,15 +34,15 @@ class CYCLO_methodTest {
 	}
 
 	@Test
-	final void testCYCLO_method() {
-		CYCLO_method teste = new CYCLO_method(m);
-		assertNotNull(teste);
+	final void testLoc_Method() {
+		Loc_Method locMethod = new Loc_Method(m);
+		assertNotNull(locMethod);
 	}
 
 	@Test
 	final void testGetResultados() {
-		assertNotNull(cyclo.getResultados());
-		assertEquals(cyclo.getResultados().size(), 32);
+		assertNotNull(locMethod2.getResultados());
+		assertEquals(locMethod2.getResultados().size(), 32);
 	}
 
 }

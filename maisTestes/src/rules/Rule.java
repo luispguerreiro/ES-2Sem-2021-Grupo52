@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Metrics.Resultado;
 import central.BoolResultado;
+import metrics.Resultado;
 
 /**
  * Allows user to create a rule with multiple thresholds

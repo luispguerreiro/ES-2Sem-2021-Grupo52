@@ -1,4 +1,4 @@
-package Excel;
+package excel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,10 +13,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Excel.Comparador;
-import Excel.Excel;
-import Excel.Linha;
 import central.BoolResultado;
+import excel.Comparador;
+import excel.Excel;
+import excel.Linha;
 
 /**
  * @author Grupo 52

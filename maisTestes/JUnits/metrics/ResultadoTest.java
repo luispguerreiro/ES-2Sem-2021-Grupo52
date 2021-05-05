@@ -1,4 +1,4 @@
-package Metrics;
+package metrics;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import metrics.CYCLO_method;
+import metrics.Loc_Class;
+import metrics.Loc_Method;
+import metrics.NOM_Class;
+import metrics.Resultado;
+import metrics.WMC_Class;
 
 class ResultadoTest {
 	static String Path;

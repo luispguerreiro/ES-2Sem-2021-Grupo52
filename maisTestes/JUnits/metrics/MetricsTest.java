@@ -1,4 +1,4 @@
-package Metrics;
+package metrics;
 
 import static org.junit.jupiter.api.Assertions.*;
 

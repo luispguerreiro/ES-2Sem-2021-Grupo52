@@ -1,4 +1,4 @@
-package Metrics;
+package metrics;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,15 +8,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class WMC_ClassTest {
+import metrics.CYCLO_method;
+
+class CYCLO_methodTest {
 	private static String FILE_PATH = "SourceCodeParser.java";
 	static Metrics m;
-	private static WMC_Class wmc;
-
+	private static CYCLO_method cyclo;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		m = new Metrics(FILE_PATH);
-		wmc = new WMC_Class(m);
+		 cyclo = new CYCLO_method(m);
 	}
 
 	@AfterAll
@@ -32,16 +33,15 @@ class WMC_ClassTest {
 	}
 
 	@Test
-	final void testWMC_Class() {
-		WMC_Class wmcClass = new WMC_Class(m);
-		assertNotNull(wmcClass);
+	final void testCYCLO_method() {
+		CYCLO_method teste = new CYCLO_method(m);
+		assertNotNull(teste);
 	}
-
 
 	@Test
 	final void testGetResultados() {
-		assertNotNull(wmc.getResultados());
-		assertEquals(wmc.getResultados().size(),3);
+		assertNotNull(cyclo.getResultados());
+		assertEquals(cyclo.getResultados().size(), 32);
 	}
 
 }

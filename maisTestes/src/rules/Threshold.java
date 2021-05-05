@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import Metrics.Resultado;
 import central.BoolResultado;
+import metrics.Resultado;
 import rules.Rule.comparator;
 
 /**

@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -44,10 +44,10 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
-import Excel.Comparador;
 import central.BoolResultado;
 import central.Central;
 import central.History;
+import excel.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;
