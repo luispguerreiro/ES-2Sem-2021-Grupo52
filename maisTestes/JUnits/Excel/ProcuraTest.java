@@ -12,8 +12,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import excel.Excel;
-import excel.Procura;
+import Excel.Excel;
+import Excel.Procura;
 
 /**
  * @author Grupo 52

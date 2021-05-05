@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import Excel.Comparador;
 import Metrics.CYCLO_method;
 import Metrics.Loc_Class;
 import Metrics.Loc_Method;
@@ -27,7 +28,6 @@ import Metrics.Metrics;
 import Metrics.NOM_Class;
 import Metrics.Resultado;
 import Metrics.WMC_Class;
-import excel.Comparador;
 import rules.Rule;
 import rules.Rule.comparator;
 import rules.Rule.operator;

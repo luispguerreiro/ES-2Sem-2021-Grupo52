@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import excel.Excel;
+import Excel.Excel;
 
 /**
  * @author Grupo 52

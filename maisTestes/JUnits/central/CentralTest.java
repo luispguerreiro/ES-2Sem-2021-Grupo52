@@ -23,6 +23,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Excel.Comparador;
+import Excel.Excel;
 import Metrics.CYCLO_method;
 import Metrics.Loc_Class;
 import Metrics.Loc_Method;
@@ -30,8 +32,6 @@ import Metrics.Metrics;
 import Metrics.NOM_Class;
 import Metrics.Resultado;
 import Metrics.WMC_Class;
-import excel.Comparador;
-import excel.Excel;
 //import rules.GuiOutput.comparators;
 //import rules.GuiOutput.operators;
 import rules.Rule;
