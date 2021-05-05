@@ -14,6 +14,4 @@ Group 52.
 - Vasco Bargas, nº87415.
 
 ##### Coisas em falta
-- nada.
-
-
+- Tudo foi feito em conformidade com o enunciado.
