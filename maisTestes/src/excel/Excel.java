@@ -77,7 +77,6 @@ public class Excel {
 				}
 			}
 			list.add(linha);
-			System.out.println(linha);
 		}
 
 	}

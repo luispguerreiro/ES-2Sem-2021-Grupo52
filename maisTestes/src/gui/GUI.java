@@ -253,7 +253,6 @@ public class GUI extends JFrame {
 								"Precisa de selecionar pelo menos um Code Smell!\n Tente novamente");
 
 					central = new Central(rules, src_path, tipoComparacao, files);
-					System.out.println(jFileChooserRun.getSelectedFile().getAbsolutePath());
 					central.setExcelFileDir(jFileChooserRun.getSelectedFile().getAbsolutePath());
 					central.ini();
 					excelFile = central.getExcelFile();
