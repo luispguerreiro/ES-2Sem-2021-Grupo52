@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import central.BoolResultado;
+
 
 /**
  * @author Grupo 52
@@ -21,7 +21,6 @@ public class Comparador {
 	private ArrayList<String> classCheck;
 
 	private File file = new File("Code_Smells.xlsx");
-
 	/**
 	 * Determines the quality of detection of code smells by comparing the results
 	 * of the Excel file with the results of code smells using the thresholds chosen
@@ -42,6 +41,7 @@ public class Comparador {
 	public Comparador(ArrayList<BoolResultado> boolMethod, ArrayList<BoolResultado> boolClass, int tipo)
 			throws FileNotFoundException, IOException {
 		Excel excel = new Excel();
+
 		excel.lerExcel(file);
 		ArrayList<Linha> linhas = new ArrayList<Linha>(excel.getList());
 		if (tipo == 1) {

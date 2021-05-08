@@ -5,13 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -29,8 +23,6 @@ import metrics.NOM_Class;
 import metrics.Resultado;
 import metrics.WMC_Class;
 import rules.Rule;
-import rules.Rule.comparator;
-import rules.Rule.operator;
 
 /**
  * @author Grupo 52
