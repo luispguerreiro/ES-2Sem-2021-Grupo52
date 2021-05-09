@@ -421,11 +421,11 @@ public class GUI extends JFrame {
 							JOptionPane.showMessageDialog(null, "Selecione uma pasta com um projeto Java.");
 							return;
 						}
-						src_path = new File(textFieldSrcPath.getText());
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
 					textFieldSrcPath.setText(selectedFile.getAbsolutePath());
+					src_path = new File(textFieldSrcPath.getText());
 				}
 			}
 		});
@@ -457,7 +457,7 @@ public class GUI extends JFrame {
 					if (returnValue == JFileChooser.APPROVE_OPTION) {
 						try {
 							central = new Central(rules, src_path, tipoComparacao, files);
-							System.out.println(jFileChooserRun.getSelectedFile().getAbsolutePath());
+//							System.out.println(jFileChooserRun.getSelectedFile().getAbsolutePath());
 							central.setExcelFileDir(jFileChooserRun.getSelectedFile().getAbsolutePath());
 							central.ini();
 							excelFile = central.getExcelFile();

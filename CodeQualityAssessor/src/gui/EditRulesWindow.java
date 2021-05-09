@@ -39,11 +39,11 @@ public class EditRulesWindow extends JFrame {
 	private History history;
 
 	private JPanel contentPane;
-	private JTextField txtThreasholdMethodLOC;
-	private JTextField txtThreasholdMethodCYCLO;
-	private JTextField txtThreasholdClassLOC;
-	private JTextField txtThreasholdClassNOM;
-	private JTextField txtThreasholdClassWMC;
+	private JTextField txtThresholdMethodLOC;
+	private JTextField txtThresholdMethodCYCLO;
+	private JTextField txtThresholdClassLOC;
+	private JTextField txtThresholdClassNOM;
+	private JTextField txtThresholdClassWMC;
 
 	private JCheckBox chckBoxLongMethod;
 	private JComboBox<comparator> comboBoxLOCMethod;
@@ -172,7 +172,7 @@ public class EditRulesWindow extends JFrame {
 	}
 
 	private void LongMethod() {
-		// First line of Frame » Long Method checkbox + LOC Method Threashold
+		// First line of Frame » Long Method checkbox + LOC Method Threshold
 		chckBoxLongMethod = new JCheckBox("Long Method");
 		chckBoxLongMethod.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -180,14 +180,14 @@ public class EditRulesWindow extends JFrame {
 					comboBoxCYCLOMethod.setEnabled(true);
 					comboBoxLOCMethod.setEnabled(true);
 					comboBoxLongMethodoperator.setEnabled(true);
-					txtThreasholdMethodCYCLO.setEnabled(true);
-					txtThreasholdMethodLOC.setEnabled(true);
+					txtThresholdMethodCYCLO.setEnabled(true);
+					txtThresholdMethodLOC.setEnabled(true);
 				} else {
 					comboBoxCYCLOMethod.setEnabled(false);
 					comboBoxLOCMethod.setEnabled(false);
 					comboBoxLongMethodoperator.setEnabled(false);
-					txtThreasholdMethodCYCLO.setEnabled(false);
-					txtThreasholdMethodLOC.setEnabled(false);
+					txtThresholdMethodCYCLO.setEnabled(false);
+					txtThresholdMethodLOC.setEnabled(false);
 				}
 			}
 		});
@@ -204,24 +204,24 @@ public class EditRulesWindow extends JFrame {
 		comboBoxLOCMethod.setModel(new DefaultComboBoxModel<comparator>(comparator.values()));
 		contentPane.add(comboBoxLOCMethod, "cell 3 0,growx,aligny center");
 
-		txtThreasholdMethodLOC = new JTextField();
-		txtThreasholdMethodLOC.setEnabled(false);
-		txtThreasholdMethodLOC.addFocusListener(new FocusAdapter() {
+		txtThresholdMethodLOC = new JTextField();
+		txtThresholdMethodLOC.setEnabled(false);
+		txtThresholdMethodLOC.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtThreasholdMethodLOC.getText().equals("Threashold"))
-					txtThreasholdMethodLOC.setText("");
+				if (txtThresholdMethodLOC.getText().equals("Threshold"))
+					txtThresholdMethodLOC.setText("");
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtThreasholdMethodLOC.getText().isBlank())
-					txtThreasholdMethodLOC.setText("Threashold");
+				if (txtThresholdMethodLOC.getText().isBlank())
+					txtThresholdMethodLOC.setText("Threshold");
 			}
 		});
-		txtThreasholdMethodLOC.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtThreasholdMethodLOC.setText("Threashold");
-		contentPane.add(txtThreasholdMethodLOC, "cell 5 0,growx");
-		txtThreasholdMethodLOC.setColumns(10);
+		txtThresholdMethodLOC.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtThresholdMethodLOC.setText("Threshold");
+		contentPane.add(txtThresholdMethodLOC, "cell 5 0,growx");
+		txtThresholdMethodLOC.setColumns(10);
 
 		// Combo box for operator [OR;AND] selection
 		comboBoxLongMethodoperator = new JComboBox<operator>();
@@ -230,7 +230,7 @@ public class EditRulesWindow extends JFrame {
 		comboBoxLongMethodoperator.setModel(new DefaultComboBoxModel<operator>(operator.values()));
 		contentPane.add(comboBoxLongMethodoperator, "cell 1 1,growx,aligny center");
 
-		// CYCLO Method Threashold
+		// CYCLO Method Threshold
 		JLabel lblCYCLOMethod = new JLabel("Cyclomatic Complexity");
 		lblCYCLOMethod.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		contentPane.add(lblCYCLOMethod, "cell 1 2,alignx left,aligny center");
@@ -241,26 +241,26 @@ public class EditRulesWindow extends JFrame {
 		comboBoxCYCLOMethod.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		contentPane.add(comboBoxCYCLOMethod, "cell 3 2,growx,aligny center");
 
-		txtThreasholdMethodCYCLO = new JTextField();
-		txtThreasholdMethodCYCLO.setEnabled(false);
-		txtThreasholdMethodCYCLO.addFocusListener(new FocusListener() {
+		txtThresholdMethodCYCLO = new JTextField();
+		txtThresholdMethodCYCLO.setEnabled(false);
+		txtThresholdMethodCYCLO.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtThreasholdMethodCYCLO.getText().equals("Threashold")) {
-					txtThreasholdMethodCYCLO.setText("");
+				if (txtThresholdMethodCYCLO.getText().equals("Threshold")) {
+					txtThresholdMethodCYCLO.setText("");
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtThreasholdMethodCYCLO.getText().isBlank()) {
-					txtThreasholdMethodCYCLO.setText("Threashold");
+				if (txtThresholdMethodCYCLO.getText().isBlank()) {
+					txtThresholdMethodCYCLO.setText("Threshold");
 				}
 			}
 		});
-		txtThreasholdMethodCYCLO.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtThreasholdMethodCYCLO.setText("Threashold");
-		contentPane.add(txtThreasholdMethodCYCLO, "cell 5 2,growx");
-		txtThreasholdMethodCYCLO.setColumns(10);
+		txtThresholdMethodCYCLO.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtThresholdMethodCYCLO.setText("Threshold");
+		contentPane.add(txtThresholdMethodCYCLO, "cell 5 2,growx");
+		txtThresholdMethodCYCLO.setColumns(10);
 	}
 
 	private void GodClass() {
@@ -273,18 +273,18 @@ public class EditRulesWindow extends JFrame {
 					comboBoxLOCClass.setEnabled(true);
 					comboBoxNOMClass.setEnabled(true);
 					comboBoxWMC.setEnabled(true);
-					txtThreasholdClassLOC.setEnabled(true);
-					txtThreasholdClassNOM.setEnabled(true);
-					txtThreasholdClassWMC.setEnabled(true);
+					txtThresholdClassLOC.setEnabled(true);
+					txtThresholdClassNOM.setEnabled(true);
+					txtThresholdClassWMC.setEnabled(true);
 				} else {
 					comboBoxGCoperator1.setEnabled(false);
 					comboBoxGCoperator2.setEnabled(false);
 					comboBoxLOCClass.setEnabled(false);
 					comboBoxNOMClass.setEnabled(false);
 					comboBoxWMC.setEnabled(false);
-					txtThreasholdClassLOC.setEnabled(false);
-					txtThreasholdClassNOM.setEnabled(false);
-					txtThreasholdClassWMC.setEnabled(false);
+					txtThresholdClassLOC.setEnabled(false);
+					txtThresholdClassNOM.setEnabled(false);
+					txtThresholdClassWMC.setEnabled(false);
 				}
 			}
 		});
@@ -301,26 +301,26 @@ public class EditRulesWindow extends JFrame {
 		comboBoxLOCClass.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		contentPane.add(comboBoxLOCClass, "cell 3 4,growx");
 
-		txtThreasholdClassLOC = new JTextField();
-		txtThreasholdClassLOC.setEnabled(false);
-		txtThreasholdClassLOC.setColumns(10);
-		txtThreasholdClassLOC.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtThreasholdClassLOC.setText("Threashold");
-		txtThreasholdClassLOC.addFocusListener(new FocusListener() {
+		txtThresholdClassLOC = new JTextField();
+		txtThresholdClassLOC.setEnabled(false);
+		txtThresholdClassLOC.setColumns(10);
+		txtThresholdClassLOC.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtThresholdClassLOC.setText("Threshold");
+		txtThresholdClassLOC.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtThreasholdClassLOC.getText().equals("Threashold")) {
-					txtThreasholdClassLOC.setText("");
+				if (txtThresholdClassLOC.getText().equals("Threshold")) {
+					txtThresholdClassLOC.setText("");
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtThreasholdClassLOC.getText().isBlank()) {
-					txtThreasholdClassLOC.setText("Threashold");
+				if (txtThresholdClassLOC.getText().isBlank()) {
+					txtThresholdClassLOC.setText("Threshold");
 				}
 			}
 		});
-		contentPane.add(txtThreasholdClassLOC, "cell 5 4,growx");
+		contentPane.add(txtThresholdClassLOC, "cell 5 4,growx");
 
 		comboBoxGCoperator1 = new JComboBox<operator>();
 		comboBoxGCoperator1.setEnabled(false);
@@ -338,27 +338,27 @@ public class EditRulesWindow extends JFrame {
 		comboBoxNOMClass.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		contentPane.add(comboBoxNOMClass, "cell 3 6,growx");
 
-		txtThreasholdClassNOM = new JTextField();
-		txtThreasholdClassNOM.setEnabled(false);
-		txtThreasholdClassNOM.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtThreasholdClassNOM.setText("Threashold");
-		txtThreasholdClassNOM.addFocusListener(new FocusListener() {
+		txtThresholdClassNOM = new JTextField();
+		txtThresholdClassNOM.setEnabled(false);
+		txtThresholdClassNOM.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtThresholdClassNOM.setText("Threshold");
+		txtThresholdClassNOM.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtThreasholdClassNOM.getText().equals("Threashold")) {
-					txtThreasholdClassNOM.setText("");
+				if (txtThresholdClassNOM.getText().equals("Threshold")) {
+					txtThresholdClassNOM.setText("");
 				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtThreasholdClassNOM.getText().isBlank()) {
-					txtThreasholdClassNOM.setText("Threashold");
+				if (txtThresholdClassNOM.getText().isBlank()) {
+					txtThresholdClassNOM.setText("Threshold");
 				}
 			}
 		});
-		contentPane.add(txtThreasholdClassNOM, "cell 5 6,growx");
-		txtThreasholdClassNOM.setColumns(10);
+		contentPane.add(txtThresholdClassNOM, "cell 5 6,growx");
+		txtThresholdClassNOM.setColumns(10);
 
 		comboBoxGCoperator2 = new JComboBox<operator>();
 		comboBoxGCoperator2.setEnabled(false);
@@ -376,40 +376,40 @@ public class EditRulesWindow extends JFrame {
 		comboBoxWMC.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		contentPane.add(comboBoxWMC, "cell 3 8,growx");
 
-		txtThreasholdClassWMC = new JTextField();
-		txtThreasholdClassWMC.setEnabled(false);
-		txtThreasholdClassWMC.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtThreasholdClassWMC.setText("Threashold");
-		txtThreasholdClassWMC.addFocusListener(new FocusListener() {
+		txtThresholdClassWMC = new JTextField();
+		txtThresholdClassWMC.setEnabled(false);
+		txtThresholdClassWMC.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtThresholdClassWMC.setText("Threshold");
+		txtThresholdClassWMC.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (txtThreasholdClassWMC.getText().equals("Threashold")) {
-					txtThreasholdClassWMC.setText("");
+				if (txtThresholdClassWMC.getText().equals("Threshold")) {
+					txtThresholdClassWMC.setText("");
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtThreasholdClassWMC.getText().isBlank()) {
-					txtThreasholdClassWMC.setText("Threashold");
+				if (txtThresholdClassWMC.getText().isBlank()) {
+					txtThresholdClassWMC.setText("Threshold");
 				}
 			}
 		});
-		contentPane.add(txtThreasholdClassWMC, "cell 5 8,growx");
-		txtThreasholdClassWMC.setColumns(10);
+		contentPane.add(txtThresholdClassWMC, "cell 5 8,growx");
+		txtThresholdClassWMC.setColumns(10);
 	}
 
 	private void apply() {
 		if (chckBoxLongMethod.isSelected() && chckBoxGodClass.isSelected())
 			gui.setTipoComparacao(1);
 		if (chckBoxLongMethod.isSelected()) {
-			if (txtThreasholdMethodLOC.getText().matches("[0-9]+") && !comboBoxLOCMethod.getSelectedItem().equals(comparator.EMPTY)) {
-				limits.add(Integer.parseInt(txtThreasholdMethodLOC.getText()));
+			if (txtThresholdMethodLOC.getText().matches("[0-9]+") && !comboBoxLOCMethod.getSelectedItem().equals(comparator.EMPTY)) {
+				limits.add(Integer.parseInt(txtThresholdMethodLOC.getText()));
 				comparators.add((comparator) comboBoxLOCMethod.getSelectedItem());
 				metricNames.add("LOC_method");
 				LM = true;
 			}
-			if (txtThreasholdMethodCYCLO.getText().matches("[0-9]+") && !comboBoxCYCLOMethod.getSelectedItem().equals(comparator.EMPTY)) {
-				limits.add(Integer.parseInt(txtThreasholdMethodCYCLO.getText()));
+			if (txtThresholdMethodCYCLO.getText().matches("[0-9]+") && !comboBoxCYCLOMethod.getSelectedItem().equals(comparator.EMPTY)) {
+				limits.add(Integer.parseInt(txtThresholdMethodCYCLO.getText()));
 				comparators.add((comparator) comboBoxCYCLOMethod.getSelectedItem());
 				metricNames.add("CYCLO_method");
 				LM = true;
@@ -434,20 +434,20 @@ public class EditRulesWindow extends JFrame {
 			gui.setTipoComparacao(3);
 		}
 		if (chckBoxGodClass.isSelected()) {
-			if (txtThreasholdClassLOC.getText().matches("[0-9]+") && !comboBoxLOCClass.getSelectedItem().equals(comparator.EMPTY)) {
-				limits1.add(Integer.parseInt(txtThreasholdClassLOC.getText()));
+			if (txtThresholdClassLOC.getText().matches("[0-9]+") && !comboBoxLOCClass.getSelectedItem().equals(comparator.EMPTY)) {
+				limits1.add(Integer.parseInt(txtThresholdClassLOC.getText()));
 				metricNames1.add("LOC_class");
 				comparators1.add((comparator) comboBoxLOCClass.getSelectedItem());
 				GC = true;
 			}
-			if (txtThreasholdClassNOM.getText().matches("[0-9]+") && !comboBoxNOMClass.getSelectedItem().equals(comparator.EMPTY)) {
-				limits1.add(Integer.parseInt(txtThreasholdClassNOM.getText()));
+			if (txtThresholdClassNOM.getText().matches("[0-9]+") && !comboBoxNOMClass.getSelectedItem().equals(comparator.EMPTY)) {
+				limits1.add(Integer.parseInt(txtThresholdClassNOM.getText()));
 				metricNames1.add("NOM_class");
 				comparators1.add((comparator) comboBoxNOMClass.getSelectedItem());
 				GC = true;
 			}
-			if (txtThreasholdClassWMC.getText().matches("[0-9]+") && !comboBoxWMC.getSelectedItem().equals(comparator.EMPTY)) {
-				limits1.add(Integer.parseInt(txtThreasholdClassWMC.getText()));
+			if (txtThresholdClassWMC.getText().matches("[0-9]+") && !comboBoxWMC.getSelectedItem().equals(comparator.EMPTY)) {
+				limits1.add(Integer.parseInt(txtThresholdClassWMC.getText()));
 				metricNames1.add("WMC_class");
 				comparators1.add((comparator) comboBoxWMC.getSelectedItem());
 				GC = true;
