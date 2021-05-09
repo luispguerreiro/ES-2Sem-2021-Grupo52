@@ -22,4 +22,3 @@ Group 52.
 - Now, User can run the App and select where to save the .xlsx file;
 - User can also open the .xlsx file by selecting the "Abrir Excel" option;
 - User can see chart by selecting "Gráfico" option.
-
