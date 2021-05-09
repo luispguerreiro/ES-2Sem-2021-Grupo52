@@ -94,8 +94,7 @@ class CentralTest {
 		cyclo = new CYCLO_method(metric);
 		files.add(new File(PATH2));
 		c = new Central(rules, file, tipoComparacao, files);
-		c.setExcelFileDir("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho");
-//		file = new File("C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\jasml_metrics.xlsx");
+		c.setExcelFileDir(System.getProperty("user.home") + "/Desktop");
 	}
 
 	/**
@@ -198,9 +197,6 @@ class CentralTest {
 		c.setBoolMethod(boolMethod);
 		c.setBoolClass(boolClass);
 		c.putMethodID();
-//		for (int i = 0; i < all.size(); i++){
-//			all.get(i).setMethodID(i + 1);
-//		}
 		Assertions.assertEquals(1, c.getAll().get(0).getMethodID());
 		Assertions.assertEquals(2, c.getAll().get(1).getMethodID());
 		Assertions.assertEquals(1, c.getBoolMethod().get(0).getId());
