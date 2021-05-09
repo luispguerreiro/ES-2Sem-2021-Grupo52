@@ -21,13 +21,17 @@ import com.github.javaparser.ast.stmt.SwitchEntry.Type;
  */
 public class CYCLO_method {
 
-	private static final String FILE_PATH = "C:\\\\\\\\Users\\\\\\\\r_f_g\\\\\\\\Desktop\\\\\\\\SourceCodeParser.java";
 	private List<SwitchEntry> sw;
 	private int cyclo = 1;
 	private ArrayList<Resultado> resultados = new ArrayList<>();
 	private String pack;
 	private int i = 1;
-
+	private ClassOrInterfaceDeclaration mainClass;
+	@SuppressWarnings("rawtypes")
+	private List<CallableDeclaration> mainClassMet;
+	private List<ClassOrInterfaceDeclaration> nestedClasses;
+	private String mainClassName;
+	private Metrics m;
 //	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
 
@@ -40,12 +44,41 @@ public class CYCLO_method {
 	 */
 
 	public CYCLO_method(Metrics m) {
-		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
+		this.m = m;
+		mainClass = m.getMainClass();
 		pack = m.getCu().getPackageDeclaration().toString();
-		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
-		String mainClassName = mainClass.getNameAsString();
-		for (CallableDeclaration callableDeclaration : mainClassMet) {
+		mainClassMet = mainClass.findAll(CallableDeclaration.class);
+		mainClassName = mainClass.getNameAsString();
+		nestedClasses = m.getNestedClasses();
+		runMainClass();
+		runNestedClasses();
+	}
 
+	/**
+	 * Counts the cyclomatic complexity of all the statements in the array.
+	 * 
+	 * @param statements an array of statements
+	 * 
+	 */
+	private void countStatements(List<Statement> statements) {
+		for (Statement s : statements) {
+			if (s.isContinueStmt() || s.isDoStmt() || s.isForEachStmt() || s.isForStmt() || s.isIfStmt()
+					|| s.isWhileStmt()) {
+				cyclo++;
+			}
+			if (s.isSwitchStmt()) {
+				sw = s.findAll(SwitchEntry.class);
+				for (SwitchEntry sws : sw) {
+					if (sws.getType().equals(Type.STATEMENT_GROUP) && sws.getLabels().isNonEmpty()) {
+						cyclo++;
+					}
+				}
+			}
+		}
+	}
+	
+	private void runMainClass() {
+		for (CallableDeclaration<?> callableDeclaration : mainClassMet) {
 			List<Statement> statements = callableDeclaration.findAll(Statement.class);
 			List<BinaryExpr> binExpressions = callableDeclaration.findAll(BinaryExpr.class);
 			if (!statements.isEmpty() || !binExpressions.isEmpty()) {
@@ -64,27 +97,26 @@ public class CYCLO_method {
 			}
 			boolean a = false;
 			for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
-				for (CallableDeclaration ctest : nestClass.findAll(CallableDeclaration.class)) {
+				for (CallableDeclaration<?> ctest : nestClass.findAll(CallableDeclaration.class)) {
 					if (ctest.getName() == callableDeclaration.getName()) {
 						a = true;
 					}
 				}
-
 			}
-
 			if (a == false) {
 				resultados.add(new Resultado(i, pack + "/" + mainClassName + "/" + callableDeclaration.getNameAsString()
 						+ "(" + parameters + ")", cyclo, empty));
 				cyclo = 1;
 			}
 		}
-
-		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
+	}
+	
+	private void runNestedClasses() {
 		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
 			String NestClassNames = nestClass.getNameAsString();
+			@SuppressWarnings("rawtypes")
 			List<CallableDeclaration> contructorsNestClass = nestClass.findAll(CallableDeclaration.class);
-			for (CallableDeclaration c : contructorsNestClass) {
-
+			for (CallableDeclaration<?> c : contructorsNestClass) {
 				List<Statement> statements = c.findAll(Statement.class);
 				List<BinaryExpr> binExpressions = c.findAll(BinaryExpr.class);
 				if (!statements.isEmpty() || !binExpressions.isEmpty()) {
@@ -99,45 +131,13 @@ public class CYCLO_method {
 						if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
 							parameters += ",";
 						}
-
 					}
 				}
-
 				resultados.add(new Resultado(i, pack + "/" + mainClassName + "." + NestClassNames + "/"
 						+ c.getNameAsString() + "(" + parameters + ")" + "/", cyclo, empty));
-				// resultados.add(callableDeclaration.getNameAsString());
-				// resultados.add(Integer.toString(cyclo));
-
-				// System.out.println("Método " + callableDeclaration.getNameAsString() + " tem
-				// complexidade " + cyclo);
 				cyclo = 1;
 			}
 		}
-	}
-
-	/**
-	 * Counts the cyclomatic complexity of all the statements in the array.
-	 * 
-	 * @param statements an array of statements
-	 * 
-	 */
-	private void countStatements(List<Statement> statements) {
-
-		for (Statement s : statements) {
-			if (s.isContinueStmt() || s.isDoStmt() || s.isForEachStmt() || s.isForStmt() || s.isIfStmt()
-					|| s.isWhileStmt()) {
-				cyclo++;
-			}
-			if (s.isSwitchStmt()) {
-				sw = s.findAll(SwitchEntry.class);
-				for (SwitchEntry sws : sw) {
-					if (sws.getType().equals(Type.STATEMENT_GROUP) && sws.getLabels().isNonEmpty()) {
-						cyclo++;
-					}
-				}
-			}
-		}
-
 	}
 
 	/**
@@ -145,7 +145,6 @@ public class CYCLO_method {
 	 * 
 	 * @param binExpression an array of Binary Expressions
 	 */
-
 	private void countBinaryExpressions(List<BinaryExpr> binExpressions) {
 		for (BinaryExpr e : binExpressions) {
 			if (e.getOperator().equals(Operator.AND) || e.getOperator().equals(Operator.OR)) {
@@ -153,7 +152,6 @@ public class CYCLO_method {
 			}
 		}
 	}
-
 	
 	/**
 	 * Getter for the array with the results

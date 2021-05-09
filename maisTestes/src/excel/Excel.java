@@ -35,6 +35,7 @@ public class Excel {
 	 * 
 	 * @param file the Excel file to be converted into an Array List
 	 */
+	@SuppressWarnings("deprecation")
 	public void lerExcel(File file) throws FileNotFoundException, IOException {
 
 		FileInputStream fis = new FileInputStream(file);
@@ -67,7 +68,7 @@ public class Excel {
 					linha.setIs_God_Class(cell.getBooleanCellValue());
 					break;
 				case 10:
-					if (cell.getCellType() == 4) {
+					if (cell.getCellType().getCode() == 4) {
 						linha.setIs_Long_Method(cell.getBooleanCellValue());
 					} else {
 						linha.setIs_Long_Method(false);
@@ -78,7 +79,7 @@ public class Excel {
 			}
 			list.add(linha);
 		}
-
+		wb.close();
 	}
 
 	/**

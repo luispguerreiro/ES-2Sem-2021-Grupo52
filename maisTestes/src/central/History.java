@@ -86,22 +86,16 @@ public class History {
 	 */
 	public void writeFile(ArrayList<Rule> rules) {
 		try {
-			FileOutputStream f = new FileOutputStream(new File(folderPathToSave + "\\" + ruleName));
-
-			ObjectOutputStream o = new ObjectOutputStream(f);
-
+			ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(new File(folderPathToSave + "\\" + ruleName + ".jrule")));
 			o.writeObject(rules);
-
 			o.close();
-			f.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * read's the user's file with the rules
+	 * reads the user's file with the rules
 	 * 
 	 * @param name the user's File name
 	 * @return ArrayList of rules with all the rules in the user's file
@@ -110,15 +104,9 @@ public class History {
 	public ArrayList<Rule> readFile(String name) {
 		ArrayList<Rule> rules = null;
 		try {
-			FileInputStream f = new FileInputStream(name);
-
-			ObjectInputStream o = new ObjectInputStream(f);
-
+			ObjectInputStream o = new ObjectInputStream(new FileInputStream(name));
 			rules = (ArrayList<Rule>) o.readObject();
-
 			o.close();
-			f.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

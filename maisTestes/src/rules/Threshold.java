@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import central.BoolResultado;
 import metrics.Resultado;
 import rules.Rule.comparator;
 
@@ -16,9 +15,6 @@ public class Threshold implements Serializable {
 	/**
 	 * @author Grupo 52
 	 */
-
-	private static String SRC_PATH = "C:\\Users\\nmsid\\Downloads\\jasml_0.10\\src\\com\\jasml\\classes\\ConstantPoolGenerator.java";
-
 	private static final long serialVersionUID = 1L;
 	/**
 	 * the metric Name chosen by the user to be calculated
@@ -146,19 +142,9 @@ public class Threshold implements Serializable {
 		if (o == comparator.BIGGEREQUALS) {
 			return isBiggerEquals(z);
 		}
-
 		throw new IllegalStateException();
 	}
 
-	/**
-	 * Sets a new arrayList of BoolResults and gets the metric type
-	 * 
-	 * @param r the Arraylist of BoolResults
-	 * 
-	 */
-	public void setMetricBoolean(ArrayList<BoolResultado> r) {
-		int position = positionToGet();
-	}
 
 	/**
 	 * Gets the metric type chosen and transforms to a integer

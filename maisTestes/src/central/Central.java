@@ -5,13 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -29,8 +23,6 @@ import metrics.NOM_Class;
 import metrics.Resultado;
 import metrics.WMC_Class;
 import rules.Rule;
-import rules.Rule.comparator;
-import rules.Rule.operator;
 
 /**
  * @author Grupo 52
@@ -41,33 +33,25 @@ import rules.Rule.operator;
 public class Central {
 
 	private File srcPath;
-
-	private String excelFileDir = ""; // vai estar em branco e é
-										// necessário fazer
-										// setExcelFileDir
+	private String excelFileDir = "";
 	private File excelFile;
-
 	private CYCLO_method cycloMethod;
 	private Loc_Method locMethod;
 	private Loc_Class locClass;
 	private NOM_Class nomClass;
 	private WMC_Class wmcClass;
-
 	private int separador = 0;
 	private int numberOfPackages = 0;
 	private int numberOfClasses = 0;
 	private int numberOfMethods = 0;
 	private int numberOfLines = 0;
 	private int tipoComparacao;
-
 	private ArrayList<Resultado> all = new ArrayList<>();
 	private ArrayList<BoolResultado> boolResultClass = new ArrayList<>();
 	private ArrayList<BoolResultado> boolResultMethod = new ArrayList<>();
 	private ArrayList<Rule> rules = new ArrayList<>();
 	private ArrayList<File> files;
-
 	private Metrics metric;
-
 	private Comparador comparador;
 
 	/**
@@ -108,30 +92,22 @@ public class Central {
 			locClass = new Loc_Class(metric);
 			nomClass = new NOM_Class(metric);
 			wmcClass = new WMC_Class(metric);
-
 			writeExcel(sheet, workBook);
-
 			fuelAllandBoolResults();
-			// numberOfClasses += wmcClass.getResultados().size();
 		}
 		putMethodID();
 		chooseRules(rules);
 		numberOfSomething();
 		numberOfMethods = boolResultMethod.size();
-
-		// sys();
-
 		OutputStream fileOut = new FileOutputStream(excelFile);
 		workBook.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
 		System.out.println("\n***Exporta��o para Excel conclu�da!***\n");
-
 		System.out.println("number of methods = " + numberOfMethods);
 		System.out.println("number of packages = " + numberOfPackages);
 		System.out.println("number of classes = " + numberOfClasses);
 		System.out.println("number of lines = " + numberOfLines);
-//		Comparador c = new Comparador(boolResultMethod, boolResultClass);;
 		comparador = new Comparador(boolResultMethod, boolResultClass, tipoComparacao);
 
 	}
@@ -217,13 +193,10 @@ public class Central {
 	public void writeExcel(Sheet sheet, XSSFWorkbook workBook) throws IOException {
 		sheet.setDefaultColumnWidth(20);
 		cabecalho(sheet, workBook);
-		int rowCount = 1;
 		int k = 0;
-
 		for (int i = 0; i < cycloMethod.getResultados().size(); i++) {
 			Row row = sheet.createRow(++separador);
 			int colCount = 0;
-
 			Cell methodID = row.createCell(0);
 			Cell pack = row.createCell(++colCount);
 			Cell classes = row.createCell(++colCount);
@@ -251,9 +224,6 @@ public class Central {
 
 			locM.setCellValue(locMethod.getResultados().get(i).getLinhas());
 			cycloM.setCellValue(cycloMethod.getResultados().get(i).getLinhas());
-
-			rowCount++;
-
 			numberOfLines += locMethod.getResultados().get(i).getLinhas();
 		}
 	}
@@ -273,7 +243,6 @@ public class Central {
 		XSSFCellStyle style = workBook.createCellStyle();
 		XSSFFont font = workBook.createFont();
 		font.setFontHeightInPoints((short) 15);
-		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
 		font.setBold(true);
 		style.setFont(font);
 		for (String s : c) {
@@ -288,9 +257,8 @@ public class Central {
 	 * written in the Excel file
 	 */
 	public void numberOfSomething() {
-		int k = 0;
-		ArrayList<String> aux = new ArrayList();
-		ArrayList<String> aux2 = new ArrayList();
+		ArrayList<String> aux = new ArrayList<>();
+		ArrayList<String> aux2 = new ArrayList<>();
 		for (int i = 0; i < boolResultMethod.size(); i++) {
 			if (!aux.contains(boolResultMethod.get(i).getClasses())) {
 				aux.add(boolResultMethod.get(i).getClasses());
@@ -476,7 +444,6 @@ public class Central {
 		this.locClass = locC;
 		this.nomClass = nom;
 		this.wmcClass = wmc;
-
 	}
 
 	/**
@@ -486,7 +453,6 @@ public class Central {
 	 */
 	public void setExcelFile(File file) {
 		this.excelFile = file;
-
 	}
 
 }

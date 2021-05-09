@@ -1,6 +1,5 @@
 package metrics;
 
-import java.util.ArrayList;
 /**
  * Makes the result of each metric organized into one object with all the information needed
  * 
@@ -15,10 +14,9 @@ public class Resultado {
 	private String path;
 	private int linhas;
 	private int methodID;
-	private ArrayList<Integer> allInts = new ArrayList<>();
 	private int[] intis = new int[5];
 	/*
-	 * Posição do allInts e respetiva metrica: 0->nomClass 1->loc_class 2->wmcClass
+	 * Posição do intis e respetiva metrica: 0->nomClass 1->loc_class 2->wmcClass
 	 * 3->locMethod 4->cycloMethod
 	 */
 	
@@ -33,20 +31,18 @@ public class Resultado {
 		this.path = path;
 		this.linhas = linhas;
 		this.methodID = methodID;
-		this.allInts = allInts;
 		this.intis = intis;
 	}
-
 
 	/**
 	 * Getter for the array that identifies what metric was used
 	 * 
 	 * @return the array with the results
 	 */
-	
 	public int[] getAllInts() {
 		return intis;
 	}
+
 	/**
 	 * setter for the methodID
 	 * 
@@ -55,6 +51,7 @@ public class Resultado {
 	public void setMethodID(int methodID) {
 		this.methodID = methodID;
 	}
+	
 	/**
 	 * Getter for the methodID
 	 * 
@@ -63,6 +60,7 @@ public class Resultado {
 	public int getMethodID() {
 		return methodID;
 	}
+	
 	/**
 	 * Getter for the result
 	 * 
@@ -80,6 +78,7 @@ public class Resultado {
 	public String getPath() {
 		return path;
 	}
+	
 	/**
 	 * Changes the path String to get only the package
 	 * 
@@ -94,18 +93,16 @@ public class Resultado {
 		if (packf[0].equals("empty"))
 			return "(default package)";
 		return packf[1];
-//		return pack;
 	}
+	
 	/**
 	 * Changes the path String to get only the class
 	 * 
 	 * @return the string with the class name
 	 */
 	public String getClasses() {
-
 		String[] aux;
 		aux = path.trim().split("/");
-
 		return aux[1];
 	}
 	/**
@@ -115,10 +112,8 @@ public class Resultado {
 	 */
 	public String getMethodNames() {
 		String[] aux;
-
 		aux = path.trim().split("/");
 		return aux[2];
-
 	}
 
 

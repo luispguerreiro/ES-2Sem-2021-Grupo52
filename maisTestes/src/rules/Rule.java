@@ -24,11 +24,21 @@ public class Rule implements Serializable {
 	 */
 	public enum operator {
 		/** the predifined option that appears on the GUI */
-		Select,
+		EMPTY(""),
 		/** allows user to compare two boolean values using the OR logic */
-		OR,
+		OR("Or"),
 		/** allows user to compare two boolean values using the AND logic */
-		AND
+		AND("And");
+		
+		private String operator;
+		operator(String operator) {
+			this.operator=operator;
+		}
+		
+		
+		public String toString() {
+			return this.operator;
+		}
 	};
 
 	/**
@@ -37,17 +47,27 @@ public class Rule implements Serializable {
 	 */
 	public enum comparator {
 		/** the predifined option that appears on the GUI */
-		Select,
+		EMPTY(""),
 		/** allows user to compare if one value is bigger then the other */
-		BIGGER,
+		BIGGER("Bigger"),
 		/** allows user to compare if one value is smaller then the other */
-		SMALLER,
+		SMALLER("Smaller"),
 		/** allows user to compare if one value is equals to another */
-		EQUALS,
+		EQUALS("Equals"),
 		/** allows user to compare if one value is bigger or equals to another */
-		BIGGEREQUALS,
+		BIGGEREQUALS("Bigger or Equals"),
 		/** allows user to compare if one value is smaller or equals to another */
-		SMALLEREQUALS
+		SMALLEREQUALS("Smaller or Equals");
+		
+		private String comparator;
+		comparator(String comparator) {
+			this.comparator=comparator;
+		}
+		
+		
+		public String toString() {
+			return this.comparator;
+		}
 	};
 
 	/** the array with thresholds */
@@ -63,8 +83,6 @@ public class Rule implements Serializable {
 	protected ArrayList<operator> oper = new ArrayList<>();
 	/** the rule Name */
 	private String ruleName;
-	/** the array with the boolean results */
-	private ArrayList<BoolResultado> ruleResults = new ArrayList<>();
 	/** type of rule created (0 if ruleType=god_class, 1 if ruleType=long_method) */
 	private int ruleType;
 

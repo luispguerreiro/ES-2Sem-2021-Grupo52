@@ -1,16 +1,12 @@
 package metrics;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
-import com.github.javaparser.ast.body.TypeDeclaration;
 /**
  * Calculates the number of lines of each method on the Metrics object imported
  * 
@@ -21,11 +17,17 @@ public class Loc_Method {
 	 * 
 	 */
 	public ArrayList<Resultado> resultados = new ArrayList<>();
-	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\SourceCodeParser.java";
 	static int linhasfinal = 0;
-//	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
 	private int i = 1;
+	private CompilationUnit cu;
+	private String pack;
+	private ClassOrInterfaceDeclaration mainClass;
+	private String mainClassName;
+	@SuppressWarnings("rawtypes")
+	private List<CallableDeclaration> mainClassMet;
+	private Metrics m;
+	private List<ClassOrInterfaceDeclaration> nestedClasses;
 
 	/**
 	 * Calculates the number of lines of a method on the Metrics object with comments and empty spaces
@@ -35,16 +37,19 @@ public class Loc_Method {
 	 */
 
 	public Loc_Method(Metrics m) {
-		CompilationUnit cu = m.getCu();
-		String pack = cu.getPackageDeclaration().toString();
-		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
-		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
-		List<String> Resultados = new ArrayList<>();
-		List<TypeDeclaration> nodes = cu.findAll(TypeDeclaration.class);
-		String mainClassName = mainClass.getNameAsString();
-
-		for (CallableDeclaration callableDeclaration : mainClassMet) {
-
+		this.m = m;
+		cu = m.getCu();
+		pack = cu.getPackageDeclaration().toString();
+		mainClass = m.getMainClass();
+		mainClassMet = mainClass.findAll(CallableDeclaration.class);
+		mainClassName = mainClass.getNameAsString();
+		nestedClasses = m.getNestedClasses();
+		runMainClass();
+		runNestedClasses();
+	}
+	
+	private void runMainClass() {
+		for (CallableDeclaration<?> callableDeclaration : mainClassMet) {
 			List<Parameter> par = callableDeclaration.getParameters();
 			String parameters = "";
 			if (!par.isEmpty()) {
@@ -57,14 +62,12 @@ public class Loc_Method {
 			}
 			boolean a = false;
 			for (ClassOrInterfaceDeclaration nestClass : m.getNestedClasses()) {
-				for (CallableDeclaration ctest : nestClass.findAll(CallableDeclaration.class)) {
+				for (CallableDeclaration<?> ctest : nestClass.findAll(CallableDeclaration.class)) {
 					if (ctest.getName() == callableDeclaration.getName()) {
 						a = true;
 					}
 				}
-
 			}
-
 			if (a == false) {
 				int inicio = callableDeclaration.getBegin().get().line;
 				int fim = callableDeclaration.getEnd().get().line + 1;
@@ -73,12 +76,14 @@ public class Loc_Method {
 						+ "(" + parameters + ")", linhasMethod, empty));
 			}
 		}
-
-		List<ClassOrInterfaceDeclaration> nestedClasses = m.getNestedClasses();
+	}
+	
+	private void runNestedClasses() {
 		for (ClassOrInterfaceDeclaration nestClass : nestedClasses) {
 			String NestClassNames = nestClass.getNameAsString();
+			@SuppressWarnings("rawtypes")
 			List<CallableDeclaration> contructorsNestClass = nestClass.findAll(CallableDeclaration.class);
-			for (CallableDeclaration c : contructorsNestClass) {
+			for (CallableDeclaration<?> c : contructorsNestClass) {
 				List<Parameter> par = c.getParameters();
 				String parameters = "";
 				if (!par.isEmpty()) {
@@ -87,19 +92,15 @@ public class Loc_Method {
 						if (par.size() > 1 && !par.get(par.size() - 1).equals(p)) {
 							parameters += ",";
 						}
-
 					}
 				}
 				int inicio = c.getBegin().get().line;
 				int fim = c.getEnd().get().line + 1;
 				int linhasMethod = fim - inicio;
-
 				resultados.add(new Resultado(i, pack + "/" + mainClassName + "." + NestClassNames + "/"
 						+ c.getNameAsString() + "(" + parameters + ")" + "/", linhasMethod, empty));
-
 			}
 		}
-
 	}
 
 	/**

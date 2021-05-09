@@ -196,22 +196,7 @@ class ThresholdTest {
 		t.setLimit(limit);
 		Assertions.assertEquals(limit, t.getLimit());
 	}
-	/**
-	 * Test method for
-	 * {@link rules.Threshold#setMetricBoolean(java.util.ArrayList)}.
-	 */
-	@Test
-	final void testSetMetricBoolean() {
-		metricName= "NOM_class";
-		int position;
-		t.setMetricName(metricName);
-		ArrayList<BoolResultado> r= new ArrayList<>();
-		t.positionToGet();
-		t.setMetricBoolean(r);
-//		Assertions.assertEquals(position, t.positionToGet());	
-		
-		Assertions.assertNotNull(r);
-	}
+	
 
 	/**
 	 * Test method for {@link rules.Threshold#positionToGet()}.

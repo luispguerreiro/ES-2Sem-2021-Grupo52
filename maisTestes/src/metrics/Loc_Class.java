@@ -1,30 +1,23 @@
 package metrics;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.CallableDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.TypeDeclaration;
 
 /**
  * Calculates the number of lines of each class on the Metrics object imported
  * 
  */
 public class Loc_Class {
-	private static final String FILE_PATH = "C:\\Users\\henri\\OneDrive\\Ambiente de Trabalho\\SourceCodeParser.java";
 	/**
 	 * @author Grupo52
 	 * 
 	 */
-//	private static final String FILE_PATH = "C:\\\\Users\\\\r_f_g\\\\Desktop\\\\SourceCodeParser.java";
 	private int linhasClass;
 	private int linhasClassMain;
 	private int i = 1;
-	private String s = new String();
 	ArrayList<Resultado> resultados = new ArrayList<>();
-
 	private int[] empty = new int[5];
 
 	/**
@@ -36,13 +29,9 @@ public class Loc_Class {
 	 */
 
 	public Loc_Class(Metrics m) {
-
 		CompilationUnit cu2 = m.getCu();
 		String pack = cu2.getPackageDeclaration().toString();
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
-		List<TypeDeclaration> nodes = cu2.findAll(TypeDeclaration.class);
-		List<CallableDeclaration> mainClassMet = mainClass.findAll(CallableDeclaration.class);
-
 		String mainClassName = mainClass.getNameAsString();
 		int iniciomain = mainClass.getBegin().get().line;
 		int fimmain = mainClass.getEnd().get().line;
@@ -60,7 +49,6 @@ public class Loc_Class {
 		}
 		resultados.remove(0);
 		resultados.add(0, new Resultado(i, pack + "/" + mainClassName, linhasClassMain, empty));
-
 	}
 
 	/**

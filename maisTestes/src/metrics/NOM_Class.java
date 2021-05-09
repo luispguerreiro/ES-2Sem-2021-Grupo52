@@ -1,6 +1,5 @@
  package metrics;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +15,9 @@ public class NOM_Class {
 	 * @author Grupo52
 	 * 
 	 */
-	private static final String FILE_PATH = "C:\\Users\\r_f_g\\Desktop\\SourceCodeParser.java";
 	private int numOfMethods = 0;
-	
 	private int i = 1;
-	
-//	private ArrayList<Integer> empty = new ArrayList<>();
 	private int[] empty = new int[5];
-	
 	ArrayList<Resultado> resultados = new ArrayList<>();
 
 	
@@ -33,29 +27,17 @@ public class NOM_Class {
 	 * 
 	 * @param m the object Metrics chosen
 	 */
-
-	
 	public NOM_Class(Metrics m) {
 		String pack = m.getCu().getPackageDeclaration().toString();
 		ClassOrInterfaceDeclaration mainClass = m.getMainClass();
 		numOfMethods += mainClass.getConstructors().size() + mainClass.getMethods().size();
-		//resultados.add(mainClass.getNameAsString());
-	//	resultados.add(Integer.toString(numOfMethods));
 		resultados.add(new Resultado(i, pack + "/" + mainClass.getNameAsString() , numOfMethods, empty));
-		// System.out.println(mainClass.getNameAsString());
-		// System.out.println(numOfMethods);
 		numOfMethods = 0;
 		List<ClassOrInterfaceDeclaration> clazz = m.getNestedClasses();
 		for (ClassOrInterfaceDeclaration c : clazz) {
 			List<ConstructorDeclaration> contructors = c.getConstructors();
 			List<MethodDeclaration> methods = c.getMethods();
 			numOfMethods += contructors.size() + methods.size();
-			//resultados.add(c.getNameAsString());
-		//	resultados.add(Integer.toString(numOfMethods));
-			resultados.add(new Resultado(i, pack + "/" + mainClass.getNameAsString() +"."+ c.getNameAsString() , numOfMethods, empty));
-			// System.out.println("Class " + c.getNameAsExpression() + " tem " +
-			// numOfMethods + " métodos");
-
 		}
 	}
 	
