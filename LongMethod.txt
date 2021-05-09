@@ -1,0 +1,129 @@
+gui.GUI	private void panelResumoMetricas() 	panelResumoMetricas	B1	0/49
+gui.EditRulesWindow	private void GodClass() 	contentPane	B1	0/48
+gui.GUI	private void panelComparacaoMetricas() 	panelComparacaoMetricas	B1	0/44
+gui.EditRulesWindow	private void LongMethod() 	contentPane	B1	0/32
+gui.EditRulesWindow	private void GodClass() 	chckBoxGodClass	B1	0/30
+gui.GUI	private void rulesPanel() 	panelImportRegras	B1	0/22
+gui.EditRulesWindow	private void LongMethod() 	chckBoxLongMethod	B1	0/20
+metrics.CYCLO_method	private void runNestedClasses() 	resultados	B2	0/17
+metrics.CYCLO_method	private void runNestedClasses() 	resultados	B3	0/15
+metrics.CYCLO_method	private void runNestedClasses() 	resultados	B4	0/13
+metrics.CYCLO_method	private void runNestedClasses() 	resultados	B6	0/8
+metrics.Loc_Method	private void runMainClass() 	resultados	B2	0/17
+metrics.Loc_Method	private void runMainClass() 	resultados	B6	0/10
+metrics.Loc_Method	private void runMainClass() 	resultados	B7	0/9
+metrics.Loc_Method	private void runMainClass() 	resultados	B11	0/5
+metrics.Loc_Method	private void runMainClass() 	resultados	B12	0/4
+metrics.Loc_Method	private void runNestedClasses() 	resultados	B2	0/14
+metrics.Loc_Method	private void runNestedClasses() 	resultados	B3	0/12
+metrics.Loc_Method	private void runNestedClasses() 	resultados	B4	0/11
+metrics.Loc_Method	private void runNestedClasses() 	resultados	B8	0/4
+central.Central	public void ini() throws java.io.IOException	boolResultClass	B3	0/7
+central.Central	public void ini() throws java.io.IOException	boolResultMethod	B3	0/7
+metrics.CYCLO_method	private void runMainClass() 	parameters	B4	0/7
+metrics.CYCLO_method	private void runMainClass() 	parameters	B5	0/4
+metrics.CYCLO_method	private void runMainClass() 	parameters	B6	0/3
+metrics.CYCLO_method	private void runNestedClasses() 	parameters	B6	0/7
+metrics.CYCLO_method	private void runNestedClasses() 	parameters	B7	0/4
+metrics.CYCLO_method	private void runNestedClasses() 	parameters	B8	0/3
+metrics.Loc_Method	private void runMainClass() 	parameters	B2	0/7
+metrics.Loc_Method	private void runMainClass() 	parameters	B3	0/4
+metrics.Loc_Method	private void runMainClass() 	parameters	B4	0/3
+metrics.Loc_Method	private void runNestedClasses() 	parameters	B4	0/7
+metrics.Loc_Method	private void runNestedClasses() 	parameters	B5	0/4
+metrics.Loc_Method	private void runNestedClasses() 	parameters	B6	0/3
+gui.EditRulesWindow	private void saveAndApplyButton() 	btnSaveAndApply	B1	0/5
+gui.EditRulesWindow	private void saveAndApplyButton() 	fileChooserSave	B1	0/5
+gui.EditRulesWindow	private void saveAndApplyButton() 	history	B1	0/5
+gui.EditRulesWindow	private void saveAndApplyButton() 	rules	B1	0/5
+rules.Rule	public boolean logic3(rules.Threshold, rules.Threshold, rules.Threshold, int, int, int) throws java.io.FileNotFoundException	aux	B1	0/5
+metrics.CYCLO_method	private void runMainClass() 	a	B8	0/5
+metrics.CYCLO_method	private void runMainClass() 	a	B9	0/4
+metrics.CYCLO_method	private void runMainClass() 	a	B10	0/3
+metrics.CYCLO_method	private void runMainClass() 	a	B11	0/2
+metrics.Loc_Method	private void runMainClass() 	a	B6	0/5
+metrics.Loc_Method	private void runMainClass() 	a	B7	0/4
+metrics.Loc_Method	private void runMainClass() 	a	B8	0/3
+metrics.Loc_Method	private void runMainClass() 	a	B9	0/2
+gui.GUI	private void excelTablePanel() 	table	B1	0/4
+gui.GUI	private void panelComparacaoMetricas() 	botaoGrafico	B1	0/4
+gui.GUI	private void panelComparacaoMetricas() 	falseNegativoLabel	B1	0/4
+gui.GUI	private void panelComparacaoMetricas() 	falsePositivoLabel	B1	0/4
+gui.GUI	private void panelComparacaoMetricas() 	verdadeiroNegativoLabel	B1	0/4
+gui.GUI	private void panelComparacaoMetricas() 	verdadeiroPositivoLabel	B1	0/4
+gui.GUI	private void panelResumoMetricas() 	botaoAbrirExcel	B1	0/4
+gui.GUI	private void panelResumoMetricas() 	labelResumoRegras	B1	0/4
+gui.GUI	private void panelResumoMetricas() 	nClassesLabel	B1	0/4
+gui.GUI	private void panelResumoMetricas() 	nLinesLabel	B1	0/4
+gui.GUI	private void panelResumoMetricas() 	nMethodsLabel	B1	0/4
+gui.GUI	private void panelResumoMetricas() 	nPackagesLabel	B1	0/4
+gui.GUI	private void rulesPanel() 	botaoEditar	B1	0/4
+gui.GUI	private void rulesPanel() 	labelRegrasImportadas	B1	0/4
+gui.GUI	private void runMetricsButton() 	botaoRun	B1	0/4
+gui.GUI	private void selectProjectFolderButton() 	botaoPasta	B1	0/4
+excel.Excel	public void lerExcel(java.io.File) throws java.io.FileNotFoundException, java.io.IOException	wb	B1	0/3
+gui.GUI	private void panelComparacaoMetricas() 	labelFN	B1	0/3
+gui.GUI	private void panelComparacaoMetricas() 	labelFP	B1	0/3
+gui.GUI	private void panelComparacaoMetricas() 	labelVN	B1	0/3
+gui.GUI	private void panelComparacaoMetricas() 	labelVP	B1	0/3
+gui.GUI	private void panelResumoMetricas() 	labelNClasses	B1	0/3
+gui.GUI	private void panelResumoMetricas() 	labelNLinhas	B1	0/3
+gui.GUI	private void panelResumoMetricas() 	labelNMethods	B1	0/3
+gui.GUI	private void panelResumoMetricas() 	labelNPacotes	B1	0/3
+central.Central	public void fuelAllandBoolResults() 	k	B3	0/2
+central.Central	public void ini() throws java.io.IOException	cycloMethod	B3	0/2
+central.Central	public void ini() throws java.io.IOException	locClass	B3	0/2
+central.Central	public void ini() throws java.io.IOException	locMethod	B3	0/2
+central.Central	public void ini() throws java.io.IOException	nomClass	B3	0/2
+central.Central	public void ini() throws java.io.IOException	wmcClass	B3	0/2
+central.Central	public void writeExcel(org.apache.poi.ss.usermodel.Sheet, org.apache.poi.xssf.usermodel.XSSFWorkbook) throws java.io.IOException	k	B3	0/2
+gui.EditRulesWindow	private void applyWithoutSaveButton() 	btnApplyWithoutSave	B1	0/2
+rules.Rule	public void createThresholds() throws java.io.FileNotFoundException	thresholds	B2	0/2
+central.Central	public void fuelAllandBoolResults() 	all	B1	1/11
+central.Central	public void fuelAllandBoolResults() 	all	B2	1/10
+central.Central	public void fuelAllandBoolResults() 	all	B3	0/9
+central.Central	public void fuelAllandBoolResults() 	all	B5	0/7
+gui.EditRulesWindow	private void apply() 	operators1	B13	1/5
+gui.EditRulesWindow	private void apply() 	operators1	B20	0/4
+gui.EditRulesWindow	private void apply() 	operators	B3	1/3
+gui.EditRulesWindow	private void apply() 	operators	B8	0/2
+gui.EditRulesWindow	private void apply() 	gui	B1	2/6
+excel.Excel	public void lerExcel(java.io.File) throws java.io.FileNotFoundException, java.io.IOException	linha	B3	10/23
+excel.Excel	public void lerExcel(java.io.File) throws java.io.FileNotFoundException, java.io.IOException	linha	B4	8/20
+excel.Excel	public void lerExcel(java.io.File) throws java.io.FileNotFoundException, java.io.IOException	linha	B5	7/19
+excel.Excel	public void lerExcel(java.io.File) throws java.io.FileNotFoundException, java.io.IOException	list	B2	11/25
+excel.Excel	public void lerExcel(java.io.File) throws java.io.FileNotFoundException, java.io.IOException	list	B3	10/24
+excel.Excel	public void lerExcel(java.io.File) throws java.io.FileNotFoundException, java.io.IOException	list	B4	8/21
+excel.Comparador	public void classComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	classCheck	B1	7/16
+excel.Comparador	public void classComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	classCheck	B2	7/15
+excel.Comparador	public void classComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	classCheck	B3	6/14
+excel.Comparador	public void classComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	classCheck	B4	6/13
+excel.Comparador	public void methodComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	methodCheck	B1	7/16
+excel.Comparador	public void methodComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	methodCheck	B2	7/15
+excel.Comparador	public void methodComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	methodCheck	B3	6/14
+excel.Comparador	public void methodComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	methodCheck	B4	6/13
+central.Central	public void fuelAllandBoolResults() 	boolResultClass	B2	1/2
+central.Central	public void fuelAllandBoolResults() 	boolResultMethod	B2	1/2
+gui.EditRulesWindow	private void apply() 	comparators1	B13	4/7
+gui.EditRulesWindow	private void apply() 	comparators1	B14	3/6
+gui.EditRulesWindow	private void apply() 	limits1	B13	4/7
+gui.EditRulesWindow	private void apply() 	limits1	B14	3/6
+gui.EditRulesWindow	private void apply() 	metricNames1	B13	4/7
+gui.EditRulesWindow	private void apply() 	metricNames1	B14	3/6
+excel.Comparador	public void classComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	p	B3	2/4
+excel.Comparador	public void classComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	p	B4	2/3
+excel.Comparador	public void classComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	p	B5	1/2
+excel.Comparador	public void methodComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	p	B3	2/4
+excel.Comparador	public void methodComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	p	B4	2/3
+excel.Comparador	public void methodComp(ArrayList<central.BoolResultado>, ArrayList<excel.Linha>) 	p	B5	1/2
+gui.EditRulesWindow	private void apply() 	comparators	B3	3/5
+gui.EditRulesWindow	private void apply() 	comparators	B4	2/4
+gui.EditRulesWindow	private void apply() 	limits	B3	3/5
+gui.EditRulesWindow	private void apply() 	limits	B4	2/4
+gui.EditRulesWindow	private void apply() 	metricNames	B3	3/5
+gui.EditRulesWindow	private void apply() 	metricNames	B4	2/4
+metrics.CYCLO_method	private void runMainClass() 	resultados	B2	6/19
+metrics.CYCLO_method	private void runMainClass() 	resultados	B4	6/14
+metrics.CYCLO_method	private void runMainClass() 	resultados	B8	6/7
+metrics.CYCLO_method	private void runMainClass() 	resultados	B9	5/6
+metrics.CYCLO_method	private void runMainClass() 	resultados	B13	1/2
