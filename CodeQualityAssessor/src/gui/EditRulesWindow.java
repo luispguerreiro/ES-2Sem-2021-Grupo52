@@ -161,6 +161,7 @@ public class EditRulesWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (chckBoxGodClass.isSelected() || chckBoxLongMethod.isSelected()) {
 					apply();
+					EditRulesWindow.this.dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Nenhum code smell foi definido!\nTente novamente");
 					return;
